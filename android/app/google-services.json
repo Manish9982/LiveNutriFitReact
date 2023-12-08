@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "582264778273",
+    "project_id": "livenutrifit-9772a",
+    "storage_bucket": "livenutrifit-9772a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582264778273:android:0868aad77dbf4aa7577d60",
+        "android_client_info": {
+          "package_name": "com.lnf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582264778273-0ghkd4bj9135qkbfb8lvrsaa6a07bj10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHyz2Bd_UD93BSts6tjQgqVo0ZuFQvoH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582264778273-0ghkd4bj9135qkbfb8lvrsaa6a07bj10.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582264778273-rlrch5gsusa725m2715pnl9fst8dhlt1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.live.nutrifit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
