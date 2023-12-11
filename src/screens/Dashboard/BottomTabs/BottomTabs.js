@@ -98,7 +98,7 @@ const BottomTabs = ({ route }) => {
 
         }
       });
-    const notificationPressSubscription = notifee.onForegroundEvent(
+    const notificationPressSubscription = notifee?.onForegroundEvent(
       ({ type, detail }) => {
         if (type === EventType.PRESS) {
           if (detail?.notification?.data?.ctype == "1") {
@@ -110,7 +110,7 @@ const BottomTabs = ({ route }) => {
       }
     );
     return () => {
-      notificationPressSubscription.remove();
+      notificationPressSubscription?.remove();
     };
   }, [])
 

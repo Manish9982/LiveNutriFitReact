@@ -65,7 +65,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
         getDataFromApi()
     }, [isFocused])
 
-    
+
     const [myData, setMyData] = useState(null)
 
     const getDataFromApi = async () => {
@@ -1793,19 +1793,17 @@ const UpgradePlanOne = ({ navigation, route }) => {
     const startIcon = <Icon2 name='star-circle' size={15} color='orange' />
 
     return (
-        loader ? <View style={{
-            height: H,
-            width: W,
-            alignItems: "center",
-            justifyContent: "center"
-        }}>
-            <ActivityIndicator size="large"
-                color={colors.GREEN} />
-        </View> :
-
-
-
-
+        loader ?
+            <View style={{
+                height: H,
+                width: W,
+                alignItems: "center",
+                justifyContent: "center"
+            }}>
+                <ActivityIndicator size="large"
+                    color={colors.GREEN} />
+            </View>
+            :
             <View style={{ backgroundColor: 'white' }}>
                 <StatusBar backgroundColor={colors.GREEN} />
 
@@ -1823,7 +1821,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     onPress={() => { navigation.goBack() }} />
                                 <Appbar.Content style={{
                                     alignItems: "center",
-                                    marginRight: W * 0.15
+                                    //marginRight: W * 0.15
                                 }} title={<Text style={{
                                     color: "white",
                                     fontSize: fontSizes.XXL,
@@ -1860,18 +1858,21 @@ const UpgradePlanOne = ({ navigation, route }) => {
                         :
                         <Appbar.Header style={{
                             backgroundColor: colors.GREEN,
-                            width: W
+                            width: W,
                         }}>
                             <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }}
                                 onPress={() => { navigation.goBack() }} />
                             <Appbar.Content style={{
-                                alignItems: "center",
-                                marginRight: W * 0.125
-                            }} title={<Text style={{
+                                // alignItems: "center",
+                                //marginRight: W * 0.125
+                            }}
+                            title={<Text style={{
                                 color: "white",
                                 fontSize: fontSizes.XXL,
                                 fontFamily: "Montserrat-SemiBold"
-                            }}>{strings.ElitePlan}</Text>} />
+                            }}>{strings.ElitePlan}</Text>}
+                            >
+                            </Appbar.Content>
                         </Appbar.Header>
                 }
 

@@ -12,6 +12,13 @@ const WIDTH = Dimensions.get('window').width
 export const H = Dimensions.get('window').height
 export const W = Dimensions.get('window').width
 
+export const ShadowsiOS = {
+   shadowColor: '#8b8b8c',
+   shadowOpacity: 0.5,
+   shadowRadius: 2,
+   shadowOffset: { width: 0, height: 5 }
+}
+
 
 //export const URL = 'https://lnf.bizhawkztest.com/public/'
 export const URL = 'https://livenutrifit.com/panel/'

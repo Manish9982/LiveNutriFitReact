@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useState, useContext, useEffect } from 'react'
 import { Text, configureFonts, DefaultTheme, Provider as PaperProvider, shadow, Portal, Dialog, Paragraph, Button, Snackbar } from 'react-native-paper';
-import { colors, fontSizes, H, PostApiData, ShortToast, W } from '../../../colorSchemes/ColorSchemes';
+import { colors, fontSizes, H, PostApiData, ShortToast, W, ShadowsiOS } from '../../../colorSchemes/ColorSchemes';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
 import Icon2 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient'
@@ -296,12 +296,14 @@ const InfoCard = (props) => {
     const firstChoiceTrigger = async (heading) => {
 
         if (heading == 'Monitoring') {
+            
             setBgclr1(
                 (prev) => {
                     if (prev == colors.BEST_COLOR) {
                         return "white"
                     }
                     else {
+                        props?.onPressWeight(prev => !prev)
                         return colors.BEST_COLOR
                     }
                 }
@@ -330,12 +332,14 @@ const InfoCard = (props) => {
     }
     const secondChoiceTrigger = async (heading) => {
         if (heading == 'Monitoring') {
+            
             setBgclr2(
                 (prev) => {
                     if (prev == colors.BEST_COLOR) {
                         return "white"
                     }
                     else {
+                        props?.onPressSugar(prev => !prev)
                         return colors.BEST_COLOR
                     }
                 }
@@ -371,6 +375,7 @@ const InfoCard = (props) => {
                         return "white"
                     }
                     else {
+                        props?.onPressBP(prev => !prev)
                         return colors.BEST_COLOR
                     }
                 }
@@ -560,10 +565,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 15,
         elevation: 20,
-        shadowColor: '#8b8b8c',
-        shadowOpacity: 1,
-        shadowRadius: 5,
-        shadowOffset: { width: 0, height: 50 }
+       ...ShadowsiOS
     },
     arrowButton:
     {
