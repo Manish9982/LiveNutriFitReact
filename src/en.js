@@ -9,7 +9,7 @@ export default english = {
     lang: "Language",
     goals: "Goals",
     gratitude: "Gratitude",
-    chatwithcoach: "Chat With Coach",
+    chatwithcoach: "Message",
     reminder: "Reminder",
     blog: "Blog",
     customersupport: "Customer Support",
