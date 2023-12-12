@@ -239,14 +239,14 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                             <>
                                 <Text
                                     style={{
-                                        fontFamily: fontFamily.bold,
+                                        ...fontFamily.bold,
                                         marginTop: H * 0.08,
                                         fontSize: fontSizes.greeting,
                                         marginBottom: H * 0.03
                                     }}>{strings.Welcome}, {name}!</Text>
 
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     marginTop: H * 0.01,
                                     fontSize: fontSizes.XL,
                                     textAlign: "center",
@@ -265,7 +265,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                                         borderRadius: 1,
                                     }} />
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     marginTop: H * 0.02,
                                     fontSize: fontSizes.LAR,
                                     width: W * 0.85,
@@ -277,7 +277,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                             <>
                                 <Text
                                     style={{
-                                        fontFamily: fontFamily.bold,
+                                        ...fontFamily.bold,
                                         marginTop: flag == "2" ? H * 0.04 : H * 0.1,
                                         fontSize: fontSizes.XL,
                                         marginBottom: H * 0.05,
@@ -291,7 +291,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
 
                         <Text style={{
                             width: W,
-                            fontFamily: fontFamily.bold,
+                            ...fontFamily.bold,
                             marginLeft: W * 0.15,
                             marginTop: flag == "1" ? H * 0.05 : H * 0.2
                         }}>{customText}</Text>
@@ -319,7 +319,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                             }}>
                             <Text style={{
                                 color: "white",
-                                fontFamily: fontFamily.bold
+                                ...fontFamily.bold
                             }}>{(valueOfProgressBar !== 1) ? `${valueOfProgressBar * 100}%` : strings.Proceed}</Text>
                         </TouchableOpacity>
                     </View>

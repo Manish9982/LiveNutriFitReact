@@ -359,7 +359,7 @@ const NewProfiling = ({ navigation }) => {
             {
                 loader
                     ?
-                    <Loader />
+                    <Loader/>
                     :
                     <>
                         <Appbar.Header style={styles.appBar}>

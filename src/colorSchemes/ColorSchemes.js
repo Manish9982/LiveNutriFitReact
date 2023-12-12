@@ -58,7 +58,17 @@ export function convertTimestampToYYYYMMDD(timestamp) {
    return `${year}-${month}-${day}`;
 }
 export const fontFamily = {
-   "bold": "Montserrat-SemiBold",
+   "bold": {
+      ...Platform.select({
+         ios: {
+            fontFamily: "Montserrat-SemiBold",
+            fontWeight: "600",
+         },
+         android: {
+            fontFamily: "Montserrat-SemiBold",
+         },
+      }),
+   }
 };
 
 export const formatDate = (inputDate) => {
@@ -82,9 +92,6 @@ export const formatDate = (inputDate) => {
    return formattedDate;
  };
  
-
-
-
 
 export const GetApiData = async (ApiName) => {
    //  const URL = "https://lnf.bizhawkztest.com/public/"
