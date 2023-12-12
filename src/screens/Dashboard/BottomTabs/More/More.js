@@ -642,7 +642,7 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.reminder}</Text>
                 </View> */}
               {/* </TouchableOpacity> */}
-              <Divider style={styles.dividerStyle} />
+              {/* <Divider style={styles.dividerStyle} /> */}
               <TouchableOpacity onPress={() => { navigation.navigate("CustomerSupport") }}>
                 <View style={styles.displayBar}>
 
