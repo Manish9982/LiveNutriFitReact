@@ -48,15 +48,7 @@ export const fontSizes = {
    greeting: 24,
    choiceText: 13,
 };
-export function convertTimestampToYYYYMMDD(timestamp) {
-   const date = new Date(timestamp);
 
-   const year = date.getFullYear();
-   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-   const day = date.getDate().toString().padStart(2, '0');
-
-   return `${year}-${month}-${day}`;
-}
 export const fontFamily = {
    "bold": {
       ...Platform.select({
@@ -91,7 +83,17 @@ export const formatDate = (inputDate) => {
  
    return formattedDate;
  };
- 
+
+export function convertTimestampToYYYYMMDD(timestamp) {
+   const date = new Date(timestamp);
+
+   const year = date.getFullYear();
+   const month = (date.getMonth() + 1).toString().padStart(2, '0');
+   const day = date.getDate().toString().padStart(2, '0');
+
+   return `${year}-${month}-${day}`;
+}
+
 
 export const GetApiData = async (ApiName) => {
    //  const URL = "https://lnf.bizhawkztest.com/public/"
