@@ -1232,7 +1232,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                             <View style={styles.viewModal}
                             >
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     paddingBottom: H * 0.04,
                                 }}>
@@ -1260,7 +1260,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                         setShowCustomAnswerModal(false)
                                     }}>
                                         <Text style={{
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: colors.GREEN,
                                             fontSize: fontSizes.XL,
                                             paddingTop: H * 0.028,
@@ -1274,7 +1274,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                     }}
                                     >
                                         <Text style={{
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: "red",
                                             fontSize: fontSizes.XL,
                                             paddingTop: H * 0.028,
@@ -1420,7 +1420,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                     <Text
                                         style={{
                                             color: colors.FONT_BLACK,
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             width: W * 0.75,
                                             textAlign: "left"
                                         }}>
@@ -1478,7 +1478,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                             }}>
                             <Text style={{
                                 color: "white",
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 fontSize: fontSizes.XL
                             }}>{strings.Next}</Text>
                         </TouchableOpacity>
@@ -1571,7 +1571,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -1620,7 +1620,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 style={styles.answerTextInput}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 marginRight: W * 0.03,
                                             }}>Ft</Text>
                                             <TextInput
@@ -1648,7 +1648,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 style={styles.answerTextInput}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>In</Text>
                                         </View>
@@ -1702,7 +1702,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -1710,7 +1710,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.LIGHT_GREEN,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -1723,7 +1723,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} />
                                                         </>
@@ -1787,7 +1787,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Years</Text>
                                         </View>
@@ -1852,7 +1852,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                             <Text
 
                                                 style={{
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
 
                                                 }}></Text>
                                         </View>
@@ -1916,7 +1916,7 @@ const QuestionsCustom = ({ navigation, route }) => {
 
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -1924,7 +1924,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.LIGHT_GREEN,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -1937,7 +1937,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            {/* <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            {/* <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} /> */}
                                                         </>
@@ -2005,7 +2005,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -2013,7 +2013,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.LIGHT_GREEN,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -2026,7 +2026,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            {/* <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            {/* <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} /> */}
                                                         </>
@@ -2095,7 +2095,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}></Text>
                                         </View>
@@ -2156,7 +2156,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}></Text>
                                         </View>
@@ -2206,7 +2206,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}></Text>
                                         </View>
@@ -2268,7 +2268,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}></Text>
                                         </View>
@@ -2324,7 +2324,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -2332,7 +2332,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.white,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -2345,7 +2345,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            {/* <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            {/* <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} /> */}
                                                         </>
@@ -2407,7 +2407,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                                                 <Text style={{
                                                     fontSize: fontSizes.XXL,
                                                     color: "white",
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
                                                     paddingVertical: H * 0.02,
                                                 }}>{strings.Next}</Text>
                                             </TouchableOpacity>
@@ -2445,7 +2445,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                             <Text style={{
                                 fontSize: fontSizes.XXL,
                                 color: "white",
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 paddingVertical: H * 0.02,
                             }}>
                                 {strings.Next}
@@ -2511,7 +2511,7 @@ const styles = StyleSheet.create({
     },
     textStyle:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         textAlign: 'center',
     },
     answerOptionsButtonStyle:
@@ -2537,7 +2537,7 @@ const styles = StyleSheet.create({
     {
         color: "white",
         fontSize: fontSizes.XL,
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
     },
     secondaryContainer: {
         height: H,
@@ -2579,7 +2579,7 @@ const styles = StyleSheet.create({
     nextText:
     {
         color: "white",
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         fontSize: fontSizes.XL
     },
     questionText:

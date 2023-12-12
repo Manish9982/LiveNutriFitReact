@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     },
     textStyleForPoints:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         position: "absolute",
         left: W * 0.8
     }

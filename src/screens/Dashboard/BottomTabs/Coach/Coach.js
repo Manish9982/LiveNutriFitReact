@@ -462,7 +462,7 @@ const Coach = ({ navigation }) => {
           }>
             <Text style={{
               color: "white",
-              fontFamily: fontFamily.bold
+              ...fontFamily.bold
             }}>
               {item.user_message}</Text>
             <Text style={{
@@ -619,7 +619,7 @@ const Coach = ({ navigation }) => {
                       zIndex: 100,
                       fontSize: 35,
                       shadowOpacity: 1,
-                      fontFamily: fontFamily.bold,
+                      ...fontFamily.bold,
                     }}>{item.icon.length - 2 == 0 ? "" : `+${item.icon.length - 2}`}</Text>
                     <Image source={{ uri: `${item.base_url}${item.icon[1]}` }}
                       style={{ height: W * 0.34, width: W * 0.34, zIndex: -2 }} />
@@ -682,7 +682,7 @@ const Coach = ({ navigation }) => {
                       zIndex: 100,
                       fontSize: 35,
                       shadowOpacity: 1,
-                      fontFamily: fontFamily.bold,
+                      ...fontFamily.bold,
                     }}>{item.receiver_icon.length - 2 == 0 ? "" : `+${item.receiver_icon.length - 2}`}</Text>
                     <Image source={{ uri: `${item.base_url}${item.receiver_icon[1]}` }}
                       style={{ height: W * 0.34, width: W * 0.34, zIndex: -2 }} />
@@ -767,7 +767,7 @@ const Coach = ({ navigation }) => {
               title={<Text style={{
                 color: "white",
                 fontSize: fontSizes.XL,
-                fontFamily: "Montserrat-SemiBold"
+                ...fontFamily.bold
               }}>{strings.Coach}</Text>} />
           </Appbar.Header>
         </View>
@@ -902,7 +902,7 @@ const Coach = ({ navigation }) => {
               }}>
 
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   fontSize: fontSizes.XXXL,
                   textAlign: 'center',
                 }}>
@@ -940,7 +940,7 @@ const Coach = ({ navigation }) => {
                     <Text style={{
                       width: W * 0.14, textAlign: 'center',
                       color: "white",
-                      fontFamily: fontFamily.bold
+                      ...fontFamily.bold
                     }}>{strings.Ok}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -964,7 +964,7 @@ const Coach = ({ navigation }) => {
                       paddingVertical: H * 0.01,
                       borderRadius: 8,
                     }}>
-                    <Text style={{ fontFamily: fontFamily.bold }}>{strings.Cancel}</Text>
+                    <Text style={{ ...fontFamily.bold }}>{strings.Cancel}</Text>
                   </TouchableOpacity>
                 </View>
 
@@ -997,7 +997,7 @@ const Coach = ({ navigation }) => {
                   style={{}}
                 />
                 <Text style={{
-                  fontFamily: fontFamily.bold
+                  ...fontFamily.bold
                 }}>
                   {strings.comments} :
                 </Text>
@@ -1032,7 +1032,7 @@ const Coach = ({ navigation }) => {
                     }}>
                     <Text style={{
                       color: "white",
-                      fontFamily: fontFamily.bold
+                      ...fontFamily.bold
                     }}>{strings.Submit}</Text>
                   </TouchableOpacity>
 
@@ -1048,7 +1048,7 @@ const Coach = ({ navigation }) => {
                       paddingVertical: H * 0.01,
                       borderRadius: 8,
                     }}>
-                    <Text style={{ fontFamily: fontFamily.bold }}>{strings.Cancel}</Text>
+                    <Text style={{ ...fontFamily.bold }}>{strings.Cancel}</Text>
                   </TouchableOpacity>
                 </View>
 
@@ -1079,7 +1079,7 @@ const Coach = ({ navigation }) => {
                 elevation: 8
               }}>
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   top: -H * 0.06,
                   left: W * 0.05,
                   fontSize: fontSizes.XXL
@@ -1099,7 +1099,7 @@ const Coach = ({ navigation }) => {
                     }}>
                       <AntDesign name="camera" size={50} color={"silver"} />
                       <Text style={{
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         fontSize: fontSizes.MED
                       }}>Camera</Text>
                     </View>
@@ -1272,14 +1272,14 @@ const makeStyles = (H, W) => StyleSheet.create({
   cancelButton:
   {
     textAlign: "right",
-    fontFamily: fontFamily.bold,
+    ...fontFamily.bold,
     color: "red",
     top: H * 0.055,
     left: -W * 0.06
   },
   fonts:
   {
-    fontFamily: fontFamily.bold,
+    ...fontFamily.bold,
     fontSize: fontSizes.MED
   },
   cameraButton:

@@ -193,21 +193,21 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                     <AntDesign name="checkcircleo" size={20} color={colorOfCheckBox1} style={styles.checkbox2} />
                     :
                     <ActivityIndicator size="small" color={"green"} style={[styles.activityIndicator, { marginBottom: H * 0.02 }]} />}
-                    <Text style={{ fontFamily: "Montserrat-SemiBold", fontSize: fontSizes.XXL, width: W * 0.8, color: colors.FONT_BLACK, }}>Preparing Your Personalized Meal</Text>
+                    <Text style={{ ...fontFamily.bold, fontSize: fontSizes.XXL, width: W * 0.8, color: colors.FONT_BLACK, }}>Preparing Your Personalized Meal</Text>
                 </View>
                 <Text style={[styles.text1, { top: H * 0.135 }]}>Preparing your work-out routine based on your Calories intake </Text>
                 <View style={styles.viewOfCheckbox}>{colorOfCheckBox2 == "green" ?
                     <AntDesign name="checkcircleo" size={20} color={colorOfCheckBox1} style={styles.checkbox2} />
                     :
                     <ActivityIndicator size="small" color={"green"} style={[styles.activityIndicator, { marginBottom: H * 0.02 }]} />}
-                    <Text style={{ fontFamily: "Montserrat-SemiBold", fontSize: fontSizes.XXL, width: W * 0.85, color: colors.FONT_BLACK }}>Preparing Your Personalized Excercise Plan</Text>
+                    <Text style={{ ...fontFamily.bold, fontSize: fontSizes.XXL, width: W * 0.85, color: colors.FONT_BLACK }}>Preparing Your Personalized Excercise Plan</Text>
                 </View>
                 <Text style={[styles.text1, { top: H * 0.26 }]}>Assigning an Ideal Coach for you who can guide you through your weight loss Journey</Text>
                 <View style={styles.viewOfCheckbox}>{colorOfCheckBox3 == "green" ?
                     <AntDesign name="checkcircleo" size={20} color={colorOfCheckBox1} style={styles.checkbox2} />
                     :
                     <ActivityIndicator size="small" color={"green"} style={[styles.activityIndicator, { marginBottom: H * 0.02 }]} />}
-                    <Text style={{ fontFamily: "Montserrat-SemiBold", fontSize: fontSizes.XXL, width: W * 0.85, color: colors.FONT_BLACK }}>Preparing Your Personalized Coach</Text>
+                    <Text style={{ ...fontFamily.bold, fontSize: fontSizes.XXL, width: W * 0.85, color: colors.FONT_BLACK }}>Preparing Your Personalized Coach</Text>
                 </View>
     </View>*/}
                     <View style={{
@@ -223,7 +223,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                         <Text style={{
                             alignSelf: 'center',
                             marginBottom: H * 0.02,
-                            fontFamily: "Montserrat-SemiBold",
+                            ...fontFamily.bold,
                             position: 'absolute',
                             zIndex: 2,
                             color: 'white',
@@ -246,14 +246,14 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                             <>
                                 <Text
                                     style={{
-                                        fontFamily: fontFamily.bold,
+                                        ...fontFamily.bold,
                                         marginTop: H * 0.08,
                                         fontSize: fontSizes.greeting,
                                         marginBottom: H * 0.03
                                     }}>{strings.Welcome}, {name}!</Text>
 
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     marginTop: H * 0.01,
                                     fontSize: fontSizes.XL,
                                     textAlign: "center",
@@ -272,7 +272,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                                         borderRadius: 1,
                                     }} />
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     marginTop: H * 0.02,
                                     fontSize: fontSizes.LAR,
                                     width: W * 0.85,
@@ -284,7 +284,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                             <>
                                 <Text
                                     style={{
-                                        fontFamily: fontFamily.bold,
+                                        ...fontFamily.bold,
                                         marginTop: flag == "2" ? H * 0.04 : H * 0.1,
                                         fontSize: fontSizes.XL,
                                         marginBottom: H * 0.05,
@@ -298,7 +298,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
 
                         <Text style={{
                             width: W,
-                            fontFamily: fontFamily.bold,
+                            ...fontFamily.bold,
                             marginLeft: W * 0.15,
                             marginTop: flag == "1" ? H * 0.05 : H * 0.2
                         }}>{customText}</Text>
@@ -322,7 +322,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                             }}>
                             <Text style={{
                                 color: "white",
-                                fontFamily: fontFamily.bold
+                                ...fontFamily.bold
                             }}>{(valueOfProgressBar !== 1) ? `${valueOfProgressBar * 100}%` : strings.Proceed}</Text>
                         </TouchableOpacity>
                     </View>

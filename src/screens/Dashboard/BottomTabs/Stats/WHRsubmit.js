@@ -84,7 +84,7 @@ const WHRsubmit = ({ navigation }) => {
 
       <Appbar.Header style={styles.appBar}>
         <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
-        <Appbar.Content style={{ alignItems: "center", }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, fontFamily: "Montserrat-SemiBold" }}>{strings.WaisttoHipRatio}</Text>} />
+        <Appbar.Content style={{ alignItems: "center", }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.WaisttoHipRatio}</Text>} />
         {/* <Appbar.Action icon="information" onPress={() => { setVisible(true) }} color={"white"} size={30} /> */}
       </Appbar.Header>
 
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   {
     textAlign: "center",
     marginVertical: H * 0.05,
-    fontFamily: fontFamily.bold,
+    ...fontFamily.bold,
     fontSize: fontSizes.XL
   }
 })

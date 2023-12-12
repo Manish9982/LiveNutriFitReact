@@ -3,7 +3,7 @@ import { Alert, SafeAreaView, StatusBar } from 'react-native'
 import { Appbar, Text, TextInput } from 'react-native-paper';
 import { WebView } from 'react-native-webview';
 import { Header } from 'react-native/Libraries/NewAppScreen';
-import { colors, fontSizes, H, W } from '../../colorSchemes/ColorSchemes';
+import { colors, fontSizes, H, W, fontFamily } from '../../colorSchemes/ColorSchemes';
 
 
 import { useEffect } from 'react';
@@ -84,7 +84,7 @@ const StripeFullPaymentWebView = ({ navigation, route }) => {
                     title={<Text style={{
                         color: "white",
                         fontSize: fontSizes.XL,
-                        fontFamily: "Montserrat-SemiBold"
+                        ...fontFamily.bold
                     }}>Payment Gateway</Text>} />
             </Appbar.Header>
 

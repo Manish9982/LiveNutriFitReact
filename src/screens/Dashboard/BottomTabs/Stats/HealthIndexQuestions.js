@@ -1,6 +1,6 @@
 import { View, StyleSheet, TouchableOpacity, ToastAndroid, StatusBar } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { H, W, colors, GetApiData, fontSizes, PostApiData, ShortToast } from '../../../../colorSchemes/ColorSchemes'
+import { H, W, colors, GetApiData, fontSizes, PostApiData, ShortToast, fontFamily } from '../../../../colorSchemes/ColorSchemes'
 import { FlatList } from 'react-native-gesture-handler'
 import { ActivityIndicator, Appbar, Text } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -115,7 +115,7 @@ const HealthIndexQuestions = ({ navigation }) => {
                             left: W * 0.4,
                             zIndex: 11,
                             fontSize: fontSizes.XXL,
-                            fontFamily: "Montserrat-SemiBold",
+                            ...fontFamily.bold,
                             textDecorationLine: "underline"
                         }}>{sumOfElementsOfArray(pointArr) == 0 ? null : `Score : ${sumOfElementsOfArray(pointArr)}`}</Text>
                     </View>
@@ -153,7 +153,7 @@ const HealthIndexQuestions = ({ navigation }) => {
                                 })
                                 pointArr.pop()
                             }} />
-                            <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, fontFamily: "Montserrat-SemiBold" }}>Health Index</Text>} />
+                            <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>Health Index</Text>} />
                         </Appbar.Header>
                     </View>
 
@@ -214,11 +214,11 @@ const styles = StyleSheet.create({
     text:
     {
         //paddingVertical: H * 0.022,
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
     },
     questionText:
     {
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         fontSize: fontSizes.XL,
         color: "white",
         paddingTop: H * 0.15,

@@ -282,7 +282,7 @@ const More = ({ navigation }) => {
             <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
             <Appbar.Content style={{ alignItems: "center", }} title={<Text style={{
               color: "white", fontSize: fontSizes.XL, marginEnd: W * 0.15,
-              fontFamily: "Montserrat-SemiBold"
+              ...fontFamily.bold
             }}>{strings.More}</Text>} />
             {/* <Appbar.Action icon={{ uri: 'https://cdn-icons-png.flaticon.com/512/891/891012.png' }} style={{ alignItems: "center" }} color={"white"} onPress={() => {
 
@@ -310,7 +310,7 @@ const More = ({ navigation }) => {
                   <Text style={{ 
                     color: 'white',
                    size: "10", 
-                  fontFamily: fontFamily.bold }}>{notificationCount}</Text>
+                  ...fontFamily.bold }}>{notificationCount}</Text>
                 </TouchableOpacity>
             } */}
 
@@ -342,7 +342,7 @@ const More = ({ navigation }) => {
 
                 <Text style={{
                   alignSelf: 'center', marginBottom: 10,
-                  fontFamily: "Montserrat-SemiBold", fontSize: 15
+                  ...fontFamily.bold, fontSize: 15
                 }}>{strings.changelanguage}</Text>
 
 
@@ -358,7 +358,7 @@ const More = ({ navigation }) => {
                   style={{
                     backgroundColor: langText2 == "en" ? "green" : "white",
 
-                    fontFamily: "Montserrat-SemiBold",
+                    ...fontFamily.bold,
                     width: W * 0.25,
                     alignSelf: "center",
                     color: colors.toobarcolor,
@@ -372,7 +372,7 @@ const More = ({ navigation }) => {
 
                   <Text style={{
                     color: langText2 == "en" ? "white" : "black",
-                    fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL,
+                    ...fontFamily.bold, textAlign: 'center', fontSize: fontSizes.XL,
                   }}>{strings.english}</Text>
 
 
@@ -388,7 +388,7 @@ const More = ({ navigation }) => {
                   style={{
                     backgroundColor: langText2 == "hi" ? "green" : "white",
 
-                    fontFamily: "Montserrat-SemiBold",
+                    ...fontFamily.bold,
                     width: W * 0.25,
                     alignSelf: "center",
                     color: colors.toobarcolor,
@@ -401,7 +401,7 @@ const More = ({ navigation }) => {
 
                   <Text style={{
                     color: langText2 == "hi" ? "white" : "black",
-                    fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL
+                    ...fontFamily.bold, textAlign: 'center', fontSize: fontSizes.XL
                   }}>{strings.hindi}</Text>
                 </TouchableOpacity>
 
@@ -489,7 +489,7 @@ const More = ({ navigation }) => {
                       }}>
                         <Text style={{
                           color: "white",
-                          fontFamily: fontFamily.bold
+                          ...fontFamily.bold
                         }}>
                           {usertypetext}
                         </Text>
@@ -509,7 +509,7 @@ const More = ({ navigation }) => {
                           }}>
                             <Text style={{
                               color: "black",
-                              fontFamily: fontFamily.bold,
+                              ...fontFamily.bold,
                               fontSize: fontSizes.MED
                             }}>
 
@@ -535,7 +535,7 @@ const More = ({ navigation }) => {
                         <Text style={{
                           color: "black",
                           fontSize: fontSizes.MED,
-                          fontFamily: fontFamily.bold
+                          ...fontFamily.bold
                         }}>
 
                           {data?.valid_month?.substring(0,3)} {data?.valid_date} , {data?.valid_year}
@@ -637,7 +637,7 @@ const More = ({ navigation }) => {
                   }}>
                     <Text style={{
                       color: "white",
-                      fontFamily: fontFamily.bold
+                      ...fontFamily.bold
                     }}>
                       {langText}
                     </Text>
@@ -866,7 +866,7 @@ const styles = StyleSheet.create({
   },
   text1:
   {
-    fontFamily: fontFamily.bold,
+    ...fontFamily.bold,
     marginLeft: WIDTH * 0.08,
     fontSize: fontSizes.LAR,
     color: '#717378'

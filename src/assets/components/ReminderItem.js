@@ -2,7 +2,7 @@ import { View, Text, Dimensions, StyleSheet, TouchableOpacity } from 'react-nati
 import React, { useState } from 'react'
 import { Divider } from 'react-native-paper'
 import { Checkbox } from 'react-native-paper'
-import { H, PostApiData, W, colors } from '../../colorSchemes/ColorSchemes'
+import { H, PostApiData, W, colors, fontFamily } from '../../colorSchemes/ColorSchemes'
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -142,21 +142,21 @@ const styles = StyleSheet.create({
     },
     text1:
     {
-        fontFamily: 'Montserrat-SemiBold',
+        ...fontFamily.bold,
         fontSize: 15,
         color: "#000000"
 
     },
     textgray:
     {
-        fontFamily: 'Montserrat-SemiBold',
+        ...fontFamily.bold,
         fontSize: 15,
         color: "#000000"
 
     },
     text2:
     {
-        fontFamily: 'Montserrat-SemiBold',
+        ...fontFamily.bold,
         backgroundColor: '#e1e3e6',
         padding: WIDTH * 0.01,
         borderRadius: 5,

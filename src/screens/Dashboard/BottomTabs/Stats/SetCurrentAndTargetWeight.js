@@ -71,7 +71,7 @@ const SetCurrentAndTargetWeight = () => {
                     <TouchableOpacity
                         onPress={() => { updateValues() }}
                         style={styles.buttons}>
-                        <Text style={[styles.text2, { fontFamily: fontFamily.bold }]}>Save</Text>
+                        <Text style={[styles.text2, { ...fontFamily.bold }]}>Save</Text>
                     </TouchableOpacity>
 
                 </View>

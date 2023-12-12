@@ -313,7 +313,7 @@ const PlanDetailScreen = ({ navigation, route }) => {
                         title={<Text style={{
                             color: "white",
                             fontSize: fontSizes.XL,
-                            fontFamily: "Montserrat-SemiBold"
+                            ...fontFamily.bold
                         }}>{strings.PaymentGateway}</Text>} />
                 </Appbar.Header>
                 <Modal
@@ -641,7 +641,7 @@ const PlanDetailScreen = ({ navigation, route }) => {
                         setCoupanVisible(true)
                     }}>
                     <Text style={{
-                        fontFamily: "Montserrat-SemiBold",
+                        ...fontFamily.bold,
                         fontSize: fontSizes.XL,
                         marginTop: H * 0.05,
                         alignSelf: 'center',
@@ -665,12 +665,12 @@ const PlanDetailScreen = ({ navigation, route }) => {
                             }}>
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.LAR,
                                 }}>For Monthly Installments (Rs.):- </Text>
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.LAR,
                                     alignSelf: 'center', color: 'black'
                                 }}> {amountpermonth}</Text>
@@ -698,7 +698,7 @@ const PlanDetailScreen = ({ navigation, route }) => {
 
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     // marginRight: W * 0.1,
                                     alignSelf: 'center',
@@ -727,12 +727,12 @@ const PlanDetailScreen = ({ navigation, route }) => {
                             }}>
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.LAR,
                                 }}>For Full Payment (Rs.):- </Text>
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.LAR,
                                     alignSelf: 'center', color: 'black'
                                 }}> {amount}</Text>
@@ -759,7 +759,7 @@ const PlanDetailScreen = ({ navigation, route }) => {
 
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     // marginRight: W * 0.1,
                                     alignSelf: 'center',
@@ -798,12 +798,12 @@ const PlanDetailScreen = ({ navigation, route }) => {
                             }}>
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.LAR,
                                 }}>For Monthly Installments:- </Text>
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.LAR,
                                     alignSelf: 'center', color: 'black'
                                 }}>$ {amountpermonth}</Text>
@@ -831,7 +831,7 @@ const PlanDetailScreen = ({ navigation, route }) => {
 
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     // marginRight: W * 0.1,
                                     alignSelf: 'center',
@@ -862,12 +862,12 @@ const PlanDetailScreen = ({ navigation, route }) => {
                             }}>
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.LAR,
                                 }}>For Full payments:- </Text>
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.LAR,
                                     alignSelf: 'center', color: 'black'
                                 }}>$ {amount}</Text>
@@ -895,7 +895,7 @@ const PlanDetailScreen = ({ navigation, route }) => {
 
 
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     // marginRight: W * 0.1,
                                     alignSelf: 'center',
@@ -933,12 +933,12 @@ const PlanDetailScreen = ({ navigation, route }) => {
                 }}>
 
                     <Text style={{
-                        fontFamily: "Montserrat-SemiBold",
+                        ...fontFamily.bold,
                         fontSize: fontSizes.LAR,
                     }}>For Full Payment (Rs.)-: </Text>
 
                     <Text style={{
-                        fontFamily: "Montserrat-SemiBold",
+                        ...fontFamily.bold,
                         fontSize: fontSizes.LAR,
                         alignSelf: 'center', color: 'black'
                     }}>{amount}</Text>
@@ -971,7 +971,7 @@ const PlanDetailScreen = ({ navigation, route }) => {
 
 
                     <Text style={{
-                        fontFamily: "Montserrat-SemiBold",
+                        ...fontFamily.bold,
                         fontSize: fontSizes.XL,
                         // marginRight: W * 0.1,
                         alignSelf: 'center',

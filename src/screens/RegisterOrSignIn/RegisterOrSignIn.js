@@ -210,7 +210,7 @@ const RegisterOrSignIn = ({ navigation }) => {
                                 textAlign: 'center',
                                 color: 'white',
                                 fontSize: fontSizes.LAR,
-                                fontFamily: fontFamily.bold
+                                ...fontFamily.bold
                             }}>{strings.AreyouaCorporateUser}</Text>
                         </TouchableOpacity>
 
@@ -218,7 +218,7 @@ const RegisterOrSignIn = ({ navigation }) => {
                     <Portal>
                         <Dialog visible={visible} onDismiss={hideDialog}>
                             <Text style={{
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 alignSelf: "center",
                                 marginTop: H * 0.04,
                                 marginBottom: H * 0.02
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         // marginVertical: '11%',
         color: 'white',
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
 
     },
     textSignIn:
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
         //marginVertical: '11%',
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
 
     },
     linearGradient:

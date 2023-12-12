@@ -913,7 +913,7 @@ export default function PsychologyQuestions({ navigation }) {
                     paddingBottom: H * 0.03,
                     width: W
                 }}>
-                    <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold }}>{strings.TotalScore} {first + second + third + fourth + fifth + sixth + seventh + eighth + ninth} /27</Text>
+                    <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold }}>{strings.TotalScore} {first + second + third + fourth + fifth + sixth + seventh + eighth + ninth} /27</Text>
                     <TouchableOpacity
                         onPress={() => {
                             submitPsychology()
@@ -930,7 +930,7 @@ export default function PsychologyQuestions({ navigation }) {
                     >
                         <Text style={{
                             color: "white",
-                            fontFamily: fontFamily.bold
+                            ...fontFamily.bold
                         }}>{strings.Submit}</Text>
                     </TouchableOpacity>
                 </View>
@@ -941,12 +941,12 @@ export default function PsychologyQuestions({ navigation }) {
 const styles = StyleSheet.create({
     text1:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         color: "white"
     },
     questionText:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         color: colors.FONT_BLACK,
         fontSize: fontSizes.XL,
         marginBottom: H * 0.01,
@@ -976,7 +976,7 @@ const styles = StyleSheet.create({
     {
         color: colors.FONT_BLACK,
         marginTop: H * 0.04,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         fontSize: fontSizes.XL,
     }
 

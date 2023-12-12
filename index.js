@@ -11,7 +11,6 @@ import { displayNotification } from './src/assets/components/NotificationService
 import { storeDataInLocalStorage } from './src/local storage/LocalStorage';
 import { Text } from 'react-native-paper';
 
-
 if (Platform.OS == "ios") {
     firebase.initializeApp()
 

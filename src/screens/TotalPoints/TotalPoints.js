@@ -364,7 +364,7 @@ const TotalPoints = () => {
                                 elevation: 8
                             }}>
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     top: -H * 0.06,
                                     left: W * 0.05,
                                     fontSize: fontSizes.XXL
@@ -384,7 +384,7 @@ const TotalPoints = () => {
                                         }}>
                                             <AntDesign name="camera" size={50} color={"silver"} />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 fontSize: fontSizes.MED
                                             }}>Camera</Text>
                                         </View>
@@ -397,7 +397,7 @@ const TotalPoints = () => {
                                         }}>
                                             <AntDesign name="picture" size={50} color={"silver"} />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 fontSize: fontSizes.MED
                                             }}>Gallery</Text>
                                         </View>
@@ -407,7 +407,7 @@ const TotalPoints = () => {
                                 >
                                     <Text style={{
                                         textAlign: "right",
-                                        fontFamily: fontFamily.bold,
+                                        ...fontFamily.bold,
                                         color: "red",
                                         top: H * 0.055,
                                         left: -W * 0.06
@@ -425,7 +425,7 @@ const TotalPoints = () => {
                             keyExtractor={(item, index) => `${index}`} />
                     </View>
                     <Text style={{
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         alignSelf: "center",
                         fontSize: fontSizes.SM,
                         marginTop: H * 0.02,

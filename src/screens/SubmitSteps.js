@@ -182,7 +182,7 @@ const SubmitSteps = () => {
                     <View style={styles.ApiDataText}>
                         {/* {attributeShow(data)} */}
                         <Text style={{
-                            textAlign: "center", fontFamily: fontFamily.bold,
+                            textAlign: "center", ...fontFamily.bold,
                             fontSize: fontSizes.XL
                         }}>1.5k</Text>
                     </View>

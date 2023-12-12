@@ -150,7 +150,7 @@ const GroceryList = () => {
                         }}>
 
                             <Text style={{
-                                fontFamily: fontFamily.bold
+                                ...fontFamily.bold
                             }}>Add Groceries</Text>
                             <TextInput
                                 multiline
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     },
     text1:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         //alignSelf: "center",
         marginTop: H * 0.045,
         marginBottom: H * 0.045,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     },
     text2:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         alignSelf: "center",
         // marginTop: H * 0.02,
         fontSize: fontSizes.XL,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     addText:
 
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         alignSelf: "center",
         //marginTop: H * 0.08,
         fontSize: fontSizes.XL,

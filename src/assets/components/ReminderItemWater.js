@@ -150,7 +150,7 @@ const ReminderItemWater = ({ date, reminder, remindersection, time, checked, onC
                         }}
                         style={{
                             left: W * 0.75, position: 'absolute',
-                            fontFamily: fontFamily.bold, top: 0
+                            ...fontFamily.bold, top: 0
                         }}>
 
 

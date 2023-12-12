@@ -100,7 +100,7 @@ const CustomerSupport = ({ navigation }) => {
           <Text
             style={{
               textAlign: 'center',
-              fontFamily: fontFamily.bold,
+              ...fontFamily.bold,
               fontSize: fontSizes.LAR,
               color: 'black',
               marginVertical: H * 0.05,
@@ -170,7 +170,7 @@ const CustomerSupport = ({ navigation }) => {
         <Text
           style={{
             textAlign: 'center',
-            fontFamily: fontFamily.bold,
+            ...fontFamily.bold,
             fontSize: fontSizes.LAR,
             color: 'black',
             marginVertical: H * 0.05,
@@ -233,7 +233,7 @@ const CustomerSupport = ({ navigation }) => {
           <Text
             style={{
               textAlign: 'center',
-              fontFamily: fontFamily.bold,
+              ...fontFamily.bold,
               fontSize: fontSizes.LAR,
               color: 'black',
               marginVertical: H * 0.05,
@@ -335,7 +335,7 @@ const CustomerSupport = ({ navigation }) => {
             <Appbar.Content style={{ alignItems: "center", }}
               title={<Text style={{
                 color: "white", textAlign: "center", fontSize: fontSizes.XL,
-                fontFamily: "Montserrat-SemiBold"
+                ...fontFamily.bold
               }}>{strings.CustomerSupport}</Text>} />
           </Appbar.Header>
         </View>

@@ -1880,7 +1880,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                 }} title={<Text style={{
                     color: "white",
                     fontSize: fontSizes.XL,
-                    fontFamily: "Montserrat-SemiBold"
+                    ...fontFamily.bold
                 }}>Edit Profiling</Text>} />
             </Appbar.Header>
 
@@ -1919,7 +1919,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             }}
                             >
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     paddingBottom: H * 0.04,
                                 }}>
@@ -1947,7 +1947,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                         setShowCustomAnswerModal(false)
                                     }}>
                                         <Text style={{
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: colors.GREEN,
                                             fontSize: fontSizes.XL,
                                             paddingTop: H * 0.028,
@@ -1961,7 +1961,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                     }}
                                     >
                                         <Text style={{
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: "red",
                                             fontSize: fontSizes.XL,
                                             paddingTop: H * 0.028,
@@ -2032,7 +2032,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             {/* <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     width: W,
                                     textAlign: "center",
@@ -2050,7 +2050,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     width: W * 0.9,
                                     textAlign: "center",
                                     alignSelf: "center",
@@ -2063,7 +2063,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                 At LNF, we call our nutritionists
                                 <Text style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     width: W * 0.9,
                                     textAlign: "center",
                                     alignSelf: "center",
@@ -2091,7 +2091,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                 }}>
                                 <Text style={{
                                     color: "white",
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL
                                 }}>Next</Text>
                             </TouchableOpacity>
@@ -2139,7 +2139,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             {/* <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XXL,
                                     width: W * 0.9,
                                     textAlign: "left",
@@ -2167,7 +2167,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                 }}>
                                 <Text style={{
                                     color: "white",
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL
                                 }}>Next</Text>
                             </TouchableOpacity>
@@ -2211,7 +2211,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             {/* <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XXL,
                                     width: W * 0.96,
                                     textAlign: "center",
@@ -2226,7 +2226,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XXL,
                                     width: W * 0.96,
                                     textAlign: "center",
@@ -2243,7 +2243,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     width: W * 0.96,
                                     textAlign: "center",
                                     alignSelf: "center",
@@ -2272,7 +2272,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                 }}>
                                 <Text style={{
                                     color: "white",
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL
                                 }}>Next</Text>
                             </TouchableOpacity>
@@ -2304,7 +2304,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                 {/* <Text
                                     style={{
                                         color: colors.FONT_BLACK,
-                                        fontFamily: fontFamily.bold,
+                                        ...fontFamily.bold,
                                         width: W * 0.85,
                                         textAlign: "center",
                                         paddingVertical: H * 0.02,
@@ -2345,7 +2345,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                     {/* <Text
                                         style={{
                                             color: colors.FONT_BLACK,
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             width: W * 0.75,
                                             textAlign: "left",
                                             paddingVertical: H * 0.03,
@@ -2367,7 +2367,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                         <Text
                                             style={{
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 width: W * 0.65,
                                                 textAlign: "left",
                                                 paddingTop: H * 0.02,
@@ -2384,7 +2384,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                         <Text
                                             style={{
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 width: W * 0.75,
                                                 //textAlign: "left",
                                                 paddingBottom: H * 0.02,
@@ -2398,7 +2398,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                     <Text
                                         style={{
                                             color: colors.FONT_BLACK,
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             width: W * 0.75,
                                             textAlign: "left"
                                         }}>
@@ -2424,7 +2424,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                 }}>
                                 <Text style={{
                                     color: "white",
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL
                                 }}>Next</Text>
                             </TouchableOpacity>
@@ -2483,7 +2483,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             {/* <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     width: W * 0.96,
                                     textAlign: "center",
                                     alignSelf: "center",
@@ -2511,7 +2511,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             }}>
                             <Text style={{
                                 color: "white",
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 fontSize: fontSizes.XL
                             }}>Next</Text>
                         </TouchableOpacity>
@@ -2570,7 +2570,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             {/* <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     width: W * 0.96,
                                     textAlign: "center",
@@ -2595,7 +2595,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             {/* <Text
                                 style={{
                                     color: colors.FONT_BLACK,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     width: W * 0.96,
                                     textAlign: "center",
                                     alignSelf: "center",
@@ -2624,7 +2624,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                 }}>
                                 <Text style={{
                                     color: "white",
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL
                                 }}>Next</Text>
                             </TouchableOpacity>
@@ -2698,7 +2698,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -2718,7 +2718,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -2766,7 +2766,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 marginRight: W * 0.03,
                                             }}>Ft</Text>
                                             <TextInput
@@ -2799,7 +2799,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>In</Text>
                                         </View>
@@ -2819,7 +2819,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -2866,7 +2866,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -2874,7 +2874,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.LIGHT_GREEN,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -2887,7 +2887,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} />
                                                         </>
@@ -2915,7 +2915,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -2962,7 +2962,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -2970,7 +2970,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.LIGHT_GREEN,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -2983,7 +2983,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} />
                                                         </>
@@ -3011,7 +3011,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3061,7 +3061,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Years</Text>
                                         </View>
@@ -3082,7 +3082,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3139,7 +3139,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text
 
                                                 style={{
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
 
                                                 }}></Text>
                                         </View>
@@ -3160,7 +3160,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3216,7 +3216,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
 
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -3224,7 +3224,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.LIGHT_GREEN,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -3237,7 +3237,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            {/* <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            {/* <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} /> */}
                                                         </>
@@ -3265,7 +3265,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3318,7 +3318,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -3326,7 +3326,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.LIGHT_GREEN,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -3339,7 +3339,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            {/* <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            {/* <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} /> */}
                                                         </>
@@ -3367,7 +3367,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3421,7 +3421,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}></Text>
                                         </View>
@@ -3442,7 +3442,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3495,7 +3495,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}></Text>
                                         </View>
@@ -3516,7 +3516,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3571,7 +3571,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}></Text>
                                         </View>
@@ -3592,7 +3592,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3646,7 +3646,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}></Text>
                                         </View>
@@ -3667,7 +3667,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3725,7 +3725,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 }}
                                             />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
 
                                             }}>Kgs</Text>
                                         </View>
@@ -3733,7 +3733,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <>
                                                 <Text
                                                     style={{
-                                                        fontFamily: fontFamily.bold,
+                                                        ...fontFamily.bold,
                                                         backgroundColor: colors.white,
                                                         paddingVertical: H * 0.03,
                                                         paddingHorizontal: W * 0.05,
@@ -3746,7 +3746,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                         alignItems: "center"
                                                     }}>{shouldGoBackToTargetWeight ?
                                                         <>
-                                                            {/* <Text style={{ fontFamily: fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
+                                                            {/* <Text style={{ ...fontFamily.bold, color: "red" }}>{`\nRecommended : ${((Math.round(((ht * ht * 18.5) / 10000) * 100) / 100) + 1).toFixed(0)} Kg to ${((Math.round(((ht * ht * 36) / 10000) * 100) / 100) - 1).toFixed(0)} Kg`}</Text> <MaterialIcons name="error-outline" size={16} color="red" style={{
                                                                 alignSelf: "center", marginTop: H * 0.01, marginHorizontal: W * 0.06
                                                             }} /> */}
                                                         </>
@@ -3775,7 +3775,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                             <Text style={{
                                                 fontSize: fontSizes.XXL,
                                                 color: "white",
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingVertical: H * 0.02,
                                             }}>Next</Text>
                                         </TouchableOpacity>
@@ -3821,7 +3821,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                                                 <Text style={{
                                                     fontSize: fontSizes.XXL,
                                                     color: "white",
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
                                                     paddingVertical: H * 0.02,
                                                 }}>Next</Text>
                                             </TouchableOpacity>
@@ -3861,7 +3861,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                             <Text style={{
                                 fontSize: fontSizes.XXL,
                                 color: "white",
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 paddingVertical: H * 0.02,
                             }}>
                                 Next
@@ -3912,7 +3912,7 @@ const styles = StyleSheet.create({
     },
     textStyle:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         textAlign: 'center',
     },
     answerOptionsButtonStyle:

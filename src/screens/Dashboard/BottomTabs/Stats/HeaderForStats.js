@@ -39,7 +39,7 @@ const HeaderForStats = (props) => {
                         <Image source={require('../../../../assets/icons/LNF.png')}
                             style={{ height: 20, width: 90, alignSelf: "center" }} />
                     </TouchableOpacity>
-                    <Text style={{ textAlign: "center", fontFamily: fontFamily.bold, marginTop: H * 0.005 }}>Hello, {props.Name}</Text>
+                    <Text style={{ textAlign: "center", ...fontFamily.bold, marginTop: H * 0.005 }}>Hello, {props.Name}</Text>
                 </View>
                 <TouchableOpacity onPress={() => { navigation.navigate("Total Points") }}
                     style={{

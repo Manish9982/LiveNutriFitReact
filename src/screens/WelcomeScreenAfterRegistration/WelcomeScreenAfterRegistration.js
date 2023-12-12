@@ -82,7 +82,7 @@ export default function WelcomeScreenAfterRegistration({ navigation }) {
                 paddingTop: H * 0.28
             }}>
                 {/* <Text style={{
-                    fontFamily: "Montserrat-SemiBold",
+                    ...fontFamily.bold,
                     fontSize: H * 0.043,
                     marginBottom: H * 0.0,
                     marginTop: H * 0.12,
@@ -95,7 +95,7 @@ export default function WelcomeScreenAfterRegistration({ navigation }) {
                     marginTop: H * 0.02,
                     top: H * 0.05,
                     textAlign: "center",
-                    fontFamily: fontFamily.bold,
+                    ...fontFamily.bold,
                     lineHeight: H * 0.03
                 }}> Make real
                     change in your health from the inside out.</Text> */}
@@ -117,7 +117,7 @@ export default function WelcomeScreenAfterRegistration({ navigation }) {
                         textAlign: "center",
                         color: colors.FONT_BLACK,
                         // textDecorationLine: "underline",
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         marginTop: H * 0.01
                     }}
                     >{strings.letsGo}</Text>

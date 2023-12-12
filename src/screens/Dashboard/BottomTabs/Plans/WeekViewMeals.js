@@ -33,7 +33,7 @@ const WeekViewMeals = (props) => {
 
         }}>
             <Text style={{
-                fontFamily: fontFamily.bold,
+                ...fontFamily.bold,
                 fontSize: fontSizes.XXL,
                 marginTop: H * 0.01
             }}>{props.day}, {(props.date).replace(",", " ")} </Text>

@@ -129,7 +129,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -146,14 +146,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item?.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         // marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item?.discount_type}</Text>
 
                                 </View>
@@ -198,7 +198,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 5,
                                             marginLeft: W * 0.1,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>₹</Text>
                                     </TouchableOpacity>
 
@@ -210,7 +210,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         <Text style={{
                                             color: 'black',
                                             fontSize: fontSizes.XXXL,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -233,7 +233,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -250,14 +250,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount_type}</Text>
 
                                 </View>
@@ -299,7 +299,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
 
                                     }}>₹</Text>
                                     <Text style={{
@@ -309,7 +309,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.cutprice}</Text>
 
                                     <TouchableOpacity
@@ -322,7 +322,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             color: 'black',
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 5,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>₹</Text>
                                     </TouchableOpacity>
 
@@ -334,7 +334,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         <Text style={{
                                             color: 'black',
                                             fontSize: fontSizes.XXXL,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -362,7 +362,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -379,14 +379,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item?.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         // marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item?.discount_type}</Text>
 
                                 </View>
@@ -431,7 +431,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 5,
                                             marginLeft: W * 0.1,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>$</Text>
                                     </TouchableOpacity>
 
@@ -443,7 +443,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         <Text style={{
                                             color: 'black',
                                             fontSize: fontSizes.XXXL,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -466,7 +466,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -483,14 +483,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount_type}</Text>
 
                                 </View>
@@ -532,7 +532,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
 
                                     }}>$</Text>
                                     <Text style={{
@@ -542,7 +542,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.cutprice}</Text>
 
                                     <TouchableOpacity
@@ -555,7 +555,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             color: 'black',
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 5,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>$</Text>
                                     </TouchableOpacity>
 
@@ -567,7 +567,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         <Text style={{
                                             color: 'black',
                                             fontSize: fontSizes.XXXL,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -600,7 +600,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                 padding: 10,
                             }}>
                             <Text style={{
-                                fontFamily: "Montserrat-SemiBold",
+                                ...fontFamily.bold,
                                 color: "black",
                                 marginLeft: W * 0.01,
                                 fontSize: fontSizes.LAR,
@@ -617,14 +617,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     marginTop: H * 0.005,
 
                                     color: "red",
-                                    fontFamily: fontFamily.bold
+                                    ...fontFamily.bold
                                 }}>{item.discount}</Text>
                                 <Text style={{
                                     fontSize: fontSizes.SM,
                                     marginTop: H * 0.005,
                                     // marginLeft: W * 0.01,
                                     color: "red",
-                                    fontFamily: fontFamily.bold
+                                    ...fontFamily.bold
                                 }}>{item.discount_type}</Text>
 
                             </View>
@@ -669,7 +669,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         fontSize: fontSizes.LAR,
                                         marginBottom: 5,
                                         marginLeft: W * 0.1,
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>₹</Text>
                                 </TouchableOpacity>
 
@@ -681,7 +681,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     <Text style={{
                                         color: 'black',
                                         fontSize: fontSizes.XXXL,
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.permonth}</Text>
                                 </TouchableOpacity>
 
@@ -701,7 +701,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                 padding: 10,
                             }}>
                             <Text style={{
-                                fontFamily: "Montserrat-SemiBold",
+                                ...fontFamily.bold,
                                 color: "black",
                                 marginLeft: W * 0.01,
                                 fontSize: fontSizes.LAR,
@@ -718,14 +718,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     marginTop: H * 0.005,
 
                                     color: "red",
-                                    fontFamily: fontFamily.bold
+                                    ...fontFamily.bold
                                 }}>{item.discount}</Text>
                                 <Text style={{
                                     fontSize: fontSizes.SM,
                                     marginTop: H * 0.005,
                                     // marginLeft: W * 0.01,
                                     color: "red",
-                                    fontFamily: fontFamily.bold
+                                    ...fontFamily.bold
                                 }}>{item.discount_type}</Text>
 
                             </View>
@@ -767,7 +767,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     textDecorationLine: 'line-through',
                                     textDecorationStyle: 'solid',
                                     textDecorationColor: "red",
-                                    fontFamily: "Montserrat-SemiBold"
+                                    ...fontFamily.bold
 
                                 }}>₹</Text>
                                 <Text style={{
@@ -777,7 +777,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     textDecorationLine: 'line-through',
                                     textDecorationStyle: 'solid',
                                     textDecorationColor: "red",
-                                    fontFamily: "Montserrat-SemiBold"
+                                    ...fontFamily.bold
                                 }}>{item.cutprice}</Text>
 
                                 <TouchableOpacity
@@ -790,7 +790,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         color: 'black',
                                         fontSize: fontSizes.LAR,
                                         marginBottom: 5,
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>₹</Text>
                                 </TouchableOpacity>
 
@@ -802,7 +802,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     <Text style={{
                                         color: 'black',
                                         fontSize: fontSizes.XXL,
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.permonth}</Text>
                                 </TouchableOpacity>
 
@@ -825,7 +825,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -842,14 +842,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         // marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount_type}</Text>
 
                                 </View>
@@ -894,7 +894,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 5,
                                             marginLeft: W * 0.1,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>₹</Text>
                                     </TouchableOpacity>
 
@@ -906,7 +906,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         <Text style={{
                                             color: 'black',
                                             fontSize: fontSizes.XXXL,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -926,7 +926,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -943,14 +943,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         // marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount_type}</Text>
 
                                 </View>
@@ -992,7 +992,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
 
                                     }}>₹</Text>
                                     <Text style={{
@@ -1002,7 +1002,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.cutprice}</Text>
 
                                     <TouchableOpacity
@@ -1015,7 +1015,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             color: 'black',
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 5,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>$</Text>
                                     </TouchableOpacity>
 
@@ -1027,7 +1027,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         <Text style={{
                                             color: 'black',
                                             fontSize: fontSizes.XXL,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -1057,7 +1057,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                 padding: 10,
                             }}>
                             <Text style={{
-                                fontFamily: "Montserrat-SemiBold",
+                                ...fontFamily.bold,
                                 color: "black",
                                 marginLeft: W * 0.01,
                                 fontSize: fontSizes.LAR,
@@ -1074,14 +1074,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     marginTop: H * 0.005,
 
                                     color: "red",
-                                    fontFamily: fontFamily.bold
+                                    ...fontFamily.bold
                                 }}>{item.discount}</Text>
                                 <Text style={{
                                     fontSize: fontSizes.SM,
                                     marginTop: H * 0.005,
                                     // marginLeft: W * 0.01,
                                     color: "red",
-                                    fontFamily: fontFamily.bold
+                                    ...fontFamily.bold
                                 }}>{item.discount_type}</Text>
 
                             </View>
@@ -1126,7 +1126,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         fontSize: fontSizes.LAR,
                                         marginBottom: 5,
                                         marginLeft: W * 0.1,
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>$</Text>
                                 </TouchableOpacity>
 
@@ -1138,7 +1138,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     <Text style={{
                                         color: 'black',
                                         fontSize: fontSizes.XXXL,
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.permonth}</Text>
                                 </TouchableOpacity>
 
@@ -1161,7 +1161,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                 padding: 10,
                             }}>
                             <Text style={{
-                                fontFamily: "Montserrat-SemiBold",
+                                ...fontFamily.bold,
                                 color: "black",
                                 marginLeft: W * 0.01,
                                 fontSize: fontSizes.LAR,
@@ -1178,14 +1178,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     marginTop: H * 0.005,
 
                                     color: "red",
-                                    fontFamily: fontFamily.bold
+                                    ...fontFamily.bold
                                 }}>{item.discount}</Text>
                                 <Text style={{
                                     fontSize: fontSizes.SM,
                                     marginTop: H * 0.005,
                                     //  marginLeft: W * 0.01,
                                     color: "red",
-                                    fontFamily: fontFamily.bold
+                                    ...fontFamily.bold
                                 }}>{item.discount_type}</Text>
 
                             </View>
@@ -1227,7 +1227,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     textDecorationLine: 'line-through',
                                     textDecorationStyle: 'solid',
                                     textDecorationColor: "red",
-                                    fontFamily: "Montserrat-SemiBold"
+                                    ...fontFamily.bold
 
                                 }}>$</Text>
                                 <Text style={{
@@ -1237,7 +1237,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     textDecorationLine: 'line-through',
                                     textDecorationStyle: 'solid',
                                     textDecorationColor: "red",
-                                    fontFamily: "Montserrat-SemiBold"
+                                    ...fontFamily.bold
                                 }}>{item.cutprice}</Text>
 
                                 <TouchableOpacity
@@ -1250,7 +1250,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         color: 'black',
                                         fontSize: fontSizes.LAR,
                                         marginBottom: 5,
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>₹</Text>
                                 </TouchableOpacity>
 
@@ -1262,7 +1262,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     <Text style={{
                                         color: 'black',
                                         fontSize: fontSizes.XXL,
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.permonth}</Text>
                                 </TouchableOpacity>
 
@@ -1294,7 +1294,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -1311,14 +1311,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         // marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount_type}</Text>
 
                                 </View>
@@ -1363,7 +1363,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 15,
                                             marginLeft: W * 0.1,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>₹</Text>
                                     </TouchableOpacity>
 
@@ -1377,7 +1377,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             fontSize: fontSizes.XXXL,
                                             marginBottom: 10,
 
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -1405,7 +1405,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -1422,14 +1422,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         // marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount_type}</Text>
 
                                 </View>
@@ -1472,7 +1472,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
 
                                     }}>₹</Text>
                                     <Text style={{
@@ -1482,7 +1482,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.cutprice}</Text>
 
                                     <TouchableOpacity
@@ -1496,7 +1496,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             color: 'black',
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 5,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>₹</Text>
                                     </TouchableOpacity>
 
@@ -1509,7 +1509,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         <Text style={{
                                             color: 'black',
                                             fontSize: fontSizes.XXXL,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -1548,7 +1548,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -1565,14 +1565,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         // marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount_type}</Text>
 
                                 </View>
@@ -1619,7 +1619,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 15,
                                             marginLeft: W * 0.1,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>$</Text>
 
 
@@ -1635,7 +1635,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             fontSize: fontSizes.XXXL,
                                             marginBottom: 10,
 
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -1661,7 +1661,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                     padding: 10,
                                 }}>
                                 <Text style={{
-                                    fontFamily: "Montserrat-SemiBold",
+                                    ...fontFamily.bold,
                                     color: "black",
                                     marginLeft: W * 0.01,
                                     fontSize: fontSizes.LAR,
@@ -1678,14 +1678,14 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         marginTop: H * 0.005,
 
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount}</Text>
                                     <Text style={{
                                         fontSize: fontSizes.SM,
                                         marginTop: H * 0.005,
                                         // marginLeft: W * 0.01,
                                         color: "red",
-                                        fontFamily: fontFamily.bold
+                                        ...fontFamily.bold
                                     }}>{item.discount_type}</Text>
 
                                 </View>
@@ -1728,7 +1728,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
 
                                     }}>$</Text>
                                     <Text style={{
@@ -1738,7 +1738,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         textDecorationLine: 'line-through',
                                         textDecorationStyle: 'solid',
                                         textDecorationColor: "red",
-                                        fontFamily: "Montserrat-SemiBold"
+                                        ...fontFamily.bold
                                     }}>{item.cutprice}</Text>
 
                                     <TouchableOpacity
@@ -1752,7 +1752,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                             color: 'black',
                                             fontSize: fontSizes.LAR,
                                             marginBottom: 5,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>$</Text>
                                     </TouchableOpacity>
 
@@ -1765,7 +1765,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                         <Text style={{
                                             color: 'black',
                                             fontSize: fontSizes.XXXL,
-                                            fontFamily: "Montserrat-SemiBold"
+                                            ...fontFamily.bold
                                         }}>{item.permonth}</Text>
                                     </TouchableOpacity>
 
@@ -1825,7 +1825,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                 }} title={<Text style={{
                                     color: "white",
                                     fontSize: fontSizes.XXL,
-                                    fontFamily: "Montserrat-SemiBold"
+                                    ...fontFamily.bold
                                 }}>{strings.ElitePlan}</Text>} />
                             </Appbar.Header>
 
@@ -1869,7 +1869,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                             title={<Text style={{
                                 color: "white",
                                 fontSize: fontSizes.XXL,
-                                fontFamily: "Montserrat-SemiBold"
+                                ...fontFamily.bold
                             }}>{strings.ElitePlan}</Text>}
                             >
                             </Appbar.Content>

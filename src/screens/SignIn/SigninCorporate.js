@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontSize: fontSizes.LAR,
-        fontFamily: fontFamily.bold
+        ...fontFamily.bold
     },
     greeting:
     {
@@ -515,7 +515,7 @@ const styles = StyleSheet.create({
     {
         color: colors.FONT_BLACK,
         padding: 10,
-        fontFamily: fontFamily.bold
+        ...fontFamily.bold
 
     },
 

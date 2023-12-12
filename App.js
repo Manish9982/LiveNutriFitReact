@@ -91,12 +91,12 @@ const App = () => {
   //const { Nmessages } = useContext(DataContext)
   //const [messages, setMessages] = Nmessages
 
-  useEffect(() => {
-    requestUserPermission()
-    getFcmToken()
-   // NotificationListener()
-    checkNotificationPermission()
-  }, [])
+  // useEffect(() => {
+  //   requestUserPermission()
+  //   getFcmToken()
+  //  // NotificationListener()
+  //   checkNotificationPermission()
+  // }, [])
 
 
   return (

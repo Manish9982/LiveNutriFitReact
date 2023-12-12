@@ -232,7 +232,7 @@ const SliderIntro = ({ navigation }) => {
                         <>
                            
                             <Text style={{
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 color: colors.FONT_BLACK,
                                 //textAlign: "center",
                                 width: W * 0.7,
@@ -244,7 +244,7 @@ const SliderIntro = ({ navigation }) => {
                             }}> <AntDesign name="checkcircle" size={20} color={"green"} /> {strings.NoCalorieCounting}
                             </Text>
                             <Text style={{
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 color: colors.FONT_BLACK,
                                 //textAlign: "center",
                                 width: W * 0.7,
@@ -256,7 +256,7 @@ const SliderIntro = ({ navigation }) => {
                             }}> <AntDesign name="checkcircle" size={20} color={"green"} /> {strings.NoFillingFoodLogs}
                             </Text>
                             <Text style={{
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 color: colors.FONT_BLACK,
                                 //textAlign: "center",
                                 width: W * 0.7,
@@ -269,7 +269,7 @@ const SliderIntro = ({ navigation }) => {
                             </Text>
                             
                             <Text style={{
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 color: colors.FONT_BLACK,
                                 //textAlign: "center",
                                 width: W * 0.7,
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
         marginTop: H * 0.3,
         lineHeight: H * 0.043,
         marginLeft: W * 0.06,
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         alignSelf: "center"
     },
     nextButton:
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     text2:
     {
         textDecorationLine: "underline",
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         position: "absolute",
         textAlign: "center",
         fontSize: fontSizes.XXL,
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
         width: W * 0.8,
         lineHeight: H * 0.03,
         color: colors.FONT_BLACK,
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         textAlign: "center"
     },
     getStartedButton:
@@ -446,14 +446,14 @@ const styles = StyleSheet.create({
     textOfPros:
     {
         color: colors.FONT_BLACK,
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         width: W * 0.75,
         fontSize: fontSizes.XL,
         lineHeight: H * 0.026
     },
     websiteFonts:
     {
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         position: "absolute",
         top: H * 0.65,
         left: W * 0.1,

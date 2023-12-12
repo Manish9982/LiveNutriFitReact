@@ -284,7 +284,7 @@ const Reports = ({ navigation }) => {
 
                 <View>
                     <Text style={{
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         fontSize: fontSizes.XL,
                         width: W * 0.6
                     }}>
@@ -504,7 +504,7 @@ const Reports = ({ navigation }) => {
                                 elevation: 8
                             }}>
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     // top: -H * 0.06,
                                     //left: W * 0.05,
                                     fontSize: fontSizes.XXL,
@@ -567,7 +567,7 @@ const Reports = ({ navigation }) => {
 
                                         <Text style={{
                                             textAlign: "right",
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: colors.GREEN,
                                             // top: H * 0.055,
                                             // left: -W * 0.06
@@ -577,7 +577,7 @@ const Reports = ({ navigation }) => {
 
                                         <Text style={{
                                             textAlign: "right",
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: "red",
                                             // top: H * 0.055,
                                             //left: -W * 0.06
@@ -610,7 +610,7 @@ const Reports = ({ navigation }) => {
                                 elevation: 8
                             }}>
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     // top: -H * 0.06,
                                     //left: W * 0.05,
                                     fontSize: fontSizes.XXL,
@@ -669,7 +669,7 @@ const Reports = ({ navigation }) => {
 
                                         <Text style={{
                                             textAlign: "right",
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: colors.GREEN,
                                             // top: H * 0.055,
                                             // left: -W * 0.06
@@ -685,7 +685,7 @@ const Reports = ({ navigation }) => {
 
                                         <Text style={{
                                             textAlign: "right",
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: "red",
                                             // top: H * 0.055,
                                             //left: -W * 0.06
@@ -717,7 +717,7 @@ const Reports = ({ navigation }) => {
                                 elevation: 8
                             }}>
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     top: -H * 0.06,
                                     left: W * 0.05,
                                     fontSize: fontSizes.XXL
@@ -741,7 +741,7 @@ const Reports = ({ navigation }) => {
                                         }}>
                                             <AntDesign name="camera" size={50} color={"silver"} />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 fontSize: fontSizes.MED
                                             }}>{strings.OpenCamera}</Text>
                                         </View>
@@ -756,7 +756,7 @@ const Reports = ({ navigation }) => {
                                         }}>
                                             <AntDesign name="file1" size={50} color={"silver"} />
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 fontSize: fontSizes.MED
                                             }}>{strings.AddReportLinks}</Text>
                                         </View>
@@ -766,7 +766,7 @@ const Reports = ({ navigation }) => {
                                 >
                                     <Text style={{
                                         textAlign: "right",
-                                        fontFamily: fontFamily.bold,
+                                        ...fontFamily.bold,
                                         color: "red",
                                         top: H * 0.055,
                                         left: -W * 0.06
@@ -803,7 +803,7 @@ const Reports = ({ navigation }) => {
                         borderRadius: 8
                     }}>
                         {!flag ? <Text style={{
-                            fontFamily: fontFamily.bold,
+                            ...fontFamily.bold,
                             alignSelf: "center",
                             marginTop: H * 0.3
                         }}>{strings.YourReportsWillBeVisibleHere}</Text> : null}

@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     },
     textStyle:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         textAlign: 'center',
     },
     answerOptionsButtonStyle:

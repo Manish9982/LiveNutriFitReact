@@ -290,7 +290,7 @@ export default function PlanChoosePromptAtStartup({ navigation }) {
                 {/* <Dialog visible={visible} onDismiss={hideDialog}>
                     <Text style={{
                         alignSelf: "center",
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         marginVertical: H * 0.04
                     }}>Enter Your Upgrade Code Here:</Text>
                     <TextInput
@@ -330,7 +330,7 @@ export default function PlanChoosePromptAtStartup({ navigation }) {
                     marginTop: H * 0.05,
                     alignSelf: "flex-end",
                     color: colors.FONT_BLACK,
-                    fontFamily: fontFamily.bold
+                    ...fontFamily.bold
                 }}>{strings.Skipfornow} {'>>'}</Text>
 
             </TouchableOpacity>
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
         left: W * 0.12,
         textShadowColor: "black",
         textShadowRadius: 10,
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
     },
     textExplore:
     {
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
     },
     text2:
     {
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         fontSize: fontSizes.XXXL,
         color: "black",
         marginTop: H * 0.1,

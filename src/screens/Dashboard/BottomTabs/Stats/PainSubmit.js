@@ -178,7 +178,7 @@ const PainSubmit = ({ navigation, route }) => {
           }}
           >
             <Text style={{
-              fontFamily: fontFamily.bold,
+              ...fontFamily.bold,
               fontSize: fontSizes.XXL,
               paddingBottom: H * 0.02,
 
@@ -199,7 +199,7 @@ const PainSubmit = ({ navigation, route }) => {
                 navigation.navigate("BootSplash")
               }}>
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   color: colors.GREEN,
                   fontSize: fontSizes.XL,
                   paddingTop: H * 0.028,
@@ -212,7 +212,7 @@ const PainSubmit = ({ navigation, route }) => {
                 navigation.navigate("BootSplash")
               }}>
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   color: "red",
                   fontSize: fontSizes.XL,
                   paddingTop: H * 0.028,
@@ -230,7 +230,7 @@ const PainSubmit = ({ navigation, route }) => {
       <ScrollView contentContainerStyle={{ height: keyboardStatus ? H * 1.4 : H }}>
         <Text style={{
           textAlign: 'center',
-          fontFamily: fontFamily.bold,
+          ...fontFamily.bold,
           color: painColor,
           fontSize: fontSizes.greeting,
           marginVertical: H * 0.1
@@ -246,7 +246,7 @@ const PainSubmit = ({ navigation, route }) => {
         keyboardType="number-pad"
         maximumValue={10}
       />*/}
-        <Text style={{ textAlign: 'center', fontFamily: fontFamily.bold }}>{strings.RatingScale}</Text>
+        <Text style={{ textAlign: 'center', ...fontFamily.bold }}>{strings.RatingScale}</Text>
         <View style={{ flexDirection: 'row', justifyContent: "space-evenly", top: H * 0.04 }}>
           <Text style={{ color: "green" }}>{strings.None}</Text>
           <Text style={{ color: colors.MEDAL_GOLD }}>{strings.Mild}</Text>
@@ -276,7 +276,7 @@ const PainSubmit = ({ navigation, route }) => {
                 <Text style={{
                   alignSelf: "center",
                   marginTop: H * 0.05,
-                  fontFamily: fontFamily.bold
+                  ...fontFamily.bold
                 }}>
                   {strings.Enterreson}
                 </Text>

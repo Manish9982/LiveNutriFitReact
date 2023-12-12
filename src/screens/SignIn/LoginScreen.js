@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation, route }) => {
 
                     <Text style={{
                         fontSize: fontSizes.XXL,
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         alignSelf: 'center',
                         marginVertical: H * 0.03
                     }}>Welcome to BabySits</Text>
@@ -76,7 +76,7 @@ const LoginScreen = ({ navigation, route }) => {
                         <Text style={{
                             padding: 5,
                             fontSize: fontSizes.XL,
-                            fontFamily: fontFamily.bold,
+                            ...fontFamily.bold,
                             marginTop: 10,
 
                             alignItems: 'flex-start'
@@ -117,7 +117,7 @@ const LoginScreen = ({ navigation, route }) => {
                                     textAlign: 'center',
                                     color: 'white',
                                     fontSize: fontSizes.LAR,
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                 }}>Continue</Text>
                             </TouchableOpacity>
 
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontSize: fontSizes.LAR,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         backgroundColor: "#1e81b0"
     },
     greeting:
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     {
         color: colors.FONT_BLACK,
         padding: 10,
-        fontFamily: fontFamily.bold
+        ...fontFamily.bold
 
     },
 

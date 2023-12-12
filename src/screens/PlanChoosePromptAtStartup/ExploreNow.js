@@ -18,7 +18,7 @@ export default function ExploreNow({ navigation }) {
 
                 <Text style={{
                     fontSize:fontSizes.XL,
-                    fontFamily: fontFamily.bold,
+                    ...fontFamily.bold,
                     color:colors.FONT_BLACK
                 }}>Coming Soon..</Text>
             </View>

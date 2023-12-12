@@ -160,14 +160,14 @@ const UpgradeStack = ({ navigation }) => {
                     {/* <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} /> */}
                     <Appbar.Content style={{ alignItems: "center", 
                     //marginRight: W * 0.125
-                     }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, fontFamily: "Montserrat-SemiBold" }}>{strings.UpgradePlan}</Text>} />
+                     }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.UpgradePlan}</Text>} />
                 </Appbar.Header>
             </View>
             <Portal>
                 <Dialog visible={visible} onDismiss={hideDialog}>
                     <Text style={{
                         alignSelf: "center",
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         marginVertical: H * 0.04
                     }}>Enter Your Upgrade Code x:</Text>
                     <TextInput

@@ -1,7 +1,7 @@
 import { StyleSheet, View, TouchableOpacity, Dimensions, FlatList, Image, StatusBar } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Appbar, Text } from 'react-native-paper'
-import { colors, fontSizes, H, PostApiData, W } from '../../../../colorSchemes/ColorSchemes'
+import { colors, fontSizes, H, PostApiData, W, fontFamily } from '../../../../colorSchemes/ColorSchemes'
 import { white } from 'react-native-paper/lib/typescript/styles/colors'
 import HeaderForUpgrade from './HeaderForUpgrade'
 
@@ -51,7 +51,7 @@ const UpgradePlanTwo = ({navigation}) => {
         <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }} title={<Text style={{
           color: "white",
           fontSize: fontSizes.XL,
-          fontFamily: "Montserrat-SemiBold"
+          ...fontFamily.bold
         }}>Pro Plan</Text>} />
       </Appbar.Header>
       <View style={{ height: HEIGHT, width: WIDTH, paddingVertical: HEIGHT * 0.05, alignItems: 'center' }}>

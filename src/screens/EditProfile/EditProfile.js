@@ -563,7 +563,7 @@ const EditProfile = ({ navigation }) => {
                     />
                     <Text style={{
                       marginLeft: W * 0.02,
-                      fontFamily: fontFamily.bold
+                      ...fontFamily.bold
                     }}>'</Text>
                     <TextInput
                       onChangeText={(t) => { setInch(t) }}
@@ -580,7 +580,7 @@ const EditProfile = ({ navigation }) => {
 
                     />
                     <Text style={{
-                      fontFamily: fontFamily.bold,
+                      ...fontFamily.bold,
                       marginLeft: W * 0.02
                     }}>"</Text>
 
@@ -617,7 +617,7 @@ const EditProfile = ({ navigation }) => {
                   }}>
                   <Text style={{
                     fontSize: fontSizes.SM,
-                    fontFamily: fontFamily.bold,
+                    ...fontFamily.bold,
                   }}>
                     {textOfUnit}
                   </Text>
@@ -699,7 +699,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: 'black',
     backgroundColor: 'white',
-    fontFamily: "Montserrat-SemiBold",
+    ...fontFamily.bold,
     elevation: 3,
   },
   profilePic:
@@ -714,7 +714,7 @@ const styles = StyleSheet.create({
   },
   text:
   {
-    fontFamily: fontFamily.bold,
+    ...fontFamily.bold,
     color: 'black',
     marginLeft: W * 0.08,
     marginVertical: H * 0.02

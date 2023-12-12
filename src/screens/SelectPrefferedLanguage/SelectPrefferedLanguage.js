@@ -83,7 +83,7 @@ const SelectPrefferedLanguage = ({ navigation }) => {
                     <Text style={{
                         color: "white",
                         marginVertical: H * 0.03,
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         fontSize: fontSizes.XL
                     }}>{item.lang_name}</Text>
                 </View>
@@ -121,7 +121,7 @@ const SelectPrefferedLanguage = ({ navigation }) => {
 
                 {/*  <TouchableOpacity onPress={() => { handleNext() }}
                     style={styles.nextButton}>
-                    <Text style={{ color: "white", fontFamily: fontFamily.bold, fontSize: fontSizes.XL }}>
+                    <Text style={{ color: "white", ...fontFamily.bold, fontSize: fontSizes.XL }}>
                         Next
                     </Text>
     </TouchableOpacity>*/}
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         color: colors.FONT_BLACK,
         marginBottom: H * 0.027,
         marginTop: H * 0.12,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         fontSize: fontSizes.XXXL,
         width: W * 0.9,
         textAlign: "center"
@@ -191,14 +191,14 @@ const styles = StyleSheet.create({
     logoText:
     {
         color: colors.FONT_BLACK,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         width: W * 0.9,
         fontSize: fontSizes.MED,
         marginTop: H * 0.01,
     },
     textSet:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         marginBottom: H * 0.04,
         lineHeight: H * 0.04
     }

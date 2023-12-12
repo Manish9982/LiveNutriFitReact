@@ -126,7 +126,7 @@ const Gratification = ({ navigation }) => {
             <Appbar.Header style={styles.appBar}>
                 <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
                 <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }}
-                    title={<Text style={{ color: "white", fontSize: fontSizes.XL, fontFamily: "Montserrat-SemiBold" }}>{strings.Gratification}</Text>} />
+                    title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.Gratification}</Text>} />
             </Appbar.Header>
 
             <View style={{
@@ -189,7 +189,7 @@ const Gratification = ({ navigation }) => {
                         }}>
 
                             <Text style={{
-                                fontFamily: fontFamily.bold
+                                ...fontFamily.bold
                             }}>{strings.EnterGratification}:</Text>
                             <TextInput
                                 placeholder={strings.EnterGratification}
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     text1:
     {
         //color: "white",
-        //fontFamily: fontFamily.bold,
+        //...fontFamily.bold,
         alignSelf: "center",
         //marginTop: H * 0.1,
         // marginBottom: H * 0.04,
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     },
     text2:
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         alignSelf: "center",
         // marginTop: H * 0.02,
         fontSize: fontSizes.XL,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     addText:
 
     {
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         alignSelf: "center",
         // marginTop: H * 0.08,
         fontSize: fontSizes.XL,

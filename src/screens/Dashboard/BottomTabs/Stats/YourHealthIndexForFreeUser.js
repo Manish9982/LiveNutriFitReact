@@ -86,7 +86,7 @@ export default function YourHealthIndexForFreeUser({ navigation, route }) {
             <View style={styles.mainContainer}>
                 <LottieView source={require('../../../../assets/animations/loader.json')}
                     style={{ height: H * 0.2, width: W * 0.2, alignSelf: "center", zIndex: 20, }} autoPlay />
-                <Text style={{ fontFamily: fontFamily.bold, color: colors.FONT_BLACK }}> Please Wait..</Text>
+                <Text style={{ ...fontFamily.bold, color: colors.FONT_BLACK }}> Please Wait..</Text>
             </View>
             :
 
@@ -129,7 +129,7 @@ export default function YourHealthIndexForFreeUser({ navigation, route }) {
                                 position: "absolute",
                                 alignSelf: "center",
                                 top: H * 0.8,
-                                fontFamily: fontFamily.bold,
+                                ...fontFamily.bold,
                                 width: W * 0.85,
                                 textAlign: "center"
                             }}>{strings.SwipeUp}</Text>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     {
         textAlign: "center",
         color: "white",
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         fontSize: 100,
         top: H * 0.1
     },
@@ -176,13 +176,13 @@ const styles = StyleSheet.create({
         color: colors.FONT_BLACK,
         top: H * 0.45,
         textAlign: "center",
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         fontSize: 16
     },
     healthIndex:
     {
         color: colors.OFFWHITE,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         fontSize: fontSizes.MED,
         textAlign: "center",
 

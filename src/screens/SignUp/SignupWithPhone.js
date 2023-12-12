@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontSize: fontSizes.LAR,
-        fontFamily: fontFamily.bold
+        ...fontFamily.bold
     },
     greeting:
     {
@@ -463,7 +463,7 @@ const styles = StyleSheet.create({
         padding: HEIGHT * 0.01,
         fontFamily: 'Montserrat-Regular',
         marginTop: HEIGHT * 0.02,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
 
     },
     welcomeText:
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
         color: colors.FONT_BLACK,
         padding: 10,
         fontSize: fontSizes.LAR,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
 
     },
 

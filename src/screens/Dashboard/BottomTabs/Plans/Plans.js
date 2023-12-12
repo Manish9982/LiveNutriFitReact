@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View, Dimensions, StatusBar, RefreshControl, } from 'react-native'
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { fontSizes, colors, GetApiData, H, W, PostApiData, ShortToast } from '../../../../colorSchemes/ColorSchemes';
+import { fontSizes, colors, GetApiData, H, W, PostApiData, ShortToast, fontFamily } from '../../../../colorSchemes/ColorSchemes';
 import CollapsibleMenuForExercise from './CollapsibleMenuForExercise';
 import HeaderForPlans from './HeaderForPlans';
 import { ActivityIndicator, Appbar, Text } from 'react-native-paper';
@@ -274,7 +274,7 @@ const Plans = ({ navigation }) => {
         }} title={<Text style={{
           color: "white",
           fontSize: fontSizes.XL,
-          fontFamily: "Montserrat-SemiBold"
+          ...fontFamily.bold
         }}>{strings.Plans}</Text>} />
       </Appbar.Header>
 
@@ -468,7 +468,7 @@ const Plans = ({ navigation }) => {
         }} title={<Text style={{
           color: "white",
           fontSize: fontSizes.XL,
-          fontFamily: "Montserrat-SemiBold"
+          ...fontFamily.bold
         }}>{strings.Plans}</Text>} />
       </Appbar.Header>
 

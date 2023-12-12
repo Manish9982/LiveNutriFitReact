@@ -185,7 +185,7 @@ const ListForExercise = (props) => {
                                                 paddingBottom: H * 0.02,
                                             }}>
                                                 <Text style={{
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
                                                     fontSize: fontSizes.XXL,
                                                     color: colors.GREEN,
                                                     paddingRight: W * 0.02
@@ -195,13 +195,13 @@ const ListForExercise = (props) => {
 
                                             </View>
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingHorizontal: W * 0.025,
                                                 lineHeight: H * 0.03
                                             }}>
                                                 {strings.replacemsg} <Text style={{
                                                     color: colors.GREEN,
-                                                    fontFamily: fontFamily.bold
+                                                    ...fontFamily.bold
                                                 }}>{props.FoodName}</Text>
                                             </Text>
 
@@ -218,7 +218,7 @@ const ListForExercise = (props) => {
                                                         setVisibleMood(false)
                                                     }}>
                                                         <Text style={{
-                                                            fontFamily: fontFamily.bold,
+                                                            ...fontFamily.bold,
                                                             color: colors.GREEN,
                                                             fontSize: fontSizes.XL,
                                                             paddingTop: H * 0.028,
@@ -231,7 +231,7 @@ const ListForExercise = (props) => {
 
                                                     }}>
                                                         <Text style={{
-                                                            fontFamily: fontFamily.bold,
+                                                            ...fontFamily.bold,
                                                             color: "red",
                                                             fontSize: fontSizes.XL,
                                                             paddingTop: H * 0.028,
@@ -358,7 +358,7 @@ const ListForExercise = (props) => {
                                                 fontSize: fontSizes.LAR,
                                                 paddingTop: H * 0.01,
                                                 marginLeft: W * 0.038,
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 textDecorationLine: "underline"
                                             }}>Description: </Text><Text style={{
                                                 fontSize: fontSizes.LAR,
@@ -369,7 +369,7 @@ const ListForExercise = (props) => {
                                                 fontSize: fontSizes.LAR,
                                                 paddingTop: H * 0.01,
                                                 marginLeft: W * 0.038,
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 textDecorationLine: "underline"
                                             }}>Intensity: </Text><Text style={{
                                                 fontSize: fontSizes.LAR,

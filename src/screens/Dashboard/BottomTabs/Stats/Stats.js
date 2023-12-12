@@ -1,5 +1,5 @@
 
-import { Dimensions, StyleSheet, View, StatusBar, Text as TextRN, TouchableOpacity, Image, Animated, Easing, ScrollView, Alert, RefreshControl, Linking, Modal } from 'react-native'
+import { Dimensions, StyleSheet, View, StatusBar, Text as TextRN, TouchableOpacity, Image, Animated, Easing, ScrollView, Alert, RefreshControl, Linking, Modal, Platform } from 'react-native'
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import InfoCard from '../../Components/InfoCard'
 import { Appbar, Divider, Text, FAB, Portal, Dialog, Paragraph, Button, Snackbar, TextInput, configureFonts, DefaultTheme } from 'react-native-paper';
@@ -26,23 +26,6 @@ const strings = new LocalizedStrings({
   hi: hindi,
 });
 
-
-const fontConfig = {
-
-  android: {
-    regular: {
-      fontFamily: 'Montserrat-SemiBold',
-      fontWeight: 'normal',
-      fontSize: fontSizes.LAR,
-    }
-
-  }
-};
-
-const theme = {
-  ...DefaultTheme,
-  fonts: configureFonts({ config: fontConfig }),
-};
 
 
 const wait = (timeout) => {
@@ -285,28 +268,6 @@ const Stats = (props) => {
     }
   }
 
-  const updateValueTargetWeight = async () => {
-    if (targetWeight == "" || targetWeight.length == 0) {
-      ShortToast('Required Field', 'error', '')
-    }
-    else if ((targetWeight.length == 2 || targetWeight.length == 3 || targetWeight.length == 1) && (((targetWeight > (data?.height * data?.height * 24.9))) || ((targetWeight < (data?.height * data?.height * 18.5))))) {
-      ShortToast(`Please choose a Target Weight between ${((Math.round(((data?.height * data?.height * 18.5)) * 100) / 100) + 1).toFixed(0)} to ${(Math.round((((data?.height * data?.height * 24.9)) * 100) / 100) - 1).toFixed(0)} According to your BMI.`, "error", "")
-      setTargetWeight("")
-    }
-    else {
-      var formdata = new FormData();
-      const temp = await getDataFromLocalStorage("user_id")
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("type", "Weight");
-      formdata.append("valuename", "target weight");
-      formdata.append("value", targetWeight);
-      const result = await PostApiData('updateuserpaidhealthplan', formdata)
-      getDataForPaidUser()
-      ShortToast(result.message, 'success', '')
-      setEditWeights(false)
-    }
-  }
-
   const updateSugarValues = async () => {
     if (fastingSugar == "" || fastingSugar.includes(".") || fastingSugar.includes(",") || fastingSugar.includes("-") || fastingSugar.includes(" ") || nonFastingSugar == "" || nonFastingSugar.includes(".") || nonFastingSugar.includes(",") || nonFastingSugar.includes("-") || nonFastingSugar.includes(" ")) {
       ShortToast('Invalid Input', 'error', '')
@@ -358,42 +319,7 @@ const Stats = (props) => {
       }*/}
     }
   }
-  const updateValueNonFastingSugar = async () => {
-    // if (route.params.flag[0] == "" && route.params.flag[1] == "") {
-    if (nonFastingSugar == "" || nonFastingSugar.includes(".") || nonFastingSugar.includes(",") || nonFastingSugar.includes("-") || nonFastingSugar.includes(" ")) {
-      ShortToast('Invalid Input', 'error', '')
-    }
-    else if (nonFastingSugar < 70) {
-      ShortToast('Your non fasting sugar seems to be critically low', 'error', '')
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData();
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("valuename", "non fasting");
-      formdata.append("type", "Sugar");
-      formdata.append("value", nonFastingSugar);
 
-      const result = await PostApiData('updateuserpaidhealthplan', formdata)
-      if (result.status == 200) {
-        getDataForPaidUser()
-        setEditSugar(false)
-      }
-    }
-    else {
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData();
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("valuename", "non fasting");
-      formdata.append("type", "Sugar");
-      formdata.append("value", nonFastingSugar);
-
-      const result = await PostApiData('updateuserpaidhealthplan', formdata)
-      if (result.status == 200) {
-        getDataForPaidUser()
-        ShortToast('Success', 'success', '')
-        setEditSugar(false)
-      }
-    }
-  }
   const updateBpValues = async () => {
     if (systolic == "" || diastolic == "" || bpm == "") {
       ShortToast('Required Field', 'error', '')
@@ -417,49 +343,6 @@ const Stats = (props) => {
     }
   }
 
-  const updateValueDiastolicBp = async () => {
-    if (diastolic == "") {
-      ShortToast('Required Field', 'error', '')
-    }
-    else {
-
-      // if (route.params.flag[0] == "" && route.params.flag[1] == "") {
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData();
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("valuename", "diastolic");
-      formdata.append("type", "Blood Pressure");
-      formdata.append("value", diastolic);
-
-      const result = await PostApiData('updateuserpaidhealthplan', formdata)
-      if (result.status == 200) {
-        getDataForPaidUser()
-        { flagg1 > 2 ? null : ShortToast('Success', 'success', 'Success') }
-        setEditBp(false)
-      }
-    }
-  }
-  const updateValueBpmBp = async () => {
-    if (bpm == "") {
-      ShortToast('Required Field', 'error', '')
-    }
-    else {
-      // if (route.params.flag[0] == "" && route.params.flag[1] == "") {
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData();
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("valuename", "bpm");
-      formdata.append("type", "Blood Pressure");
-      formdata.append("value", bpm);
-
-      const result = await PostApiData('updateuserpaidhealthplan', formdata)
-      if (result.status == 200) {
-        getDataForPaidUser()
-        ShortToast('Success', 'success', '')
-        setEditBp(false)
-      }
-    }
-  }
 
   const handleTextPress = (t) => {
     if (t == "Current Weight") {
@@ -484,11 +367,6 @@ const Stats = (props) => {
     else if (t == "BPM") {
       setEditBp(true)
     }
-  }
-
-  const openURL = () => {
-    props.navigation.navigate("BlogWebView")
-    setIsInfoButtonVisible(false)
   }
 
 
@@ -617,7 +495,7 @@ const Stats = (props) => {
                 handleTextPress(item.attribute[i])
               }}>
               {<Text key={i + 1} style={{
-                fontFamily: 'Montserrat-SemiBold',
+                ...fontFamily.bold,
                 fontSize: fontSizes.XXL, marginBottom: HEIGHT * 0.013, textAlign: 'center'
               }}>{(item.attribute_value[i] == "") ? "--" : item.attribute_value[i]}</Text>}
             </TouchableOpacity>
@@ -634,7 +512,7 @@ const Stats = (props) => {
       <View style={styles.cardForMonitoringStats}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
 
-          <Text style={{ fontFamily: 'Montserrat-SemiBold', marginLeft: WIDTH * 0.02 }}>{item.heading}</Text>
+          <Text style={{ ...fontFamily.bold, marginLeft: WIDTH * 0.02 }}>{item.heading}</Text>
           <View style={{
             backgroundColor: getColorForBg(item?.attribute[item?.attribute?.length - 1]),
             borderRadius: 12,
@@ -653,7 +531,7 @@ const Stats = (props) => {
               //marginHorizontal: WIDTH * 0.018,
               alignItems: "center",
               alignSelf: "center",
-              fontFamily: fontFamily.bold
+              ...fontFamily.bold,
             }}>{item?.attribute[item?.attribute?.length - 1]}</Text>
           </View>
         </View>
@@ -774,7 +652,7 @@ const Stats = (props) => {
             justifyContent: 'space-between', marginHorizontal: WIDTH * 0.04
           }}>
             <View style={{ width: WIDTH * 0.275 }}>
-              <Text style={{ fontFamily: 'Montserrat-SemiBold' }}>{item.heading}</Text>
+              <Text style={{ ...fontFamily.bold }}>{item.heading}</Text>
               <Text style={{
                 color: getColor(item.heading, item.sub_heading),
                 fontSize: fontSizes.SM
@@ -805,7 +683,7 @@ const Stats = (props) => {
             top: item.heading == "Reports" ? -H * 0.02 : 0,
             marginLeft: item.heading == "Reports" ? W * 0.04 : 0,
             marginBottom: item.heading == "Reports" ? H * 0 : 0,
-            fontFamily: 'Montserrat-SemiBold',
+            ...fontFamily.bold,
             fontSize: item.heading == "Reports" ? fontSizes.SM : fontSizes.XXL,
             textAlign: item.heading == "Reports" ? 'left' : 'center',
           }}>{((item.attribute_value.length == 0) || (item.attribute_value[0] == "")) ? "--" : item.attribute_value[0]}</Text>
@@ -862,8 +740,6 @@ const Stats = (props) => {
     // setLoader(false)
   }
 
-  //console.log("OnPressBP", BPPopUp)
-
   return (
 
 
@@ -880,12 +756,178 @@ const Stats = (props) => {
       </>
       :
       <>
-        <View>
+        <View style={{
+          flex: 1,
+        }}>
           <View style={{
             zIndex: 100
           }}>
             < StatusBar backgroundColor={colors.GREEN} />
             <Appbar.Header style={styles.appBar}>
+              {/*More Bar Icon*/}
+              <TouchableOpacity
+                onPress={() => { props.navigation.navigate("MoreNavigation") }}  //modified
+                style={{
+                  //position: "absolute",
+                  // backgroundColor: colors.MEDAL_GOLD,
+                  height: 30,
+                  width: 30,
+                  borderRadius: 30 / 2,
+                  //top: H * 0.019,
+                  //left: W * 0.032,
+                  justifyContent: "center"
+                }}>
+                <Image
+                  onPress={() => { props.navigation.navigate("MoreNavigation") }}  //modified
+                  source={require('../../../../assets/icons/menu.png')}
+                  style={{
+                    height: 27,
+                    width: 27,
+                    position: "absolute",
+                    zIndex: 5,
+                    alignSelf: "center"
+                  }}
+                  tintColor={"green"} />
+              </TouchableOpacity>
+
+              {/*LNF Logo and Name*/}
+              <View style={{
+                //backgroundColor: 'red',
+                //position: "absolute",
+                alignSelf: "center",
+                //top: H * 0.015,
+                left: W * 0.1,
+                width: W * 0.4,
+              }}>
+
+                <TouchableOpacity style={{}}>
+                  <Image source={require('../../../../assets/icons/LNF2.png')}
+                    style={{ height: 30, width: 80, alignSelf: "center", resizeMode: "contain" }} />
+                </TouchableOpacity>
+
+                <Text style={{
+                  textAlign: "center", ...fontFamily.bold,
+                  width: W * 0.4,
+                  //backgroundColor: "red"
+                }}>{strings.hello}, {name}</Text>
+                {/* <Text style={{
+                  textAlign: "center", ...fontFamily.bold,
+                  width: W * 0.4,
+                  backgroundColor: "red"
+                }}>Hello, Manish</Text> */}
+
+              </View>
+
+              {/*Total Points and Notifications*/}
+              <View style={{
+                flexDirection: 'row'
+              }}>
+
+
+                <View>
+                  <TouchableOpacity
+
+                    onPress={() => {
+                      props.navigation.navigate("Total Points")
+                      //props.navigation.navigate("Walkthrough")
+                    }}
+                    style={{
+                      height: 15,
+                      width: 20,
+                      //left: W * 0.78,
+                      //top: H * 0.015,
+                      //position: 'absolute',
+                      alignSelf: 'center',
+                    }}>
+                    <Animated.Image source={require('../../../../assets/icons/star.png')}
+                      style={{
+                        height: H * 0.03,
+                        width: H * 0.03,
+                        zIndex: 5,
+                        alignSelf: "center",
+                        alignContent: "center",
+                        justifyContent: "center",
+                        // transform:[{rotate:spin}]
+                        transform: [{ rotateY: spin }, { rotateZ: spin }],
+                      }}
+                    />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+
+                    onPress={() => {
+                      props.navigation.navigate("Total Points")
+                    }}
+
+                    style={{
+                      height: H * 0.027,
+                      width: W * 0.2,
+                      //position: 'absolute',
+                      //left: W * 0.705,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      //top: H * 0.04,
+                    }}>
+                    <Text style={{
+                      color: 'black',
+                      fontSize: fontSizes.MED,
+                      fontFamily: "Montserrat-Bold"
+                    }}>{data?.totalpoint}</Text>
+                  </TouchableOpacity>
+                </View>
+
+
+                <TouchableOpacity
+
+                  onPress={() => {
+                    openNotification()
+                  }}
+                  style={{
+                    height: 27,
+                    width: 27,
+                    // left: W * 0.88,
+                    // top: H * 0.021,
+                    // position: 'absolute'
+                    //  marginTop:H*0.004,
+                  }}>
+                  <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/891/891012.png" }}
+                    style={{
+                      height: H * 0.035,
+                      width: H * 0.035,
+                      // position: "absolute",
+                      zIndex: 5,
+                      alignSelf: "center",
+                      tintColor: colors.GREEN
+                    }}
+                  />
+                </TouchableOpacity>
+
+                {notificationCount == "0" ? null : <TouchableOpacity
+
+                  onPress={() => {
+                    openNotification()
+                  }}
+
+                  style={{
+                    height: H * 0.027,
+                    width: H * 0.027,
+                    borderRadius: H * 0.03 / 2,
+                    // backgroundColor: "red",
+                    //position: 'absolute',
+                    //left: W * 0.92,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    //top: H * 0.012,
+                  }}>
+                  <Text style={{
+                    color: 'white',
+                    fontSize: fontSizes.SM,
+                    ...fontFamily.bold,
+                  }}>{notificationCount}</Text>
+                </TouchableOpacity>}
+
+
+              </View>
 
             </Appbar.Header>
 
@@ -896,194 +938,8 @@ const Stats = (props) => {
             }} />
 
 
-            <>
-              {/* <View  onPress={()=>{}}
-            
-            style={{
-              flexDirection: "column", height: H * 0.1, position: "absolute",
-              top: H * 0.015
-            }}>
-
-              <TouchableOpacity 
-              
-              onPress={()=>{
-                props.navigation.navigate("SubmitSteps")
-             }}
-              style={{}}>
-                <Image source={require('../../../../assets/icons/steps.png')}
-                  style={{ height: 23, width: 23,fontFamily: "Montserrat-Bold",
-
-                  alignSelf: "center", tintColor:colors.GREEN}} />
-              </TouchableOpacity>
-
-              <Text
-              
-              
-              onPress={()=>{
-             }}
-             
-             style={{
-                textAlign: "center",
-                 fontFamily: fontFamily.bold,
-                  width: W * 0.5,
-                  fontSize:fontSizes.MED
-              }}>10.2k</Text>
-
-            </View> */}
-            </>
 
 
-            <View style={{
-              flexDirection: "column", height: H * 0.1, position: "absolute",
-              alignSelf: "center", top: H * 0.015,
-              width: W * 0.4,
-            }}>
-
-
-
-              <TouchableOpacity style={{}}>
-                <Image source={require('../../../../assets/icons/LNF2.png')}
-                  style={{ height: 30, width: 80, alignSelf: "center", }} />
-              </TouchableOpacity>
-
-              <Text style={{
-                textAlign: "center", fontFamily: fontFamily.bold,
-                width: W * 0.4,
-
-              }}>{strings.hello}, {name}</Text>
-
-            </View>
-
-
-            <TouchableOpacity
-              onPress={() => { props.navigation.navigate("MoreNavigation") }}  //modified
-              style={{
-                position: "absolute",
-                // backgroundColor: colors.MEDAL_GOLD,
-                height: 30,
-                width: 30,
-                borderRadius: 30 / 2,
-                top: H * 0.019,
-                left: W * 0.032,
-                justifyContent: "center"
-              }}>
-              <Image
-                onPress={() => { props.navigation.navigate("MoreNavigation") }}  //modified
-                source={require('../../../../assets/icons/menu.png')}
-                style={{
-                  height: 27,
-                  width: 27,
-                  position: "absolute",
-                  zIndex: 5,
-                  alignSelf: "center"
-                }}
-                tintColor={"green"} />
-            </TouchableOpacity>
-
-
-
-
-
-            <TouchableOpacity
-
-              onPress={() => {
-                openNotification()
-              }}
-              style={{
-                height: 27,
-                width: 27,
-                left: W * 0.88,
-                top: H * 0.021,
-                position: 'absolute'
-                //  marginTop:H*0.004,
-              }}>
-              <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/891/891012.png" }}
-                style={{
-                  height: H * 0.035,
-                  width: H * 0.035,
-                  position: "absolute",
-                  zIndex: 5,
-                  alignSelf: "center",
-                  tintColor: colors.GREEN
-                }}
-              />
-            </TouchableOpacity>
-
-            {notificationCount == "0" ? null : <TouchableOpacity
-
-              onPress={() => {
-                openNotification()
-              }}
-
-              style={{
-                height: H * 0.027,
-                width: H * 0.027,
-                borderRadius: H * 0.03 / 2,
-                backgroundColor: "red",
-                position: 'absolute',
-                left: W * 0.92,
-                justifyContent: 'center',
-                alignItems: 'center',
-                top: H * 0.012,
-              }}>
-              <Text style={{
-                color: 'white',
-                fontSize: fontSizes.SM,
-                fontFamily: fontFamily.bold
-              }}>{notificationCount}</Text>
-            </TouchableOpacity>}
-
-
-            <TouchableOpacity
-
-              onPress={() => {
-                props.navigation.navigate("Total Points")
-                //props.navigation.navigate("Walkthrough")
-              }}
-              style={{
-                height: 15,
-                width: 20,
-                left: W * 0.78,
-                top: H * 0.015,
-                position: 'absolute',
-                alignSelf: 'center',
-              }}>
-              <Animated.Image source={require('../../../../assets/icons/star.png')}
-                style={{
-                  height: H * 0.03,
-                  width: H * 0.03,
-                  position: "absolute",
-                  zIndex: 5,
-                  alignSelf: "center",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  // transform:[{rotate:spin}]
-                  transform: [{ rotateY: spin }, { rotateZ: spin }],
-                }}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-
-              onPress={() => {
-                props.navigation.navigate("Total Points")
-              }}
-
-              style={{
-                height: H * 0.027,
-                width: W * 0.2,
-                position: 'absolute',
-                left: W * 0.705,
-                justifyContent: 'center',
-                alignItems: 'center',
-                top: H * 0.04,
-              }}>
-              <Text style={{
-                color: 'black',
-                fontSize: fontSizes.MED,
-                fontFamily: "Montserrat-Bold"
-              }}>{data?.totalpoint}</Text>
-            </TouchableOpacity>
 
 
           </View>
@@ -1400,7 +1256,6 @@ const Stats = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    setFastingSugar("")
                     setEditSugar(false)
                   }}
                   style={{
@@ -1451,7 +1306,7 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text style={{
-                  fontFamily: "Montserrat-SemiBold"
+                  ...fontFamily.bold
                 }}>{strings.nonfating}</Text>
                 <TextInput
                   onChangeText={(t) => {
@@ -1523,7 +1378,6 @@ const Stats = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    setNonFastingSugar("")
                     setEditSugar(false)
                   }}
                   style={{
@@ -1704,7 +1558,6 @@ const Stats = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    setSystolic("")
                     setEditBp(false)
                   }}
                   style={{
@@ -1755,7 +1608,7 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text style={{
-                  fontFamily: "Montserrat-SemiBold"
+                  ...fontFamily.bold
                 }}>{strings.diastolicBP}</Text>
                 <TextInput
                   value={diastolic}
@@ -1797,7 +1650,7 @@ const Stats = (props) => {
                         else {
                           setFlagg1(prev => prev + 1)
                           ShortToast("Your Diastolic BP level doesn't seem to be normal. Kindly make sure you have took the correct reading", 'warning', '')
-                          setSystolic("")
+                          setDiastolic("")
                         }
                       }
                       else {
@@ -1823,7 +1676,6 @@ const Stats = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    setDiastolic("")
                     setEditBp(false)
                   }}
                   style={{
@@ -1874,7 +1726,7 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text style={{
-                  fontFamily: "Montserrat-SemiBold"
+                  ...fontFamily.bold
                 }}>{strings.BPM}</Text>
                 <TextInput
                   onChangeText={(t) => {
@@ -1936,7 +1788,6 @@ const Stats = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    setBpm("")
                     setEditBp(false)
                   }}
                   style={{
@@ -1981,7 +1832,7 @@ const Stats = (props) => {
               }}
               >
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   fontSize: fontSizes.XXL,
                   paddingBottom: H * 0.02,
                   color: colors.GREEN
@@ -1989,7 +1840,7 @@ const Stats = (props) => {
                   Congratulations!    <FontAwesome5 name="coins" size={20} color={colors.MEDAL_GOLD} />
                 </Text>
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   paddingHorizontal: W * 0.025,
                   lineHeight: H * 0.03
                 }}>
@@ -2001,7 +1852,7 @@ const Stats = (props) => {
                   props.navigation.navigate("Walkthrough")
                 }}>
                   <Text style={{
-                    fontFamily: fontFamily.bold,
+                    ...fontFamily.bold,
                     color: colors.GREEN,
                     fontSize: fontSizes.XL,
                     paddingTop: H * 0.028,
@@ -2012,8 +1863,6 @@ const Stats = (props) => {
               </View>
             </View>
           </Modal>
-
-
 
 
           {/* modal for paid user status */}
@@ -2042,7 +1891,7 @@ const Stats = (props) => {
               }}
               >
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   fontSize: fontSizes.XXL,
                   paddingBottom: H * 0.02,
                   color: 'green'
@@ -2053,7 +1902,7 @@ const Stats = (props) => {
 
                 </Text>
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   paddingHorizontal: W * 0.025,
                   lineHeight: H * 0.03, textAlign: 'center'
                 }}>
@@ -2066,7 +1915,7 @@ const Stats = (props) => {
 
                 }}>
                   <Text style={{
-                    fontFamily: fontFamily.bold,
+                    ...fontFamily.bold,
                     color: 'green',
                     fontSize: fontSizes.XL,
                     paddingTop: H * 0.028,
@@ -2077,9 +1926,6 @@ const Stats = (props) => {
               </View>
             </View>
           </Modal>
-
-
-
 
           <Modal visible={visibleMood}
             transparent={true}>
@@ -2106,7 +1952,7 @@ const Stats = (props) => {
               >
                 <View style={{ flexDirection: "row", alignItems: "center", paddingBottom: H * 0.02, }}>
                   <Text style={{
-                    fontFamily: fontFamily.bold,
+                    ...fontFamily.bold,
                     fontSize: fontSizes.XXL,
                     color: colors.GREEN,
                     paddingRight: W * 0.02
@@ -2118,7 +1964,7 @@ const Stats = (props) => {
                     autoPlay loop />
                 </View>
                 <Text style={{
-                  fontFamily: fontFamily.bold,
+                  ...fontFamily.bold,
                   paddingHorizontal: W * 0.025,
                   lineHeight: H * 0.03
                 }}>
@@ -2181,13 +2027,7 @@ const Stats = (props) => {
             </View>
           </Modal>
 
-
-
-
-
           {/**Edit bpm///////////////////////////////////////////////// */}
-
-
 
           <Portal>
 
@@ -2507,7 +2347,7 @@ const styles = StyleSheet.create({
   },
   mainContainer:
   {
-    paddingBottom: HEIGHT * 0.18
+    paddingBottom: HEIGHT * 0.3
   },
   headerView:
   {
@@ -2593,7 +2433,7 @@ const styles = StyleSheet.create({
   },
   attributeHeading:
   {
-    fontFamily: "Montserrat-SemiBold",
+    ...fontFamily.bold,
     width: W * 0.3
   }
 

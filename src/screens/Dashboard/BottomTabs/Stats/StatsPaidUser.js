@@ -279,7 +279,7 @@ const StatsPaidUser = ({ navigation }) => {
               {myloop}
               {/*********************PAID USER*******************/}
               <View style={[styles.lorem, { height: H * 0.12 }]}>
-                <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Weight</Text>
+                <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Weight</Text>
                 <View style={{ flexDirection: "row", marginTop: H * 0.02 }}>
 
                   <View style={{ flexDirection: "row" }}>
@@ -309,7 +309,7 @@ const StatsPaidUser = ({ navigation }) => {
 
               <View style={{ flexDirection: "row", width: W, left: -W * 0.1 }}>
                 <View style={[styles.lorem, styles.loremSecondary]}>
-                  <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>BMI</Text>
+                  <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>BMI</Text>
                   <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
                     <View style={{ justifyContent: "space-evenly", width: W * 0.3, height: H * 0.12 }}>
                       <Text style={[styles.ipsum, { color: "black", fontSize: fontSizes.XL, top: H * 0.01 }]}>{data?.bmi[0]?.value == "" ? "--" : data?.bmi[0]?.value}</Text>
@@ -331,7 +331,7 @@ const StatsPaidUser = ({ navigation }) => {
                 </View>
 
                 <View style={[styles.lorem, styles.loremSecondary]}>
-                  <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Health Index</Text>
+                  <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Health Index</Text>
                   <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
 
                     <View style={{ justifyContent: "space-evenly", width: W * 0.3, height: H * 0.12 }}>
@@ -357,7 +357,7 @@ const StatsPaidUser = ({ navigation }) => {
 
               <View style={{ flexDirection: "row", width: W, left: -W * 0.1 }}>
                 <View style={[styles.lorem, styles.loremSecondary]}>
-                  <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>BMR</Text>
+                  <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>BMR</Text>
                   <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
                     <View style={{ justifyContent: "space-evenly", width: W * 0.3, height: H * 0.12 }}>
                       <Text style={[styles.ipsum, styles.ipsumSecondary]}>{data?.bmr[0]?.value == "" ? "--" : data?.bmr[0]?.value}</Text>
@@ -379,7 +379,7 @@ const StatsPaidUser = ({ navigation }) => {
                 </View>
 
                 <View style={[styles.lorem, styles.loremSecondary]}>
-                  <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>WHR</Text>
+                  <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>WHR</Text>
                   <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
                     <View style={{ justifyContent: "space-evenly", width: W * 0.3, height: H * 0.12 }}>
                       <Text style={[styles.ipsum, styles.ipsumSecondary]}>--</Text>
@@ -402,7 +402,7 @@ const StatsPaidUser = ({ navigation }) => {
               </View>
               <View style={{ flexDirection: "row", width: W, left: -W * 0.1 }}>
                 <View style={[styles.lorem, styles.loremSecondary]}>
-                  <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Pain</Text>
+                  <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Pain</Text>
                   <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
                     <View style={{ justifyContent: "space-evenly", width: W * 0.3, height: H * 0.12 }}>
                       <Text style={[styles.ipsum, styles.ipsumSecondary]}>--</Text>
@@ -424,7 +424,7 @@ const StatsPaidUser = ({ navigation }) => {
                 </View>
 
                 <View style={[styles.lorem, styles.loremSecondary]}>
-                  <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Psychology</Text>
+                  <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Psychology</Text>
                   <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
                     <View style={{ justifyContent: "space-evenly", width: W * 0.3, height: H * 0.12 }}>
                       <Text style={[styles.ipsum, styles.ipsumSecondary]}>--</Text>
@@ -447,7 +447,7 @@ const StatsPaidUser = ({ navigation }) => {
               </View>
               <View style={{ left: -W * 0.1 }}>
                 <View style={[styles.lorem, styles.loremSecondary]}>
-                  <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Calories</Text>
+                  <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Calories</Text>
                   <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
                     <View style={{ justifyContent: "space-evenly", width: W * 0.3, height: H * 0.12 }}>
                       <Text style={[styles.ipsum, styles.ipsumSecondary]}>--</Text>
@@ -469,7 +469,7 @@ const StatsPaidUser = ({ navigation }) => {
                 </View>
               </View>
               <View style={[styles.lorem, { height: H * 0.12 }]}>
-                <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Blood Pressure</Text>
+                <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Blood Pressure</Text>
                 <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
 
                   <View style={{ flexDirection: "row" }}>
@@ -502,7 +502,7 @@ const StatsPaidUser = ({ navigation }) => {
                 </View>
               </View>
               <View style={[styles.lorem, { height: H * 0.12 }]}>
-                <Text style={{ color: colors.FONT_BLACK, fontFamily: fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Sugar</Text>
+                <Text style={{ color: colors.FONT_BLACK, ...fontFamily.bold, position: "absolute", left: W * 0.05, top: H * 0.01 }}>Sugar</Text>
                 <View style={{ flexDirection: "row", marginTop: H * 0.025 }}>
 
                   <View style={{ flexDirection: "row" }}>
@@ -662,7 +662,7 @@ const styles = StyleSheet.create({
   },
   ipsum:
   {
-    fontFamily: fontFamily.bold,
+    ...fontFamily.bold,
     color: "silver",
     fontSize: fontSizes.SM,
     textAlign: "center"

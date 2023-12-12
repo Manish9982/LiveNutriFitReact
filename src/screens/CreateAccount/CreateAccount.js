@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
         paddingTop: HEIGHT * 0.04,
         color: 'white',
         fontSize: fontSizes.greeting,
-        fontFamily: fontFamily.bold
+        ...fontFamily.bold
     },
     text3:
     {

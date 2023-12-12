@@ -246,7 +246,7 @@ const ListForMeal = (props) => {
                                                 paddingBottom: H * 0.02,
                                             }}>
                                                 <Text style={{
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
                                                     fontSize: fontSizes.XXL,
                                                     color: colors.GREEN,
                                                     paddingRight: W * 0.02
@@ -257,13 +257,13 @@ const ListForMeal = (props) => {
                                             </View>
                                             <Text style={{
                                                 color: colors.GREEN,
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 bottom: H * 0.04,
 
                                             }}>{props.FoodName}
                                             </Text>
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingHorizontal: W * 0.025,
                                                 lineHeight: H * 0.03,
                                             }}>
@@ -283,7 +283,7 @@ const ListForMeal = (props) => {
                                                         setVisibleModalForRepeat(false)
                                                     }}>
                                                         <Text style={{
-                                                            fontFamily: fontFamily.bold,
+                                                            ...fontFamily.bold,
                                                             color: colors.GREEN,
                                                             fontSize: fontSizes.XL,
                                                             paddingTop: H * 0.028,
@@ -296,7 +296,7 @@ const ListForMeal = (props) => {
 
                                                     }}>
                                                         <Text style={{
-                                                            fontFamily: fontFamily.bold,
+                                                            ...fontFamily.bold,
                                                             color: "red",
                                                             fontSize: fontSizes.XL,
                                                             paddingTop: H * 0.028,
@@ -340,7 +340,7 @@ const ListForMeal = (props) => {
                                                 paddingBottom: H * 0.03,
                                             }}>
                                                 <Text style={{
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
                                                     fontSize: fontSizes.XXL,
                                                     color: "black",
                                                     paddingRight: W * 0.02
@@ -350,14 +350,14 @@ const ListForMeal = (props) => {
 
                                             </View>
                                             <Text style={{
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 paddingHorizontal: W * 0.025,
                                                 lineHeight: H * 0.03,
                                                 marginTop: H * 0.01
                                             }}>
                                                 {strings.replacemsg} <Text style={{
                                                     color: colors.GREEN,
-                                                    fontFamily: fontFamily.bold
+                                                    ...fontFamily.bold
                                                 }}>{props.FoodName}</Text>
                                             </Text>
 
@@ -375,7 +375,7 @@ const ListForMeal = (props) => {
                                                         replaceThisMeal()
                                                     }}>
                                                         <Text style={{
-                                                            fontFamily: fontFamily.bold,
+                                                            ...fontFamily.bold,
                                                             color: colors.GREEN,
                                                             fontSize: fontSizes.XL,
                                                             paddingTop: H * 0.028,
@@ -388,7 +388,7 @@ const ListForMeal = (props) => {
 
                                                     }}>
                                                         <Text style={{
-                                                            fontFamily: fontFamily.bold,
+                                                            ...fontFamily.bold,
                                                             color: "red",
                                                             fontSize: fontSizes.XL,
                                                             paddingTop: H * 0.028,
@@ -519,7 +519,7 @@ const ListForMeal = (props) => {
                                                 <Text style={{
                                                     fontSize: fontSizes.EXTRASM,
                                                     color: "black",
-                                                    fontFamily: fontFamily.bold
+                                                    ...fontFamily.bold
                                                 }}>REPEATED</Text>
                                             </View>
                                             :
@@ -576,7 +576,7 @@ const ListForMeal = (props) => {
                                                 fontSize: fontSizes.LAR,
                                                 paddingTop: H * 0.01,
                                                 marginLeft: W * 0.038,
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 textDecorationLine: "underline"
                                             }}>Meal Name: </Text>
 
@@ -590,7 +590,7 @@ const ListForMeal = (props) => {
                                                 fontSize: fontSizes.LAR,
                                                 paddingTop: H * 0.01,
                                                 marginLeft: W * 0.038,
-                                                fontFamily: fontFamily.bold,
+                                                ...fontFamily.bold,
                                                 textDecorationLine: "underline"
                                             }}>Serving: </Text>
 

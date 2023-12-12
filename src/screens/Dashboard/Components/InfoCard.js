@@ -484,6 +484,7 @@ const InfoCard = (props) => {
                                 <Text style={styles.userChoiceText}>{props.Attributes[0]}</Text>}
                             {props.FollowNeeded ? <Text style={{ fontSize: fontSizes.SM, textAlign: 'center' }}>Follow</Text> : null}
                         </TouchableOpacity>
+
                         <TouchableOpacity onPress={() => {
                             if (props.Attributes[1] == "2") {
                                 setVisibleMood(true)
@@ -559,8 +560,9 @@ const styles = StyleSheet.create({
     },
     choiceButtons:
     {
-        height: 45,
+        //height: 45,
         width: 80,
+        padding:2,
         justifyContent: 'center',
         backgroundColor: 'white',
         borderRadius: 15,

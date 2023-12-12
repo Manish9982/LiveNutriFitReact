@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     },
     textSet:
     {
-        fontFamily: fontFamily.bold
+        ...fontFamily.bold
     },
     displayDataContainer:
     {

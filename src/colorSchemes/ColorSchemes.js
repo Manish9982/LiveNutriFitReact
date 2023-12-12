@@ -1,4 +1,4 @@
-import { Dimensions, ToastAndroid, StyleSheet, View, TouchableOpacity, Alert, } from "react-native";
+import { Dimensions, ToastAndroid, StyleSheet, View, TouchableOpacity, Alert, Platform } from "react-native";
 import { getDataFromLocalStorage } from "../local storage/LocalStorage";
 import React, { useState } from 'react'
 import SweetAlert from 'react-native-sweet-alert';
@@ -54,7 +54,17 @@ export const fontSizes = {
 };
 
 export const fontFamily = {
-   "bold": "Montserrat-SemiBold",
+   "bold": {
+      ...Platform.select({
+         ios: {
+            fontFamily: "Montserrat-SemiBold",
+            fontWeight: "600",
+         },
+         android: {
+            fontFamily: "Montserrat-SemiBold",
+         },
+      }),
+   }
 };
 
 
@@ -146,7 +156,7 @@ export const ShortToast = (msg, style, title) => {
    //    cancellable: true,
    // },
    //    callback => console.log('callback'))
-   Alert.alert(style, title)
+   Alert.alert(style == 'error' ? 'Error' : '', msg)
 }
 export const GreenButton = (props) => {
    return (
@@ -162,7 +172,7 @@ export const GreenButton = (props) => {
          }}>
          <Text style={{
             color: "white",
-            fontFamily: fontFamily.bold,
+            ...fontFamily.bold,
             fontSize: fontSizes.XL
          }}>{props.Title}</Text>
       </View>

@@ -262,14 +262,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontSize: fontSizes.LAR,
-        fontFamily: fontFamily.bold
+        ...fontFamily.bold
     },
     greeting:
     {
         color: 'white',
         fontSize: fontSizes.greeting,
         padding: 10,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         marginTop: HEIGHT * 0.02,
         elevation: 8,
     },
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         paddingLeft: 10,
         fontSize: fontSizes.LAR,
-        fontFamily: fontFamily.bold,
+        ...fontFamily.bold,
         elevation: 8,
 
     },
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
     {
         color: colors.FONT_BLACK,
         padding: 10,
-        fontFamily: fontFamily.bold
+        ...fontFamily.bold
 
     },
 
