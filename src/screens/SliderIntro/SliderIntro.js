@@ -87,15 +87,15 @@ const SliderIntro = ({ navigation }) => {
     }, [])
 
     const slides = [
+        // {
+        //     key: 1,
+        //     title: 'Title 1',
+        //     text: strings.YourWellnessWithOurFunctionalHealthPillars,
+        //     image: require('../../assets/icons/LNF.png'),
+        //     backgroundColor: '#59b2ab',
+        // },
         {
             key: 1,
-            title: 'Title 1',
-            text: strings.YourWellnessWithOurFunctionalHealthPillars,
-            image: require('../../assets/icons/LNF.png'),
-            backgroundColor: '#59b2ab',
-        },
-        {
-            key: 2,
             title: 'Title 2',
             text: '',
             text2: strings.YourWellnessWithOurFunctionalHealthPillars,
@@ -103,7 +103,7 @@ const SliderIntro = ({ navigation }) => {
             backgroundColor: '#febe29',
         },
         {
-            key: 3,
+            key: 2,
             title: 'Title 3',
             text: '',
             text2: strings.YourWellnessWithOurFunctionalHealthPillars,
@@ -121,13 +121,11 @@ const SliderIntro = ({ navigation }) => {
 
     }
     const returnStyle = (num) => {
-        if (num == 0) {
-            return styles.image
-        }
-        else if (num == 1) {
+        
+       if (num == 0) {
             return styles.image3
         }
-        else if (num == 2) {
+        else if (num == 1) {
 
             return styles.image2
         }
@@ -140,7 +138,7 @@ const SliderIntro = ({ navigation }) => {
                 <LinearGradient colors={(index == 0) || (index == 2) ? [colors.GREEN, "white", "white"] : ["white", "white"]}
                     style={styles.slide}>
 
-                    {index == 1 ?
+                    {index == 0 ?
                         <>
                             {/*<Image source={require('../../assets/icons/LNF.png')}
                                 style={{
@@ -158,7 +156,9 @@ const SliderIntro = ({ navigation }) => {
                             }}>
                                 <Logo />
                             </View>
-                            <LottieView style={returnStyle(index)}
+                            <LottieView 
+                          
+                            style={returnStyle(index)}
                                 source={item.image}
                                 autoPlay loop />
                         </>
@@ -168,7 +168,7 @@ const SliderIntro = ({ navigation }) => {
                         </>
                     }
 
-                    {index == 0 ?
+                    {/* {index == 0 ?
                         <>
                             <View style={{
                                 position: "absolute",
@@ -199,9 +199,14 @@ const SliderIntro = ({ navigation }) => {
                             </View>
                         </>
 
-                        : null}
-                    <Text style={index == 2 ? styles.text2 : styles.text}>{item.text}</Text>
-                    {index == 2 ?
+                        : null} */}
+
+
+
+                    <Text style={index == 1 ? styles.text2 : styles.text}>{item.text}</Text>
+
+
+                    {index == 1 ?
                         <View>
                             <View style={{
                                 position: "absolute",
@@ -216,7 +221,7 @@ const SliderIntro = ({ navigation }) => {
                                     source={require('../../assets/animations/74389-weight-loss-progress.json')}
                                     autoPlay loop />
                             </Animated.View>
-                            <Text style={[styles.mantraSubheading, { marginTop: H * 0.05,
+                            <Text style={[styles.mantraSubheading, { marginTop: H * 0.07,
                                  paddingTop: H * 0.02 }]}>{strings.GetNotified}</Text>
                             <Text style={[[styles.mantraSubheading,
                             {
@@ -228,7 +233,10 @@ const SliderIntro = ({ navigation }) => {
 
                         </View>
                         : null}
-                    {index == 1 ?
+
+
+
+                    {index == 0 ?
                         <>
                            
                             <Text style={{
@@ -236,7 +244,7 @@ const SliderIntro = ({ navigation }) => {
                                 color: colors.FONT_BLACK,
                                 //textAlign: "center",
                                 width: W * 0.7,
-                                marginTop: H * 0.1,
+                                marginTop: H * 0.05,
                                 //alignSelf: "center",
                                 fontSize: fontSizes.XL,
                                 lineHeight: H * 0.03,
@@ -283,6 +291,8 @@ const SliderIntro = ({ navigation }) => {
 
                         </>
                         : null}
+
+                        
                 </LinearGradient>
             </View>)
     }
@@ -324,7 +334,7 @@ const SliderIntro = ({ navigation }) => {
                 renderNextButton={renderNextButton}
                 activeDotStyle={styles.activeDotStyle}
                 renderDoneButton={renderDoneButton}
-                onSlideChange={(index) => { index == 2 ? startAnimation() : null }}
+                onSlideChange={(index) => { index == 1 ? startAnimation() : null }}
             />
         </View>
     )
@@ -359,7 +369,7 @@ const styles = StyleSheet.create({
         marginTop: H * 0.3,
         lineHeight: H * 0.043,
         marginLeft: W * 0.06,
-        ...fontFamily.bold,
+        fontFamily: "Montserrat-SemiBold",
         alignSelf: "center"
     },
     nextButton:
@@ -386,7 +396,7 @@ const styles = StyleSheet.create({
     text2:
     {
         textDecorationLine: "underline",
-        ...fontFamily.bold,
+        fontFamily: "Montserrat-SemiBold",
         position: "absolute",
         textAlign: "center",
         fontSize: fontSizes.XXL,
@@ -408,7 +418,7 @@ const styles = StyleSheet.create({
         width: W * 0.8,
         lineHeight: H * 0.03,
         color: colors.FONT_BLACK,
-        ...fontFamily.bold,
+        fontFamily: "Montserrat-SemiBold",
         textAlign: "center"
     },
     getStartedButton:
@@ -446,14 +456,14 @@ const styles = StyleSheet.create({
     textOfPros:
     {
         color: colors.FONT_BLACK,
-        ...fontFamily.bold,
+        fontFamily: "Montserrat-SemiBold",
         width: W * 0.75,
         fontSize: fontSizes.XL,
         lineHeight: H * 0.026
     },
     websiteFonts:
     {
-        ...fontFamily.bold,
+        fontFamily: "Montserrat-SemiBold",
         position: "absolute",
         top: H * 0.65,
         left: W * 0.1,
@@ -473,7 +483,7 @@ const styles = StyleSheet.create({
         height: H * 0.48,
         width: H * 0.48,
         alignSelf: "center",
-        marginTop: H * 0.1,
+        marginTop: H * 0.15,
         backgroundColor: "transparent",
         borderRadius: 8,
 
@@ -485,7 +495,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         // aspectRatio: 3.2,
         position: "absolute",
-        top: H * 0.1,
+        top: H * 0.252,
         backgroundColor: "white",
         borderRadius: 8
     },

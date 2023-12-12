@@ -145,18 +145,24 @@ export const PostApiData = async (ApiName, formdata) => {
 }
 
 export const ShortToast = (msg, style, title) => {
-   // SweetAlert.showAlertWithOptions({
-   //    title: msg,
-   //    subTitle: '',
-   //    confirmButtonTitle: 'OK',
-   //    confirmButtonColor: colors.GREEN,
-   //    otherButtonTitle: 'Cancel',
-   //    otherButtonColor: '#dedede',
-   //    style: style,
-   //    cancellable: true,
-   // },
-   //    callback => console.log('callback'))
-   Alert.alert(style == 'error' ? 'Error' : '', msg)
+   if(Platform.OS == "android")
+   {
+SweetAlert.showAlertWithOptions({
+      title: msg,
+      subTitle: '',
+      confirmButtonTitle: 'OK',
+      confirmButtonColor: colors.GREEN,
+      otherButtonTitle: 'Cancel',
+      otherButtonColor: '#dedede',
+      style: style,
+      cancellable: true,
+   },
+      callback => console.log('callback'))
+   }else{
+      Alert.alert(style == 'error' ? 'Error' : '', msg)
+
+   }
+   
 }
 export const GreenButton = (props) => {
    return (

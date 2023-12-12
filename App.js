@@ -70,6 +70,8 @@ import StripePaymentWebview from './src/screens/StripePaymentWebview/StripePayme
 import ChatPdfViewer from './src/screens/ChatPdfViewer';
 import StripeFullPaymentWebView from './src/screens/StripeFullPaymentWebView/StripeFullPaymentWebView';
 import SubmitSteps from './src/screens/SubmitSteps';
+import NewProfiling from './src/screens/Questions/NewProfiling';
+
 //import PDFURLWebView from './src/screens/PDFURLWebView/PDFURLWebView';
 
 const fontConfig = {
@@ -158,6 +160,7 @@ const App = () => {
               <Stack.Screen name="StripeFullPaymentWebView" component={StripeFullPaymentWebView} />
               <Stack.Screen name="ChatPdfViewer" component={ChatPdfViewer} />
               <Stack.Screen name="SubmitSteps" component={SubmitSteps} />
+              <Stack.Screen name="NewProfiling" component={NewProfiling} />
 
 
             </Stack.Navigator>

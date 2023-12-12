@@ -196,7 +196,7 @@ const RegisterOrSignIn = ({ navigation }) => {
 
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => { setVisible(true) }}
+                        {/* <TouchableOpacity onPress={() => { setVisible(true) }}
                             style={[{
                                 backgroundColor: colors.GREEN,
                                 height: 52,
@@ -210,15 +210,15 @@ const RegisterOrSignIn = ({ navigation }) => {
                                 textAlign: 'center',
                                 color: 'white',
                                 fontSize: fontSizes.LAR,
-                                ...fontFamily.bold
+                                fontFamily: fontFamily.bold
                             }}>{strings.AreyouaCorporateUser}</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
 
                     </View>
                     <Portal>
                         <Dialog visible={visible} onDismiss={hideDialog}>
                             <Text style={{
-                                ...fontFamily.bold,
+                                fontFamily: fontFamily.bold,
                                 alignSelf: "center",
                                 marginTop: H * 0.04,
                                 marginBottom: H * 0.02
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         // marginVertical: '11%',
         color: 'white',
-        ...fontFamily.bold
+        fontFamily: "Montserrat-SemiBold"
 
     },
     textSignIn:
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
         //marginVertical: '11%',
-        ...fontFamily.bold
+        fontFamily: "Montserrat-SemiBold"
 
     },
     linearGradient:

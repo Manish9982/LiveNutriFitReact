@@ -123,6 +123,8 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
                 <View style={{ alignItems: 'center' }}>
                     <Text style={{ color: '#adadaa' }}>{strings.Wehavesentthecodeto} </Text>
                     <Text style={{ fontSize: fontSizes.LAR }}>{route.params.email}</Text>
+                    {/* <Text style={{ fontSize: fontSizes.MED }}>and </Text>
+                    <Text style={{ fontSize: fontSizes.LAR }}>{route.params.mobile}</Text> */}
                 </View>
                 <View style={styles.inputContainer}>
                     <OTPinputComponent />

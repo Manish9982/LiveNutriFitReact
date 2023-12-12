@@ -51,7 +51,8 @@ export default function WelcomeScreenAfterRegistration({ navigation }) {
 
 
     const handleGo = () => {
-        navigation.navigate("QuestionsCustom")
+        //navigation.navigate("QuestionsCustom") // chnge 
+        navigation.navigate("NewProfiling")
     }
     return (
         <View style={{ height: H, width: W, backgroundColor: "white" }}>
@@ -82,7 +83,7 @@ export default function WelcomeScreenAfterRegistration({ navigation }) {
                 paddingTop: H * 0.28
             }}>
                 {/* <Text style={{
-                    ...fontFamily.bold,
+                    fontFamily: "Montserrat-SemiBold",
                     fontSize: H * 0.043,
                     marginBottom: H * 0.0,
                     marginTop: H * 0.12,
