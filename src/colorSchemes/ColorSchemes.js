@@ -195,7 +195,7 @@ export const GreenButton = (props) => {
          }}>
          <Text style={{
             color: "white",
-            fontFamily: fontFamily.bold,
+            ...fontFamily.bold,
             fontSize: fontSizes.XL
          }}>{props.Title}</Text>
       </View>

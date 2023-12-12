@@ -235,7 +235,7 @@ const UserProfile = ({ navigation }) => {
             <StatusBar backgroundColor={colors.GREEN} />
             <Appbar.Header style={styles.appBar}>
                 <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
-                <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, fontFamily: "Montserrat-SemiBold" }}>
+                <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>
                     {strings.MyProfile}</Text>} />
 
             </Appbar.Header>
@@ -285,7 +285,7 @@ const UserProfile = ({ navigation }) => {
                                     elevation: 8
                                 }}>
                                     <Text style={{
-                                        fontFamily: fontFamily.bold,
+                                        ...fontFamily.bold,
                                         top: -H * 0.06,
                                         left: W * 0.05,
                                         fontSize: fontSizes.XXL
@@ -305,7 +305,7 @@ const UserProfile = ({ navigation }) => {
                                             }}>
                                                 <AntDesign name="camera" size={50} color={"silver"} />
                                                 <Text style={{
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
                                                     fontSize: fontSizes.MED
                                                 }}>Camera</Text>
                                             </View>
@@ -318,7 +318,7 @@ const UserProfile = ({ navigation }) => {
                                             }}>
                                                 <AntDesign name="picture" size={50} color={"silver"} />
                                                 <Text style={{
-                                                    fontFamily: fontFamily.bold,
+                                                    ...fontFamily.bold,
                                                     fontSize: fontSizes.MED
                                                 }}>Gallery</Text>
                                             </View>
@@ -328,7 +328,7 @@ const UserProfile = ({ navigation }) => {
                                     >
                                         <Text style={{
                                             textAlign: "right",
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: "red",
                                             top: H * 0.055,
                                             left: -W * 0.06
@@ -375,7 +375,7 @@ const UserProfile = ({ navigation }) => {
 
                         top: H * 0.04,
                         width: W * 0.57,
-                        fontFamily: fontFamily.bold,
+                        ...fontFamily.bold,
                         borderWidth: 0.5,
                         alignSelf: 'center',
                         textAlign: 'center',
@@ -423,7 +423,7 @@ const UserProfile = ({ navigation }) => {
                             }}
                             >
                                 <Text style={{
-                                    fontFamily: fontFamily.bold,
+                                    ...fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     paddingBottom: H * 0.01,
                                     marginLeft: W * 0.08
@@ -458,7 +458,7 @@ const UserProfile = ({ navigation }) => {
 
                                     }}>
                                         <Text style={{
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: colors.GREEN,
                                             fontSize: fontSizes.XL,
                                             paddingTop: H * 0.028,
@@ -473,7 +473,7 @@ const UserProfile = ({ navigation }) => {
                                     }}
                                     >
                                         <Text style={{
-                                            fontFamily: fontFamily.bold,
+                                            ...fontFamily.bold,
                                             color: "red",
                                             fontSize: fontSizes.XL,
                                             paddingTop: H * 0.028,

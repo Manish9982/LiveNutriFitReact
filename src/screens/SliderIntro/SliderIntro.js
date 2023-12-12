@@ -23,14 +23,14 @@ import Loader from '../../assets/components/Loader';
 
 //lang chnge
 const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
+    en: english,
+    hi: hindi,
 });
 
 
 
 const SliderIntro = ({ navigation }) => {
-     const [loader, setLoader] = useState(false)
+    const [loader, setLoader] = useState(false)
 
     const progress = useSharedValue(0)
     const scale = useSharedValue(0)
@@ -43,26 +43,26 @@ const SliderIntro = ({ navigation }) => {
     useEffect(() => { getLanguge() }, [isFocused])
 
 
-  //lng
-  const getLanguge = async () => {
-    setLoader(true)
-    const lang = await getDataFromLocalStorage("lang")
+    //lng
+    const getLanguge = async () => {
+        setLoader(true)
+        const lang = await getDataFromLocalStorage("lang")
 
-    if (lang == "en") {
-      changeLaguagee('en')
-    } else {
-      changeLaguagee('hi')
+        if (lang == "en") {
+            changeLaguagee('en')
+        } else {
+            changeLaguagee('hi')
+
+        }
+
+        setLoader(false)
 
     }
 
-    setLoader(false)
 
-  }
-
-
-  const changeLaguagee = (languageKey) => {
-    strings.setLanguage(languageKey)
-  }
+    const changeLaguagee = (languageKey) => {
+        strings.setLanguage(languageKey)
+    }
 
 
     const reanimatedStyle = useAnimatedStyle(() => {
@@ -121,8 +121,8 @@ const SliderIntro = ({ navigation }) => {
 
     }
     const returnStyle = (num) => {
-        
-       if (num == 0) {
+
+        if (num == 0) {
             return styles.image3
         }
         else if (num == 1) {
@@ -135,7 +135,7 @@ const SliderIntro = ({ navigation }) => {
 
         return (
             <View style={styles.slide}>
-                <LinearGradient colors={(index == 0) || (index == 2) ? [colors.GREEN, "white", "white"] : ["white", "white"]}
+                <LinearGradient colors={(index == 1) ? [colors.GREEN, "white", "white"] : ["white", "white"]}
                     style={styles.slide}>
 
                     {index == 0 ?
@@ -156,9 +156,9 @@ const SliderIntro = ({ navigation }) => {
                             }}>
                                 <Logo />
                             </View>
-                            <LottieView 
-                          
-                            style={returnStyle(index)}
+                            <LottieView
+
+                                style={returnStyle(index)}
                                 source={item.image}
                                 autoPlay loop />
                         </>
@@ -211,7 +211,7 @@ const SliderIntro = ({ navigation }) => {
                             <View style={{
                                 position: "absolute",
                                 alignSelf: "center",
-                                top: H * 0.14,
+                                top: H * 0.06,
                                 zIndex: 2,
                             }}>
                                 <Logo />
@@ -221,8 +221,10 @@ const SliderIntro = ({ navigation }) => {
                                     source={require('../../assets/animations/74389-weight-loss-progress.json')}
                                     autoPlay loop />
                             </Animated.View>
-                            <Text style={[styles.mantraSubheading, { marginTop: H * 0.07,
-                                 paddingTop: H * 0.02 }]}>{strings.GetNotified}</Text>
+                            <Text style={[styles.mantraSubheading, {
+                                marginTop: H * 0.17,
+                                paddingTop: H * 0.02
+                            }]}>{strings.GetNotified}</Text>
                             <Text style={[[styles.mantraSubheading,
                             {
                                 // color: "silver",
@@ -238,7 +240,7 @@ const SliderIntro = ({ navigation }) => {
 
                     {index == 0 ?
                         <>
-                           
+
                             <Text style={{
                                 ...fontFamily.bold,
                                 color: colors.FONT_BLACK,
@@ -247,7 +249,6 @@ const SliderIntro = ({ navigation }) => {
                                 marginTop: H * 0.05,
                                 //alignSelf: "center",
                                 fontSize: fontSizes.XL,
-                                lineHeight: H * 0.03,
                                 marginLeft: W * 0.2
                             }}> <AntDesign name="checkcircle" size={20} color={"green"} /> {strings.NoCalorieCounting}
                             </Text>
@@ -259,7 +260,6 @@ const SliderIntro = ({ navigation }) => {
                                 marginTop: H * 0.03,
                                 // alignSelf: "center",
                                 fontSize: fontSizes.XL,
-                                lineHeight: H * 0.03,
                                 marginLeft: W * 0.2
                             }}> <AntDesign name="checkcircle" size={20} color={"green"} /> {strings.NoFillingFoodLogs}
                             </Text>
@@ -271,11 +271,10 @@ const SliderIntro = ({ navigation }) => {
                                 marginTop: H * 0.03,
                                 // alignSelf: "center",
                                 fontSize: fontSizes.XL,
-                                lineHeight: H * 0.03,
                                 marginLeft: W * 0.2
                             }}> <AntDesign name="checkcircle" size={20} color={"green"} /> {strings.NoGym}
                             </Text>
-                            
+
                             <Text style={{
                                 ...fontFamily.bold,
                                 color: colors.FONT_BLACK,
@@ -284,7 +283,6 @@ const SliderIntro = ({ navigation }) => {
                                 marginTop: H * 0.03,
                                 //alignSelf: "center",
                                 fontSize: fontSizes.XL,
-                                lineHeight: H * 0.03,
                                 marginLeft: W * 0.2
                             }}> <AntDesign name="checkcircle" size={20} color={"green"} /> {strings.NoFadDiet}
                             </Text>
@@ -292,7 +290,7 @@ const SliderIntro = ({ navigation }) => {
                         </>
                         : null}
 
-                        
+
                 </LinearGradient>
             </View>)
     }
@@ -321,22 +319,22 @@ const SliderIntro = ({ navigation }) => {
     return (
 
         loader
-        ?
-        <>
-            <Loader />
-        </>
-        :
-        <View style={styles.mainContainer}>
-            <StatusBar backgroundColor={colors.GREEN} />
-            <AppIntroSlider renderItem={renderItem}
-                data={slides}
-                onDone={onDone}
-                renderNextButton={renderNextButton}
-                activeDotStyle={styles.activeDotStyle}
-                renderDoneButton={renderDoneButton}
-                onSlideChange={(index) => { index == 1 ? startAnimation() : null }}
-            />
-        </View>
+            ?
+            <>
+                <Loader />
+            </>
+            :
+            <View style={styles.mainContainer}>
+                <StatusBar backgroundColor={colors.GREEN} />
+                <AppIntroSlider renderItem={renderItem}
+                    data={slides}
+                    onDone={onDone}
+                    renderNextButton={renderNextButton}
+                    activeDotStyle={styles.activeDotStyle}
+                    renderDoneButton={renderDoneButton}
+                    onSlideChange={(index) => { index == 1 ? startAnimation() : null }}
+                />
+            </View>
     )
 }
 
@@ -369,7 +367,7 @@ const styles = StyleSheet.create({
         marginTop: H * 0.3,
         lineHeight: H * 0.043,
         marginLeft: W * 0.06,
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         alignSelf: "center"
     },
     nextButton:
@@ -396,7 +394,7 @@ const styles = StyleSheet.create({
     text2:
     {
         textDecorationLine: "underline",
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         position: "absolute",
         textAlign: "center",
         fontSize: fontSizes.XXL,
@@ -418,7 +416,7 @@ const styles = StyleSheet.create({
         width: W * 0.8,
         lineHeight: H * 0.03,
         color: colors.FONT_BLACK,
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         textAlign: "center"
     },
     getStartedButton:
@@ -456,14 +454,14 @@ const styles = StyleSheet.create({
     textOfPros:
     {
         color: colors.FONT_BLACK,
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         width: W * 0.75,
         fontSize: fontSizes.XL,
         lineHeight: H * 0.026
     },
     websiteFonts:
     {
-        fontFamily: "Montserrat-SemiBold",
+        ...fontFamily.bold,
         position: "absolute",
         top: H * 0.65,
         left: W * 0.1,

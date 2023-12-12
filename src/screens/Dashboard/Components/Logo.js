@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Platform } from 'react-native'
 import React from 'react'
 import { H } from '../../../colorSchemes/ColorSchemes'
 
@@ -10,6 +10,7 @@ const Logo = () => {
                 style={{
                     height: H * 0.09,
                     aspectRatio: 29 / 11,
+                    resizeMode: Platform.OS == "ios" ? 'contain' : 'cover'
                 }} />
         </View>
     )
