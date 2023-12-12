@@ -1,21 +1,43 @@
 import { View, TouchableOpacity, ScrollView, Image, StyleSheet, ToastAndroid, FlatList } from 'react-native'
-import React, { useEffect, useState, useContext } from 'react'
-import { ActivityIndicator, RadioButton, Text, TextInput } from 'react-native-paper'
+import React, { useEffect, useState, useContext, useCallback } from 'react'
+import { ActivityIndicator, Checkbox, RadioButton, Text, TextInput } from 'react-native-paper'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
-import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../colorSchemes/ColorSchemes'
+import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W, convertTimestampToYYYYMMDD, formatDate } from '../../colorSchemes/ColorSchemes'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import HeaderForSubmissionScreens from '../Dashboard/BottomTabs/Stats/HeaderForSubmissionScreens'
 import DataContext from '../../context/DataContext'
 import { useIsFocused } from '@react-navigation/native'
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
+import Customloader from '../../assets/components/Customloader'
+import DateTimePicker from '@react-native-community/datetimepicker';
+import CustomAccordion from '../../assets/components/CustomAccordion'
 
 
 
+function getTimestamp10YearsAgo() {
+  // Get the current date
+  const currentDate = new Date();
 
+  // Subtract 10 years from the current date
+  const tenYearsAgo = new Date(currentDate);
+  tenYearsAgo.setFullYear(currentDate.getFullYear() - 10);
 
+  // Return the timestamp in milliseconds
+  return tenYearsAgo?.getTime();
+}
+
+const OPTION1 = [
+  "No restrictions here",
+  "No dairy",
+  "No Egg",
+  "No Meat",
+  "No Fish",
+  "No Nuts",
+  "No Gluten/Wheat"
+]
 
 //lang chnge
 const strings = new LocalizedStrings({
@@ -38,6 +60,11 @@ const EditProfile = ({ navigation }) => {
   const [veg, setVeg] = useState(true)
   const [textOfUnit, setTextOfUnit] = useState("Feet/In")
   const [exerciseLevel, setExerciseLevel] = useState("beginner")
+  const [showCalendar, setShowCalendar] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showOptionsForFoodType, setShowOptionsForFoodType] = useState(false)
+  const [foodType, setFoodType] = useState([])
+  const [goal, setGoal] = useState([])
 
   const { NglobalBmi, Ncrrnt, Ntrgt, Nht, Nfeet, Ninch } = useContext(DataContext)
   const [globalBmi, setGlobalBmi] = NglobalBmi
@@ -57,6 +84,20 @@ const EditProfile = ({ navigation }) => {
 
   useEffect(() => { getLanguge() }, [isFocused])
 
+
+  const handleDateChange = useCallback((event, newDate) => {
+    setShowCalendar(false)
+    setage(convertTimestampToYYYYMMDD(newDate))
+    setSelectedDate(newDate)
+  }, [])
+
+  const toggleAccordion = () => {
+    setShowOptionsForFoodType(prev => !prev);
+  };
+
+  const handleDOB = () => {
+    setShowCalendar(prev => !prev)
+  }
 
   //lng
   const getLanguge = async () => {
@@ -96,53 +137,63 @@ const EditProfile = ({ navigation }) => {
 
   const updateDetails = async () => {
 
-    if (textOfUnit == "Feet/In") {
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData();
-      formdata.append("id", JSON.parse(temp));
-      formdata.append("user_name", user_name);
-      formdata.append("weight", weight);
-      formdata.append("age", age);
-      formdata.append("height", ((Number.parseInt(feet, 10)) * 30.48) + (Number.parseInt(inch, 10) * 2.54));
-      // formdata.append("email", email);
-      // formdata.append("mobile", mobile);
-      formdata.append("address", address);
-      formdata.append("food_type", checked);
-      formdata.append("intensity", exerciseLevel)
-      const result = await PostApiData('userprofileupdate', formdata)
-      console.log(result)
-      if (result.status == 200) {
-        ShortToast('Success!', 'success', '')
-        setTimeout(() => { navigation.goBack() }, 1000)
-      }
-    }
-    else {
-      const temp = await getDataFromLocalStorage('user_id')
-      console.log('temp---->', JSON.parse(temp))
-      var formdata = new FormData();
-      formdata.append("id", JSON.parse(temp));
-      formdata.append("user_name", user_name);
-      formdata.append("weight", weight);
-      formdata.append("age", age);
-      formdata.append("height", height);
-      formdata.append("mobile", mobile);
-      formdata.append("address", address);
-      formdata.append("food_type", checked);
-      formdata.append("intensity", exerciseLevel)
-      {/*
-    formdata.append("profile_pic", {
-      uri: image?.assets[0]?.uri,
-      type: image?.assets[0]?.type,
-      name: image?.assets[0]?.fileName,
-    })*/}
 
-      const result = await PostApiData('userprofileupdate', formdata)
-      console.log(result)
-      if (result.status == 200) {
-        ShortToast('Success!', 'success', '')
-        setTimeout(() => { navigation.goBack() }, 1000)
+    if (feet == "" || inch == "") {
+      ShortToast('Feet or Inch can not be empty', 'Error', '')
+    } else {
+      setLoader(true)
+      if (textOfUnit == "Feet/In") {
+        const temp = await getDataFromLocalStorage('user_id')
+        var formdata = new FormData();
+        formdata.append("id", JSON.parse(temp));
+        formdata.append("user_name", user_name);
+        formdata.append("weight", weight);
+        formdata.append("age", age);
+        formdata.append("height", ((Number.parseInt(feet, 10)) * 30.48) + (Number.parseInt(inch, 10) * 2.54));
+        formdata.append("address", address);
+        formdata.append("goal", goal?.join(","))
+        // formdata.append("intensity", exerciseLevel)
+        formdata.append("food_type", foodType?.join(","));
+        formdata.append("intensity", "")
+        const result = await PostApiData('userprofileupdate', formdata)
+        console.log(result)
+        if (result.status == 200) {
+          ShortToast('Success!', 'success', '')
+          setTimeout(() => { navigation.goBack() }, 1000)
+        }
+      }
+      else {
+        const temp = await getDataFromLocalStorage('user_id')
+        console.log('temp---->', JSON.parse(temp))
+        var formdata = new FormData();
+        formdata.append("id", JSON.parse(temp));
+        formdata.append("user_name", user_name);
+        formdata.append("weight", weight);
+        formdata.append("age", age);
+        formdata.append("height", height);
+        formdata.append("mobile", mobile);
+        formdata.append("address", address);
+        formdata.append("goal", goal?.join(","))
+        formdata.append("food_type", foodType?.join(","));
+        formdata.append("intensity", "")
+        {/*
+      formdata.append("profile_pic", {
+        uri: image?.assets[0]?.uri,
+        type: image?.assets[0]?.type,
+        name: image?.assets[0]?.fileName,
+      })*/}
+
+        const result = await PostApiData('userprofileupdate', formdata)
+        console.log(result)
+        if (result.status == 200) {
+          ShortToast('Success!', 'success', '')
+          setTimeout(() => { navigation.goBack() }, 1000)
+        }
       }
     }
+
+
+
   }
 
   const getNumberForWorkoutIntensity = (t) => {
@@ -157,52 +208,47 @@ const EditProfile = ({ navigation }) => {
     }
   }
 
-  const foodTypeQsnAndOptionAPI = async () => {
-    setLoader(true)
-    var formdata = new FormData();
-    const temp = await getDataFromLocalStorage('user_id')
-    const usertype = await getDataFromLocalStorage('user_type')
+  const handleOptionPress = (item) => {
 
-    //formdata.append("user_id", JSON.parse(temp));
-    formdata.append("user_id", "463");
-    formdata.append("question", "29");
-    formdata.append("answer", "Weight Loss")
-    formdata.append("user_type", "1"); // chnged from usertype
-    formdata.append("language", "1")
+    //setAnswer(item)
 
-
-    const result = await PostApiData('first_answer_submit', formdata)
-
-    console.log("formdataRequest========================================", formdata)
-
-    setData(result)
-
-    setLoader(false)
   }
 
+  const renderOptions = ({ item }) => {
+    return (
 
+      <TouchableOpacity
+        style={[styles.optionlayout, {
+          //backgroundColor: answer?.includes(item) ? colors.GREEN : "white"
+        }]}
+        onPress={() => {
+          handleOptionPress(item)
+        }}>
+        <View style={{
 
-
-
-
-
-
-
-
-
-
-
-
-
+          marginLeft: W * 0.1,
+        }}>
+          <Checkbox
+            //status={answer?.includes(item) ? 'checked' : 'unchecked'}
+            color={"white"} />
+        </View>
+        <Text style={[styles.optionText2,
+        {
+          //color: answer?.includes(item) ? "white" : "black"
+        }]}>{item}</Text>
+      </TouchableOpacity>
+    )
+  }
 
   const getDataFromApi = async () => {
+
     const temp = await getDataFromLocalStorage('user_id')
     var formdata = new FormData();
     formdata.append("id", JSON.parse(temp));
 
     const result = await PostApiData('userprofile', formdata)
     console.log(result)
-    // setMyData(result)
+    setMyData(result)
     setFeet(toFeet(result?.data[0]?.height))
     setInch(toInches(result?.data[0]?.height))
     setheight(result?.data[0]?.height == null ? "" : result?.data[0]?.height)
@@ -225,75 +271,22 @@ const EditProfile = ({ navigation }) => {
     }
   }
 
-
-
-  // const renderItem = ({ item }) => {
-  //   console.log('GAURAV---->', console.log(item))
-
-  //   return (
-  //     <View style={{
-  //       backgroundColor: "red"
-  //     }}>
-  //       <TouchableOpacity
-  //         style={{
-  //           borderRadius: 5,
-  //           margin: 10,
-  //           width: W * 0.85,
-  //           //height: H * 0.1,
-  //           justifyContent: "center",
-  //          // backgroundColor: getColor(item),
-  //           backgroundColor: "red",
-  //           alignItems: "center",
-  //           alignSelf: "center",
-  //           flexDirection: "row",
-  //           paddingVertical: H * 0.025,
-  //           paddingHorizontal: W * 0.0
-
-  //         }}
-  //         onPress={() => {
-  //         //  handleOptionPress(item)
-  //         }}>
-  //         {/* {(data?.question_type.question_type == "2") ?
-  //           <View style={{
-
-  //             marginLeft: W * 0.1,
-  //           }}>
-  //             <Checkbox
-  //               status={arr.includes(item) ? 'checked' : 'unchecked'}
-  //               color={"white"} />
-  //           </View>
-  //           : null} */}
-
-  //         <Text style={{
-  //           width: W * 0.65,
-  //           fontFamily: "Montserrat-Medium",
-  //           color: getColorForText(item),
-  //           textAlign: "center",
-  //           marginRight: (data?.question_type == "2") ? W * 0.1 : null,
-
-  //         }}>{item}</Text>
-  //       </TouchableOpacity>
-  //     </View >
-  //   )
-  // }
-
-
-
-
-
-
-
+  console.log("goal", goal)
+  console.log("food type from API ======>", myData?.data[0]?.food_type?.answer)
 
   return (
     loader ?
       <View style={styles.activityIndicator}>
-        <ActivityIndicator size={"large"}
-          color={colors.GREEN} />
+        {/* <ActivityIndicator size={"large"}
+          color={colors.GREEN} /> */}
+
+        <Customloader></Customloader>
+
       </View>
       :
       <View>
         <HeaderForSubmissionScreens Title={strings.EditProfile} />
-        < ScrollView contentContainerStyle={{ paddingVertical: H * 0.06 }} >
+        < ScrollView contentContainerStyle={{ paddingBottom : H * 0.15 }} >
           {/* <Image source={{ uri: image == null ? myData?.data[0]?.profile_pic : image.assets[0]?.uri }}
             style={styles.profilePic} />
           <TouchableOpacity
@@ -301,6 +294,9 @@ const EditProfile = ({ navigation }) => {
             <Text style={styles.textChangePhoto}>Change Photo</Text>
           </TouchableOpacity>
           */}
+
+
+
           <View style={{ flexDirection: "row" }}>
             <Image source={require('../../assets/icons/user100.png')}
               style={{
@@ -310,6 +306,22 @@ const EditProfile = ({ navigation }) => {
                 width: H * 0.035,
               }}
             />
+
+            {
+              showCalendar &&
+              <DateTimePicker
+                value={selectedDate}
+                mode="date"
+                display="default"
+                onChange={(a, t) => handleDateChange(a, t)}
+                //maximumDate={getTimestamp10YearsAgo()}
+              //onTouchCancel={() =>setShowCalendar(prev => !prev)}
+
+              />
+
+            }
+
+
             <View>
               <Text style={styles.text}>{strings.Name}</Text>
               <TextInput
@@ -323,7 +335,27 @@ const EditProfile = ({ navigation }) => {
 
 
           <View style={{ flexDirection: "row" }}>
-            <Image source={require('../../assets/icons/location100.png')}
+            {/* <Image source={require('../../assets/icons/location100.png')}
+              style={{
+                top: H * 0.017,
+                left: W * 0.05,
+                height: H * 0.035,
+                width: H * 0.035,
+              }}
+            /> */}
+            {/* <View>
+              <Text style={styles.text}>{strings.Location}</Text>
+              <TextInput
+                onChangeText={(tex) => { setaddress(tex) }}
+                value={address}
+                underlineColor={"transparent"}
+                activeUnderlineColor={colors.GREEN}
+                style={styles.textInput}
+              /></View> */}
+          </View>
+
+          <View style={{ flexDirection: "row" }}>
+            <Image source={require('../../assets/icons/goal.png')}
               style={{
                 top: H * 0.017,
                 left: W * 0.05,
@@ -332,14 +364,68 @@ const EditProfile = ({ navigation }) => {
               }}
             />
             <View>
-              <Text style={styles.text}>{strings.Location}</Text>
-              <TextInput
-                onChangeText={(tex) => { setaddress(tex) }}
-                value={address}
-                underlineColor={"transparent"}
-                activeUnderlineColor={colors.GREEN}
-                style={styles.textInput}
-              /></View>
+              <Text style={styles.text}>Goal </Text>
+              <View style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginVertical: H * 0.01,
+              }}>
+
+                {/* <View style={{
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "white",
+      borderRadius: 8,
+      width: W * 0.35,
+      paddingVertical: H * 0.02,
+      justifyContent: "center"
+    }}>
+      <RadioButton
+        value="true"
+        status={checked === 'true' ? 'checked' : 'unchecked'}
+        onPress={() => {
+          setChecked('true')
+          ShortToast("Changing your food type will change your meal plan.", 'warning', '')
+        }}
+      // onPress={() => { ShortToast("We don't support changing food type for now. Feature will be available soon", 'warning', '') }}
+      />
+      <Text>Veg</Text>
+
+    </View>
+
+    <View style={{
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "white",
+      borderRadius: 8,
+      width: W * 0.35,
+      paddingVertical: H * 0.02,
+      marginLeft: W * 0.15,
+      justifyContent: "center"
+    }}>
+      <RadioButton
+        value="false"
+        status={checked === 'false' ? 'checked' : 'unchecked'}
+        onPress={() => {
+          setChecked('false')
+          ShortToast("Changing your food type will change your meal plan.", 'warning', '')
+        }}
+
+      //onPress={() => { ShortToast("We don't support changing food type for now. Feature will be available soon", 'warning', '') }}
+      />
+      <Text>Non-Veg</Text>
+    </View> */}
+                <View>
+                  <CustomAccordion
+                    onSelectionChange={setGoal}
+                    title={myData?.data[0]?.goal?.question}
+                    options={myData?.data[0]?.goal?.option}
+                    answers={myData?.data[0]?.goal?.answer}
+                  />
+                </View>
+
+              </View>
+            </View>
           </View>
 
           <View style={{ flexDirection: "row" }}>
@@ -358,172 +444,65 @@ const EditProfile = ({ navigation }) => {
                 justifyContent: "space-between",
                 marginVertical: H * 0.01,
               }}>
-                <View style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  borderRadius: 8,
-                  width: W * 0.35,
-                  paddingVertical: H * 0.02,
-                  justifyContent: "center"
-                }}>
-                  <RadioButton
-                    value="true"
-                    status={checked === 'true' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                      setChecked('true')
-                      ShortToast("Changing your food type will change your meal plan.", 'warning', '')
-                    }}
-                  // onPress={() => { ShortToast("We don't support changing food type for now. Feature will be available soon", 'warning', '') }}
+
+                {/* <View style={{
+       flexDirection: "row",
+       alignItems: "center",
+       backgroundColor: "white",
+       borderRadius: 8,
+       width: W * 0.35,
+       paddingVertical: H * 0.02,
+       justifyContent: "center"
+     }}>
+       <RadioButton
+         value="true"
+         status={checked === 'true' ? 'checked' : 'unchecked'}
+         onPress={() => {
+           setChecked('true')
+           ShortToast("Changing your food type will change your meal plan.", 'warning', '')
+         }}
+       // onPress={() => { ShortToast("We don't support changing food type for now. Feature will be available soon", 'warning', '') }}
+       />
+       <Text>Veg</Text>
+
+     </View>
+
+     <View style={{
+       flexDirection: "row",
+       alignItems: "center",
+       backgroundColor: "white",
+       borderRadius: 8,
+       width: W * 0.35,
+       paddingVertical: H * 0.02,
+       marginLeft: W * 0.15,
+       justifyContent: "center"
+     }}>
+       <RadioButton
+         value="false"
+         status={checked === 'false' ? 'checked' : 'unchecked'}
+         onPress={() => {
+           setChecked('false')
+           ShortToast("Changing your food type will change your meal plan.", 'warning', '')
+         }}
+
+       //onPress={() => { ShortToast("We don't support changing food type for now. Feature will be available soon", 'warning', '') }}
+       />
+       <Text>Non-Veg</Text>
+     </View> */}
+                <View>
+                  <CustomAccordion
+                    onSelectionChange={setFoodType}
+                    title={myData?.data[0]?.food_type?.question}
+                    options={myData?.data[0]?.food_type?.option}
+                    answers={myData?.data[0]?.food_type?.answer}
                   />
-                  <Text>Veg</Text>
-
-                </View>
-
-
-
-
-
-
-                <View style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  borderRadius: 8,
-                  width: W * 0.35,
-                  paddingVertical: H * 0.02,
-                  marginLeft: W * 0.15,
-                  justifyContent: "center"
-                }}>
-                  <RadioButton
-                    value="false"
-                    status={checked === 'false' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                      setChecked('false')
-                      ShortToast("Changing your food type will change your meal plan.", 'warning', '')
-                    }}
-
-                  //onPress={() => { ShortToast("We don't support changing food type for now. Feature will be available soon", 'warning', '') }}
-                  />
-                  <Text>Non-Veg</Text>
                 </View>
 
               </View>
-
-
-              {/* <Text style={styles.text}>{"Question"}</Text>
-
-              <View style={{
-                height: H * 0.55,
-                W: W * 0.9,
-                alignSelf: "center",
-                alignItems: "center",
-                backgroundColor:"red"
-              }}>
-                <FlatList
-                  data={data?.option}
-                  renderItem={renderItem}
-                  keyExtractor={(index) => `${index}`}
-                  persistentScrollbar={true}
-                  //showsVerticalScrollIndicator={true}
-                />
-              </View> */}
-
-            </View>
-
-
-
-
-
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Image source={require('../../assets/icons/exerciseEditProfile.png')}
-              style={{
-                top: H * 0.017,
-                left: W * 0.05,
-                height: H * 0.035,
-                width: H * 0.035,
-              }}
-            />
-            <View>
-              <Text style={styles.text}>{strings.ExcercisesPlan} </Text>
-              <View style={{
-                justifyContent: "space-between",
-                marginVertical: H * 0.01
-              }}>
-                <View style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  borderRadius: 8,
-                  width: W * 0.35,
-                  paddingVertical: H * 0.02,
-                  // justifyContent: "center",
-                  width: W * 0.6,
-                  paddingLeft: W * 0.04
-                }}>
-                  <RadioButton
-                    value="1"
-                    status={exerciseLevel === '1' ? 'checked' : 'unchecked'}
-
-                    onPress={() => {
-                      setExerciseLevel('1')
-                      ShortToast("Changing your workout intensity will change all your exercise plans.", 'warning', '')
-                    }}
-
-                  />
-                  <Text>Beginner</Text>
-
-                </View>
-                <View style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  borderRadius: 8,
-                  width: W * 0.35,
-                  paddingVertical: H * 0.02,
-                  // justifyContent: "center",
-                  width: W * 0.6,
-                  marginTop: H * 0.015,
-                  paddingLeft: W * 0.04
-                }}>
-                  <RadioButton
-                    value="3"
-                    status={exerciseLevel === '3' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                      setExerciseLevel('3')
-                      ShortToast("Changing your workout intensity will change all your exercise plans.", 'warning', '')
-                    }}
-                  // onPress={() => { ShortToast("We don't support changing workout intensity for now. Feature will be available soon", 'warning', '') }}
-                  />
-                  <Text>Intermediate</Text>
-                </View>
-                <View style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  borderRadius: 8,
-                  width: W * 0.35,
-                  paddingVertical: H * 0.02,
-                  // justifyContent: "center",
-                  width: W * 0.6,
-                  marginTop: H * 0.015,
-                  paddingLeft: W * 0.04
-                }}>
-                  <RadioButton
-                    value="2"
-                    status={exerciseLevel === '2' ? 'checked' : 'unchecked'}
-                    //onPress={() => { ShortToast("We don't support changing workout intensity for now. Feature will be available soon", 'warning', '') }}
-                    onPress={() => {
-                      setExerciseLevel('2')
-                      ShortToast("Changing your workout intensity will change all your exercise plans.", 'warning', '')
-                    }}
-                  />
-                  <Text>Advance</Text>
-                </View>
-              </View>
             </View>
           </View>
+
+
           <View style={{ flexDirection: "row" }}>
             <Image source={require('../../assets/icons/height100.png')}
               style={{
@@ -549,7 +528,22 @@ const EditProfile = ({ navigation }) => {
                 {textOfUnit == "Feet/In" ?
                   <>
                     <TextInput
-                      onChangeText={(t) => { setFeet(t) }}
+                      // onChangeText={(t) => { setFeet(t) }}
+                      onChangeText={(t) => {
+                        if (t == " ")
+                          ShortToast("Blank Spaces Not Allowed", 'error', '')
+                        else if (t == '0') {
+                          ShortToast("Height can't be Zero", 'error', '')
+                          setFeet("1")
+                        }
+                        else if ((t > 8) || (t == ".") || (t == ",") || (t == "-") || (t == " ")) {
+                          ShortToast("Height is not Valid", 'error', '')
+                        }
+                        else {
+                          setFeet(t.toString())
+                          //  setAnswer(() => { return ((Number.parseInt(t, 10) * 30.48) + (Number.parseInt(inch, 10) * 2.54)).toString() })
+                        }
+                      }}
                       value={feet}
                       maxLength={1}
                       keyboardType={"number-pad"}
@@ -563,7 +557,7 @@ const EditProfile = ({ navigation }) => {
                     />
                     <Text style={{
                       marginLeft: W * 0.02,
-                      ...fontFamily.bold
+                      fontFamily: fontFamily.bold
                     }}>'</Text>
                     <TextInput
                       onChangeText={(t) => { setInch(t) }}
@@ -580,7 +574,7 @@ const EditProfile = ({ navigation }) => {
 
                     />
                     <Text style={{
-                      ...fontFamily.bold,
+                      fontFamily: fontFamily.bold,
                       marginLeft: W * 0.02
                     }}>"</Text>
 
@@ -617,7 +611,7 @@ const EditProfile = ({ navigation }) => {
                   }}>
                   <Text style={{
                     fontSize: fontSizes.SM,
-                    ...fontFamily.bold,
+                    fontFamily: fontFamily.bold,
                   }}>
                     {textOfUnit}
                   </Text>
@@ -662,15 +656,26 @@ const EditProfile = ({ navigation }) => {
               }}
             />
             <View>
-              <Text style={styles.text}>{strings.Age} (in years)</Text>
-              <TextInput
+              <Text style={styles.text}>DOB</Text>
+
+
+
+              < TouchableOpacity
+                onPress={handleDOB}
+                style={styles.textdatestyle} >
+
+                <Text style={styles.texttyle}>{formatDate(age) || "Enter DOB"}</Text>
+
+              </TouchableOpacity >
+              {/* <TextInput
                 onChangeText={(tex) => { setage(tex) }}
                 value={age}
                 underlineColor={"transparent"}
                 activeUnderlineColor={colors.GREEN}
                 style={styles.textInput}
                 keyboardType="numeric"
-              /></View>
+              /> */}
+            </View>
           </View>
 
           <TouchableOpacity style={styles.updateButton}
@@ -699,8 +704,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: 'black',
     backgroundColor: 'white',
-    ...fontFamily.bold,
+    fontFamily: "Montserrat-SemiBold",
     elevation: 3,
+  },
+  textdatestyle:
+  {
+    height: H * 0.06,
+    width: W * 0.85,
+    //fontSize: fontSizes.LAR,
+    borderRadius: 8,
+    color: 'black',
+    backgroundColor: 'white',
+    fontFamily: "Montserrat-SemiBold",
+    elevation: 3,
+    justifyContent: "center",
+  },
+  texttyle:
+  {
+    marginLeft: W * 0.04
   },
   profilePic:
   {
@@ -714,7 +735,7 @@ const styles = StyleSheet.create({
   },
   text:
   {
-    ...fontFamily.bold,
+    fontFamily: fontFamily.bold,
     color: 'black',
     marginLeft: W * 0.08,
     marginVertical: H * 0.02
@@ -738,6 +759,31 @@ const styles = StyleSheet.create({
     width: W * 0.85,
     alignSelf: 'center',
     elevation: 5,
+  },
+  optionText: {
+    width: W * 0.65,
+    fontFamily: "Montserrat-Medium",
+    textAlign: "center",
+    fontSize: fontSizes.XL
+  },
+
+  optionlayout: {
+    borderRadius: 8,
+    margin: 10,
+    width: W * 0.85,
+    borderColor: "lightgray",
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    flexDirection: "row",
+    paddingVertical: H * 0.025,
+    paddingHorizontal: W * 0.0
+  },
+  optionText2: {
+    width: W * 0.65,
+    fontFamily: "Montserrat-Medium",
+    fontSize: fontSizes.XL, marginLeft: 10
   },
 })
 

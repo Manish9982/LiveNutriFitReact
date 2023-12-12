@@ -32,22 +32,9 @@ const wait = (timeout) => {
 
 
 const UserProfile = ({ navigation }) => {
-
-    const [dataFromApi, setDataFromApi] = useState(null)
-    const [loader, setLoader] = useState(false)
-    const [refreshing, setRefreshing] = useState(false)
-    const [lastRefresh, setLastRefresh] = useState(null)
-    const [bioModal, setBioModal] = useState(false)
-    const [camVisible, setCamVisible] = useState(false)
-    const [image, setImage] = useState(null)
-    const [text, setText] = useState("")
-
     const isFocused = useIsFocused()
     useEffect(() => { getLanguge() }, [isFocused])
-    useEffect(() => {
-        getDataForUserProfile()
-        requestCameraPermission()
-    }, [isFocused])
+
 
     //lng
     const getLanguge = async () => {
@@ -93,6 +80,22 @@ const UserProfile = ({ navigation }) => {
 
     }
 
+
+
+
+
+    useEffect(() => {
+        getDataForUserProfile()
+        requestCameraPermission()
+    }, [isFocused])
+    const [dataFromApi, setDataFromApi] = useState(null)
+    const [loader, setLoader] = useState(true)
+    const [refreshing, setRefreshing] = useState(false)
+    const [lastRefresh, setLastRefresh] = useState(null)
+    const [bioModal, setBioModal] = useState(false)
+    const [camVisible, setCamVisible] = useState(false)
+    const [image, setImage] = useState(null)
+    const [text, setText] = useState("")
     const date = new Date()
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -220,22 +223,19 @@ const UserProfile = ({ navigation }) => {
         formdata.append("id", JSON.parse(temp));
         const result = await PostApiData('userprofile', formdata)
         console.log(result)
-        if (result?.status == "200") {
-            setDataFromApi(result)
-            setLastRefresh(`${(date.getHours()).toString().padStart(2, 0)}:${(date.getMinutes()).toString().padStart(2, 0)}`)
-        }
-        else {
-            ShortToast("error", "msg")
-        }
+        setDataFromApi(result)
         setLoader(false)
+        setLastRefresh(`${(date.getHours()).toString().padStart(2, 0)}:${(date.getMinutes()).toString().padStart(2, 0)}`)
     }
+
+    console.log("dataFromApi?.data?.[0]?.goal?.answer====>", dataFromApi?.data?.[0]?.goal)
 
     return (
         <View>
             <StatusBar backgroundColor={colors.GREEN} />
             <Appbar.Header style={styles.appBar}>
                 <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
-                <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>
+                <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, fontFamily: "Montserrat-SemiBold" }}>
                     {strings.MyProfile}</Text>} />
 
             </Appbar.Header>
@@ -257,7 +257,7 @@ const UserProfile = ({ navigation }) => {
                         />
                     }
                 >
-                    <View style={{ flexDirection: 'row', }}>
+                    <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
                         <TouchableOpacity onPress={() => { setCamVisible(true) }}>
                             <Image source={{ uri: dataFromApi?.data[0].profile_pic }}
                                 style={styles.userImageContainer}
@@ -285,7 +285,7 @@ const UserProfile = ({ navigation }) => {
                                     elevation: 8
                                 }}>
                                     <Text style={{
-                                        ...fontFamily.bold,
+                                        fontFamily: fontFamily.bold,
                                         top: -H * 0.06,
                                         left: W * 0.05,
                                         fontSize: fontSizes.XXL
@@ -305,7 +305,7 @@ const UserProfile = ({ navigation }) => {
                                             }}>
                                                 <AntDesign name="camera" size={50} color={"silver"} />
                                                 <Text style={{
-                                                    ...fontFamily.bold,
+                                                    fontFamily: fontFamily.bold,
                                                     fontSize: fontSizes.MED
                                                 }}>Camera</Text>
                                             </View>
@@ -318,7 +318,7 @@ const UserProfile = ({ navigation }) => {
                                             }}>
                                                 <AntDesign name="picture" size={50} color={"silver"} />
                                                 <Text style={{
-                                                    ...fontFamily.bold,
+                                                    fontFamily: fontFamily.bold,
                                                     fontSize: fontSizes.MED
                                                 }}>Gallery</Text>
                                             </View>
@@ -328,7 +328,7 @@ const UserProfile = ({ navigation }) => {
                                     >
                                         <Text style={{
                                             textAlign: "right",
-                                            ...fontFamily.bold,
+                                            fontFamily: fontFamily.bold,
                                             color: "red",
                                             top: H * 0.055,
                                             left: -W * 0.06
@@ -340,7 +340,7 @@ const UserProfile = ({ navigation }) => {
 
                         <View style={{ justifyContent: 'center' }}>
                             <Text style={styles.text2}>{dataFromApi?.data[0].name}</Text>
-                            <Text style={styles.text1}>{dataFromApi?.data[0].food_type == true ? "Vegetarian" : "Non-Vegetarian"}</Text>
+                            <Text style={styles.text1}>{dataFromApi?.data?.[0]?.food_profile}</Text>
                         </View>
                     </View>
 
@@ -348,7 +348,7 @@ const UserProfile = ({ navigation }) => {
                     <>
                         {dataFromApi?.data[0].mobile == null || dataFromApi?.data[0].mobile == "" ? null :
                             <>
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
                                     <Image source={require('../../assets/icons/phone-call.png')}
                                         style={styles.userIconContainer} />
                                     <Text style={styles.text1}>{dataFromApi?.data[0].mobile}</Text>
@@ -357,9 +357,11 @@ const UserProfile = ({ navigation }) => {
                     </>
 
                     <>
-                        {(dataFromApi?.data[0]?.email == "null" || dataFromApi?.data[0].email == null || dataFromApi?.data[0].email == "") ? null :
+                        {(dataFromApi?.data[0]?.email == "null" ||
+                            dataFromApi?.data[0].email == null ||
+                            dataFromApi?.data[0].email == "") ? null :
                             <>
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row', marginTop: H * 0.04 }}>
                                     <Image source={require('../../assets/icons/email.png')}
                                         style={styles.userIconContainer} />
                                     <Text style={styles.text1}>{dataFromApi?.data[0].email}</Text>
@@ -370,28 +372,30 @@ const UserProfile = ({ navigation }) => {
 
                     </>
                     <Text style={{
-                        position: "absolute",
-                        left: W * 0.42,
-                        top: H * 0.2,
+
+                        top: H * 0.04,
                         width: W * 0.57,
-                        ...fontFamily.bold,
+                        fontFamily: fontFamily.bold,
                         borderWidth: 0.5,
+                        alignSelf: 'center',
+                        textAlign: 'center',
                         paddingHorizontal: W * 0.01,
                     }}>{strings.LastUpdatedat} {lastRefresh}</Text>
 
 
 
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', marginTop: H * 0.1 }}>
                         <View style={styles.containersAdjacent}>
-                            <Text style={[styles.text2, { fontSize: fontSizes.XXXL }]}>{dataFromApi?.data[0].total_point}</Text>
+                            <Text style={[styles.text2, { fontSize: fontSizes.XXXL }]}>
+                                {dataFromApi?.data[0].total_point}</Text>
                             <Text style={styles.text1}>{strings.TotalPoints}</Text>
                         </View>
 
                         <View style={styles.containersAdjacent}>
-                            <TouchableOpacity onPress={() => navigationTOScreen()}
+                            {/* <TouchableOpacity onPress={() => navigationTOScreen()}
                                 style={styles.button}>
                                 <Text style={styles.text3}>{strings.Upgrade}</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </View>
                     <Modal visible={bioModal}
@@ -419,7 +423,7 @@ const UserProfile = ({ navigation }) => {
                             }}
                             >
                                 <Text style={{
-                                    ...fontFamily.bold,
+                                    fontFamily: fontFamily.bold,
                                     fontSize: fontSizes.XL,
                                     paddingBottom: H * 0.01,
                                     marginLeft: W * 0.08
@@ -454,7 +458,7 @@ const UserProfile = ({ navigation }) => {
 
                                     }}>
                                         <Text style={{
-                                            ...fontFamily.bold,
+                                            fontFamily: fontFamily.bold,
                                             color: colors.GREEN,
                                             fontSize: fontSizes.XL,
                                             paddingTop: H * 0.028,
@@ -469,7 +473,7 @@ const UserProfile = ({ navigation }) => {
                                     }}
                                     >
                                         <Text style={{
-                                            ...fontFamily.bold,
+                                            fontFamily: fontFamily.bold,
                                             color: "red",
                                             fontSize: fontSizes.XL,
                                             paddingTop: H * 0.028,
@@ -484,17 +488,17 @@ const UserProfile = ({ navigation }) => {
 
 
 
-                    <TouchableOpacity onPress={() => { setBioModal(true) }}>
+                    {/* <TouchableOpacity onPress={() => { setBioModal(true) }}>
                         <View style={{ flexDirection: 'row' }}>
-                            <Image source={require('../../assets/icons/inverted-commas.png')}
-                                style={styles.userIconContainer} />
+                         <Image source={require('../../assets/icons/inverted-commas.png')}
+                                style={styles.userIconContainer} /> 
                             <View>
                                 <Text style={styles.text2}>{strings.Bio}</Text>
-                                <Text style={styles.text1}>{dataFromApi?.data?.[0]?.bio == "" ? "Write something about youself" : dataFromApi?.data?.[0]?.bio}</Text>
+                                <Text style={styles.text1}>{dataFromApi?.data?.[0]?.bio == "" ? "Write something about youself" : dataFromApi?.data?.[0]?.bio}</Text> 
                             </View>
                         </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
+                    </TouchableOpacity> */}
+                    {/* <TouchableOpacity>
                         <View style={{ flexDirection: 'row' }}>
                             <Image source={require('../../assets/icons/pin.png')}
                                 style={styles.userIconContainer} />
@@ -503,9 +507,9 @@ const UserProfile = ({ navigation }) => {
                                 <Text style={styles.text1}>{dataFromApi?.data?.[0].address == null ? "Your Current Location" : dataFromApi?.data[0].address}</Text>
                             </View>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TouchableOpacity onPress={() => { navigation.navigate("editProfile") }}>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
                             <Image source={require('../../assets/icons/about.png')}
                                 style={styles.userIconContainer} />
                             <View>
@@ -515,12 +519,12 @@ const UserProfile = ({ navigation }) => {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
                             <Image source={require('../../assets/icons/report.png')}
                                 style={styles.userIconContainer} />
                             <View>
                                 <Text style={styles.text2}>{strings.goals}</Text>
-                                <Text style={styles.text1}>{dataFromApi?.data?.[0]?.goal}</Text>
+                                <Text style={styles.text1}>{dataFromApi?.data?.[0]?.goal?.answer.join(",")}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -535,14 +539,14 @@ const UserProfile = ({ navigation }) => {
                         </View>
                     </TouchableOpacity>*/}
                     <TouchableOpacity>
-                        <View style={{ flexDirection: 'row' }}>
+                        {/* <View style={{ flexDirection: 'row' }}>
                             <Image source={require('../../assets/icons/credit-card.png')}
                                 style={styles.userIconContainer} />
                             <View>
                                 <Text style={styles.text2}>{strings.PaymentDetails}</Text>
                                 <Text style={styles.text1}>{strings.YourPaymentDetails}</Text>
                             </View>
-                        </View>
+                        </View> */}
                     </TouchableOpacity>
 
                 </ScrollView >
@@ -562,7 +566,6 @@ const styles = StyleSheet.create({
     {
         height: HEIGHT,
         width: WIDTH,
-        justifyContent: 'space-evenly',
         paddingBottom: HEIGHT * 0.1,
 
     },
