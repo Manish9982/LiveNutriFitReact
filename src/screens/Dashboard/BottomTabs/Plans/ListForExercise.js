@@ -22,7 +22,7 @@ import LocalizedStrings from 'react-native-localization';
     });
 
 const ListForExercise = (props) => {
-    useEffect(() => { setLikedExercise(props.Liked) }, [props.Liked])
+    useEffect(() => { console.log("props" ,props), setLikedExercise(props.Liked) }, [props.Liked])
     const { NmyExcercise } = useContext(DataContext)
     const navigation = useNavigation()
 
@@ -73,26 +73,27 @@ const ListForExercise = (props) => {
 
 
     const handlingReplaceMeal = async () => {
+        setVisibleMood(true)
         const userTypee = await getDataFromLocalStorage('user_type')
-        if (JSON.parse(userTypee) == "2") {
-            setVisibleMood(false)
-            Alert.alert(
-                'Alert!',
-               strings.upgradeplanmsg ,
-                [
-                    {
-                        text: strings.Cancel,
-                        onPress: () => console.log("Cancel Pressed"),
-                        style: "cancel"
-                    },
-                    { text: strings.Ok, onPress: () => { navigation.navigate("Upgrade") } }
-                ],
-                { cancelable: false }
-            );
-        } else {
-            setVisibleMood(true)
+        // if (JSON.parse(userTypee) == "2") {
+        //     setVisibleMood(false)
+        //     Alert.alert(
+        //         'Alert!',
+        //        strings.upgradeplanmsg ,
+        //         [
+        //             {
+        //                 text: strings.Cancel,
+        //                 onPress: () => console.log("Cancel Pressed"),
+        //                 style: "cancel"
+        //             },
+        //             { text: strings.Ok, onPress: () => { navigation.navigate("Upgrade") } }
+        //         ],
+        //         { cancelable: false }
+        //     );
+        // } else {
+        //     setVisibleMood(true)
 
-        }
+        // }
 
     }
 
@@ -187,10 +188,10 @@ const ListForExercise = (props) => {
                                                 <Text style={{
                                                     ...fontFamily.bold,
                                                     fontSize: fontSizes.XXL,
-                                                    color: colors.GREEN,
+                                                    color: "black",
                                                     paddingRight: W * 0.02
                                                 }}>
-
+                                                  {strings.replacemeal}
                                                 </Text>
 
                                             </View>
@@ -302,9 +303,9 @@ const ListForExercise = (props) => {
                                         (likedExercise == true)
                                             ?
                                             <TouchableOpacity onPress={() => {
-                                                //  sendDislike()
+                                                  //sendDislike()
 
-                                                ShortToast(strings.FeatureComingSoon, 'warning', '')
+                                               ShortToast(strings.FeatureComingSoon, 'warning', '')
 
                                                 //ShortToast("No Worries. you can always replace the meal you don't like", 'success', '')
                                             }}>
@@ -314,7 +315,7 @@ const ListForExercise = (props) => {
                                             <TouchableOpacity
                                                 onPress={() => {
                                                     // setLikedExercise(!likedExercise)4
-                                                    //   sendLike()
+                                                     // sendLike()
 
                                                     ShortToast(strings.FeatureComingSoon, 'warning', '')
 

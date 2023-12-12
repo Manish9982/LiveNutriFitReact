@@ -46,7 +46,7 @@ const More = ({ navigation }) => {
   const [usertype, setUsertype] = useState("")
 
   useEffect(() => {
-    changeLanguageAPI()
+   // changeLanguageAPI()
     getLanguge()
   }, [])
 
@@ -282,7 +282,7 @@ const More = ({ navigation }) => {
             <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
             <Appbar.Content style={{ alignItems: "center", }} title={<Text style={{
               color: "white", fontSize: fontSizes.XL, marginEnd: W * 0.15,
-              ...fontFamily.bold
+              fontFamily: "Montserrat-SemiBold"
             }}>{strings.More}</Text>} />
             {/* <Appbar.Action icon={{ uri: 'https://cdn-icons-png.flaticon.com/512/891/891012.png' }} style={{ alignItems: "center" }} color={"white"} onPress={() => {
 
@@ -342,7 +342,7 @@ const More = ({ navigation }) => {
 
                 <Text style={{
                   alignSelf: 'center', marginBottom: 10,
-                  ...fontFamily.bold, fontSize: 15
+                  fontFamily: "Montserrat-SemiBold", fontSize: 15
                 }}>{strings.changelanguage}</Text>
 
 
@@ -358,7 +358,7 @@ const More = ({ navigation }) => {
                   style={{
                     backgroundColor: langText2 == "en" ? "green" : "white",
 
-                    ...fontFamily.bold,
+                    fontFamily: "Montserrat-SemiBold",
                     width: W * 0.25,
                     alignSelf: "center",
                     color: colors.toobarcolor,
@@ -372,7 +372,7 @@ const More = ({ navigation }) => {
 
                   <Text style={{
                     color: langText2 == "en" ? "white" : "black",
-                    ...fontFamily.bold, textAlign: 'center', fontSize: fontSizes.XL,
+                    fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL,
                   }}>{strings.english}</Text>
 
 
@@ -388,7 +388,7 @@ const More = ({ navigation }) => {
                   style={{
                     backgroundColor: langText2 == "hi" ? "green" : "white",
 
-                    ...fontFamily.bold,
+                    fontFamily: "Montserrat-SemiBold",
                     width: W * 0.25,
                     alignSelf: "center",
                     color: colors.toobarcolor,
@@ -401,7 +401,7 @@ const More = ({ navigation }) => {
 
                   <Text style={{
                     color: langText2 == "hi" ? "white" : "black",
-                    ...fontFamily.bold, textAlign: 'center', fontSize: fontSizes.XL
+                    fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL
                   }}>{strings.hindi}</Text>
                 </TouchableOpacity>
 
@@ -452,7 +452,7 @@ const More = ({ navigation }) => {
               {/* <TouchableOpacity onPress={() => { navigation.navigate("Upgrade") }}> */}
 
 
-              <TouchableOpacity onPress={() => { navigationTOScreen() }}>
+              {/* <TouchableOpacity onPress={() => { navigationTOScreen() }}>
                 <View style={styles.displayBar}>
 
                   <Image
@@ -547,9 +547,12 @@ const More = ({ navigation }) => {
                   </View>
 
                 </View>
-              </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
-              <TouchableOpacity onPress={() => { navigation.navigate("OnDetailsSubmitScreenOne") }}>
+              </TouchableOpacity> */}
+
+
+
+              {/* <Divider style={styles.dividerStyle} /> */}
+              {/* <TouchableOpacity onPress={() => { navigation.navigate("OnDetailsSubmitScreenOne") }}>
                 <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/images/Reminder.jpg')}
@@ -557,9 +560,9 @@ const More = ({ navigation }) => {
 
                   <Text style={styles.text1}>{strings.progress}</Text>
                 </View>
-              </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
-              <TouchableOpacity onPress={() => {
+              </TouchableOpacity> */}
+              {/* <Divider style={styles.dividerStyle} /> */}
+              {/* <TouchableOpacity onPress={() => {
                 navigation.navigate('GroceryList')
                 //ShortToast('Coming Soon..', 'warning', '')
               }}>
@@ -570,9 +573,9 @@ const More = ({ navigation }) => {
 
                   <Text style={styles.text1}> {strings.grocerylist}</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
-              <Divider style={styles.dividerStyle} />
+              {/* <Divider style={styles.dividerStyle} /> */}
 
 
               <TouchableOpacity onPress={() => {
@@ -646,7 +649,7 @@ const More = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
-              <TouchableOpacity onPress={() => { navigation.navigate("Goal") }}>
+              {/* <TouchableOpacity onPress={() => { navigation.navigate("Goal") }}>
                 <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/images/Goal.jpg')}
@@ -655,8 +658,8 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.goals}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
-              <TouchableOpacity onPress={() => { navigation.navigate("Gratification") }}>
+              <Divider style={styles.dividerStyle} /> */}
+              {/* <TouchableOpacity onPress={() => { navigation.navigate("Gratification") }}>
                 <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/icons/charity.png')}
@@ -665,7 +668,7 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.gratitude}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
+              <Divider style={styles.dividerStyle} /> */}
               <TouchableOpacity onPress={() => { navigation.navigate("Coach") }}>
                 <View style={styles.displayBar}>
 
@@ -676,16 +679,16 @@ const More = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
-              <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
+              {/* <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}> */}
                 {/********************************************Reminder**********************************************/}
-                <View style={styles.displayBar}>
+                {/* <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/images/Reminder.jpg')}
                     style={styles.imageContainer} />
 
                   <Text style={styles.text1}>{strings.reminder}</Text>
-                </View>
-              </TouchableOpacity>
+                </View> */}
+              {/* </TouchableOpacity> */}
               <Divider style={styles.dividerStyle} />
               <TouchableOpacity onPress={() => { navigation.navigate("CustomerSupport") }}>
                 <View style={styles.displayBar}>
@@ -719,7 +722,7 @@ const More = ({ navigation }) => {
 
               <Divider style={styles.dividerStyle} />
               {/********************************************Leadership Board************************************************* */}
-              <TouchableOpacity onPress={() => { navigation.navigate('LeadershipBoard') }}>
+              {/* <TouchableOpacity onPress={() => { navigation.navigate('LeadershipBoard') }}>
                 <View style={styles.displayBar}>
                   <Image source={require('../../../../assets/images/Leadership.jpg')}
                     style={[styles.imageContainer, { width: (HEIGHT * 0.04) * (11 / 16) }]} />
@@ -727,7 +730,7 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.leadershipboard}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
+              <Divider style={styles.dividerStyle} /> */}
               {/********************************************************************************************************* */}
               {/* <TouchableOpacity onPress={() => { openURL() }}>
                 <View style={styles.displayBar}>
@@ -740,7 +743,7 @@ const More = ({ navigation }) => {
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} /> */}
 
-              <TouchableOpacity onPress={() => {
+              {/* <TouchableOpacity onPress={() => {
                 ShortToast(strings.FeatureComingSoon, 'warning', '')
                 //navigation.navigate('MedicalInformation') 
               }}>
@@ -752,7 +755,7 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.medicalinformation}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
+              <Divider style={styles.dividerStyle} /> */}
               <TouchableOpacity onPress={() => { navigation.navigate("TermsAndConditions") }}>
                 <View style={styles.displayBar}>
 
@@ -762,8 +765,8 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.TermsandConditions}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
-              <TouchableOpacity onPress={() => { changeCoachText() }}>
+              {/* <Divider style={styles.dividerStyle} /> */}
+              {/* <TouchableOpacity onPress={() => { changeCoachText() }}>
                 <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/images/Change_your_coach.jpg')}
@@ -771,7 +774,7 @@ const More = ({ navigation }) => {
 
                   <Text style={styles.text1}>{strings.ChangeYourCoach}</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               {/* <Divider style={styles.dividerStyle} />
               <TouchableOpacity onPress={() => {

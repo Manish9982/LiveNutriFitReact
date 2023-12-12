@@ -63,15 +63,19 @@ const Coach = ({ navigation }) => {
 
   useEffect(() => {
     if (isFocused) {
-      showCallAlertMessage()
+      //showCallAlertMessage()
+
+      //getMessages()
     }
   },
     [isFocused])
 
 
   useEffect(() => {
-    getLanguge(),
-    setIsInfoButtonVisible(false)
+    getMessages(),
+
+      getLanguge(),
+      setIsInfoButtonVisible(false)
     requestCameraPermission()
     markMessageAsRead()
   }, [isFocused])
@@ -135,25 +139,6 @@ const Coach = ({ navigation }) => {
   }
 
 
-
-  const showCallAlertMessage = async () => {
-    setLoader(true)
-    const userTypee = await getDataFromLocalStorage('user_type')
-    setUserType(userTypee)
-    console.log("USERTYPEEEEEEEEEEEEEEEEEEEEEEEEEEEE", userTypee)
-
-    if (JSON.parse(userTypee) == "1") {
-      setPopupvisible(true)
-
-    } else {
-
-      getMessages()
-
-    }
-    setLoader(false)
-  }
-
-
   const toastMobileEmail = async () => {
     const userTypee = await getDataFromLocalStorage('user_type')
     if (JSON.parse(userTypee) == "1") {
@@ -196,7 +181,8 @@ const Coach = ({ navigation }) => {
     const temp2 = await getDataFromLocalStorage('coach_id')
     const userTypee = await getDataFromLocalStorage('user_type')
     formdata.append("user_id", JSON.parse(temp));
-    formdata.append("reciever_id", JSON.parse(temp2))
+    //formdata.append("reciever_id", JSON.parse(temp2))
+    formdata.append("reciever_id", "")
     const result = await PostApiData('getusermessage', formdata)
 
     console.log("type ===== ", result)
@@ -205,16 +191,18 @@ const Coach = ({ navigation }) => {
       setData(result)
       setMessages(result.data.reverse())
 
-      if (JSON.parse(userTypee) == "1") {
+      markRatingAsRead()
 
-      } else {
-        markRatingAsRead()
-        if (result.hideunhiderating == "true") {
-          setVisible(true)
-        } else {
-          setVisible(false)
-        }
-      }
+      // if (JSON.parse(userTypee) == "1") {
+
+      // } else {
+      //   markRatingAsRead()
+      //   // if (result.hideunhiderating == "true") {
+      //   //   setVisible(true)
+      //   // } else {
+      //   //   setVisible(false)
+      //   // }
+      // }
 
 
     }
@@ -241,9 +229,9 @@ const Coach = ({ navigation }) => {
 
   const uploadPhoto = async (pic) => {
     setLoading(true)
-    console.log("gallery pic",pic)
-    console.log("gallery pic",pic?.[0]?.mime,)
-    console.log("gallery pic",pic?.[0]?.path,)
+    console.log("gallery pic", pic)
+    console.log("gallery pic", pic?.[0]?.mime,)
+    console.log("gallery pic", pic?.[0]?.path,)
     console.log(pic.length)
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
@@ -267,7 +255,7 @@ const Coach = ({ navigation }) => {
       })
     }
     formdata.append("reciever_id", JSON.parse(temp2));
-    console.log("FORMDATA====================================================",formdata)
+    console.log("FORMDATA====================================================", formdata)
     const result = await PostApiData('sendermessage', formdata)
     if (result.status == '200') {
       setCamVisible(false)
@@ -279,7 +267,7 @@ const Coach = ({ navigation }) => {
   }
   const uploadCamPic = async (pic) => {
     setLoading(true)
-    console.log("cam pic",pic)
+    console.log("cam pic", pic)
     console.log("pic.mime", pic.mime)
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
@@ -316,7 +304,7 @@ const Coach = ({ navigation }) => {
 
     formdata.append("reciever_id", JSON.parse(temp2));
 
-    console.log("REQUEST++++++++++++   " , formdata)
+    console.log("REQUEST++++++++++++   ", formdata)
     const result = await PostApiData('sendermessage', formdata)
     if (result.status == '200') {
       //setCamVisible(false)
@@ -381,7 +369,7 @@ const Coach = ({ navigation }) => {
   const pickPDF = async () => {
     try {
       const result = await DocumentPicker.pick({
-       // type: [DocumentPicker.types.pdf, DocumentPicker.types.docx], // Filter for PDF files only
+        // type: [DocumentPicker.types.pdf, DocumentPicker.types.docx], // Filter for PDF files only
         type: [DocumentPicker.types.pdf], // Filter for PDF files only
       });
 
@@ -442,8 +430,30 @@ const Coach = ({ navigation }) => {
   }
 
 
+
+
+  // const getTimeFromStamp = (timestamp) => {
+  //   const date = new Date(Number.parseInt(timestamp, 10) * 1000);
+
+  //   var hour = date.getHours();
+  //   var period = hour >= 12 ? 'PM' : 'AM';
+
+  //   // Convert to 12-hour format
+  //   hour = (hour % 12) || 12;
+
+  //   var minutes = date.getMinutes().toString().padStart(2, '0');
+  //   var date2 = date.getDate().toString().padStart(2, '0');
+  //   var month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //   var year = date.getFullYear().toString();
+
+  //   return `${date2}/${month}/${year}  ${hour}:${minutes} ${period}`;
+  // }
+
+
   const renderItem = ({ item, index }) => {
-    if (item.reciever_message == "" && item.receiver_icon.length == 0 && item.icon.length == 0 && item?.message_type == 'text') {
+    if (item.reciever_message == ""
+      && item.receiver_icon.length == 0
+      && item.icon.length == 0 && item?.message_type == 'text') {
       return (
         <>
           < View style={{
@@ -463,13 +473,17 @@ const Coach = ({ navigation }) => {
             <Text style={{
               color: "white",
               ...fontFamily.bold
-            }}>
-              {item.user_message}</Text>
+            }}>{item.user_message}</Text>
             <Text style={{
               marginTop: H * 0.01,
               fontSize: fontSizes.EXTRASM,
               color: "white"
             }}>{getTimeFromStamp(item.created)}</Text>
+
+
+            {/* <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize:fontSizes.SM,
+            color:colors.OFFWHITE }}>{item?.coachname}</Text> */}
+
           </View >
         </>
       )
@@ -493,11 +507,22 @@ const Coach = ({ navigation }) => {
             marginLeft: W * 0.02,
             marginTop: H * 0.02,
           }}>
-            <Text>{item.reciever_message}</Text>
+            <Text style={{
+
+
+            }
+            }>{item.reciever_message}</Text>
             <Text style={{
               marginTop: H * 0.01,
               fontSize: fontSizes.EXTRASM,
             }}>{getTimeFromStamp(item.created)}</Text>
+
+            <Text style={{
+              fontFamily: 'Montserrat-Regular',
+              fontSize: fontSizes.SM,
+              marginTop: 5,
+              color: "black"
+            }}>By - {item?.coachname}</Text>
           </View>
         </>
       )
@@ -595,7 +620,7 @@ const Coach = ({ navigation }) => {
                 { "icon": item.icon, "base": `${item.base_url}` })}>
 
               <Image source={{ uri: `${item.base_url}${item.icon[0]}` }}
-                style={{ height: W * 0.34, width: W * 0.34 }} />
+                style={{ height: W * 0.34, width: W * 0.34, }} />
               <Text style={{
                 marginTop: H * 0.01,
                 fontSize: fontSizes.EXTRASM,
@@ -767,89 +792,90 @@ const Coach = ({ navigation }) => {
               title={<Text style={{
                 color: "white",
                 fontSize: fontSizes.XL,
-                ...fontFamily.bold
-              }}>{strings.Coach}</Text>} />
+                fontFamily: "Montserrat-SemiBold"
+              }}>LiveNutriFit {strings.Coach}</Text>} />
           </Appbar.Header>
         </View>
+
+        <>
+        </>
         <View style={styles.ButtonDisplayContainer}>
-          <TouchableOpacity onPress={() => { handleOnPress1() }} style={[styles.mealButton, { backgroundColor: buttonBgColor }]}>
+          {/* <TouchableOpacity onPress={() => { handleOnPress1() }} style={[styles.mealButton, { backgroundColor: buttonBgColor }]}>
             <Text style={[styles.textStyle, { color: textColor }]}>{strings.Coach}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.excerciseButton, { backgroundColor: buttonBgColor2 }]}>
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.excerciseButton, { backgroundColor: buttonBgColor2 }]}>
             <Text style={[styles.textStyle, { color: textColor2 }]}>{strings.Doctor}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
         </View>
 
 
-
-        {JSON.parse(userType) == "1" ? null :
-
-
-          <View style={{
-            flexDirection: 'row',
-            paddingVertical: H * 0.02,
-            paddingHorizontal: W * 0.03,
-            backgroundColor: '#e8e9eb',
-          }}>
-            <View>
-              <Image source={{ uri: data?.coachimage }}
-                style={{
-                  height: H * 0.1,
-                  width: H * 0.1,
-                  borderRadius: H * 0.05,
-                  borderColor: '#8eb4ed',
-                  borderWidth: 1
-                }} />
-            </View>
-            <View style={{
-              justifyContent: 'center',
-              width: W * 0.38,
-              marginLeft: W * 0.025
-            }}>
-              <Text style={{ fontFamily: 'Montserrat-SemiBold' }}>{data?.coachname}</Text>
-              <Text style={{ fontSize: fontSizes.SM }}>{strings.YourPersonalHealthAssistant}</Text>
-
-              <TouchableOpacity onPress={() => {
-                // data.hideunhiderating == "true" ? setVisible(true) : setVisible(true)
-                setVisible(true)
-              }}>
-
-                <Text style={{
-                  fontSize: fontSizes.MED,
-                  color: colors.GREEN
-                }}>{strings.AddRatings}</Text>
-              </TouchableOpacity>
-            </View>
-            <Divider style={{
-              width: 1,
-              height: H * 0.1
-            }} />
-            <TouchableOpacity
-              //  onPress={() => { scheduleWhatsappCall() }}  modified 
-              onPress={() => { toastMobileEmail() }}
+        <View style={{
+          flexDirection: 'row',
+          paddingVertical: H * 0.02,
+          paddingHorizontal: W * 0.03,
+          backgroundColor: '#e8e9eb',
+        }}>
+          <View>
+            <Image source={{ uri: data?.coachimage }}
               style={{
-                alignSelf: 'center',
-                marginLeft: W * 0.032
-              }}>
-              <Image source={require('../../../../assets/icons/phone-call1.png')}
-                style={{
-                  height: H * 0.05,
-                  width: H * 0.05,
-                  borderRadius: H * 0.025,
-                  tintColor: colors.ORANGE
-                }}
-              />
-            </TouchableOpacity>
-            <View style={{
-              justifyContent: 'center',
-              width: W * 0.2,
-              marginLeft: W * 0.015
+                height: H * 0.1,
+                width: H * 0.1,
+                borderRadius: H * 0.05,
+                borderColor: '#8eb4ed',
+                borderWidth: 1,
+                resizeMode: 'contain'
+              }} />
+          </View>
+          <View style={{
+            justifyContent: 'center',
+            // width: W * 0.38,
+            width: W * 0.9,
+            marginLeft: W * 0.025
+          }}>
+            <Text style={{ fontFamily: 'Montserrat-SemiBold' }}>{data?.coachname}</Text>
+            <Text style={{ fontSize: fontSizes.SM, marginVertical: H * 0.005 }}>{strings.YourPersonalHealthAssistant}</Text>
+
+            <TouchableOpacity onPress={() => {
+              // data.hideunhiderating == "true" ? setVisible(true) : setVisible(true)
+              setVisible(true)
             }}>
-              <Text style={{ color: colors.ORANGE }}>{strings.Scheduleacall}</Text>
-              {/* <Text style={{ fontSize: fontSizes.SM }}>{strings.Morecallispending}</Text> */}
-            </View>
-          </View>}
+
+              <Text style={{
+                fontSize: fontSizes.MED,
+                color: "green"
+              }}>{strings.AddRatings}</Text>
+            </TouchableOpacity>
+          </View>
+          {/* <Divider style={{
+            width: 1,
+            height: H * 0.1
+          }} /> */}
+          {/* <TouchableOpacity
+            onPress={() => { scheduleWhatsappCall() }} modified
+            // onPress={() => { toastMobileEmail() }}
+            style={{
+              alignSelf: 'center',
+              marginLeft: W * 0.032
+            }}>
+            <Image source={require('../../../../assets/icons/phone-call1.png')}
+              style={{
+                height: H * 0.05,
+                width: H * 0.05,
+                borderRadius: H * 0.025,
+                tintColor: colors.ORANGE
+              }}
+            />
+          </TouchableOpacity> */}
+          {/* <View style={{
+            justifyContent: 'center',
+            width: W * 0.2,
+            marginLeft: W * 0.015
+          }}>
+            <Text style={{ color: colors.ORANGE }}>{strings.Scheduleacall}</Text>
+          </View> */}
+        </View>
+
 
 
 
@@ -949,9 +975,9 @@ const Coach = ({ navigation }) => {
                       Alert.alert('Alert!', strings.coachalertmsg, [
                         {
                           text: 'OKAY', onPress: () => {
-                            
-                              callRequestToCoach()
-                            
+
+                            callRequestToCoach()
+
                           }
                         },]);
 
@@ -1212,10 +1238,11 @@ const makeStyles = (H, W) => StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     //height: H * 0.05,
-    marginVertical: H * 0.008,
+    //  marginVertical: H * 0.008,
     width: W,
     alignItems: "center",
-    borderColor: colors.ORANGE,
+    //borderColor: colors.ORANGE,
+    borderColor: "white",
     borderWidth: 1,
   },
   mealButton:

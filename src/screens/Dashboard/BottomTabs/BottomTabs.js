@@ -219,7 +219,7 @@ const BottomTabs = ({ route }) => {
           }
           else if (propsTab.route.name === 'Coach') {
 
-            return <Image source={require('../../../assets/icons/more/coach.png')}
+            return <Image source={require('../../../assets/icons/comment.png')}
               tintColor={color}
               style={{ height: 24, aspectRatio: 8 / 8 }} />
           }
@@ -256,11 +256,11 @@ const BottomTabs = ({ route }) => {
         initialRouteName: " "
 
       })} >
-    
+
       <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Home" : "Home" }} />
-      <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Upgrade" : "Upgrade" }} />
+      {/* <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Upgrade" : "Upgrade" }} /> */}
       <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Plans" : "Plans" }} />
-      <Tab.Screen name="Coach" component={Coach} options={{ tabBarHideOnKeyboard: true, tabBarBadge: count, tabBarLabel: (languagee || langTypeText) == "en" ? "Coach" : "Coach" }} />
+      <Tab.Screen name="Coach" component={Coach} options={{ tabBarHideOnKeyboard: true, tabBarBadge: count, tabBarLabel: (languagee || langTypeText) == "en" ? "Message" : "Message" }} />
 
       {/* {hidetab == "India" ? <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "LNF Shop" : "LNF शॉप" }} />
         : null} */}
