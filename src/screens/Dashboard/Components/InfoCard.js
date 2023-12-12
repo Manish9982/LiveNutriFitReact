@@ -1,6 +1,6 @@
 import { StyleSheet, View, Image, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useState, useContext, useEffect } from 'react'
-import { Text, configureFonts, DefaultTheme, Provider as PaperProvider, shadow, Portal, Dialog, Paragraph, Button, Snackbar } from 'react-native-paper';
+import { Text, configureFonts, DefaultTheme, Provider as PaperProvider, Portal, Dialog, Paragraph, Button, Snackbar } from 'react-native-paper';
 import { colors, fontSizes, H, PostApiData, ShortToast, W, ShadowsiOS } from '../../../colorSchemes/ColorSchemes';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
 import Icon2 from 'react-native-vector-icons/dist/MaterialCommunityIcons';

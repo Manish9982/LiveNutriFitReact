@@ -1,4 +1,4 @@
-import { Dimensions, ToastAndroid, StyleSheet, View, TouchableOpacity, } from "react-native";
+import { Dimensions, ToastAndroid, StyleSheet, View, TouchableOpacity, Platform, Alert, } from "react-native";
 import { getDataFromLocalStorage } from "../local storage/LocalStorage";
 import React, { useState } from 'react'
 import SweetAlert from 'react-native-sweet-alert';
@@ -32,9 +32,9 @@ export const colors = {
    FONT_BLACK: '#3f4853',
    GREEN3: '#bbf562',
    LIGHT_GREEN: '#eef8e5',
-   BLACK:'#000',
-   DARK_GRAY:'#D3D3D3',
-   LIGHT_GRAY:'lightGrey'
+   BLACK: '#000',
+   DARK_GRAY: '#D3D3D3',
+   LIGHT_GRAY: 'lightGrey'
 };
 
 export const fontSizes = {
@@ -63,26 +63,33 @@ export const fontFamily = {
    }
 };
 
+export const ShadowsiOS = {
+   shadowColor: '#8b8b8c',
+   shadowOpacity: 0.5,
+   shadowRadius: 2,
+   shadowOffset: { width: 0, height: 5 }
+}
+
 export const formatDate = (inputDate) => {
    // Create a Date object from the input string
    const dateObject = new Date(inputDate);
- 
+
    // Define month names
    const monthNames = [
-     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
    ];
- 
+
    // Extract components of the date
    const year = dateObject.getFullYear();
    const month = dateObject.getMonth(); // Note: Months are zero-based
    const day = dateObject.getDate();
- 
+
    // Format the output string
    const formattedDate = `${monthNames[month]} ${day}, ${year}`;
- 
+
    return formattedDate;
- };
+};
 
 export function convertTimestampToYYYYMMDD(timestamp) {
    const date = new Date(timestamp);
@@ -129,7 +136,7 @@ export const PostApiData = async (ApiName, formdata) => {
       const token = await getDataFromLocalStorage('Token')
       console.log("TOKEN == ", token)
       var myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${token}`); 
+      myHeaders.append("Authorization", `Bearer ${token}`);
       var requestOptions = {
          method: 'POST',
          redirect: 'follow',
@@ -169,18 +176,24 @@ export const PostApiData = async (ApiName, formdata) => {
 }
 
 export const ShortToast = (msg, style, title) => {
-   SweetAlert.showAlertWithOptions({
-      title: msg,
-      subTitle: '',
-      confirmButtonTitle: 'OK',
-      confirmButtonColor: colors.GREEN,
-      otherButtonTitle: 'Cancel',
-      otherButtonColor: '#dedede',
-      style: style,
-      cancellable: true,
-   },
-      callback => console.log('callback'))
+   if (Platform.OS == "android") {
+      SweetAlert.showAlertWithOptions({
+         title: msg,
+         subTitle: '',
+         confirmButtonTitle: 'OK',
+         confirmButtonColor: colors.GREEN,
+         otherButtonTitle: 'Cancel',
+         otherButtonColor: '#dedede',
+         style: style,
+         cancellable: true,
+      },
+         callback => console.log('callback'))
+   }
+   else {
+      Alert.alert(style == 'error' ? 'Error' : style, msg)
+   }
 }
+
 export const GreenButton = (props) => {
    return (
       <View

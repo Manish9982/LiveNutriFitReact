@@ -46,12 +46,12 @@ const More = ({ navigation }) => {
   const [usertype, setUsertype] = useState("")
 
   useEffect(() => {
-   // changeLanguageAPI()
+    // changeLanguageAPI()
     getLanguge()
   }, [])
 
   useEffect(() => {
-   
+
     toastuserType()
     getuserType()
 
@@ -104,7 +104,7 @@ const More = ({ navigation }) => {
     console.log('Done.')
   }
 
-  const getuserType = async ()=>{
+  const getuserType = async () => {
     const userType = await getDataFromLocalStorage('user_type')
     console.log("USERTPEEEEEE+++++++++++", userType)
     setUsertype(JSON.parse(userType))
@@ -226,7 +226,7 @@ const More = ({ navigation }) => {
 
   const navigationTOScreen = async () => {
     const userType = await getDataFromLocalStorage('user_type')
-    
+
     if (JSON.parse(userType) == "1") {
       Alert.alert('Alert', strings.UpgradePlanText, [
         {
@@ -316,9 +316,6 @@ const More = ({ navigation }) => {
 
 
           </Appbar.Header>
-
-
-
           <Modal
             visible={langModal}
             transparent={true}>
@@ -422,69 +419,43 @@ const More = ({ navigation }) => {
               </View>
             </View>
           </Modal>
-
-
-
-
         </View>
-
-
-
-
         <View style={styles.mainContainer}>
           <KeyboardAwareScrollView style={styles.containerForOptions}>
             <View>
               <TouchableOpacity onPress={() => { navigation.navigate("UserProfile") }}>
                 <View style={styles.displayBar}>
-
                   <Image source={require('../../../../assets/icons/userc.jpg')}
                     style={styles.imageContainer} />
-
                   {/* <Text style={styles.text1}>{t('Profile')}{' '}</Text> */}
                   <Text style={styles.text1}>{strings.profile}</Text>
-
-
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
-
-
               {/* <TouchableOpacity onPress={() => { navigation.navigate("Upgrade") }}> */}
-
-
               {/* <TouchableOpacity onPress={() => { navigationTOScreen() }}>
                 <View style={styles.displayBar}>
-
                   <Image
                     source={require('../../../../assets/images/Activate.jpg')}
                     style={styles.imageContainer} />
-
-
                   <Text style={styles.text1}>{strings.yourplan}</Text>
-
-
-
                   <View style={{
-
                     alignItems: "center",
                     marginLeft: W * 0.2,
                     justifyContent: "center",
                     alignItems: "center",
                   }}>
-
                     <View style={{
                       flexDirection: 'row',
                       alignItems: "center",
                       justifyContent: "center",
                       alignItems: "center",
                     }}>
-
                       <View style={{
                         backgroundColor: colors.GREEN,
                         borderRadius: 8,
                         height: H * 0.036,
                         justifyContent: "center",
-
                         paddingHorizontal: W * 0.02,
                       }}>
                         <Text style={{
@@ -494,10 +465,6 @@ const More = ({ navigation }) => {
                           {usertypetext}
                         </Text>
                       </View>
-
-
-
-
                       {
                        (usertype) == "1" ? null :
                           <View style={{
@@ -512,20 +479,11 @@ const More = ({ navigation }) => {
                               ...fontFamily.bold,
                               fontSize: fontSizes.MED
                             }}>
-
                               till
-
                             </Text>
                           </View>
-
-
                       }
-
-
-
                     </View>
-
-
                     {
                       (usertype) == "1" ? null : <View style={{
                         justifyContent: "center",
@@ -543,14 +501,9 @@ const More = ({ navigation }) => {
                         </Text>
                       </View>
                     }
-
                   </View>
-
                 </View>
               </TouchableOpacity> */}
-
-
-
               {/* <Divider style={styles.dividerStyle} /> */}
               {/* <TouchableOpacity onPress={() => { navigation.navigate("OnDetailsSubmitScreenOne") }}>
                 <View style={styles.displayBar}>
@@ -680,8 +633,8 @@ const More = ({ navigation }) => {
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
               {/* <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}> */}
-                {/********************************************Reminder**********************************************/}
-                {/* <View style={styles.displayBar}>
+              {/********************************************Reminder**********************************************/}
+              {/* <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/images/Reminder.jpg')}
                     style={styles.imageContainer} />

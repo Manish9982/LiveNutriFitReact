@@ -311,8 +311,7 @@ const Signin = ({ navigation, route }) => {
 
 
                                         <View style={{
-                                        }}><Checkbox style={{
-
+                                        }}><Checkbox.Android style={{
                                         }}
                                             onPress={handleCheckBoxToggle}
                                             status={isChecked ? 'checked' : 'unchecked'}

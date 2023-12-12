@@ -3,7 +3,6 @@ import { View, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Change to your desired icon library
 import { colors } from '../../colorSchemes/ColorSchemes';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const CustomAccordion = ({ title, question, options, onSelectionChange, answers }) => {
     const [expanded, setExpanded] = useState(false);

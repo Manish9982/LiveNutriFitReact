@@ -8,8 +8,7 @@ const Loader = () => {
         <View style={{
             justifyContent: 'center',
             alignItems: 'center',
-            height: H,
-            width: W,
+            flex: 1,
             backgroundColor: 'white',
         }}>
             <LottieView

@@ -83,7 +83,7 @@ export default function WelcomeScreenAfterRegistration({ navigation }) {
                 paddingTop: H * 0.28
             }}>
                 {/* <Text style={{
-                    fontFamily: "Montserrat-SemiBold",
+                    ...fontFamily.bold,
                     fontSize: H * 0.043,
                     marginBottom: H * 0.0,
                     marginTop: H * 0.12,

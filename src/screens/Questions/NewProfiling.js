@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Modal, Alert } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Alert, Platform } from 'react-native'
 import React, { useState, useEffect, useCallback } from 'react'
-import { Appbar, Checkbox } from 'react-native-paper'
+import { Appbar, Checkbox, TextInput } from 'react-native-paper'
 import { PostApiData, W, colors, fontSizes, H, fontFamily, ShortToast, cmToFeetAndInches, convertTimestampToYYYYMMDD, formatDate } from '../../colorSchemes/ColorSchemes'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
 import Loader from '../../assets/components/Loader'
@@ -290,7 +290,7 @@ const NewProfiling = ({ navigation }) => {
                                     mode="date"
                                     display="default"
                                     onChange={(a, t) => handleDateChange(a, t)}
-                                    maximumDate={getTimestamp10YearsAgo()}
+                                //maximumDate={getTimestamp10YearsAgo()}
                                 //onTouchCancel={() =>setShowCalendar(prev => !prev)}
 
                                 />
@@ -342,7 +342,7 @@ const NewProfiling = ({ navigation }) => {
 
                     marginLeft: W * 0.1,
                 }}>
-                    <Checkbox
+                    <Checkbox.Android
                         status={answer?.includes(item) ? 'checked' : 'unchecked'}
                         color={"white"} />
                 </View>
@@ -359,7 +359,7 @@ const NewProfiling = ({ navigation }) => {
             {
                 loader
                     ?
-                    <Loader/>
+                    <Loader />
                     :
                     <>
                         <Appbar.Header style={styles.appBar}>
@@ -476,7 +476,7 @@ const styles = StyleSheet.create(({
         fontSize: fontSizes.XXL,
         alignSelf: 'center',
         marginTop: 40,
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
     },
 
     question: {
@@ -484,10 +484,10 @@ const styles = StyleSheet.create(({
         fontSize: fontSizes.XL,
         alignSelf: 'center',
         marginTop: 40,
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
     },
     flatlist: {
-        height: H * 0.6,
+        height: H * 0.55,
         W: W * 0.9,
         alignSelf: "center",
         alignItems: "center",
@@ -541,7 +541,14 @@ const styles = StyleSheet.create(({
     textinput: {
         fontSize: fontSizes.XL,
         fontFamily: "Montserrat-Medium",
-        width: W, textAlign: 'center'
+        width: W,
+        textAlign: 'center',
+        ...Platform.select({
+            ios: {
+                height: H * 0.07
+            }
+        })
+
     },
 
 
@@ -555,7 +562,12 @@ const styles = StyleSheet.create(({
         justifyContent: "center",
         alignSelf: "center",
         marginTop: 20,
-        borderRadius: 8
+        borderRadius: 8,
+        ...Platform.select({
+            ios: {
+                height: H * 0.07
+            }
+        })
     },
 
     textStyle: {
@@ -578,7 +590,12 @@ const styles = StyleSheet.create(({
         justifyContent: "center",
         alignSelf: "center",
         marginTop: 20,
-        borderRadius: 8
+        borderRadius: 8,
+        ...Platform.select({
+            ios: {
+                height: H * 0.07
+            }
+        })
 
     },
 
@@ -598,13 +615,18 @@ const styles = StyleSheet.create(({
         width: W * 0.15,
         alignSelf: "center",
         marginRight: W * 0.04,
-        fontSize: fontSizes.XL
+        fontSize: fontSizes.XL,
+        ...Platform.select({
+            ios: {
+                height: H * 0.07
+            }
+        })
     },
     headerText:
     {
         color: "white",
         fontSize: fontSizes.XXL,
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
     },
     headerBar:
     {
@@ -615,7 +637,7 @@ const styles = StyleSheet.create(({
         fontSize: fontSizes.XL,
         textAlign: 'center',
         color: "black",
-        fontFamily: "Montserrat-SemiBold"
+        ...fontFamily.bold
 
     }
 }))

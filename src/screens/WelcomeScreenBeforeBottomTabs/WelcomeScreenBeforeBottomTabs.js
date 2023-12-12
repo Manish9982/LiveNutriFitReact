@@ -216,7 +216,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                         <Text style={{
                             alignSelf: 'center',
                             marginBottom: H * 0.02,
-                            fontFamily: "Montserrat-SemiBold",
+                            ...fontFamily.bold,
                             position: 'absolute',
                             zIndex: 2,
                             color: 'white',

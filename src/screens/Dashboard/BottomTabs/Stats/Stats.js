@@ -15,7 +15,6 @@ import DoubleTapBackButtonToCloseApp from '../../../../assets/components/DoubleT
 import LottieView from 'lottie-react-native';
 import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5'
 import { useIsFocused } from "@react-navigation/native"
-import { copilot, walkthroughable, CopilotStep } from 'react-native-copilot';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
@@ -34,8 +33,6 @@ const wait = (timeout) => {
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
-
-const WalkthroughableText = walkthroughable(TextRN);
 
 const Stats = (props) => {
 
@@ -748,7 +745,7 @@ const Stats = (props) => {
         <View style={styles.loadingContainer}>
           <LottieView
             style={{
-              height: H * 0.2
+              height: H * 0.2,
             }}
             source={require('../../../../assets/animations/lf30_editor_xibt7sue.json')}
             autoPlay loop />

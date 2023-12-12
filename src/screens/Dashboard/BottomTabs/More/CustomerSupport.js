@@ -130,6 +130,7 @@ const CustomerSupport = ({ navigation }) => {
                         onChangeText={(text) => { setEmail(text) }}
           /> */}
           <TextInput
+            numberOfLines={5}
             style={styles.textInput}
             placeholder='Enter Message*'
             activeUnderlineColor={colors.GREEN}
@@ -201,6 +202,7 @@ const CustomerSupport = ({ navigation }) => {
         /> */}
 
         <TextInput
+          numberOfLines={5}
           style={styles.textInput}
           placeholder='Enter Message*'
           value={message}
@@ -266,14 +268,13 @@ const CustomerSupport = ({ navigation }) => {
           /> */}
 
           <TextInput
+            numberOfLines={5}
             style={styles.textInput}
             placeholder='Enter Message*'
             activeUnderlineColor={"silver"}
             underlineColor={"transparent"}
             value={message}
             multiline={true}
-            numberOfLines={5}
-
             onChangeText={(textmessage) => { setMessage(textmessage) }}
           />
 

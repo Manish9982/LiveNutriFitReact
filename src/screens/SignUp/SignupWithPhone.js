@@ -342,7 +342,7 @@ const SignupWithPhone = ({ navigation }) => {
                                 }}>
 
                                     <View style={{
-                                    }}><Checkbox style={{
+                                    }}><Checkbox.Android style={{
 
                                     }}
                                         onPress={handleCheckBoxToggle}
