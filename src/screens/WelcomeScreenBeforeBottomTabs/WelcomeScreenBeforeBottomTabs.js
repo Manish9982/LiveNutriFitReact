@@ -13,6 +13,8 @@ import { useIsFocused } from '@react-navigation/native';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
+import RNRestart from 'react-native-restart'
+import Customloader from '../../assets/components/Customloader'
 
 
 //lang chnge
@@ -31,6 +33,11 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
 
     useEffect(() => { getLanguge() }, [isFocused])
 
+
+   const navigationToDashboard = async () => {
+        await storeDataInLocalStorage('stackValue', "3")
+        RNRestart.Restart()
+    }
 
     //lng
     const getLanguge = async () => {
@@ -120,7 +127,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
             setTimeout(() => {
                 setValueOfProgressBar(0.8)
                 runBarToLevelNine()
-                setCustomText(strings.AssigningyouaFunctionalCoach)
+                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
             }, 1000)
         }
         const runBarToLevelNine = () => {
@@ -128,14 +135,14 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                 setValueOfProgressBar(0.9)
                 setColorOfCheckBox3("green")
                 runBarToLevelTen()
-                setCustomText(strings.AssigningyouaFunctionalCoach)
+                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
             }, 1000)
         }
         const runBarToLevelTen = () => {
             setTimeout(() => {
                 setValueOfProgressBar(1)
                 progres.value = withSequence(withTiming(1.1), withSpring(1))
-                setCustomText(strings.AssigningyouaFunctionalCoach)
+                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
                 setCustomText("")
                 setFlag(2)
                 //navigation.replace("PlanChoosePromptAtStartup")
@@ -152,7 +159,6 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
 
     const registerStatus = async () => {
         const userType = await getDataFromLocalStorage('user_type')
-        console.log("more TYPE= ", userType)
         var formdata = new FormData();
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("id", JSON.parse(temp))
@@ -175,10 +181,15 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                         height: H,
                         width: W,
                     }}>
-                    <ActivityIndicator size={"large"}
-                        color={colors.GREEN} />
+                    {/* <ActivityIndicator size={"large"}
+                        color={colors.GREEN} /> */}
+
+                        <Customloader/>
                 </View>
             </>
+
+
+
             :
 
 
@@ -187,29 +198,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
 
                 < View style={{ height: H, width: W }}>
                     <StatusBar backgroundColor={colors.GREEN} />
-                    { /*<View style={styles.primary}>
-                <Text style={styles.text1}>Carefully selecting recipes for their benefits on your body </Text>
-                <View style={styles.viewOfCheckbox}>{colorOfCheckBox1 == "green" ?
-                    <AntDesign name="checkcircleo" size={20} color={colorOfCheckBox1} style={styles.checkbox2} />
-                    :
-                    <ActivityIndicator size="small" color={"green"} style={[styles.activityIndicator, { marginBottom: H * 0.02 }]} />}
-                    <Text style={{ ...fontFamily.bold, fontSize: fontSizes.XXL, width: W * 0.8, color: colors.FONT_BLACK, }}>Preparing Your Personalized Meal</Text>
-                </View>
-                <Text style={[styles.text1, { top: H * 0.135 }]}>Preparing your work-out routine based on your Calories intake </Text>
-                <View style={styles.viewOfCheckbox}>{colorOfCheckBox2 == "green" ?
-                    <AntDesign name="checkcircleo" size={20} color={colorOfCheckBox1} style={styles.checkbox2} />
-                    :
-                    <ActivityIndicator size="small" color={"green"} style={[styles.activityIndicator, { marginBottom: H * 0.02 }]} />}
-                    <Text style={{ ...fontFamily.bold, fontSize: fontSizes.XXL, width: W * 0.85, color: colors.FONT_BLACK }}>Preparing Your Personalized Excercise Plan</Text>
-                </View>
-                <Text style={[styles.text1, { top: H * 0.26 }]}>Assigning an Ideal Coach for you who can guide you through your weight loss Journey</Text>
-                <View style={styles.viewOfCheckbox}>{colorOfCheckBox3 == "green" ?
-                    <AntDesign name="checkcircleo" size={20} color={colorOfCheckBox1} style={styles.checkbox2} />
-                    :
-                    <ActivityIndicator size="small" color={"green"} style={[styles.activityIndicator, { marginBottom: H * 0.02 }]} />}
-                    <Text style={{ ...fontFamily.bold, fontSize: fontSizes.XXL, width: W * 0.85, color: colors.FONT_BLACK }}>Preparing Your Personalized Coach</Text>
-                </View>
-    </View>*/}
+
                     <View style={{
                         position: "absolute",
                         alignSelf: "center",
@@ -218,12 +207,16 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                     }}>
                         <Logo />
                     </View>
-                    <View style={{ zIndex: 40, width: W * 0.85, alignSelf: 'center', top: flag == "1" ? H * 0.2 : H * 0.4 }}>
+                    <View style={{
+                        zIndex: 40, width: W * 0.85,
+                        alignSelf: 'center',
+                        top: flag == "1" ? H * 0.2 : H * 0.4
+                    }}>
 
                         <Text style={{
                             alignSelf: 'center',
                             marginBottom: H * 0.02,
-                            ...fontFamily.bold,
+                            fontFamily: "Montserrat-SemiBold",
                             position: 'absolute',
                             zIndex: 2,
                             color: 'white',
@@ -308,7 +301,11 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                                     console.log("Do Nothing")
                                 }
                                 else if (flag == 2 && (valueOfProgressBar == 1))
-                                    navigation.replace("PlanChoosePromptAtStartup")
+                                    //  navigation.replace("PlanChoosePromptAtStartup")
+
+                                    navigationToDashboard()
+
+
                             }}
                             style={{
                                 height: H * 0.07,

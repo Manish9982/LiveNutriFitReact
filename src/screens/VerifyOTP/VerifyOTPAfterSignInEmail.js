@@ -36,10 +36,7 @@ const VerifyOTPAfterSignInEmail = ({ navigation, route }) => {
   const isFocused = useIsFocused()
 
 
-  useEffect(() => { 
-    console.log("OTP============================================>")
-    getLanguge() 
-  }, [isFocused])
+  useEffect(() => { getLanguge() }, [isFocused])
 
 
 //lng

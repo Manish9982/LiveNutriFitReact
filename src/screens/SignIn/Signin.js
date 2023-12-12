@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View, Dimensions, Linking, ToastAndroid, StatusBar, } from 'react-native'
-import { TextInput, Text, configureFonts, DefaultTheme, Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
+import { TextInput, Text, configureFonts, DefaultTheme, Provider as PaperProvider, ActivityIndicator, Checkbox } from 'react-native-paper';
 import { fontSizes, colors, H, W, ShortToast, fontFamily } from '../../colorSchemes/ColorSchemes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, { useState, useContext, useEffect } from 'react'
@@ -37,7 +37,7 @@ const theme = {
 const Signin = ({ navigation, route }) => {
     const isFocused = useIsFocused()
     useEffect(() => { getLanguge() }, [isFocused])
-    const { Nmobile, Notp , Nlanguagee } = useContext(DataContext)
+    const { Nmobile, Notp, Nlanguagee } = useContext(DataContext)
     const [mobile, setMobile] = Nmobile
     const [languagee, setLanguagee] = Nlanguagee
     const [otp, setOtp] = Notp
@@ -46,6 +46,7 @@ const Signin = ({ navigation, route }) => {
     const [countryType, setCountryType] = useState("India")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
+    const [isChecked, setChecked] = useState(false);
 
     //lng
     const getLanguge = async () => {
@@ -56,135 +57,158 @@ const Signin = ({ navigation, route }) => {
     }
 
 
+    const handleCheckBoxToggle = () => {
+        setChecked(prev => !prev);
+    };
+
+
     const openURL = async () => {
         { Linking.openURL('https://livenutrifit.com/terms-conditions-2/') }
     }
     const signInPressed = async () => {
-        storeDataInLocalStorage('country',countryType)
 
-        setLoader(true)
-        if (mobile.length === 0) {
-            ShortToast('Kindly fill in your details!', 'error', '')
-            setLoader(false)
-        }
-        else if (mobile.includes('@')) {
-            setUserType('2')
-            var formdata = new FormData();
-            formdata.append("email", mobile);
-            formdata.append("country", "india");
 
-            var requestOptions = {
-                method: 'POST',
-                body: formdata,
-            };
-            try {
-                const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
-                const result = await response.json()
-                console.log(result)
-                if (result.status === 200) {
+        storeDataInLocalStorage('country', countryType)
 
-                    ShortToast(result.message, 'success', '')
-                    // ShortToast(`OTP : ${JSON.stringify(result?.otp)}`, 'warning', '')
-                    setOtp(result?.otp)
-                    setTimeout(() => {
-                        storeDataInLocalStorage('registerStatus', result.register_status)
-                        storeDataInLocalStorage('mobile', mobile)
-                        // console.log("")
+        if (isChecked) {
+            setLoader(true)
+            if (mobile.length === 0) {
+                ShortToast('Kindly fill in your details!', 'error', '')
+                setLoader(false)
+            }
+            else if (mobile.includes('@')) {
+                setUserType('2')
+                var formdata = new FormData();
+                formdata.append("email", mobile);
+                formdata.append("country", "india");
+
+                var requestOptions = {
+                    method: 'POST',
+                    body: formdata,
+                };
+                try {
+                    const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
+                    const result = await response.json()
+                    console.log(result)
+                    if (result.status === 200) {
+
+                        ShortToast(result.message, 'success', '')
+                        // ShortToast(`OTP : ${JSON.stringify(result?.otp)}`, 'warning', '')
+                        setOtp(result?.otp)
+                        setTimeout(() => {
+                            storeDataInLocalStorage('registerStatus', result.register_status)
+                            storeDataInLocalStorage('mobile', mobile)
+                            // console.log("")
+                            setLoader(false)
+                            navigation.navigate("VerifyOTPAfterSignInEmail", { "email": mobile })
+                        }, 500);
+
+                    }
+                    else {
                         setLoader(false)
-                        navigation.navigate("VerifyOTPAfterSignInEmail", { "email": mobile })
-                    }, 500);
+                        ShortToast(result?.message, 'error', '')
+                    }
 
+
+                } catch (error) {
+                    ShortToast("Internal Server Error :"`${error}`, 'error', '')
                 }
-                else {
-                    setLoader(false)
-                    ShortToast(result?.message, 'error', '')
-                }
-
-
-            } catch (error) {
-                ShortToast("Internal Server Error :"`${error}`, 'error', '')
             }
-        }
-        else {
-            setUserType('1')
-            var formdata = new FormData();
-            formdata.append("mobile", mobile);
-            formdata.append("country", "india");
+            else {
+                setUserType('1')
+                var formdata = new FormData();
+                formdata.append("mobile", mobile);
+                formdata.append("country", "india");
 
-            var requestOptions = {
-                method: 'POST',
-                body: formdata,
-            };
-            try {
-                //const response = await fetch("https://lnf.bizhawkztest.com/public/Signup/login", requestOptions)
-                const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
-                const result = await response.json()
-                console.log(result)
-                if (result.status === 200) {
+                var requestOptions = {
+                    method: 'POST',
+                    body: formdata,
+                };
+                try {
+                    //const response = await fetch("https://lnf.bizhawkztest.com/public/Signup/login", requestOptions)
+                    const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
+                    const result = await response.json()
+                    console.log(result)
+                    if (result.status === 200) {
 
-                    navigate(result)
+                        navigate(result)
 
+                    }
+                    else if (mobile.length === 0) {
+                        ShortToast('Kindly Fill in your Details!', 'error', '')
+                        setLoader(false)
+                    }
+                    else {
+                        ShortToast(result.message, 'error', '')
+                        setLoader(false)
+                    }
+                } catch (error) {
+                    ShortToast(`Internal Server Error :${error}`, 'error', '')
                 }
-                else if (mobile.length === 0) {
-                    ShortToast('Kindly Fill in your Details!', 'error', '')
-                    setLoader(false)
-                }
-                else {
-                    ShortToast(result.message, 'error', '')
-                    setLoader(false)
-                }
-            } catch (error) {
-                ShortToast(`Internal Server Error :${error}`, 'error', '')
             }
+        } else {
+            ShortToast("Please accept terms and condtions !", "error")
         }
+
+
 
 
 
     }
+
+
+
+
     const signInPressedUS = async () => {
-        storeDataInLocalStorage('country',countryType)
+        storeDataInLocalStorage('country', countryType)
 
-        setLoader(true)
-        if (email.length === 0) {
-            ShortToast('Kindly fill in your details!', 'error', '')
-            setLoader(false)
-        }
-        else if (password.length === 0) {
-            // setUserType('2')
-            ShortToast('Kindly fill in password!', 'error', '')
-            setLoader(false)
-        }
-        else {
-            var formdata = new FormData();
-            formdata.append("email", email);
-            formdata.append("password", password);
-            formdata.append("country", "other");
+        if (isChecked) {
+            setLoader(true)
+            if (email.length === 0) {
+                ShortToast('Kindly fill in your details!', 'error', '')
+                setLoader(false)
+            }
+            else if (password.length === 0) {
+                // setUserType('2')
+                ShortToast('Kindly fill in password!', 'error', '')
+                setLoader(false)
+            }
+            else {
+                var formdata = new FormData();
+                formdata.append("email", email);
+                formdata.append("password", password);
+                formdata.append("country", "other");
 
 
-            var requestOptions = {
-                method: 'POST',
-                body: formdata,
-            };
-            try {
-                const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
-                const result = await response.json()
-                console.log(result)
-                if (result.status === 200) {
+                var requestOptions = {
+                    method: 'POST',
+                    body: formdata,
+                };
+                try {
+                    const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
+                    const result = await response.json()
+                    console.log(result)
+                    if (result.status === 200) {
 
-                    navigateUS(result)
+                        navigateUS(result)
 
-                } else {
-                    setLoader(false)
+                    } else {
+                        setLoader(false)
 
-                    ShortToast(result.message, 'error', '')
+                        ShortToast(result.message, 'error', '')
 
+                    }
+
+                } catch (error) {
+                    ShortToast(`Internal Server Error :${error}`, 'error', '')
                 }
 
-            } catch (error) {
-                ShortToast(`Internal Server Error :${error}`, 'error', '')
             }
-
+        } else {
+            ShortToast("Please accept terms and conditions!", "error")
         }
+
+
     }
 
     const navigate = (result) => {
@@ -282,7 +306,21 @@ const Signin = ({ navigation, route }) => {
                                         onChangeText={(text) => { setMobile(text) }}
                                     />
 
-                                    <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
+
+
+
+                                        <View style={{
+                                        }}><Checkbox style={{
+
+                                        }}
+                                            onPress={handleCheckBoxToggle}
+                                            status={isChecked ? 'checked' : 'unchecked'}
+                                            color={colors.GREEN} />
+                                        </View>
+
+
+
 
                                         <Text style={styles.textUniversal}>{strings.bysignin}</Text>
                                         <TouchableOpacity onPress={() => { openURL() }}>
@@ -291,7 +329,7 @@ const Signin = ({ navigation, route }) => {
 
                                     </View>
 
-                                    <View style={{ alignItems: 'center' }}>
+                                    <View style={{ alignItems: 'center', marginTop: 25 }}>
 
                                         <TouchableOpacity onPress={() => {
                                             signInPressed()
@@ -395,7 +433,17 @@ const Signin = ({ navigation, route }) => {
                                         }}>{strings.ForgotPassword}</Text>
 
                                     </TouchableOpacity>
-                                    <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
+
+                                        <View style={{
+                                        }}><Checkbox style={{
+
+                                        }}
+                                            onPress={handleCheckBoxToggle}
+                                            status={isChecked ? 'checked' : 'unchecked'}
+                                            color={colors.GREEN} />
+                                        </View>
+
 
                                         <Text style={styles.textUniversal}>{strings.bysignin} </Text>
                                         <TouchableOpacity onPress={() => { openURL() }}>
@@ -404,7 +452,7 @@ const Signin = ({ navigation, route }) => {
 
                                     </View>
 
-                                    <View style={{ alignItems: 'center' }}>
+                                    <View style={{ alignItems: 'center', marginTop: 25 }}>
 
                                         <TouchableOpacity onPress={() => {
                                             signInPressedUS()
@@ -471,24 +519,22 @@ const styles = StyleSheet.create({
     tncText:
     {
         fontSize: fontSizes.LAR,
-        padding: 10,
         paddingLeft: 0,
+        marginTop: 7,
         color: colors.ORANGE,
-        marginVertical: 20
     },
     textUniversal:
     {
         fontSize: fontSizes.LAR,
-        padding: 10,
         paddingRight: 0,
-        marginVertical: 20
+        marginTop: 7,
     },
     textAgree:
     {
         textAlign: 'center',
         color: 'white',
         fontSize: fontSizes.LAR,
-        ...fontFamily.bold
+
     },
     greeting:
     {

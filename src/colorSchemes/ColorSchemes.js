@@ -1,4 +1,4 @@
-import { Dimensions, ToastAndroid, StyleSheet, View, TouchableOpacity, Alert, Platform } from "react-native";
+import { Dimensions, ToastAndroid, StyleSheet, View, TouchableOpacity, } from "react-native";
 import { getDataFromLocalStorage } from "../local storage/LocalStorage";
 import React, { useState } from 'react'
 import SweetAlert from 'react-native-sweet-alert';
@@ -11,13 +11,6 @@ const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 export const H = Dimensions.get('window').height
 export const W = Dimensions.get('window').width
-
-export const ShadowsiOS = {
-   shadowColor: '#8b8b8c',
-   shadowOpacity: 0.5,
-   shadowRadius: 2,
-   shadowOffset: { width: 0, height: 5 }
-}
 
 
 //export const URL = 'https://lnf.bizhawkztest.com/public/'
@@ -38,7 +31,10 @@ export const colors = {
    BUTTON_ORANGE: '#f7a14e',
    FONT_BLACK: '#3f4853',
    GREEN3: '#bbf562',
-   LIGHT_GREEN: '#eef8e5'
+   LIGHT_GREEN: '#eef8e5',
+   BLACK:'#000',
+   DARK_GRAY:'#D3D3D3',
+   LIGHT_GRAY:'lightGrey'
 };
 
 export const fontSizes = {
@@ -87,7 +83,6 @@ export const formatDate = (inputDate) => {
  
    return formattedDate;
  };
- 
 
 export function convertTimestampToYYYYMMDD(timestamp) {
    const date = new Date(timestamp);
@@ -98,7 +93,6 @@ export function convertTimestampToYYYYMMDD(timestamp) {
 
    return `${year}-${month}-${day}`;
 }
-
 
 
 export const GetApiData = async (ApiName) => {
@@ -114,7 +108,6 @@ export const GetApiData = async (ApiName) => {
       redirect: 'follow'
    };
    try {
-      console.log(`formdata of Get Api ${ApiName} ===+++===+++===+++===>`)
       const response = await fetch(`${URL}${ApiName}`, requestOptions)
       const result = await response.json()
       return result
@@ -136,7 +129,7 @@ export const PostApiData = async (ApiName, formdata) => {
       const token = await getDataFromLocalStorage('Token')
       console.log("TOKEN == ", token)
       var myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${token}`);
+      myHeaders.append("Authorization", `Bearer ${token}`); 
       var requestOptions = {
          method: 'POST',
          redirect: 'follow',
@@ -144,7 +137,7 @@ export const PostApiData = async (ApiName, formdata) => {
          headers: myHeaders,
       };
       try {
-         console.log(`formdata of ${ApiName} ===+++===+++===+++===> `, formdata)
+         console.log(`formdata of ${ApiName} ====> `, formdata)
          const response = await fetch(`${URL}${ApiName}`, requestOptions)
          const result = await response.json()
          if (result.status == '403') {
@@ -165,8 +158,8 @@ export const PostApiData = async (ApiName, formdata) => {
       } catch (error) {
          const temp = await getDataFromLocalStorage('user_id')
          ToastAndroid.show(`${error}`, ToastAndroid.SHORT)
-         console.log("error ==>", error)
-         ShortToast(`Message for Developer: Api That Failed: ${ApiName} for User ID:${temp}`, "error", "")
+         //ShortToast(`Message for Developer: Api That Failed: ${ApiName} for User ID:${temp}`, "error", "")
+         ShortToast(`Something went wrong`, "error", "")
       }
    }
    else {
@@ -176,18 +169,17 @@ export const PostApiData = async (ApiName, formdata) => {
 }
 
 export const ShortToast = (msg, style, title) => {
-   // SweetAlert.showAlertWithOptions({
-   //    title: msg,
-   //    subTitle: '',
-   //    confirmButtonTitle: 'OK',
-   //    confirmButtonColor: colors.GREEN,
-   //    otherButtonTitle: 'Cancel',
-   //    otherButtonColor: '#dedede',
-   //    style: style,
-   //    cancellable: true,
-   // },
-   //    callback => console.log('callback'))
-   Alert.alert(style == 'error' ? 'Error' : '', msg)
+   SweetAlert.showAlertWithOptions({
+      title: msg,
+      subTitle: '',
+      confirmButtonTitle: 'OK',
+      confirmButtonColor: colors.GREEN,
+      otherButtonTitle: 'Cancel',
+      otherButtonColor: '#dedede',
+      style: style,
+      cancellable: true,
+   },
+      callback => console.log('callback'))
 }
 export const GreenButton = (props) => {
    return (
@@ -203,7 +195,7 @@ export const GreenButton = (props) => {
          }}>
          <Text style={{
             color: "white",
-            ...fontFamily.bold,
+            fontFamily: fontFamily.bold,
             fontSize: fontSizes.XL
          }}>{props.Title}</Text>
       </View>
@@ -227,7 +219,19 @@ export function formatTimestamp(timestamp) {
    return formattedDate;
 }
 
+export function cmToFeetAndInches(cm) {
+   // 1 inch = 2.54 cm
+   const inches = cm / 2.54;
 
+   // 1 foot = 12 inches
+   const feet = Math.floor(inches / 12);
+   const remainingInches = Math.round(inches % 12);
+
+   return {
+      feet: feet,
+      inches: remainingInches
+   };
+}
 
 
 

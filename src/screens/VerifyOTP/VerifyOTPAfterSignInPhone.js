@@ -14,7 +14,6 @@ import english from '../../en'
 import { useIsFocused } from '@react-navigation/native'
 
 
-
 //lang chnge
 const strings = new LocalizedStrings({
   en: english,
