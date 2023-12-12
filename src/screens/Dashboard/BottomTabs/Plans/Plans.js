@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View, Dimensions, StatusBar, RefreshControl, } from 'react-native'
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { fontSizes, colors, GetApiData, H, W, PostApiData, ShortToast, fontFamily } from '../../../../colorSchemes/ColorSchemes';
+import { fontSizes, colors, GetApiData, H, W, PostApiData, ShortToast } from '../../../../colorSchemes/ColorSchemes';
 import CollapsibleMenuForExercise from './CollapsibleMenuForExercise';
 import HeaderForPlans from './HeaderForPlans';
 import { ActivityIndicator, Appbar, Text } from 'react-native-paper';
@@ -88,7 +88,6 @@ const Plans = ({ navigation }) => {
 
   useEffect(() => {
     getMeals()
-    getExcercise(datee)
   }, [isFocused])
 
   const [myMeals, setMyMeals] = NmyMeals
@@ -173,8 +172,10 @@ const Plans = ({ navigation }) => {
     formdata.append("month", month);
     formdata.append("year", year);
 
+
     const result = await PostApiData('get_userexcersie_list', formdata)
 
+    console.log("EXC DATA == " , result)
 
     if (result.status == '200') {
       setMyExcercise(result)
@@ -184,7 +185,7 @@ const Plans = ({ navigation }) => {
       ShortToast(result.message, 'error', '')
     }
     setIsRefreshing(false)
-    // setLoader(false)
+    setLoader(false)
   }
 
   const getMeals = async () => {
@@ -195,6 +196,8 @@ const Plans = ({ navigation }) => {
     const result = await PostApiData('get_meal_list', formdata)
     console.log(result)
     if (result.status == '200') {
+      getExcercise(datee)
+
       setMyMeals(result)
     }
     else {
@@ -274,7 +277,7 @@ const Plans = ({ navigation }) => {
         }} title={<Text style={{
           color: "white",
           fontSize: fontSizes.XL,
-          ...fontFamily.bold
+          fontFamily: "Montserrat-SemiBold"
         }}>{strings.Plans}</Text>} />
       </Appbar.Header>
 
@@ -468,7 +471,7 @@ const Plans = ({ navigation }) => {
         }} title={<Text style={{
           color: "white",
           fontSize: fontSizes.XL,
-          ...fontFamily.bold
+          fontFamily: "Montserrat-SemiBold"
         }}>{strings.Plans}</Text>} />
       </Appbar.Header>
 

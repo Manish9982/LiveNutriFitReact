@@ -108,7 +108,7 @@ const CustomerSupport = ({ navigation }) => {
             }} >{strings.CustSupportText}</Text>
 
 
-          <TextInput
+          {/* <TextInput
             editable={false}
             style={styles.textInput}
             placeholder='Enter Name*'
@@ -128,7 +128,7 @@ const CustomerSupport = ({ navigation }) => {
             mode={'flat'}
             underlineColor={"transparent"}
                         onChangeText={(text) => { setEmail(text) }}
-          />
+          /> */}
           <TextInput
             style={styles.textInput}
             placeholder='Enter Message*'
@@ -136,7 +136,7 @@ const CustomerSupport = ({ navigation }) => {
             value={message}
             mode={'flat'}
             underlineColor={"transparent"}
-                        onChangeText={(textmessage) => { setMessage(textmessage) }} />
+            onChangeText={(textmessage) => { setMessage(textmessage) }} />
 
           <TouchableOpacity
             onPress={() => postData()}>
@@ -152,7 +152,7 @@ const CustomerSupport = ({ navigation }) => {
                 style={{}}>
 
                 <Text
-                  style={styles.greeting}>{}</Text>
+                  style={styles.greeting}>{ }</Text>
 
               </View>
 
@@ -178,7 +178,7 @@ const CustomerSupport = ({ navigation }) => {
           }} >
           {strings.CustSupportText}</Text>
 
-        <TextInput
+        {/* <TextInput
           editable={false}
 
           style={styles.textInput}
@@ -198,7 +198,7 @@ const CustomerSupport = ({ navigation }) => {
           mode={'flat'}
           underlineColor={"transparent"}
           onChangeText={(textemail) => { setEmail(textemail) }}
-        />
+        /> */}
 
         <TextInput
           style={styles.textInput}
@@ -241,7 +241,7 @@ const CustomerSupport = ({ navigation }) => {
             }} >
             {strings.CustSupportText}</Text>
 
-          <TextInput
+          {/* <TextInput
             editable={false}
 
             style={styles.textInput}
@@ -263,7 +263,7 @@ const CustomerSupport = ({ navigation }) => {
             mode={'flat'}
             underlineColor={"transparent"}
             onChangeText={(textemail) => { setEmail(textemail) }}
-          />
+          /> */}
 
           <TextInput
             style={styles.textInput}
@@ -271,7 +271,9 @@ const CustomerSupport = ({ navigation }) => {
             activeUnderlineColor={"silver"}
             underlineColor={"transparent"}
             value={message}
-           
+            multiline={true}
+            numberOfLines={5}
+
             onChangeText={(textmessage) => { setMessage(textmessage) }}
           />
 
@@ -308,7 +310,9 @@ const CustomerSupport = ({ navigation }) => {
 
 
     if (result?.status == "200") {
-      Alert.alert("Alert", result.message)
+
+      ShortToast(result?.message, 'success', '')
+
       setMessage("")
 
     }
@@ -335,21 +339,12 @@ const CustomerSupport = ({ navigation }) => {
             <Appbar.Content style={{ alignItems: "center", }}
               title={<Text style={{
                 color: "white", textAlign: "center", fontSize: fontSizes.XL,
-                ...fontFamily.bold
+                fontFamily: "Montserrat-SemiBold"
               }}>{strings.CustomerSupport}</Text>} />
           </Appbar.Header>
         </View>
 
         {renderComponent()}
-
-
-
-
-
-
-
-
-
 
 
 
@@ -366,13 +361,13 @@ const styles = StyleSheet.create({
   textInput:
   {
     backgroundColor: 'white',
-    fontSize: fontSizes.LAR,
+    fontSize: fontSizes.XL,
     marginHorizontal: W * 0.05,
     marginVertical: H * 0.01,
     fontFamily: 'Montserrat-Medium',
-    borderWidth:0.5,
-    borderColor:"gray",
-    borderRadius:5
+    borderWidth: 0.5,
+    borderColor: "gray",
+    borderRadius: 5,
   },
   lowerContainer:
   {

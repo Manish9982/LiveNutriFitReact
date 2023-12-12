@@ -26,7 +26,7 @@ const WIDTH = Dimensions.get('window').width
 const ListForMeal = (props) => {
     const { NmyMeals } = useContext(DataContext)
     const navigation = useNavigation()
-    useEffect(() => { setLikedMeal(props.Liked) }, [props.Liked])
+    useEffect(() => {"propsMEAL+++++" ,props, setLikedMeal(props.Liked) }, [props.Liked])
     const [myMeals, setMyMeals] = NmyMeals
     const [likedMeal, setLikedMeal] = useState(true)
     const [visibleReplaceMeal, setVisibleReplaceMeal] = useState(true)
@@ -46,7 +46,6 @@ const ListForMeal = (props) => {
     const getLanguge = async () => {
         const lang = await getDataFromLocalStorage("lang")
         strings.setLanguage(lang)
-        console.log("currentLanguage", lang)
 
     }
 
@@ -59,7 +58,7 @@ const ListForMeal = (props) => {
         formdata.append("id", props.Id);
         formdata.append("status", "1")
         formdata.append("repeat", "0")
-        const result = await PostApiData('DashboardApi1/followunfollowsinglemeal', formdata)
+        const result = await PostApiData('followunfollowsinglemeal', formdata)
         if (result.status == '200') {
             setLikedMeal(true)
             setVisibleModalForRepeat(true)
@@ -78,7 +77,7 @@ const ListForMeal = (props) => {
         formdata.append("id", props.Id);
         formdata.append("status", "0")
         formdata.append("repeat", "0")
-        const result1 = await PostApiData('DashboardApi1/followunfollowsinglemeal', formdata)
+        const result1 = await PostApiData('followunfollowsinglemeal', formdata)
         console.log("FOLLOW UNFOLLOW", result1)
 
         if (result1.status == '200') {
@@ -100,26 +99,27 @@ const ListForMeal = (props) => {
 
 
     const handlingReplaceMeal = async () => {
+        setVisibleMood(true)
         const userTypee = await getDataFromLocalStorage('user_type')
-        if (JSON.parse(userTypee) == "1") {
-            setVisibleMood(false)
+        // if (JSON.parse(userTypee) == "1") {
+        //     setVisibleMood(false)
 
-            Alert.alert(
-                'Alert!',
-                strings.upgradeplanmsg,
-                [
-                    {
-                        text: strings.Cancel,
-                        onPress: () => console.log("Cancel Pressed"),
-                        style: "cancel"
-                    },
-                    { text: strings.Ok, onPress: () => { navigation.navigate("Upgrade") } }
-                ],
-                { cancelable: false }
-            );
-        } else {
-            setVisibleMood(true)
-        }
+        //     Alert.alert(
+        //         'Alert!',
+        //         strings.upgradeplanmsg,
+        //         [
+        //             {
+        //                 text: strings.Cancel,
+        //                 onPress: () => console.log("Cancel Pressed"),
+        //                 style: "cancel"
+        //             },
+        //             { text: strings.Ok, onPress: () => { navigation.navigate("Upgrade") } }
+        //         ],
+        //         { cancelable: false }
+        //     );
+        // } else {
+        //     setVisibleMood(true)
+        // }
     }
 
 
@@ -470,8 +470,8 @@ const ListForMeal = (props) => {
                                         (likedMeal == true)
                                             ?
                                             <TouchableOpacity onPress={() => {
-                                                // sendDislike()
-                                                ShortToast(strings.Ok, 'warning', '')
+                                                 sendDislike()
+                                                //ShortToast(strings.Ok, 'warning', '')
 
                                                 //ShortToast("No Worries. you can always replace the meal you don't like", 'success', '')
                                             }}>
@@ -480,8 +480,8 @@ const ListForMeal = (props) => {
                                             :
                                             <TouchableOpacity
                                                 onPress={() => {
-                                                    // sendLike()
-                                                    ShortToast(strings.FeatureComingSoon, 'warning', '')
+                                                     sendLike()
+                                                    //ShortToast(strings.FeatureComingSoon, 'warning', '')
                                                 }}>
                                                 <AntDesign name="sync" size={fontSizes.XXL} color={"grey"} />
                                             </TouchableOpacity>
