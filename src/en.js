@@ -187,7 +187,7 @@ export default english = {
     PreparingYourPersonalizedExercisePlan: "Preparing Your Personalized Exercise Plan..",
     AssigningyouaFunctionalCoach: "Assigning you a Functional Coach..",
     Ourpreventivehealth: "Our preventive health program based on Power of 7. It only takes 7 mins in a day.",
-    Readytocommit: "Ready to commit to build to last habits|",
+    Readytocommit: "Ready to commit to build to last habits",
     RecommendedPlansforyou: "Recommended Plans for you",
     Basedonyourfitnessgoals: "Based on your fitness goals",
     CustomizableDietPlan: "Customizable Diet Plan",

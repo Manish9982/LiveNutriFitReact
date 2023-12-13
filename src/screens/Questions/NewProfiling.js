@@ -5,6 +5,7 @@ import { PostApiData, W, colors, fontSizes, H, fontFamily, ShortToast, cmToFeetA
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
 import Loader from '../../assets/components/Loader'
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 function getTimestamp10YearsAgo() {
@@ -354,7 +355,7 @@ const NewProfiling = ({ navigation }) => {
 
     return (
 
-        <View>
+        <KeyboardAwareScrollView>
 
             {
                 loader
@@ -459,7 +460,7 @@ const NewProfiling = ({ navigation }) => {
                         </TouchableOpacity>
                     </>
             }
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 

@@ -32,7 +32,9 @@ const HeaderForStats = (props) => {
             <View>
                 < StatusBar backgroundColor={colors.OFFWHITE} />
                 <Appbar.Header style={styles.appBar}>
-                    <Appbar.Action style={{ marginLeft: W * 0.85 }} icon="information" color={colors.GREEN} size={30} onPress={() => { navigation.navigate("Walkthrough") }} />
+                    <Appbar.Action style={{ marginLeft: W * 0.85 }} icon="information" color={colors.GREEN} size={30} onPress={() => { 
+                        //navigation.navigate("Walkthrough") 
+                        }} />
                 </Appbar.Header>
                 <View style={{ flexDirection: "column", height: H * 0.1, position: "absolute", alignSelf: "center", top: H * 0.015 }}>
                     <TouchableOpacity style={{}}>

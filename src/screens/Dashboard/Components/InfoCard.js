@@ -296,7 +296,7 @@ const InfoCard = (props) => {
     const firstChoiceTrigger = async (heading) => {
 
         if (heading == 'Monitoring') {
-            
+
             setBgclr1(
                 (prev) => {
                     if (prev == colors.BEST_COLOR) {
@@ -332,7 +332,7 @@ const InfoCard = (props) => {
     }
     const secondChoiceTrigger = async (heading) => {
         if (heading == 'Monitoring') {
-            
+
             setBgclr2(
                 (prev) => {
                     if (prev == colors.BEST_COLOR) {
@@ -403,28 +403,28 @@ const InfoCard = (props) => {
     }
 
     const openInformationofindex = (num) => {
-        if (props.Text == "Meal Plan") {
-            navigation.navigate("WalkthroughMeal")
-        }
-        if (props.Text == "Exercise") {
-            navigation.navigate("WalkthroughExercise")
-        }
-        if (props.Text == "Sleep") {
-            navigation.navigate("WalkthroughSleep")
-        }
-        if (props.Text == "Hydration") {
-            navigation.navigate("WalkthroughHydration")
-        }
-        if (props.Text == "Fasting") {
-            navigation.navigate("WalkthroughFasting")
-        }
-        if (props.Text == "Mood") {
-            navigation.navigate("WalkthroughMood")
-        }
-        if (props.Text == "Monitoring") {
-            navigation.navigate("WalkthroughMonitoring")
-        }
-
+        // if (props.Text == "Meal Plan") {
+        //     navigation.navigate("WalkthroughMeal")
+        // }
+        // if (props.Text == "Exercise") {
+        //     navigation.navigate("WalkthroughExercise")
+        // }
+        // if (props.Text == "Sleep") {
+        //     navigation.navigate("WalkthroughSleep")
+        // }
+        // if (props.Text == "Hydration") {
+        //     navigation.navigate("WalkthroughHydration")
+        // }
+        // if (props.Text == "Fasting") {
+        //     navigation.navigate("WalkthroughFasting")
+        // }
+        // if (props.Text == "Mood") {
+        //     navigation.navigate("WalkthroughMood")
+        // }
+        // if (props.Text == "Monitoring") {
+        //     navigation.navigate("WalkthroughMonitoring")
+        // }
+        console.log("i button is pressed")
     }
 
     const openSnackbarOne = () => {
@@ -562,12 +562,12 @@ const styles = StyleSheet.create({
     {
         //height: 45,
         width: 80,
-        padding:2,
+        padding: 2,
         justifyContent: 'center',
         backgroundColor: 'white',
         borderRadius: 15,
         elevation: 20,
-       ...ShadowsiOS
+        ...ShadowsiOS
     },
     arrowButton:
     {
