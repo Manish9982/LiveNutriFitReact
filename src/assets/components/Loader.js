@@ -8,12 +8,14 @@ const Loader = () => {
         <View style={{
             justifyContent: 'center',
             alignItems: 'center',
-            flex: 1,
+            height: H,
+            width: W,
             backgroundColor: 'white',
         }}>
             <LottieView
                 style={{
-                    height: H * 0.2
+                    height: H * 0.7,
+                    width: W * 0.7
                 }}
                 source={require('../animations/lf30_editor_xibt7sue.json')}
                 autoPlay loop />

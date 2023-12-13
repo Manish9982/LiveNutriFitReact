@@ -190,7 +190,12 @@ export const ShortToast = (msg, style, title) => {
          callback => console.log('callback'))
    }
    else {
-      Alert.alert(style == 'error' ? 'Error' : style, msg)
+      if (style == 'error') {
+         Alert.alert('Error', msg)
+      }
+      else {
+         Alert.alert('Info', msg)
+      }
    }
 }
 

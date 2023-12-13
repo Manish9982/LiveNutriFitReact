@@ -322,7 +322,7 @@ export default english = {
     nonfating: "Non Fasting Sugar :",
     systolicBP: "Systolic BP : ",
     diastolicBP: "Diastolic BP : ",
-    BPM: "BPM : ",
+    BPM: "BPM (optional) : ",
     chngelang: "Change your language",
     upgradeplanmsg: "Currently you are a free user, you need to upgrade plan to use this feature",
     yes: "YES",

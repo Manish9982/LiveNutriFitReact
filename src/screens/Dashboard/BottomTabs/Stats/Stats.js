@@ -266,10 +266,11 @@ const Stats = (props) => {
   }
 
   const updateSugarValues = async () => {
-    if (fastingSugar == "" || fastingSugar.includes(".") || fastingSugar.includes(",") || fastingSugar.includes("-") || fastingSugar.includes(" ") || nonFastingSugar == "" || nonFastingSugar.includes(".") || nonFastingSugar.includes(",") || nonFastingSugar.includes("-") || nonFastingSugar.includes(" ")) {
-      ShortToast('Invalid Input', 'error', '')
-    }
-    else if (fastingSugar < 55 || nonFastingSugar < 70) {
+    // if (fastingSugar == "" || fastingSugar.includes(".") || fastingSugar.includes(",") || fastingSugar.includes("-") || fastingSugar.includes(" ") || nonFastingSugar == "" || nonFastingSugar.includes(".") || nonFastingSugar.includes(",") || nonFastingSugar.includes("-") || nonFastingSugar.includes(" ")) {
+    //   ShortToast('Invalid Input', 'error', '')
+    // }
+    // else 
+    if (fastingSugar < 55 || nonFastingSugar < 70) {
       ShortToast("Your sugar seems to be critically low! Kindly consult a Doctor", 'error', '')
       const temp = await getDataFromLocalStorage('user_id')
       var formdata = new FormData();
@@ -297,7 +298,7 @@ const Stats = (props) => {
       if (result.status == 200) {
         getDataForPaidUser()
         setEditSugar(false)
-        ShortToast('Success', 'success', '')
+        ShortToast(JSON.stringify(result?.message), 'success', '')
 
       }
       //  }
@@ -318,8 +319,8 @@ const Stats = (props) => {
   }
 
   const updateBpValues = async () => {
-    if (systolic == "" || diastolic == "" || bpm == "") {
-      ShortToast('Required Field', 'error', '')
+    if (systolic == "" || diastolic == "") {
+      ShortToast('Required field is missing', 'error', '')
     }
     else {
       // if (route.params.flag[0] == "" && route.params.flag[1] == "") {
@@ -745,7 +746,8 @@ const Stats = (props) => {
         <View style={styles.loadingContainer}>
           <LottieView
             style={{
-              height: H * 0.2,
+              height: H * 0.7,
+              width: W * 0.7,
             }}
             source={require('../../../../assets/animations/lf30_editor_xibt7sue.json')}
             autoPlay loop />
@@ -988,7 +990,9 @@ const Stats = (props) => {
                 flexDirection: "row",
                 alignItems: "center"
               }}>
-                <Text style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
+                <Text numberOfLines={1}
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
                 <TextInput
                   value={currentWeight}
                   onChangeText={(t) => {
@@ -1009,7 +1013,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   maxLength={3}
                   keyboardType="number-pad" />
@@ -1024,7 +1029,9 @@ const Stats = (props) => {
                 alignItems: "center",
                 marginTop: 10
               }}>
-                <Text style={styles.attributeHeading}>{strings.Targetweight} </Text>
+                <Text numberOfLines={1}
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.Targetweight} </Text>
                 <TextInput
                   underlineColor={colors.GREEN}
                   onChangeText={(t) => {
@@ -1049,7 +1056,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad" />
                 <Text style={{
@@ -1130,7 +1138,9 @@ const Stats = (props) => {
                 flexDirection: "row",
                 alignItems: "center"
               }}>
-                <Text style={styles.attributeHeading}>{strings.fasting} </Text>
+                <Text numberOfLines={1}
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.fasting} </Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1165,7 +1175,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad"
                   maxLength={3} />
@@ -1180,7 +1191,9 @@ const Stats = (props) => {
                 alignItems: "center",
                 marginTop: 10,
               }}>
-                <Text style={styles.attributeHeading}>{strings.nonfating} </Text>
+                <Text numberOfLines={1}
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.nonfating} </Text>
 
                 <TextInput
                   onChangeText={(t) => {
@@ -1216,7 +1229,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad"
                   maxLength={3}
@@ -1339,7 +1353,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad"
                   maxLength={3}
@@ -1425,7 +1440,9 @@ const Stats = (props) => {
                 flexDirection: "row",
                 alignItems: "center"
               }}>
-                <Text style={styles.attributeHeading}>{strings.systolicBP}</Text>
+                <Text numberOfLines={1}
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.systolicBP}</Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1440,7 +1457,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad" />
                 <Text style={{
@@ -1456,7 +1474,9 @@ const Stats = (props) => {
                 alignItems: "center",
                 marginTop: 10,
               }}>
-                <Text style={styles.attributeHeading}>{strings.diastolicBP}</Text>
+                <Text numberOfLines={1}
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.diastolicBP}</Text>
                 <TextInput
                   value={diastolic}
                   onChangeText={(t) => {
@@ -1472,7 +1492,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad" />
                 <Text style={{
@@ -1488,7 +1509,9 @@ const Stats = (props) => {
                 alignItems: "center",
                 marginTop: 10,
               }}>
-                <Text style={styles.attributeHeading}>{strings.BPM}</Text>
+                <Text numberOfLines={1}
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.BPM}</Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1504,7 +1527,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad" />
                 <Text style={{
@@ -1622,7 +1646,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad" />
                 <Text style={{
@@ -1740,7 +1765,8 @@ const Stats = (props) => {
                     width: W * 0.2,
                     height: H * 0.07,
                     alignSelf: "center",
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    margin: 5,
                   }}
                   keyboardType="number-pad" />
                 <Text style={{
@@ -2431,7 +2457,7 @@ const styles = StyleSheet.create({
   attributeHeading:
   {
     ...fontFamily.bold,
-    width: W * 0.3
+    width: W * 0.4
   }
 
 

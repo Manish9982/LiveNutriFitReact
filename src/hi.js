@@ -326,7 +326,7 @@ export default hindi = {
     nonfating: "नॉन फास्टिंग शुगर :",
     systolicBP: "सिस्टोलिक BP : ",
     diastolicBP: "डायास्टोलिक BP : ",
-    BPM: "BPM : ",
+    BPM: "BPM (optional): ",
     chngelang: "अपनी भाषा बदलो",
     upgradeplanmsg: "वर्तमान में आप फ्री यूजर हैं, आपको इस फीचर को यूज़ करने के लिए प्लान को अपग्रेड करना होगा",
     yes: "हां",
