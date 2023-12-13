@@ -371,20 +371,11 @@ const UserProfile = ({ navigation }) => {
                         }
 
                     </>
-                    <Text style={{
-
-                        top: H * 0.04,
-                        width: W * 0.57,
-                        ...fontFamily.bold,
-                        borderWidth: 0.5,
-                        alignSelf: 'center',
-                        textAlign: 'center',
-                        paddingHorizontal: W * 0.01,
-                    }}>{strings.LastUpdatedat} {lastRefresh}</Text>
 
 
 
-                    <View style={{ flexDirection: 'row', marginTop: H * 0.1 }}>
+
+                    <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
                         <View style={styles.containersAdjacent}>
                             <Text style={[styles.text2, { fontSize: fontSizes.XXXL }]}>
                                 {dataFromApi?.data[0].total_point}</Text>
@@ -396,6 +387,15 @@ const UserProfile = ({ navigation }) => {
                                 style={styles.button}>
                                 <Text style={styles.text3}>{strings.Upgrade}</Text>
                             </TouchableOpacity> */}
+
+                            <Text style={{
+
+                                width: W * 0.57,
+                                ...fontFamily.bold,
+                                alignSelf: 'center',
+                                textAlign: 'center',
+                                paddingHorizontal: W * 0.01,
+                            }}>{strings.LastUpdatedat} {lastRefresh}</Text>
                         </View>
                     </View>
                     <Modal visible={bioModal}
@@ -590,7 +590,7 @@ const styles = StyleSheet.create({
     },
     text1:
     {
-        color: 'grey',
+        color: 'black',
         fontSize: fontSizes.MED
     },
     button:
