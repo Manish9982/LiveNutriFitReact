@@ -270,14 +270,14 @@ const TotalPoints = () => {
                                 color: 'black', fontSize: fontSizes.LAR
                             }}>{strings.TotalPoints}</Text>
                         </View>
-                        {<TouchableOpacity
+                        {/* {<TouchableOpacity
                             onPress={() => { ShortToast('Feature will be available soon..', 'warning', '') }}
                             style={styles.redeemPointsButton}>
                             <Text style={{
                                 fontFamily: 'Montserrat-Regular', color: 'white',
                                 textAlign: 'center', fontSize: fontSizes.MED
                             }}>{strings.RedeemPoints}</Text>
-                        </TouchableOpacity>}
+                        </TouchableOpacity>} */}
 
 
                     </View>
