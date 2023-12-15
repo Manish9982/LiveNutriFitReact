@@ -59,15 +59,15 @@ const BottomTabs = ({ route }) => {
     getMessageCount()
     getChatStatus()
   }, [])
-  // React.useEffect(() => {
-  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
-  //     displayNotification(remoteMessage.notification.title, remoteMessage.notification.body)
-  //     getMessages()
+  React.useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      displayNotification(remoteMessage.notification.title, remoteMessage.notification.body)
+      getMessages()
 
-  //   });
+    });
 
-  //   return unsubscribe;
-  // }, []);
+    return unsubscribe;
+  }, []);
 
 
   React.useEffect(() => { getLanguge() }, [])
@@ -84,35 +84,35 @@ const BottomTabs = ({ route }) => {
   }
 
 
-  // React.useEffect(() => {
-  //   messaging()
-  //     .getInitialNotification()
-  //     .then(remoteMessage => {
-  //       if (remoteMessage?.data?.ctype == "1") {
-  //         navigation.navigate("Coach")
+  React.useEffect(() => {
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage?.data?.ctype == "1") {
+          navigation.navigate("Coach")
 
-  //         console.log(
-  //           'Notification caused app to open from quit state:==================', remoteMessage.notification,
-  //         );
-  //       } else {
+          console.log(
+            'Notification caused app to open from quit state:==================', remoteMessage.notification,
+          );
+        } else {
 
-  //       }
-  //     });
-  //   const notificationPressSubscription = notifee?.onForegroundEvent(
-  //     ({ type, detail }) => {
-  //       if (type === EventType.PRESS) {
-  //         if (detail?.notification?.data?.ctype == "1") {
-  //           navigation.navigate("Coach")
+        }
+      });
+    const notificationPressSubscription = notifee?.onForegroundEvent(
+      ({ type, detail }) => {
+        if (type === EventType.PRESS) {
+          if (detail?.notification?.data?.ctype == "1") {
+            navigation.navigate("Coach")
 
-  //         }
+          }
 
-  //       }
-  //     }
-  //   );
-  //   return () => {
-  //     notificationPressSubscription?.remove();
-  //   };
-  // }, [])
+        }
+      }
+    );
+    return () => {
+      notificationPressSubscription?.remove();
+    };
+  }, [])
 
   const { Nmessages, Ncount } = useContext(DataContext)
   const [messages, setMessages] = Nmessages

@@ -190,7 +190,7 @@ const NewProfiling = ({ navigation }) => {
             );
         } else if (type === "3") {
             return (
-                < View style={styles.textinputlayout} >
+                <KeyboardAwareScrollView>
                     <TextInput
                         activeOutlineColor='white'
                         activeUnderlineColor={colors.GREEN}
@@ -212,74 +212,75 @@ const NewProfiling = ({ navigation }) => {
                         }}
                         style={styles.textinput}
                     />
-
-                </View >
+                </KeyboardAwareScrollView>
             )
 
         } else if (type === "4") {
             switch (myData?.data?.question_id) {
                 case "70":
                     return (
-                        <View style={
-                            styles.targetweightlayout
-                        }>
-                            <TextInput
-                                activeOutlineColor='white'
-                                activeUnderlineColor={colors.GREEN}
-                                underlineColor={"white"}
-                                keyboardType="number-pad"
-                                maxLength={1}
-                                value={feet}
-                                onChangeText={(t) => {
-                                    if (t == " ")
-                                        ShortToast("Blank Spaces Not Allowed", 'error', '')
-                                    else if (t == '0') {
-                                        ShortToast("Height can't be Zero", 'error', '')
-                                    }
-                                    else if ((t > 8) || (t == ".") || (t == ",") || (t == "-") || (t == " ")) {
-                                        ShortToast("Height is not Valid", 'error', '')
-                                    }
-                                    else {
-                                        setFeet(t.toString())
-                                        setAnswer(() => { return ((Number.parseInt(t, 10) * 30.48) + (Number.parseInt(inch, 10) * 2.54)).toString() })
-                                    }
-                                }}
-                                style={styles.feet}
-                            />
-                            <Text style={{
-                                ...fontFamily.bold,
-                                marginRight: W * 0.03,
-                            }}>Ft</Text>
-                            <TextInput
-                                activeOutlineColor='white'
-                                activeUnderlineColor={colors.GREEN}
-                                underlineColor={"white"}
-                                keyboardType="number-pad"
-                                maxLength={2}
-                                value={inch}
-                                onChangeText={(t) => {
-                                    if (t == " ")
-                                        ShortToast("Blank Spaces Not Allowed", 'error', '')
-                                    else if (t > 12) {
-                                        ShortToast("Value in Inch should be less than 12", 'error', '')
-                                    }
-                                    else if ((t.includes(".")) || t.includes(",") || (t.includes("-") || t.includes(" "))) {
-                                        ShortToast("Special Characters are Not Allowed", 'error', '')
+                        <KeyboardAwareScrollView>
+                            <View style={
+                                styles.targetweightlayout
+                            }>
+                                <TextInput
+                                    activeOutlineColor='white'
+                                    activeUnderlineColor={colors.GREEN}
+                                    underlineColor={"white"}
+                                    keyboardType="number-pad"
+                                    maxLength={1}
+                                    value={feet}
+                                    onChangeText={(t) => {
+                                        if (t == " ")
+                                            ShortToast("Blank Spaces Not Allowed", 'error', '')
+                                        else if (t == '0') {
+                                            ShortToast("Height can't be Zero", 'error', '')
+                                        }
+                                        else if ((t > 8) || (t == ".") || (t == ",") || (t == "-") || (t == " ")) {
+                                            ShortToast("Height is not Valid", 'error', '')
+                                        }
+                                        else {
+                                            setFeet(t.toString())
+                                            setAnswer(() => { return ((Number.parseInt(t, 10) * 30.48) + (Number.parseInt(inch, 10) * 2.54)).toString() })
+                                        }
+                                    }}
+                                    style={styles.feet}
+                                />
+                                <Text style={{
+                                    ...fontFamily.bold,
+                                    marginRight: W * 0.03,
+                                }}>Ft</Text>
+                                <TextInput
+                                    activeOutlineColor='white'
+                                    activeUnderlineColor={colors.GREEN}
+                                    underlineColor={"white"}
+                                    keyboardType="number-pad"
+                                    maxLength={2}
+                                    value={inch}
+                                    onChangeText={(t) => {
+                                        if (t == " ")
+                                            ShortToast("Blank Spaces Not Allowed", 'error', '')
+                                        else if (t > 12) {
+                                            ShortToast("Value in Inch should be less than 12", 'error', '')
+                                        }
+                                        else if ((t.includes(".")) || t.includes(",") || (t.includes("-") || t.includes(" "))) {
+                                            ShortToast("Special Characters are Not Allowed", 'error', '')
 
-                                    }
-                                    else {
-                                        setInch(t.toString())
-                                        setAnswer(() => { return ((Number.parseInt(feet, 10) * 30.48) + (Number.parseInt(t, 10) * 2.54)).toString() })
+                                        }
+                                        else {
+                                            setInch(t.toString())
+                                            setAnswer(() => { return ((Number.parseInt(feet, 10) * 30.48) + (Number.parseInt(t, 10) * 2.54)).toString() })
 
-                                    }
-                                }}
-                                style={styles.feet}
-                            />
-                            <Text style={{
-                                ...fontFamily.bold,
+                                        }
+                                    }}
+                                    style={styles.feet}
+                                />
+                                <Text style={{
+                                    ...fontFamily.bold,
 
-                            }}>In</Text>
-                        </View>
+                                }}>In</Text>
+                            </View>
+                        </KeyboardAwareScrollView>
                     );
                 case "65":
                     return (
@@ -355,7 +356,7 @@ const NewProfiling = ({ navigation }) => {
 
     return (
 
-        <KeyboardAwareScrollView>
+        <View>
 
             {
                 loader
@@ -460,7 +461,7 @@ const NewProfiling = ({ navigation }) => {
                         </TouchableOpacity>
                     </>
             }
-        </KeyboardAwareScrollView>
+        </View>
     )
 }
 
@@ -540,9 +541,12 @@ const styles = StyleSheet.create(({
 
 
     textinput: {
+        backgroundColor: 'white',
         fontSize: fontSizes.XL,
         fontFamily: "Montserrat-Medium",
-        width: W,
+        width: W * 0.5,
+        alignSelf: 'center',
+        marginVertical: W * 0.1,
         textAlign: 'center',
         ...Platform.select({
             ios: {
@@ -607,7 +611,7 @@ const styles = StyleSheet.create(({
         alignItems: "center",
         width: W,
         justifyContent: "center",
-        top: H * 0.05
+        marginTop: H * 0.05
     },
 
 
