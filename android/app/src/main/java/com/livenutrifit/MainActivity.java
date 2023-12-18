@@ -1,4 +1,4 @@
-package com.livenutrifit;
+package com.lnf;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

@@ -5,7 +5,7 @@ import { PostApiData, W, colors, fontSizes, H, fontFamily, ShortToast, cmToFeetA
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
 import Loader from '../../assets/components/Loader'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import InputModalBox from '../../assets/components/InputModalBox'
 
 
 function getTimestamp10YearsAgo() {
@@ -190,8 +190,8 @@ const NewProfiling = ({ navigation }) => {
             );
         } else if (type === "3") {
             return (
-                <KeyboardAwareScrollView>
-                    <TextInput
+                <View style={styles.inputContainer}>
+                    {/* <TextInput
                         activeOutlineColor='white'
                         activeUnderlineColor={colors.GREEN}
                         underlineColor={"white"}
@@ -211,19 +211,37 @@ const NewProfiling = ({ navigation }) => {
                             }
                         }}
                         style={styles.textinput}
+                    /> */}
+                    <InputModalBox
+                        width={100}
+                        value={answer}
+                        keyboardType={'numeric'}
+                        maxLength={3}
+                        onChangeText={(t) => {
+                            if (t.length == 1 && (t == "-" || t == " " || t == "." || t == ",")) {
+                                ShortToast("Invalid Input", "warning", "")
+                            }
+                            else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
+                                ShortToast("Invalid Input", "warning", "")
+                            }
+                            else {
+
+                                setAnswer(t)
+                            }
+                        }}
                     />
-                </KeyboardAwareScrollView>
+                </View>
             )
 
         } else if (type === "4") {
             switch (myData?.data?.question_id) {
                 case "70":
                     return (
-                        <KeyboardAwareScrollView>
+                        <View>
                             <View style={
                                 styles.targetweightlayout
                             }>
-                                <TextInput
+                                {/* <TextInput
                                     activeOutlineColor='white'
                                     activeUnderlineColor={colors.GREEN}
                                     underlineColor={"white"}
@@ -245,12 +263,32 @@ const NewProfiling = ({ navigation }) => {
                                         }
                                     }}
                                     style={styles.feet}
+                                /> */}
+                                <InputModalBox
+                                    width={60}
+                                    value={feet}
+                                    keyboardType={'numeric'}
+                                    maxLength={1}
+                                    onChangeText={(t) => {
+                                        if (t == " ")
+                                            ShortToast("Blank Spaces Not Allowed", 'error', '')
+                                        else if (t == '0') {
+                                            ShortToast("Height can't be Zero", 'error', '')
+                                        }
+                                        else if ((t > 8) || (t == ".") || (t == ",") || (t == "-") || (t == " ")) {
+                                            ShortToast("Height is not Valid", 'error', '')
+                                        }
+                                        else {
+                                            setFeet(t.toString())
+                                            setAnswer(() => { return ((Number.parseInt(t, 10) * 30.48) + (Number.parseInt(inch, 10) * 2.54)).toString() })
+                                        }
+                                    }}
                                 />
                                 <Text style={{
                                     ...fontFamily.bold,
                                     marginRight: W * 0.03,
                                 }}>Ft</Text>
-                                <TextInput
+                                {/* <TextInput
                                     activeOutlineColor='white'
                                     activeUnderlineColor={colors.GREEN}
                                     underlineColor={"white"}
@@ -274,13 +312,35 @@ const NewProfiling = ({ navigation }) => {
                                         }
                                     }}
                                     style={styles.feet}
+                                /> */}
+                                <InputModalBox
+                                    width={60}
+                                    value={inch}
+                                    maxLength={2}
+                                    keyboardType={"numeric"}
+                                    onChangeText={(t) => {
+                                        if (t == " ")
+                                            ShortToast("Blank Spaces Not Allowed", 'error', '')
+                                        else if (t > 12) {
+                                            ShortToast("Value in Inch should be less than 12", 'error', '')
+                                        }
+                                        else if ((t.includes(".")) || t.includes(",") || (t.includes("-") || t.includes(" "))) {
+                                            ShortToast("Special Characters are Not Allowed", 'error', '')
+
+                                        }
+                                        else {
+                                            setInch(t.toString())
+                                            setAnswer(() => { return ((Number.parseInt(feet, 10) * 30.48) + (Number.parseInt(t, 10) * 2.54)).toString() })
+
+                                        }
+                                    }}
                                 />
                                 <Text style={{
                                     ...fontFamily.bold,
 
                                 }}>In</Text>
                             </View>
-                        </KeyboardAwareScrollView>
+                        </View>
                     );
                 case "65":
                     return (
@@ -644,6 +704,9 @@ const styles = StyleSheet.create(({
         color: "black",
         ...fontFamily.bold
 
+    },
+    inputContainer: {
+        marginTop: '10%'
     }
 }))
 

@@ -178,13 +178,13 @@ export const PostApiData = async (ApiName, formdata) => {
 export const ShortToast = (msg, style, title) => {
    if (Platform.OS == "android") {
       SweetAlert.showAlertWithOptions({
-         title: msg,
+         title: JSON.stringify(msg),
          subTitle: '',
          confirmButtonTitle: 'OK',
          confirmButtonColor: colors.GREEN,
          otherButtonTitle: 'Cancel',
          otherButtonColor: '#dedede',
-         style: style,
+         style: JSON.stringify(style),
          cancellable: true,
       },
          callback => console.log('callback'))

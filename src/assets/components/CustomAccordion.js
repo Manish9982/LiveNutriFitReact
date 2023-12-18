@@ -60,9 +60,11 @@ const CustomAccordion = ({ title, question, options, onSelectionChange, answers 
                         )}
                     /> */}
                     {
-                        options?.map(item => {
+                        options?.map((item, index) => {
                             return (
-                                <TouchableOpacity onPress={() => toggleOption(item)}>
+                                <TouchableOpacity 
+                                ke={index}
+                                onPress={() => toggleOption(item)}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
                                         <Icon
                                             color={selectedOptions.includes(item) ? colors.GREEN : colors.BLACK}

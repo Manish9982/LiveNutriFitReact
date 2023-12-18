@@ -1,4 +1,4 @@
-import { FlatList, View, Image, Keyboard, Modal, TouchableOpacity, StyleSheet, PermissionsAndroid, Linking, Alert, StatusBar, useWindowDimensions } from 'react-native'
+import { FlatList, View, Image, Keyboard, Modal, TouchableOpacity, StyleSheet, PermissionsAndroid, Linking, Alert, StatusBar, useWindowDimensions, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Appbar, Divider, Portal, ProgressBar, Text, TextInput } from 'react-native-paper'
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../../local storage/LocalStorage'
@@ -147,28 +147,7 @@ const Coach = ({ navigation }) => {
       scheduleWhatsappCall()
 
     }
-
-
-
   }
-
-
-
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", (e) => {
-      setKeyboardShown(true)
-      setKeyboardHeight(e.endCoordinates.height)
-    });
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", (e) => {
-      setKeyboardShown(false)
-      setKeyboardHeight(0)
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
 
   const yourRef = useRef(null)
 
@@ -317,39 +296,40 @@ const Coach = ({ navigation }) => {
   }
 
   const launchCam = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: "LiveNutriFit App Camera Permission",
-          message:
-            "LiveNutriFit App needs access to your camera " +
-            "so you can take awesome pictures.",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK"
+    if (Platform.OS == "android") {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: "LiveNutriFit App Camera Permission",
+            message:
+              "LiveNutriFit App needs access to your camera " +
+              "so you can take awesome pictures.",
+            buttonNeutral: "Ask Me Later",
+            buttonNegative: "Cancel",
+            buttonPositive: "OK"
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          try {
+            const pic = await ImagePicker.openCamera({
+              width: 300,
+              height: 400,
+              cropping: true,
+            });
+            console.log("CAmPic======>", pic)
+            uploadCamPic(pic)
+            setCamVisible(false)
+          } catch (err) {
+            ShortToast(`${err}`, 'error', '');
+          }
+        } else {
+          ShortToast("Camera permission denied", 'error', '');
         }
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        try {
-          const pic = await ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
-          });
-          console.log("CAmPic======>", pic)
-          uploadCamPic(pic)
-          setCamVisible(false)
-        } catch (err) {
-          ShortToast(`${err}`, 'error', '');
-        }
-      } else {
-        ShortToast("Camera permission denied", 'error', '');
+      } catch (err) {
+        ShortToast(err, "error", "");
       }
-    } catch (err) {
-      ShortToast(err, "error", "");
     }
-
   };
 
   const launchGallery = async () => {
@@ -395,27 +375,30 @@ const Coach = ({ navigation }) => {
   }
 
   const requestCameraPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: "LiveNutriFit App Camera Permission",
-          message:
-            "LiveNutriFit App needs access to your camera " +
-            "so you can take awesome pictures.",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK"
+    if (Platform.OS == "android") {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: "LiveNutriFit App Camera Permission",
+            message:
+              "LiveNutriFit App needs access to your camera " +
+              "so you can take awesome pictures.",
+            buttonNeutral: "Ask Me Later",
+            buttonNegative: "Cancel",
+            buttonPositive: "OK"
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log("You can use the camera");
+        } else {
+          console.log("Camera permission denied");
         }
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use the camera");
-      } else {
-        console.log("Camera permission denied");
+      } catch (err) {
+        ShortToast(err, "error", "");
       }
-    } catch (err) {
-      ShortToast(err, "error", "");
     }
+
   }
 
   const getTimeFromStamp = (timestamp) => {
@@ -777,7 +760,10 @@ const Coach = ({ navigation }) => {
         <Loader />
       </>
       :
-      <>
+      <KeyboardAvoidingView
+        behavior="padding"
+        style={{ flex: 1 }}
+      >
 
         <View>
           <StatusBar backgroundColor={colors.GREEN} />
@@ -812,7 +798,7 @@ const Coach = ({ navigation }) => {
 
         <View style={{
           flexDirection: 'row',
-          paddingVertical: H * 0.02,
+          //paddingVertical: H * 0.02,
           paddingHorizontal: W * 0.03,
           backgroundColor: '#e8e9eb',
         }}>
@@ -918,7 +904,7 @@ const Coach = ({ navigation }) => {
 
             }}>
               <View style={{
-                paddingVertical: H * 0.05,
+                //paddingVertical: H * 0.05,
                 height: H * 0.35,
                 width: W * 0.9,
                 backgroundColor: "white",
@@ -1007,7 +993,7 @@ const Coach = ({ navigation }) => {
             alignItems: "center"
           }}>
               <View style={{
-                paddingVertical: H * 0.05,
+                //paddingVertical: H * 0.05,
                 height: H * 0.5,
                 width: W * 0.9,
                 backgroundColor: "white",
@@ -1225,7 +1211,7 @@ const Coach = ({ navigation }) => {
 
         </View>
 
-      </>
+      </KeyboardAvoidingView>
 
 
 

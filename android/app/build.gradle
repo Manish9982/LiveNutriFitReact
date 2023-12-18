@@ -1,4 +1,4 @@
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 
@@ -74,9 +74,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.livenutrifit"
+    namespace "com.lnf"
     defaultConfig {
-        applicationId "com.livenutrifit"
+        applicationId "com.lnf"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

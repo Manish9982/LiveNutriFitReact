@@ -110,7 +110,6 @@ const App = () => {
             <Stack.Navigator screenOptions={{
               headerShown: false,
             }}>
-
               <Stack.Screen name="BootSplash" component={BootSplash} />
               <Stack.Screen name="WelcomeScreenBeforeBottomTabs" component={WelcomeScreenBeforeBottomTabs} />
               <Stack.Screen name="BottomTabs" component={BottomTabs} />
