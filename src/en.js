@@ -297,7 +297,7 @@ export default english = {
     CoporateIDEroor: "Corporate Id can not be empty!",
     LowGIFruitsandVegatables: "Low GI Fruits and Vegatables",
     callmsg: "Can I schedule a call for you?",
-    bysignin: "By signing, I accept the, ",
+    bysignin: "By signing, I accept the,",
     termsandcondition: "Terms & Conditions",
     donthaveanaccount: "Don't have an account? ",
     craeteone: "Create Account",
@@ -334,6 +334,4 @@ export default english = {
     whrnovalue: "You've not entered WHR value yet. Please add value.",
     Skipfornow:"Skip for Now",
     changelanguage:"Change your language",
-    
-    no: 'non'
-}
+    }

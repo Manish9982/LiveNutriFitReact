@@ -18,7 +18,6 @@ import { useIsFocused } from "@react-navigation/native"
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //lang chnge
 const strings = new LocalizedStrings({
@@ -756,7 +755,7 @@ const Stats = (props) => {
       </>
       :
       <>
-        <KeyboardAwareScrollView style={{
+        <View style={{
           flex: 1,
         }}>
           <View style={{
@@ -792,12 +791,13 @@ const Stats = (props) => {
 
               {/*LNF Logo and Name*/}
               <View style={{
-                //backgroundColor: 'red',
+               backgroundColor: 'red',
                 //position: "absolute",
                 alignSelf: "center",
                 //top: H * 0.015,
                 left: W * 0.1,
-                width: W * 0.4,
+                width: W * 0.45,
+
               }}>
 
                 <TouchableOpacity style={{}}>
@@ -808,6 +808,7 @@ const Stats = (props) => {
                 <Text style={{
                   textAlign: "center", ...fontFamily.bold,
                   width: W * 0.4,
+                  fontSize:fontSizes.MED, marginBottom:3
                   //backgroundColor: "red"
                 }}>{strings.hello}, {name}</Text>
                 {/* <Text style={{
@@ -832,11 +833,9 @@ const Stats = (props) => {
                       //props.navigation.navigate("Walkthrough")
                     }}
                     style={{
-                      height: 15,
+                      height: 20,
                       width: 20,
-                      //left: W * 0.78,
-                      //top: H * 0.015,
-                      //position: 'absolute',
+                    
                       alignSelf: 'center',
                     }}>
                     <Animated.Image source={require('../../../../assets/icons/star.png')}
@@ -968,7 +967,7 @@ const Stats = (props) => {
 
             {/* Input Weights Pop Up */}
 
-            <KeyboardAwareScrollView contentContainerStyle={{
+            <View style={{
               width: W * 0.8,
               backgroundColor: colors.OFFWHITE,
               borderRadius: 10,
@@ -992,8 +991,8 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
                 <TextInput
                   value={currentWeight}
                   onChangeText={(t) => {
@@ -1031,8 +1030,8 @@ const Stats = (props) => {
                 marginTop: 10
               }}>
                 <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.Targetweight} </Text>
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.Targetweight} </Text>
                 <TextInput
                   underlineColor={colors.GREEN}
                   onChangeText={(t) => {
@@ -1105,10 +1104,10 @@ const Stats = (props) => {
                   }}>{strings.Cancel}</Text>
                 </TouchableOpacity>
               </View>
-            </KeyboardAwareScrollView>
+            </View>
           </Modal>
 
-          {/**Edit Sugar Modal */}
+          {/**Edit Fasting Sugar///////////////////////////////////////////////// */}
           <Modal
             style={{
               backgroundColor: "red"
@@ -1116,7 +1115,7 @@ const Stats = (props) => {
             animationType="fade"
             transparent={true}
             visible={editSugar}>
-            <KeyboardAwareScrollView contentContainerStyle={{
+            <View style={{
               padding: 10,
               width: W * 0.7,
               backgroundColor: colors.OFFWHITE,
@@ -1140,8 +1139,8 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.fasting} </Text>
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.fasting} </Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1193,8 +1192,8 @@ const Stats = (props) => {
                 marginTop: 10,
               }}>
                 <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.nonfating} </Text>
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.nonfating} </Text>
 
                 <TextInput
                   onChangeText={(t) => {
@@ -1285,10 +1284,133 @@ const Stats = (props) => {
                   }}>{strings.Cancel}</Text>
                 </TouchableOpacity>
               </View>
-            </KeyboardAwareScrollView>
+            </View>
           </Modal>
+          {/**Edit Fasting Sugar///////////////////////////////////////////////// */}
+          {/**Edit non Fasting Sugar///////////////////////////////////////////////// */}
+          <Modal
+            style={{
+              backgroundColor: "red"
+            }}
+            animationType="fade"
+            transparent={true}
+            visible={false}>
+            <View style={{
+              height: H * 0.28,
+              width: W * 0.7,
+              backgroundColor: colors.OFFWHITE,
+              borderRadius: 10,
+              alignSelf: "center",
+              justifyContent: "center",
+              alignItems: "center",
+              top: H * 0.35,
+              elevation: 5,
+            }}>
+              <Image source={require('../../../../assets/icons/glucose-meter.png')}
+                style={{
+                  height: H * 0.05,
+                  width: H * 0.05,
+                  marginBottom: H * 0.02,
+                }} />
+              <View style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}>
+                <Text style={{
+                  ...fontFamily.bold
+                }}>{strings.nonfating}</Text>
+                <TextInput
+                  onChangeText={(t) => {
+                    if (t == '0') {
+                      ShortToast('Invalid Input', 'error', '')
+                    }
+                    else if (t <= 90) {
+                      setNonFastingSugar(t)
+                    }
+                    else if (t >= 90 && t <= 140) {
+                      setNonFastingSugar(t)
+                    }
+                    else if (t > 140 && t <= 210) {
+                      ShortToast("Your Non Fasting Sugar Seems to be Elevated", 'warning', '')
+                      setNonFastingSugar(t)
+                    }
+                    else if (t > 210 && t <= 300) {
+                      ShortToast("Your Non Fasting Sugar Seems to be High (Stage 1)", 'error', '')
+                      setNonFastingSugar(t)
+                    }
+                    else if (t > 300 && t <= 380) {
+                      ShortToast("Your Non Fasting Sugar Seems to be High (Stage 2)", 'error', '')
+                      setNonFastingSugar(t)
+                    }
+                    else if (t > 380) {
+                      ShortToast("Your Non Fasting Sugar Seems To Be Critical. Please Consult A Doctor!", 'error', '')
+                    }
+                  }}
+                  value={nonFastingSugar}
+                  underlineColor={colors.GREEN}
+                  activeUnderlineColor={colors.GREEN}
+                  style={{
+                    width: W * 0.2,
+                    height: H * 0.07,
+                    alignSelf: "center",
+                    backgroundColor: "white",
+                    margin: 5,
+                  }}
+                  keyboardType="number-pad"
+                  maxLength={3}
+                />
+                <Text style={{
+                  color: colors.FONT_BLACK,
+                  marginLeft: W * 0.01
+                }}></Text>
+              </View>
+              <View style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                width: W * 0.5
+              }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // updateValueNonFastingSugar()
 
-          {/**Edit BP Modal */}
+                  }}
+                  style={{
+                    width: W * 0.18,
+                    height: H * 0.04,
+                    backgroundColor: colors.GREEN,
+                    borderRadius: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: H * 0.03,
+
+                  }}>
+                  <Text style={{
+                    color: "white"
+                  }}>{strings.Ok}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setEditSugar(false)
+                  }}
+                  style={{
+                    width: W * 0.18,
+                    height: H * 0.04,
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: H * 0.03,
+
+                  }}>
+                  <Text style={{
+                    color: colors.FONT_BLACK
+                  }}>{strings.Cancel}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+          {/**Edit non Fasting Sugar///////////////////////////////////////////////// */}
+          {/**Edit Systolic///////////////////////////////////////////////// */}
           <Modal
             style={{
 
@@ -1296,7 +1418,7 @@ const Stats = (props) => {
             animationType="fade"
             transparent={true}
             visible={editBp}>
-            <KeyboardAwareScrollView contentContainerStyle={{
+            <View style={{
               padding: 10,
               backgroundColor: colors.OFFWHITE,
               borderRadius: 10,
@@ -1319,8 +1441,8 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.systolicBP}</Text>
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.systolicBP}</Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1353,8 +1475,8 @@ const Stats = (props) => {
                 marginTop: 10,
               }}>
                 <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.diastolicBP}</Text>
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.diastolicBP}</Text>
                 <TextInput
                   value={diastolic}
                   onChangeText={(t) => {
@@ -1388,8 +1510,8 @@ const Stats = (props) => {
                 marginTop: 10,
               }}>
                 <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.BPM}</Text>
+                adjustsFontSizeToFit
+                style={styles.attributeHeading}>{strings.BPM}</Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1474,7 +1596,239 @@ const Stats = (props) => {
                   }}>{strings.Cancel}</Text>
                 </TouchableOpacity>
               </View>
-            </KeyboardAwareScrollView>
+            </View>
+          </Modal>
+          {/**Edit Systolic///////////////////////////////////////////////// */}
+          {/**Edit diastolic///////////////////////////////////////////////// */}
+          <Modal
+            style={{
+              backgroundColor: "red"
+            }}
+            animationType="fade"
+            transparent={true}
+            visible={false}>
+            <View style={{
+              height: H * 0.28,
+              width: W * 0.7,
+              backgroundColor: colors.OFFWHITE,
+              borderRadius: 10,
+              alignSelf: "center",
+              justifyContent: "center",
+              alignItems: "center",
+              top: H * 0.35,
+              elevation: 5,
+            }}>
+              <Image source={require('../../../../assets/icons/hypertension.png')}
+                style={{
+                  height: H * 0.05,
+                  width: H * 0.05,
+                  marginBottom: H * 0.02,
+                }} />
+              <View style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}>
+                <Text style={{
+                  ...fontFamily.bold
+                }}>{strings.diastolicBP}</Text>
+                <TextInput
+                  value={diastolic}
+                  onChangeText={(t) => {
+                    if (t == '0') {
+                      ShortToast('Invalid Input', 'error', '')
+                    }
+                    else
+                      setDiastolic(t)
+                  }}
+                  underlineColor={colors.GREEN}
+                  activeUnderlineColor={colors.GREEN}
+                  style={{
+                    width: W * 0.2,
+                    height: H * 0.07,
+                    alignSelf: "center",
+                    backgroundColor: "white",
+                    margin: 5,
+                  }}
+                  keyboardType="number-pad" />
+                <Text style={{
+                  color: colors.FONT_BLACK,
+                  marginLeft: W * 0.01
+                }}></Text>
+              </View>
+              <View style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                width: W * 0.5
+              }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    {
+
+                      if (diastolic < 55 || diastolic > 120) {
+                        if (flagg1 > 2) {
+                          ShortToast("Your Diastolic BP Level Seems to be Critical, Kindly Consult a Doctor", 'error', '')
+                          //updateValueDiastolicBp()
+                        }
+                        else {
+                          setFlagg1(prev => prev + 1)
+                          ShortToast("Your Diastolic BP level doesn't seem to be normal. Kindly make sure you have took the correct reading", 'warning', '')
+                          setDiastolic("")
+                        }
+                      }
+                      else {
+                        //updateValueDiastolicBp()
+                      }
+
+
+                    }
+                  }}
+                  style={{
+                    width: W * 0.18,
+                    height: H * 0.04,
+                    backgroundColor: colors.GREEN,
+                    borderRadius: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: H * 0.03,
+
+                  }}>
+                  <Text style={{
+                    color: "white"
+                  }}>{strings.Ok}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setEditBp(false)
+                  }}
+                  style={{
+                    width: W * 0.18,
+                    height: H * 0.04,
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: H * 0.03,
+
+                  }}>
+                  <Text style={{
+                    color: colors.FONT_BLACK
+                  }}>{strings.Cancel}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+          {/**Edit diastolic///////////////////////////////////////////////// */}
+          {/**Edit bpm///////////////////////////////////////////////// */}
+          <Modal
+            style={{
+              backgroundColor: "red"
+            }}
+            animationType="fade"
+            transparent={true}
+            visible={false}>
+            <View style={{
+              height: H * 0.28,
+              width: W * 0.7,
+              backgroundColor: colors.OFFWHITE,
+              borderRadius: 10,
+              alignSelf: "center",
+              justifyContent: "center",
+              alignItems: "center",
+              top: H * 0.35,
+              elevation: 5,
+            }}>
+              <Image source={require('../../../../assets/icons/hypertension.png')}
+                style={{
+                  height: H * 0.05,
+                  width: H * 0.05,
+                  marginBottom: H * 0.02,
+                }} />
+              <View style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}>
+                <Text style={{
+                  ...fontFamily.bold
+                }}>{strings.BPM}</Text>
+                <TextInput
+                  onChangeText={(t) => {
+                    if (t == '0') {
+                      ShortToast('Invalid Input', 'error', '')
+                    }
+                    else
+                      setBpm(t)
+                  }}
+                  value={bpm}
+                  underlineColor={colors.GREEN}
+                  activeUnderlineColor={colors.GREEN}
+                  style={{
+                    width: W * 0.2,
+                    height: H * 0.07,
+                    alignSelf: "center",
+                    backgroundColor: "white",
+                    margin: 5,
+                  }}
+                  keyboardType="number-pad" />
+                <Text style={{
+                  color: colors.FONT_BLACK,
+                  marginLeft: W * 0.01
+                }}></Text>
+              </View>
+              <View style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                width: W * 0.5
+              }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    {
+                      if (bpm == "0" || bpm == " " || ((bpm.length == 2 && bpm < "40") || (bpm.length == 3 && bpm > "250"))) {
+                        ShortToast("Invalid Value", "warning", "")
+                        setBpm("")
+                      }
+                      else if (bpm.includes(".") || bpm.includes(",") || bpm.includes(" ") || bpm.includes("-")) {
+                        ShortToast("Invalid Value", "warning", "")
+                        setBpm("")
+                      }
+                      else {
+                        //updateValueBpmBp()
+                      }
+                    }
+                  }}
+                  style={{
+                    width: W * 0.18,
+                    height: H * 0.04,
+                    backgroundColor: colors.GREEN,
+                    borderRadius: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: H * 0.03,
+
+                  }}>
+                  <Text style={{
+                    color: "white"
+                  }}>{strings.Ok}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setEditBp(false)
+                  }}
+                  style={{
+                    width: W * 0.18,
+                    height: H * 0.04,
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: H * 0.03,
+
+                  }}>
+                  <Text style={{
+                    color: colors.FONT_BLACK
+                  }}>{strings.Cancel}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </Modal>
 
           <Modal visible={firstTimeLogin}
@@ -1518,7 +1872,7 @@ const Stats = (props) => {
                 <TouchableOpacity onPress={() => {
                   setFirstTimeLogin(false)
                   storeDataInLocalStorage('firstTimeLogin', '0')
-                  //props.navigation.navigate("Walkthrough")
+                  props.navigation.navigate("Walkthrough")
                 }}>
                   <Text style={{
                     ...fontFamily.bold,
@@ -1883,7 +2237,7 @@ const Stats = (props) => {
               </View>
             </ScrollView>
           </View>
-        </KeyboardAwareScrollView>
+        </View>
       </>
 
   )

@@ -112,36 +112,36 @@ const SignupWithPhone = ({ navigation }) => {
 
         storeDataInLocalStorage('country', countryType)
 
-        if(isChecked){
+        if (isChecked) {
             setLoaderNeeded(true)
 
             if (!testName(userName)) {
                 ShortToast(strings.NameError, 'error', '')
-    
-    
+
+
             } else if (!testNumber(mobile)) {
                 ShortToast(strings.MobileError, 'error', '')
-    
-    
+
+
             } else if (!testEmail(email)) {
                 ShortToast(strings.EmailError, 'error', '')
-    
+
             }
-    
+
             else if (password.length == 0) {
                 ShortToast(strings.PasswordError, 'error', '')
-    
+
             }
             else if (confirmpassword.length == 0) {
                 ShortToast(strings.RePasswordError, 'error', '')
-    
+
             }
-    
+
             else if (password !== confirmpassword) {
                 ShortToast(strings.ConfirmError, 'error', '')
-    
+
             }
-    
+
             else {
                 var formdata = new FormData();
                 formdata.append("user_name", userName);
@@ -151,8 +151,8 @@ const SignupWithPhone = ({ navigation }) => {
                 formdata.append("password", password);
                 formdata.append("confirm_password", confirmpassword);
                 formdata.append("language", langText);
-    
-    
+
+
                 var requestOptions = {
                     method: 'POST',
                     body: formdata,
@@ -171,22 +171,22 @@ const SignupWithPhone = ({ navigation }) => {
                             navigation.navigate("Sign In")
                         }
                         else ShortToast(result.message, 'error')
-    
+
                     }
                 } catch (error) {
                     ShortToast(error, 'error')
                 }
                 //Navigation
-    
+
             }
-    
-    
-        }else{
+
+
+        } else {
             ShortToast("Please accept terms and condtions !", "error")
         }
 
 
-      
+
 
         setLoaderNeeded(false)
 
@@ -216,7 +216,7 @@ const SignupWithPhone = ({ navigation }) => {
             <KeyboardAwareScrollView>
 
                 <ScrollView contentContainerStyle={{
-                    paddingBottom: H * 0.8
+                    paddingBottom: H * 0.2
                 }}>
                     <PaperProvider theme={theme}>
 
@@ -338,27 +338,39 @@ const SignupWithPhone = ({ navigation }) => {
 
                                 <View style={{
                                     flexDirection: 'row',
-                                    flexWrap: 'wrap', marginVertical: HEIGHT * 0.04
+                                    flexWrap: 'wrap',
+                                    marginVertical: HEIGHT * 0.04
                                 }}>
 
-                                    <View style={{
-                                    }}><Checkbox.Android style={{
+
+
+                                    <Checkbox.Android style={{
 
                                     }}
                                         onPress={handleCheckBoxToggle}
                                         status={isChecked ? 'checked' : 'unchecked'}
                                         color={colors.GREEN} />
-                                    </View>
 
-                                    <Text style={styles.textUniversal}>{strings.bysignin}</Text>
+                                    <Text style={[styles.textUniversal,
+                                    { marginTop: 8 }]}>{strings.bysignin}</Text>
+
                                     <TouchableOpacity onPress={() => { openURL() }}>
-                                        <Text style={styles.tncText}>{strings.termsandcondition} </Text>
+                                        <Text style={[styles.tncText,
+                                        { marginTop: 0 }]}>{strings.termsandcondition} </Text>
                                     </TouchableOpacity>
-                                    <Text style={{ fontSize: fontSizes.LAR, fontFamily: 'Montserrat-Regular' }}>{strings.and} </Text>
+
+                                    <Text style={{
+                                        fontSize: fontSizes.LAR,
+                                        fontFamily: 'Montserrat-Regular'
+                                    }}>{strings.and} </Text>
                                     <TouchableOpacity onPress={() => { openURL2() }}>
-                                        <Text style={styles.tncText2}>{strings.privacypolicy} </Text></TouchableOpacity>
-                                   
-                                    <Text style={[styles.tncText2, { color: 'black', marginTop: 0 }]}> {strings.includingusage}</Text>
+                                        <Text style={[styles.tncText2,
+                                        { marginTop: 0 }]}>{strings.privacypolicy}
+                                        </Text></TouchableOpacity>
+
+                                    <Text style={[styles.tncText2,
+                                    { color: 'black', marginTop: 0 }]}>
+                                        {strings.includingusage}</Text>
                                 </View>
 
                                 <View style={{ alignItems: 'center' }}>
@@ -435,7 +447,7 @@ const styles = StyleSheet.create({
         color: colors.ORANGE,
         //marginBottom: HEIGHT * 0.02,
         fontSize: fontSizes.LAR,
-        fontFamily: 'Montserrat-Regular', 
+        fontFamily: 'Montserrat-Regular',
     },
     textUniversal:
     {
