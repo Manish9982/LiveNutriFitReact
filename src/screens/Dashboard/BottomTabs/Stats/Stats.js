@@ -791,12 +791,13 @@ const Stats = (props) => {
 
               {/*LNF Logo and Name*/}
               <View style={{
-               backgroundColor: 'red',
+                //backgroundColor: 'red',
                 //position: "absolute",
                 alignSelf: "center",
                 //top: H * 0.015,
                 left: W * 0.1,
                 width: W * 0.45,
+                alignItems: 'center'
 
               }}>
 
@@ -805,12 +806,16 @@ const Stats = (props) => {
                     style={{ height: 30, width: 80, alignSelf: "center", resizeMode: "contain" }} />
                 </TouchableOpacity>
 
-                <Text style={{
-                  textAlign: "center", ...fontFamily.bold,
-                  width: W * 0.4,
-                  fontSize:fontSizes.MED, marginBottom:3
-                  //backgroundColor: "red"
-                }}>{strings.hello}, {name}</Text>
+                <Text
+                  numberOfLines={2}
+                  style={{
+                    textAlign: "center",
+                    ...fontFamily.bold,
+                    width: W * 0.4,
+                    fontSize: fontSizes.MED,
+                    marginBottom: 3
+                    //backgroundColor: "red"
+                  }}>{strings.hello}, {name}</Text>
                 {/* <Text style={{
                   textAlign: "center", ...fontFamily.bold,
                   width: W * 0.4,
@@ -835,7 +840,7 @@ const Stats = (props) => {
                     style={{
                       height: 20,
                       width: 20,
-                    
+
                       alignSelf: 'center',
                     }}>
                     <Animated.Image source={require('../../../../assets/icons/star.png')}
@@ -991,8 +996,8 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text numberOfLines={1}
-                adjustsFontSizeToFit
-                style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
+                  adjustsFontSizeToFit
+                  style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
                 <TextInput
                   value={currentWeight}
                   onChangeText={(t) => {
@@ -1030,8 +1035,8 @@ const Stats = (props) => {
                 marginTop: 10
               }}>
                 <Text numberOfLines={1}
-                adjustsFontSizeToFit
-                style={styles.attributeHeading}>{strings.Targetweight} </Text>
+                  adjustsFontSizeToFit
+                  style={styles.attributeHeading}>{strings.Targetweight} </Text>
                 <TextInput
                   underlineColor={colors.GREEN}
                   onChangeText={(t) => {
@@ -1139,8 +1144,8 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text numberOfLines={1}
-                adjustsFontSizeToFit
-                style={styles.attributeHeading}>{strings.fasting} </Text>
+                  adjustsFontSizeToFit
+                  style={styles.attributeHeading}>{strings.fasting} </Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1192,8 +1197,8 @@ const Stats = (props) => {
                 marginTop: 10,
               }}>
                 <Text numberOfLines={1}
-                adjustsFontSizeToFit
-                style={styles.attributeHeading}>{strings.nonfating} </Text>
+                  adjustsFontSizeToFit
+                  style={styles.attributeHeading}>{strings.nonfating} </Text>
 
                 <TextInput
                   onChangeText={(t) => {
@@ -1441,8 +1446,8 @@ const Stats = (props) => {
                 alignItems: "center"
               }}>
                 <Text numberOfLines={1}
-                adjustsFontSizeToFit
-                style={styles.attributeHeading}>{strings.systolicBP}</Text>
+                  adjustsFontSizeToFit
+                  style={styles.attributeHeading}>{strings.systolicBP}</Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1475,8 +1480,8 @@ const Stats = (props) => {
                 marginTop: 10,
               }}>
                 <Text numberOfLines={1}
-                adjustsFontSizeToFit
-                style={styles.attributeHeading}>{strings.diastolicBP}</Text>
+                  adjustsFontSizeToFit
+                  style={styles.attributeHeading}>{strings.diastolicBP}</Text>
                 <TextInput
                   value={diastolic}
                   onChangeText={(t) => {
@@ -1510,8 +1515,8 @@ const Stats = (props) => {
                 marginTop: 10,
               }}>
                 <Text numberOfLines={1}
-                adjustsFontSizeToFit
-                style={styles.attributeHeading}>{strings.BPM}</Text>
+                  adjustsFontSizeToFit
+                  style={styles.attributeHeading}>{strings.BPM}</Text>
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -2439,9 +2444,9 @@ const styles = StyleSheet.create({
   appBar:
   {
     backgroundColor: colors.OFFWHITE,
+    //backgroundColor: 'red',
     justifyContent: "space-between",
     width: W,
-    height: H * 0.09
   },
   headerContainer:
   {

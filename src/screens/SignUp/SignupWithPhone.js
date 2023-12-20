@@ -339,44 +339,27 @@ const SignupWithPhone = ({ navigation }) => {
                                 <View style={{
                                     flexDirection: 'row',
                                     flexWrap: 'wrap',
-                                    marginVertical: HEIGHT * 0.04
+                                    marginVertical: HEIGHT * 0.04,
+                                    alignItems: 'center'
                                 }}>
-
-
-
                                     <Checkbox.Android style={{
-
                                     }}
                                         onPress={handleCheckBoxToggle}
                                         status={isChecked ? 'checked' : 'unchecked'}
                                         color={colors.GREEN} />
-
-                                    <Text style={[styles.textUniversal,
-                                    { marginTop: 8 }]}>{strings.bysignin}</Text>
-
+                                    <Text style={{}}>{strings.bysignin}</Text>
                                     <TouchableOpacity onPress={() => { openURL() }}>
-                                        <Text style={[styles.tncText,
-                                        { marginTop: 0 }]}>{strings.termsandcondition} </Text>
+                                        <Text style={{ color: colors.BUTTON_ORANGE }}> {strings.termsandcondition} </Text>
                                     </TouchableOpacity>
-
-                                    <Text style={{
-                                        fontSize: fontSizes.LAR,
-                                        fontFamily: 'Montserrat-Regular'
-                                    }}>{strings.and} </Text>
+                                    <Text style={{}}>{strings.and} </Text>
                                     <TouchableOpacity onPress={() => { openURL2() }}>
-                                        <Text style={[styles.tncText2,
-                                        { marginTop: 0 }]}>{strings.privacypolicy}
-                                        </Text></TouchableOpacity>
-
-                                    <Text style={[styles.tncText2,
-                                    { color: 'black', marginTop: 0 }]}>
-                                        {strings.includingusage}</Text>
+                                        <Text style={{ color: colors.BUTTON_ORANGE }}>{strings.privacypolicy}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <Text style={{}}> {strings.includingusage}</Text>
                                 </View>
 
                                 <View style={{ alignItems: 'center' }}>
-
-
-
                                     <TouchableOpacity onPress={() => { signUpPressed() }}
                                         style={styles.button}>
                                         <Text style={styles.textAgree}>{strings.AgreeSignUp}</Text>
