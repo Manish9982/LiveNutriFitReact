@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Alert, Platform } from 'react-native'
+import { View, StyleSheet, FlatList, TouchableOpacity, Modal, Alert, Platform } from 'react-native'
 import React, { useState, useEffect, useCallback } from 'react'
-import { Appbar, Checkbox, TextInput } from 'react-native-paper'
+import { Appbar, Checkbox, TextInput, Text } from 'react-native-paper'
 import { PostApiData, W, colors, fontSizes, H, fontFamily, ShortToast, cmToFeetAndInches, convertTimestampToYYYYMMDD, formatDate } from '../../colorSchemes/ColorSchemes'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
 import Loader from '../../assets/components/Loader'
@@ -31,7 +31,7 @@ const NewProfiling = ({ navigation }) => {
     const [inch, setInch] = useState("")
     const [showCalendar, setShowCalendar] = useState(false)
     const [otherOptionText, setOtherOptionText] = useState("")
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date(new Date().getFullYear() - 10, new Date().getMonth(), new Date().getDate()));
     const [selectItem, setSelectItem] = useState([])
 
     useEffect(() => {
@@ -40,7 +40,9 @@ const NewProfiling = ({ navigation }) => {
 
 
     const handleDateChange = useCallback((event, newDate) => {
-        setShowCalendar(false)
+        if (Platform.OS == "android") {
+            setShowCalendar(false)
+        }
         setAnswer(convertTimestampToYYYYMMDD(newDate))
         setSelectedDate(newDate)
 
@@ -109,9 +111,7 @@ const NewProfiling = ({ navigation }) => {
     };
 
     const handleOptionPress = (item) => {
-
         setAnswer(item)
-
     }
     const handleOptionPress2 = (item) => {
         if (answer?.includes(item)) {
@@ -345,28 +345,48 @@ const NewProfiling = ({ navigation }) => {
                 case "65":
                     return (
                         <>
-                            {
-                                showCalendar &&
-                                <DateTimePicker
-                                    value={selectedDate}
-                                    mode="date"
-                                    display="default"
-                                    onChange={(a, t) => handleDateChange(a, t)}
-                                //maximumDate={getTimestamp10YearsAgo()}
-                                //onTouchCancel={() =>setShowCalendar(prev => !prev)}
 
-                                />
-
-                            }
-
-
-                            < TouchableOpacity
+                            < View
                                 onPress={handleDOB}
-                                style={styles.textStyle} >
+                                style={styles.datePickerContainer} >
 
-                                <Text style={styles.textdatestyle}>{answer == "" ? "Enter DOB" : formatDate(answer)}</Text>
+                                {/* <Text style={styles.textdatestyle}>{answer == "" ? "Enter DOB" : formatDate(answer)}</Text> */}
+                                <Text style={styles.textdatestyle}>Enter DOB:</Text>
+                                {
+                                    Platform.OS == "android"
+                                    &&
+                                    <TouchableOpacity
+                                        style={[styles.timetext,]}
+                                        onPress={() => setShowCalendar(prev => !prev)}>
+                                        <Text style={[]}>{formatDate(selectedDate)}</Text>
+                                    </TouchableOpacity>
+                                }
+                                {
 
-                            </TouchableOpacity >
+
+                                    Platform.OS == 'android'
+                                        ?
+                                        showCalendar
+                                        &&
+                                        <DateTimePicker
+                                            maximumDate={new Date(new Date().getFullYear() - 10, new Date().getMonth(), new Date().getDate())}
+                                            style={styles.datePicker}
+                                            value={selectedDate}
+                                            mode="date"
+                                            onChange={(a, t) => handleDateChange(a, t)}
+                                        />
+                                        :
+                                        <DateTimePicker
+                                            maximumDate={new Date(new Date().getFullYear() - 10, new Date().getMonth(), new Date().getDate())}
+                                            style={styles.datePicker}
+                                            value={selectedDate}
+                                            mode="date"
+                                            onChange={(a, t) => handleDateChange(a, t)}
+                                        />
+
+                                }
+
+                            </View >
                         </>
 
                     )
@@ -439,31 +459,11 @@ const NewProfiling = ({ navigation }) => {
                         <Modal visible={answer == "Other health goals"}
                             transparent={true}>
                             <View
-                                style={{
-                                    height: H,
-                                    width: W,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    backgroundColor: "rgba(0,0,0,0.3)"
-                                }}
+                                style={styles.overlay}
                             >
-                                <View style={{
-                                    height: H * 0.3,
-                                    backgroundColor: colors.OFFWHITE,
-                                    // backgroundColor: "red",
-                                    width: W * 0.85,
-                                    alignSelf: "center",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    borderRadius: 8,
-                                    elevation: 8,
-                                }}
+                                <View style={styles.popUp}
                                 >
-                                    <Text style={{
-                                        ...fontFamily.bold,
-                                        fontSize: fontSizes.XL,
-                                        paddingBottom: H * 0.04,
-                                    }}>
+                                    <Text style={styles.pleaseSpecifyText}>
                                         Please Specify
                                     </Text>
                                     <TextInput
@@ -482,12 +482,7 @@ const NewProfiling = ({ navigation }) => {
                                             onPress={() => {
                                                 nextButtonClicked()
                                             }}>
-                                            <Text style={{
-                                                ...fontFamily.bold,
-                                                color: colors.GREEN,
-                                                fontSize: fontSizes.XL,
-                                                paddingTop: H * 0.028,
-                                            }}>
+                                            <Text style={styles.okay}>
                                                 Okay
                                             </Text>
                                         </TouchableOpacity>
@@ -496,12 +491,7 @@ const NewProfiling = ({ navigation }) => {
 
                                         }}
                                         >
-                                            <Text style={{
-                                                ...fontFamily.bold,
-                                                color: "red",
-                                                fontSize: fontSizes.XL,
-                                                paddingTop: H * 0.028,
-                                            }}>
+                                            <Text style={[styles.okay, { color: 'red' }]}>
                                                 Cancel
                                             </Text>
                                         </TouchableOpacity>
@@ -707,7 +697,59 @@ const styles = StyleSheet.create(({
     },
     inputContainer: {
         marginTop: '10%'
-    }
+    },
+    okay:
+    {
+        ...fontFamily.bold,
+        color: colors.GREEN,
+        fontSize: fontSizes.XL,
+        paddingTop: H * 0.028,
+    },
+    overlay:
+    {
+        height: H,
+        width: W,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0,0,0,0.3)"
+    },
+    popUp:
+    {
+        height: H * 0.3,
+        backgroundColor: colors.OFFWHITE,
+        // backgroundColor: "red",
+        width: W * 0.85,
+        alignSelf: "center",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 8,
+        elevation: 8,
+    },
+    pleaseSpecifyText:
+    {
+        ...fontFamily.bold,
+        fontSize: fontSizes.XL,
+        paddingBottom: H * 0.04,
+    },
+    datePickerContainer:
+    {
+        flexDirection: 'row',
+        //backgroundColor: 'red',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: H * 0.11
+    },
+    timetext: {
+        borderColor: colors.LIGHT_SILVER,
+        backgroundColor: colors.LIGHT_SILVER,
+        borderWidth: 1,
+        borderRadius: 5,
+        marginHorizontal: W * 0.03,
+        textAlign: 'center',
+        alignItems: 'center',
+        padding: 10,
+        alignSelf: 'flex-start'
+    },
 }))
 
 export default NewProfiling

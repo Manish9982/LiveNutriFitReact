@@ -21,8 +21,6 @@ const strings = new LocalizedStrings({
     hi: hindi,
 });
 
-
-
 const QuestionsCustom = ({ navigation, route }) => {
     const [langText, setLangText] = useState('')
 
@@ -42,15 +40,11 @@ const QuestionsCustom = ({ navigation, route }) => {
 
     }
 
-
     useEffect(() => {
         // getQuestions()
         retrieveAnswerFirst()
         //animate()
     }, [])
-
-
-
 
     //useEffect(() => { regStatusUpdate() }, [])
     useEffect(() => {
@@ -131,7 +125,6 @@ const QuestionsCustom = ({ navigation, route }) => {
 
         const result = await GetApiData(`custom_question?language=${language}`)
         setMyData(result.data)
-
         setLoader(false)
     }
 

@@ -160,8 +160,6 @@ const App = () => {
               <Stack.Screen name="ChatPdfViewer" component={ChatPdfViewer} />
               <Stack.Screen name="SubmitSteps" component={SubmitSteps} />
               <Stack.Screen name="NewProfiling" component={NewProfiling} />
-
-
             </Stack.Navigator>
           </DataState>
         </NavigationContainer>

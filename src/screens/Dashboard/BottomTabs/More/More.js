@@ -28,8 +28,6 @@ const strings = new LocalizedStrings({
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
-
-
 const More = ({ navigation }) => {
   const isFocused = useIsFocused()
   const { Nlanguagee } = useContext(DataContext)
@@ -67,7 +65,6 @@ const More = ({ navigation }) => {
     } else {
       setLangTypeText("2")
       changeLaguagee('hi')
-
     }
   }
 
@@ -84,7 +81,6 @@ const More = ({ navigation }) => {
       setLangText(strings.hindi)
       // convert to Hindi from english
       //  setLangText("English")   // convert to Hindi from english
-
     }
 
   }
@@ -118,7 +114,6 @@ const More = ({ navigation }) => {
       setUsertypetext(strings.paidUser)
     } else if (JSON.parse(userType) == "2") {
       setUsertypetext(strings.corporate)
-
     }
   }
 
@@ -133,9 +128,7 @@ const More = ({ navigation }) => {
       navigation.navigate('ChangeYourCoach')
     } else if (JSON.parse(userType) == "2") {
       navigation.navigate('ChangeYourCoach')
-
     }
-
   }
 
   const changeLanguageAPI = async (languageType) => {
@@ -150,14 +143,10 @@ const More = ({ navigation }) => {
     formdata.append("country", "IN")
     const result = await PostApiData('update_user_language', formdata)
     if (result.status == 200) {
-
       getLanguge()
-
     } else {
-
       ShortToast(result?.message, 'error', '')
     }
-
     setLoader(false)
   }
   const getNotificationCount = async () => {
@@ -421,7 +410,7 @@ const More = ({ navigation }) => {
           </Modal>
         </View>
         <View style={styles.mainContainer}>
-          <KeyboardAwareScrollView style={styles.containerForOptions}>
+          <View style={styles.containerForOptions}>
             <View>
               <TouchableOpacity onPress={() => { navigation.navigate("UserProfile") }}>
                 <View style={styles.displayBar}>
@@ -789,7 +778,7 @@ const More = ({ navigation }) => {
 
             </View>
 
-          </KeyboardAwareScrollView>
+          </View>
         </View >
       </View >
   )
@@ -805,6 +794,7 @@ const styles = StyleSheet.create({
   {
     height: HEIGHT,
     width: WIDTH,
+    backgroundColor: "white"
   },
   headerContainer:
   {
@@ -817,8 +807,6 @@ const styles = StyleSheet.create({
     height: HEIGHT * 0.04,
     width: HEIGHT * 0.04,
     marginLeft: WIDTH * 0.05,
-
-
   },
   text1:
   {

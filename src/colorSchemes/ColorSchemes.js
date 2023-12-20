@@ -34,7 +34,8 @@ export const colors = {
    LIGHT_GREEN: '#eef8e5',
    BLACK: '#000',
    DARK_GRAY: '#D3D3D3',
-   LIGHT_GRAY: 'lightGrey'
+   LIGHT_GRAY: 'lightGrey',
+   'LIGHT_SILVER': '#e1e1e1',
 };
 
 export const fontSizes = {
