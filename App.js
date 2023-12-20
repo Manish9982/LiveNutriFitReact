@@ -33,11 +33,9 @@ import VerifyOTPAfterSignInPhone from './src/screens/VerifyOTP/VerifyOTPAfterSig
 import WelcomeScreenBeforeBottomTabs from './src/screens/WelcomeScreenBeforeBottomTabs/WelcomeScreenBeforeBottomTabs'
 import WelcomeScreenAfterRegistration from './src/screens/WelcomeScreenAfterRegistration/WelcomeScreenAfterRegistration'
 import PlanChoosePromptAtStartup from './src/screens/PlanChoosePromptAtStartup/PlanChoosePromptAtStartup';
-import Walkthrough from './src/screens/Walkthrough/Walkthrough';
 import SelectPrefferedLanguage from './src/screens/SelectPrefferedLanguage/SelectPrefferedLanguage';
 import SliderIntro from './src/screens/SliderIntro/SliderIntro'
 import ExploreNow from './src/screens/PlanChoosePromptAtStartup/ExploreNow';
-import WalkthroughClone from './src/screens/Walkthrough/WalkthroughClone';
 import Blank from './src/screens/Blank/Blank';
 import QuestionsCustom from './src/screens/Questions/QuestionsCustom';
 import Gratification from './src/screens/Dashboard/BottomTabs/More/Gratification';
@@ -134,7 +132,6 @@ const App = () => {
               <Stack.Screen name="SelectPrefferedLanguage" component={SelectPrefferedLanguage} />
               <Stack.Screen name="SliderIntro" component={SliderIntro} />
               <Stack.Screen name="ExploreNow" component={ExploreNow} />
-              <Stack.Screen name="WalkthroughClone" component={WalkthroughClone} />
               <Stack.Screen name="Blank" component={Blank} />
               <Stack.Screen name="QuestionsCustom" component={QuestionsCustom} />
               <Stack.Screen name="Gratification" component={Gratification} />

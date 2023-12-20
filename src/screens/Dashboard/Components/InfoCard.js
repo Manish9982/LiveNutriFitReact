@@ -403,27 +403,6 @@ const InfoCard = (props) => {
     }
 
     const openInformationofindex = (num) => {
-        // if (props.Text == "Meal Plan") {
-        //     navigation.navigate("WalkthroughMeal")
-        // }
-        // if (props.Text == "Exercise") {
-        //     navigation.navigate("WalkthroughExercise")
-        // }
-        // if (props.Text == "Sleep") {
-        //     navigation.navigate("WalkthroughSleep")
-        // }
-        // if (props.Text == "Hydration") {
-        //     navigation.navigate("WalkthroughHydration")
-        // }
-        // if (props.Text == "Fasting") {
-        //     navigation.navigate("WalkthroughFasting")
-        // }
-        // if (props.Text == "Mood") {
-        //     navigation.navigate("WalkthroughMood")
-        // }
-        // if (props.Text == "Monitoring") {
-        //     navigation.navigate("WalkthroughMonitoring")
-        // }
         console.log("i button is pressed")
     }
 

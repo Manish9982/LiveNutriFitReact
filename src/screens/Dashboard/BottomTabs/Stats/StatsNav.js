@@ -21,14 +21,6 @@ import SetCurrentAndTargetWeight from './SetCurrentAndTargetWeight';
 import WHRSubmitMedium from './WHRSubmitMedium';
 import BlogWebView from './BlogWebView';
 import PsychologyQuestions from './PsychologyQuestions';
-import Walkthrough from '../../../Walkthrough/Walkthrough';
-import WalkthroughMeal from '../../../Walkthrough/WalkthroughMeal';
-import WalkthroughExercise from '../../../Walkthrough/WalkthroughExercise';
-import WalkthroughSleep from '../../../Walkthrough/WalkthroughSleep';
-import WalkthroughHydration from '../../../Walkthrough/WalkthroughHydration';
-import WalkthroughFasting from '../../../Walkthrough/WalkthroughFasting';
-import WalkthroughMood from '../../../Walkthrough/WalkthroughMood';
-import WalkthroughMonitoring from '../../../Walkthrough/WalkthroughMonitoring';
 import Reports from './Reports';
 import ReportsWebView from './ReportsWebView';
 
@@ -60,14 +52,6 @@ const StatsNav = ({ navigation }) => {
             <Stack.Screen name="WHRSubmitMedium" component={WHRSubmitMedium} />
             <Stack.Screen name="BlogWebView" component={BlogWebView} />
             <Stack.Screen name="PsychologyQuestions" component={PsychologyQuestions} />
-            <Stack.Screen name="Walkthrough" component={Walkthrough} />
-            <Stack.Screen name="WalkthroughMeal" component={WalkthroughMeal} />
-            <Stack.Screen name="WalkthroughExercise" component={WalkthroughExercise} />
-            <Stack.Screen name="WalkthroughSleep" component={WalkthroughSleep} />
-            <Stack.Screen name="WalkthroughHydration" component={WalkthroughHydration} />
-            <Stack.Screen name="WalkthroughFasting" component={WalkthroughFasting} />
-            <Stack.Screen name="WalkthroughMood" component={WalkthroughMood} />
-            <Stack.Screen name="WalkthroughMonitoring" component={WalkthroughMonitoring} />
             <Stack.Screen name="Reports" component={Reports} />
             <Stack.Screen name="ReportsWebView" component={ReportsWebView} />
         </Stack.Navigator>

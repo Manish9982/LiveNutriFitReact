@@ -14,9 +14,7 @@ const fontConfig = {
             fontFamily:  "Montserrat-SemiBold",
             fontWeight: 'normal',
             fontSize: fontSizes.LAR,
-
         }
-
     }
 };
 

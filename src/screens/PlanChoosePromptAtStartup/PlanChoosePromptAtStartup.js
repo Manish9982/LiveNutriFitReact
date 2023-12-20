@@ -317,7 +317,6 @@ export default function PlanChoosePromptAtStartup({ navigation }) {
             <TouchableOpacity
 
                 onPress={() => {
-                    // navigation.replace("Walkthrough")
 
                     getValues()
 

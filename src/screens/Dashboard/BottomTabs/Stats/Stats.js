@@ -835,7 +835,6 @@ const Stats = (props) => {
 
                     onPress={() => {
                       props.navigation.navigate("Total Points")
-                      //props.navigation.navigate("Walkthrough")
                     }}
                     style={{
                       height: 20,
@@ -1877,7 +1876,6 @@ const Stats = (props) => {
                 <TouchableOpacity onPress={() => {
                   setFirstTimeLogin(false)
                   storeDataInLocalStorage('firstTimeLogin', '0')
-                  props.navigation.navigate("Walkthrough")
                 }}>
                   <Text style={{
                     ...fontFamily.bold,
@@ -2467,9 +2465,5 @@ const styles = StyleSheet.create({
 
 
 })
-// export default copilot({
-//   animated: true,
-//   androidStatusBarVisible: false,
-// })(Stats);
 
 export default Stats
