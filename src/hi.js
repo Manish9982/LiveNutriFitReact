@@ -302,7 +302,7 @@ export default hindi = {
     CoporateIDEroor: "कॉर्पोरेट आईडी एम्प्टी नहीं हो सकती!",
     LowGIFruitsandVegatables: "लो GI फल और सब्जियां",
     callmsg: "क्या मैं आपके लिए कॉल शेड्यूल कर सकता हूँ?",
-    bysignin: "मैं साइनिंग करके स्वीकार करता हूं, ",
+    bysignin: "मैं साइनिंग करके स्वीकार करता हूं,",
     termsandcondition: "टर्म्स और कंडीशंस",
     donthaveanaccount: "कोई अकाउंट नहीं है? ",
     craeteone: "अकाउंट बनाएं",

@@ -524,7 +524,9 @@ const UserProfile = ({ navigation }) => {
                                 style={styles.userIconContainer} />
                             <View>
                                 <Text style={styles.text2}>{strings.goals}</Text>
-                                <Text style={styles.text1}>{dataFromApi?.data?.[0]?.goal?.answer.join(",")}</Text>
+                                <Text 
+                                
+                                style={styles.text1}>{dataFromApi?.data?.[0]?.goal?.answer.join(",")}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -591,7 +593,8 @@ const styles = StyleSheet.create({
     text1:
     {
         color: 'black',
-        fontSize: fontSizes.MED
+        fontSize: fontSizes.MED,
+        width:W*0.9
     },
     button:
     {

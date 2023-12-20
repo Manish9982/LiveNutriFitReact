@@ -251,6 +251,7 @@ const Signin = ({ navigation, route }) => {
                         <View style={styles.lowerContainer}>
 
                             <Text style={styles.text}>{strings.SignIn}</Text>
+
                             <Text style={styles.text3}>{strings.Pleaseenteryourcredentialstocontinue}</Text>
 
 
@@ -309,21 +310,15 @@ const Signin = ({ navigation, route }) => {
                                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
 
 
-
-                                        <View style={{
-                                        }}><Checkbox.Android style={{
+                                        <Checkbox.Android style={{
                                         }}
                                             onPress={handleCheckBoxToggle}
                                             status={isChecked ? 'checked' : 'unchecked'}
                                             color={colors.GREEN} />
-                                        </View>
 
-
-
-
-                                        <Text style={styles.textUniversal}>{strings.bysignin}</Text>
+                                        <Text style={styles.textBySignin}>{strings.bysignin}</Text>
                                         <TouchableOpacity onPress={() => { openURL() }}>
-                                            <Text style={styles.tncText}>{strings.termsandcondition}</Text>
+                                            <Text style={[styles.tncText,]}>{strings.termsandcondition}</Text>
                                         </TouchableOpacity>
 
                                     </View>
@@ -444,14 +439,18 @@ const Signin = ({ navigation, route }) => {
                                         </View>
 
 
-                                        <Text style={styles.textUniversal}>{strings.bysignin} </Text>
+                                        <Text style={styles.textBySignin}>{strings.bysignin} </Text>
                                         <TouchableOpacity onPress={() => { openURL() }}>
+
                                             <Text style={styles.tncText}>{strings.termsandcondition}</Text>
                                         </TouchableOpacity>
 
                                     </View>
 
-                                    <View style={{ alignItems: 'center', marginTop: 25 }}>
+                                    <View style={{
+                                        alignItems: 'center',
+                                        marginTop: 25
+                                    }}>
 
                                         <TouchableOpacity onPress={() => {
                                             signInPressedUS()
@@ -526,6 +525,12 @@ const styles = StyleSheet.create({
     {
         fontSize: fontSizes.LAR,
         paddingRight: 0,
+        marginTop: 20,
+    },
+    textBySignin:
+    {
+        fontSize: fontSizes.LAR,
+        paddingLeft: 0,
         marginTop: 7,
     },
     textAgree:
@@ -554,10 +559,8 @@ const styles = StyleSheet.create({
     text2:
     {
         fontSize: fontSizes.LAR,
-        padding: 10,
-        paddingLeft: 0,
         color: colors.GREEN,
-        marginVertical: 20
+        marginTop: 20
     },
     text3:
     {

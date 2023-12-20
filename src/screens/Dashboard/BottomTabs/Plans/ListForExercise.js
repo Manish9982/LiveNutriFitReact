@@ -191,7 +191,7 @@ const ListForExercise = (props) => {
                                                     color: "black",
                                                     paddingRight: W * 0.02
                                                 }}>
-                                                  {strings.replacemeal}
+                                                  Replace Plan
                                                 </Text>
 
                                             </View>
@@ -242,8 +242,6 @@ const ListForExercise = (props) => {
                                                     </TouchableOpacity>
                                                 </View>
                                             </>
-
-
 
                                         </View>
                                     </View>
