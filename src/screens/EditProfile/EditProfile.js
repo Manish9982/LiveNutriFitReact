@@ -655,9 +655,6 @@ const EditProfile = ({ navigation }) => {
             />
             <View>
               <Text style={styles.text}>DOB</Text>
-
-
-
               < TouchableOpacity
                 onPress={handleDOB}
                 style={styles.textdatestyle} >
