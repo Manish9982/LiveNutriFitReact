@@ -32,7 +32,7 @@
 		788FF5A3BC1C4E3BA183DAD0 /* FontAwesome6_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0633E26ED4F84C539DEA6B67 /* FontAwesome6_Solid.ttf */; };
 		7C6E0636A20343C787EBE565 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7952F2E75AF48D0BE43E609 /* Montserrat-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		89492C572B217EB9009E5798 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89492C562B217EB9009E5798 /* GoogleService-Info.plist */; };
+		89394FF42B3549C7000421C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89394FF32B3549C6000421C6 /* GoogleService-Info.plist */; };
 		8C0F1CA7120444078530B4CE /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64455373A5EC436C868D269B /* Montserrat-ExtraBold.ttf */; };
 		9091936DDC4E44E48A8BC9D3 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F518CE5D791040C39B25B159 /* FontAwesome5_Brands.ttf */; };
 		9528D018B6324945AB162705 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9243B072B1F745ABA2FCA8C1 /* Montserrat-Medium.ttf */; };
@@ -101,7 +101,7 @@
 		7D1341E56A1045D892A43AB6 /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLight.ttf"; path = "../src/assets/fonts/Montserrat/static/Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
 		7FF77585B8EB426BAE67A9D4 /* Montserrat-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat/static/Montserrat-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LiveNutriFit/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89492C562B217EB9009E5798 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		89394FF32B3549C6000421C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89492C582B2197B8009E5798 /* LiveNutriFit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LiveNutriFit.entitlements; path = LiveNutriFit/LiveNutriFit.entitlements; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig"; path = "Target Support Files/Pods-LiveNutriFit-LiveNutriFitTests/Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig"; sourceTree = "<group>"; };
 		8A2D021D9EE2891926EF714B /* Pods_LiveNutriFit_LiveNutriFitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiveNutriFit_LiveNutriFitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,7 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				89492C582B2197B8009E5798 /* LiveNutriFit.entitlements */,
-				89492C562B217EB9009E5798 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -239,6 +238,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				89394FF32B3549C6000421C6 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* LiveNutriFit */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* LiveNutriFitTests */,
@@ -370,7 +370,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				89492C572B217EB9009E5798 /* GoogleService-Info.plist in Resources */,
 				46BC63FC21F3465AA4880977 /* AntDesign.ttf in Resources */,
 				B2ED24CC5DB344FE9FED6930 /* Entypo.ttf in Resources */,
 				0CC787E29552463585383ECC /* EvilIcons.ttf in Resources */,
@@ -408,6 +407,7 @@
 				9DB2286C9D3844ACB6C401A6 /* Octicons.ttf in Resources */,
 				F2C35DA693E84D148989FD80 /* SimpleLineIcons.ttf in Resources */,
 				2730E15FE84447DF91E74FD9 /* Zocial.ttf in Resources */,
+				89394FF42B3549C7000421C6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,7 +679,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.live.nutri.fit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.live.nutrifit;
 				PRODUCT_NAME = LiveNutriFit;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -707,7 +707,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.live.nutri.fit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.live.nutrifit;
 				PRODUCT_NAME = LiveNutriFit;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
