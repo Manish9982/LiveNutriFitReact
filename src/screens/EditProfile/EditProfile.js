@@ -316,10 +316,7 @@ const EditProfile = ({ navigation }) => {
               //onTouchCancel={() =>setShowCalendar(prev => !prev)}
 
               />
-
             }
-
-
             <View>
               <Text style={styles.text}>{strings.Name}</Text>
               <TextInput
