@@ -3,13 +3,13 @@ import React from 'react'
 import LottieView from 'lottie-react-native';
 import { H, W } from '../../colorSchemes/ColorSchemes';
 
-const Loader = () => {
+const Loader = ({ ht = 1 }) => {
     return (
         <View style={{
-            height: H * 0.8,
+            height: H * ht,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'white',
+            //backgroundColor: 'white',
         }}>
             <LottieView
                 style={{

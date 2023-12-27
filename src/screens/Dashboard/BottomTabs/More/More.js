@@ -18,6 +18,8 @@ import { useIsFocused } from '@react-navigation/native';
 
 
 import DataContext from '../../../../context/DataContext';
+import Loader from '../../../../assets/components/Loader';
+import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens';
 
 
 const strings = new LocalizedStrings({
@@ -252,163 +254,11 @@ const More = ({ navigation }) => {
 
     loader ?
 
-      <View style={{
-        height: H,
-        width: W,
-        alignItems: "center",
-        justifyContent: "center"
-      }}>
-        <ActivityIndicator size="large"
-          color={colors.GREEN} />
-
-      </View>
+      <Loader />
       :
 
       <View>
-        <View style={{ elevation: 8, zIndex: 1 }}>
-          <StatusBar backgroundColor={colors.GREEN} />
-          <Appbar.Header style={styles.appBar}>
-            <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
-            <Appbar.Content style={{ alignItems: "center", }} title={<Text style={{
-              color: "white", fontSize: fontSizes.XL, marginEnd: W * 0.15,
-              fontFamily: "Montserrat-SemiBold"
-            }}>{strings.More}</Text>} />
-            {/* <Appbar.Action icon={{ uri: 'https://cdn-icons-png.flaticon.com/512/891/891012.png' }} style={{ alignItems: "center" }} color={"white"} onPress={() => {
-
-              openNotification()
-                
-
-            }} />
-
-            {
-              notificationCount == "0" ?
-                null : <TouchableOpacity
-                  onPress={() => {
-                  }}
-                  style={{
-                    height: H * 0.025,
-                    width: H * 0.025,
-                    borderRadius: H * 0.025 / 2,
-                    backgroundColor: "red",
-                    position: 'absolute',
-                    left: W * 0.92,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    top: H * 0.012
-                  }}>
-                  <Text style={{ 
-                    color: 'white',
-                   size: "10", 
-                  ...fontFamily.bold }}>{notificationCount}</Text>
-                </TouchableOpacity>
-            } */}
-
-
-          </Appbar.Header>
-          <Modal
-            visible={langModal}
-            transparent={true}>
-            <View style={{
-              backgroundColor: "rgba(0,0,0,0.3)",
-              height: H,
-              width: W,
-              justifyContent: "center",
-              alignItems: "center",
-
-            }}>
-
-
-              <View style={{
-                paddingVertical: H * 0.02,
-                //height: H * 0.4,
-                width: W * 0.9,
-                backgroundColor: "white",
-                borderRadius: 8,
-              }}>
-
-                <Text style={{
-                  alignSelf: 'center', marginBottom: 10,
-                  fontFamily: "Montserrat-SemiBold", fontSize: 15
-                }}>{strings.changelanguage}</Text>
-
-
-                <Divider
-                  style={{ width: W, borderColor: 'black', borderWidth: 0.02 }} />
-
-
-                <TouchableOpacity
-                  onPress={() => {
-                    changeLaguagee("en"), setLangModal(false), storeDataInLocalStorage('lang', "en"), changeLanguageAPI("1"), setLanguagee("en"), toastuserType()
-                  }}
-
-                  style={{
-                    backgroundColor: langText2 == "en" ? "green" : "white",
-
-                    fontFamily: "Montserrat-SemiBold",
-                    width: W * 0.25,
-                    alignSelf: "center",
-                    color: colors.toobarcolor,
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    padding: 5,
-                    borderRadius: 5,
-                    textAlign: 'center',
-                    marginVertical: H * 0.04,
-                  }}>
-
-                  <Text style={{
-                    color: langText2 == "en" ? "white" : "black",
-                    fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL,
-                  }}>{strings.english}</Text>
-
-
-                </TouchableOpacity>
-
-
-                <TouchableOpacity
-                  onPress={() => {
-                    changeLaguagee("hi"), setLangModal(false), storeDataInLocalStorage('lang', "hi"), changeLanguageAPI("2"), setLanguagee("hi"), toastuserType()
-
-                  }}
-
-                  style={{
-                    backgroundColor: langText2 == "hi" ? "green" : "white",
-
-                    fontFamily: "Montserrat-SemiBold",
-                    width: W * 0.25,
-                    alignSelf: "center",
-                    color: colors.toobarcolor,
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    padding: 5,
-                    borderRadius: 5,
-                    textAlign: 'center',
-                  }}>
-
-                  <Text style={{
-                    color: langText2 == "hi" ? "white" : "black",
-                    fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL
-                  }}>{strings.hindi}</Text>
-                </TouchableOpacity>
-
-
-
-
-
-                <TouchableOpacity onPress={() => {
-                  setLangModal(false)
-                }}>
-                  <Text style={{
-                    marginTop: H * 0.05,
-                    marginRight: W * 0.05,
-                    alignSelf: "flex-end",
-                    fontFamily: "Montserrat-Medium"
-                  }}>{strings.Cancel}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-        </View>
+        <HeaderForSubmissionScreens Title="More" />
         <View style={styles.mainContainer}>
           <View style={styles.containerForOptions}>
             <View>
@@ -519,6 +369,42 @@ const More = ({ navigation }) => {
 
               {/* <Divider style={styles.dividerStyle} /> */}
 
+              <TouchableOpacity
+
+
+              //  onPress={() => { setLangModal(true) }}  // modified to commnet
+              >
+                <View style={styles.displayBar}>
+
+                  <Image source={require('../../../../assets/icons/language.png')}
+                    style={[styles.imageContainer]}
+                    tintColor={"silver"}
+                  />
+
+                  <Text style={styles.text1}>{strings.lang}</Text>
+                  <View style={{
+                    backgroundColor: colors.GREEN,
+                    marginLeft: W * 0.3,
+                    height: H * 0.036,
+                    //width: W * 0.15,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 8,
+                    paddingHorizontal: W * 0.02,
+                    //elevation: 5,
+                  }}>
+                    <Text style={{
+                      color: "white",
+                      ...fontFamily.bold
+                    }}>
+                      {langText}
+                    </Text>
+
+                  </View>
+                </View>
+              </TouchableOpacity>
+              <Divider style={styles.dividerStyle} />
+
               <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
                 <View style={styles.displayBar}>
 
@@ -567,41 +453,7 @@ const More = ({ navigation }) => {
 
 
               <Divider style={styles.dividerStyle} />
-              <TouchableOpacity
 
-
-              //  onPress={() => { setLangModal(true) }}  // modified to commnet
-              >
-                <View style={styles.displayBar}>
-
-                  <Image source={require('../../../../assets/icons/language.png')}
-                    style={[styles.imageContainer]}
-                    tintColor={"silver"}
-                  />
-
-                  <Text style={styles.text1}>{strings.lang}</Text>
-                  <View style={{
-                    backgroundColor: colors.GREEN,
-                    marginLeft: W * 0.3,
-                    height: H * 0.036,
-                    //width: W * 0.15,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 8,
-                    paddingHorizontal: W * 0.02,
-                    //elevation: 5,
-                  }}>
-                    <Text style={{
-                      color: "white",
-                      ...fontFamily.bold
-                    }}>
-                      {langText}
-                    </Text>
-
-                  </View>
-                </View>
-              </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
               {/* <TouchableOpacity onPress={() => { navigation.navigate("Goal") }}>
                 <View style={styles.displayBar}>
 
@@ -633,7 +485,7 @@ const More = ({ navigation }) => {
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
               {/********************************************Reminder**********************************************/}
-              
+
               {/*}
               <TouchableOpacity onPress={() => { navigation.navigate("CustomerSupport") }}>
                 <View style={styles.displayBar}>

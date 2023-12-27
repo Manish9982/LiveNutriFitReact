@@ -8,6 +8,7 @@ import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../../lo
 import { displayNotification, onCreateTriggerNotification, onCreateTriggerNotificationDaily, onCreateTriggerNotificationHourly, onCreateTriggerNotificationWeekly } from '../../../../assets/components/NotificationServices';
 import DatePicker from 'react-native-modern-datepicker'
 import moment from 'moment/moment';
+import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens';
 
 
 const HEIGHT = Dimensions.get('window').height
@@ -109,9 +110,8 @@ const ReminderExcercise = () => {
 
     return (
         <View>
-            <HeaderForReminder />
+            <HeaderForSubmissionScreens Title="Exercise Reminder" />
             <View style={styles.mainContainer}>
-
                 {/* {
                     show == true ? <DateTimePicker
                         mode={"time"} // THIS DOES NOT WORK ON ANDROID. IT DISPLAYS ONLY A DATE PICKER.
@@ -149,9 +149,7 @@ const ReminderExcercise = () => {
                             storeDataInLocalStorage("time", JSON.stringify(date2) )
 
                             console.log("timeStamppppppppppppp======================", date2)
-
                             //ToastAndroid.show(`Alarm will ring in ${(t.nativeEvent.timestamp - dateForRef)} hours ${(t.nativeEvent.timestamp - dateForRef)} minutes`, ToastAndroid.SHORT)
-
                         }}
                     />
                         :
@@ -169,17 +167,12 @@ const ReminderExcercise = () => {
                             setDate2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)))
                             storeDataInLocalStorage('alarmE2', JSON.stringify(t.nativeEvent.timestamp))
                             setTimeStamp2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)).getTime())
-
                             //ToastAndroid.show(`Alarm will ring in ${(t.nativeEvent.timestamp - dateForRef)} hours ${(t.nativeEvent.timestamp - dateForRef)} minutes`, ToastAndroid.SHORT)
-
                         }}
                     />
                         :
                         null
                 }
-
-
-
 
                 {/* <View style={{
                     flexDirection: 'row',
@@ -277,7 +270,6 @@ const ReminderExcercise = () => {
                             }}
                         />
                         <Text style={[styles.text1, { marginLeft: WIDTH * 0.04 }]}>Remind me{" "}
-
                             <Text onPress={() => {
                                 setFrequency(
                                     (prev) => {
@@ -317,9 +309,6 @@ const ReminderExcercise = () => {
                              { marginRight: W * 0.02 }]}>
                                 {converter(date2.getHours())}:{converter(date2.getMinutes())}</Text>
 
-
-
-
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => { setShow3(true) }}
@@ -328,7 +317,6 @@ const ReminderExcercise = () => {
                                 left: W * 0.68,
                                 flexDirection: "row"
                             }} >
-
                             <Text style={[styles.text2, { left: W * 0.015}]}>{converter(date2.getDate())}/{converter(date2.getMonth() + 1)}/{date2.getFullYear()}</Text>
                         </TouchableOpacity>
                     </View>
