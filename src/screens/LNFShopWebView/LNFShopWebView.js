@@ -62,17 +62,9 @@ const LNFShopWebView = ({ navigation }) => {
                             } else {
 
                             }
-
-
-
                             console.log("URL == ", info)
                         }}
-
-
-
                     />
-
-
                 </View>
             }
         </View>

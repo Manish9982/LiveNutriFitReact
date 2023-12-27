@@ -26,7 +26,7 @@ const WIDTH = Dimensions.get('window').width
 const ListForMeal = (props) => {
     const { NmyMeals } = useContext(DataContext)
     const navigation = useNavigation()
-    useEffect(() => {"propsMEAL+++++" ,props, setLikedMeal(props.Liked) }, [props.Liked])
+    useEffect(() => { "propsMEAL+++++", props, setLikedMeal(props.Liked) }, [props.Liked])
     const [myMeals, setMyMeals] = NmyMeals
     const [likedMeal, setLikedMeal] = useState(true)
     const [visibleReplaceMeal, setVisibleReplaceMeal] = useState(true)
@@ -60,10 +60,8 @@ const ListForMeal = (props) => {
         formdata.append("repeat", "0")
         const result = await PostApiData('followunfollowsinglemeal', formdata)
         if (result.status == '200') {
-            setLikedMeal(true)
             setVisibleModalForRepeat(true)
             // ShortToast(result.message, 'success', '')
-
         }
         else {
             ShortToast(result.message, 'warning', '')
@@ -81,22 +79,17 @@ const ListForMeal = (props) => {
         console.log("FOLLOW UNFOLLOW", result1)
 
         if (result1.status == '200') {
-
             var formdata2 = new FormData();
             formdata2.append("user_id", JSON.parse(temp));
             const result = await PostApiData('get_meal_list', formdata2)
             setMyMeals(result)
-            setLikedMeal(false)
+
             ShortToast(result1.message, 'success', '')
-
-
         }
         else {
             ShortToast(result1.message, 'warning', '')
         }
     }
-
-
 
     const handlingReplaceMeal = async () => {
         setVisibleMood(true)
@@ -121,9 +114,6 @@ const ListForMeal = (props) => {
         //     setVisibleMood(true)
         // }
     }
-
-
-
 
     const replaceThisMeal = async () => {
         setLoader(true)
@@ -172,7 +162,7 @@ const ListForMeal = (props) => {
 
         const result1 = await PostApiData('followunfollowsinglemeal', formdata)
         if (result1.status == '200') {
-            setLikedMeal(true)
+
             var formdata2 = new FormData();
             formdata2.append("user_id", JSON.parse(temp));
             const result = await PostApiData('get_meal_list', formdata2)
@@ -251,7 +241,6 @@ const ListForMeal = (props) => {
                                                     color: colors.GREEN,
                                                     paddingRight: W * 0.02
                                                 }}>
-
                                                 </Text>
 
                                             </View>
@@ -268,9 +257,6 @@ const ListForMeal = (props) => {
                                                 lineHeight: H * 0.03,
                                             }}>
                                                 {"We noticed that you like this meal, Want to repeat it for next 7 days?\n"} </Text>
-
-
-
                                             <>
                                                 <View style={{
                                                     flexDirection: "row",
@@ -345,7 +331,7 @@ const ListForMeal = (props) => {
                                                     color: "black",
                                                     paddingRight: W * 0.02
                                                 }}>
-                                                  {strings.replacemeal}
+                                                    {strings.replacemeal}
                                                 </Text>
 
                                             </View>
@@ -470,7 +456,7 @@ const ListForMeal = (props) => {
                                         (likedMeal == true)
                                             ?
                                             <TouchableOpacity onPress={() => {
-                                                 sendDislike()
+                                                sendDislike()
                                                 //ShortToast(strings.Ok, 'warning', '')
 
                                                 //ShortToast("No Worries. you can always replace the meal you don't like", 'success', '')
@@ -480,7 +466,7 @@ const ListForMeal = (props) => {
                                             :
                                             <TouchableOpacity
                                                 onPress={() => {
-                                                     sendLike()
+                                                    sendLike()
                                                     //ShortToast(strings.FeatureComingSoon, 'warning', '')
                                                 }}>
                                                 <AntDesign name="sync" size={fontSizes.XXL} color={"grey"} />

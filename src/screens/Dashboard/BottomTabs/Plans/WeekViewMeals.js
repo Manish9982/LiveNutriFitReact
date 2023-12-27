@@ -37,7 +37,6 @@ const WeekViewMeals = (props) => {
                 fontSize: fontSizes.XXL,
                 marginTop: H * 0.01
             }}>{props.day}, {(props.date).replace(",", " ")} </Text>
-
             
             <FlatList
                 data={props?.meals}

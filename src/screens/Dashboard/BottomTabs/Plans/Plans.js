@@ -11,22 +11,16 @@ import DataContext from '../../../../context/DataContext';
 import { useIsFocused } from "@react-navigation/native"
 import WeekViewMeals from './WeekViewMeals';
 import Loader from '../../../../assets/components/Loader'
-
-
-
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
 
 //lang chnge
 const strings = new LocalizedStrings({
   en: english,
   hi: hindi,
 });
-
 
 const date = new Date()
 
@@ -39,12 +33,9 @@ const year = date.getFullYear().toString()
 
 const Plans = ({ navigation }) => {
 
-
   const isFocused = useIsFocused()
 
   useEffect(() => { getLanguge() }, [isFocused])
-
-
   //lng
   const getLanguge = async () => {
     const lang = await getDataFromLocalStorage("lang")
@@ -70,11 +61,9 @@ const Plans = ({ navigation }) => {
     }
   }
 
-
   const refContainer = useRef(null)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [selectedDate, setSelectedDate] = useState("")
-
   const { NmyMeals, NmyExcercise, NisInfoButtonVisible } = useContext(DataContext)
   const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
   useEffect(() => {
@@ -111,7 +100,6 @@ const Plans = ({ navigation }) => {
   }, [mealMenuIsVisible])
   const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
   const viewConfigRef2 = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
-
 
   const handleScroll = (event) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
@@ -175,7 +163,7 @@ const Plans = ({ navigation }) => {
 
     const result = await PostApiData('get_userexcersie_list', formdata)
 
-    console.log("EXC DATA == " , result)
+    console.log("EXC DATA == ", result)
 
     if (result.status == '200') {
       setMyExcercise(result)
@@ -257,10 +245,31 @@ const Plans = ({ navigation }) => {
     setTextColor2('white')
     setMealMenuIsVisible(false)
     setSelectedDate("")
-
     //getExcercise(date)
-
   }
+
+  const renderMealOrExerciseList = (data, renderItemFunction) => {
+    return (
+      <View style={styles.displayCardsContainer}>
+        <FlatList
+          ref={refContainer}
+          data={data}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={onRefresh}
+              tintColor="#F8852D"
+            />
+          }
+          renderItem={renderItemFunction}
+          listKey={(item, index) => `_key${index.toString()}`}
+          keyExtractor={(item, index) => `_key${index.toString()}`}
+          showsVerticalScrollIndicator={false}
+          onScroll={handleScroll}
+        />
+      </View>
+    );
+  };
 
   return (
     <View>
@@ -382,7 +391,6 @@ const Plans = ({ navigation }) => {
               {/********************DATES *********************/}
             </View>
 
-
             <View>
 
               <View style={styles.ButtonDisplayContainer}>
@@ -390,90 +398,23 @@ const Plans = ({ navigation }) => {
                   {/* <Text style={[styles.textStyle, { color: textColor }]}>Meal Plan</Text> */}
                   <Text style={[styles.textStyle, { color: textColor }]}>{strings.MealPlan}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.excerciseButton, { backgroundColor: buttonBgColor2 }]}>
+                <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.mealButton, { backgroundColor: buttonBgColor2 }]}>
                   {/* <TouchableOpacity onPress={() => { ShortToast("Generating Excercise Plan. Please Check Again After Sometime.", "warning", "") }} style={[styles.excerciseButton, { backgroundColor: buttonBgColor2 }]}> */}
                   {/* <Text style={[styles.textStyle, { color: textColor2 }]}>Excercises Plan</Text> */}
                   <Text style={[styles.textStyle, { color: textColor2 }]}>{strings.ExcercisesPlan}</Text>
                 </TouchableOpacity>
 
               </View>
-              {mealMenuIsVisible ?
-                //meal
-                <View style={styles.displayCardsContainer}>
-                  {/* <FlatList data={data} */}
-                  <FlatList data={myMeals?.data}
-                    ref={refContainer}
-                    refreshControl={
-                      <RefreshControl
-                        refreshing={isRefreshing}
-                        onRefresh={onRefresh}
-                        tintColor="#F8852D" />
-                    }
-                    renderItem={renderItem2}
-                    listKey={(item, index) => `_key${index.toString()}`}
-                    keyExtractor={(item, index) => `_key${index.toString()}`}
-                    showsVerticalScrollIndicator={false}
-                    onScroll={handleScroll}
-                  // onViewableItemsChanged={onViewCallBack}
-                  // viewabilityConfig={viewConfigRef.current}
-                  // onViewableItemsChanged={info => {
-                  //   console.log("info===>", info.viewableItems?.[0]?.index)
-                  // }}
-                  />
-
-
-                </View>
-                :
-                //exercise
-                <View style={styles.displayCardsContainer}>
-                  <FlatList data={myExcercise?.data}
-                    refreshControl={
-                      <RefreshControl
-                        refreshing={isRefreshing}
-                        onRefresh={onRefresh}
-                        tintColor="#F8852D" />
-                    }
-                    renderItem={renderItem}
-                    listKey={(item, index) => `_key${index.toString()}`}
-                    keyExtractor={(item, index) => `_key${index.toString()}`}
-                  />
-
-                </View>}
-
-
-
-
+              {
+                mealMenuIsVisible ? (
+                  renderMealOrExerciseList(myMeals?.data, renderItem2)
+                ) : (
+                  renderMealOrExerciseList(myExcercise?.data, renderItem)
+                )
+              }
             </View>
-            {/**Floating Action Button********************************************* */}
-            { /*<View style={{ backgroundColor: 'transparent' }}>
-          <FAB
-            color="white"
-            icon="pencil"
-            style={styles.fab}
-            onPress={() => console.log('Pressed')}
-          />
-            </View>
-            */}
           </View>
       }
-
-
-      <StatusBar backgroundColor={colors.GREEN} />
-
-      <Appbar.Header style={{
-        backgroundColor: colors.GREEN,
-        width: W
-      }}>
-        {/* <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} /> */}
-        <Appbar.Content style={{
-          alignItems: "center",
-          //marginRight: W * 0.125 
-        }} title={<Text style={{
-          color: "white",
-          fontSize: fontSizes.XL,
-          fontFamily: "Montserrat-SemiBold"
-        }}>{strings.Plans}</Text>} />
-      </Appbar.Header>
 
     </View>
   )
@@ -484,7 +425,7 @@ const styles = StyleSheet.create({
   {
     height: '100%',
     width: '100%',
-    paddingBottom: HEIGHT * 0.15,
+    //paddingBottom: HEIGHT * 0.15,
     backgroundColor: 'white',
   },
   calendar:
@@ -494,18 +435,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     //marginVertical: HEIGHT * 0.03,
-    marginTop: HEIGHT * 0.01,
+    marginVertical: HEIGHT * 0.01,
     alignSelf: 'center',
     justifyContent: 'space-evenly',
     elevation: 3,
+    borderWidth: 1,
   },
   mealButton:
   {
+    borderWidth: 1,
     height: HEIGHT * 0.06,
     width: WIDTH * 0.35,
     borderRadius: 6,
-    marginHorizontal: WIDTH * 0.05,
-    elevation: 2,
+    //marginHorizontal: WIDTH * 0.05,
+    //elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   excerciseButton:
   {
@@ -518,25 +463,24 @@ const styles = StyleSheet.create({
   {
     fontFamily: 'Montserrat-SemiBold',
     textAlign: 'center',
-    textAlignVertical: 'center',
+    //textAlignVertical: 'center',
     fontSize: fontSizes.LAR,
-    height: '100%'
+    //height: '100%'
   },
   ButtonDisplayContainer:
   {
     flexDirection: 'row',
-    justifyContent: 'center',
-    height: HEIGHT * 0.05,
+    justifyContent: 'space-evenly',
     marginVertical: HEIGHT * 0.01,
     width: WIDTH,
   },
   displayCardsContainer:
   {
-    height: H,
-    paddingBottom: H * 0.37,
+    height: H * 0.58,
+    //paddingBottom: H * 0.37,
     alignItems: 'center',
-    marginTop: HEIGHT * 0.01,
-    // backgroundColor:"red"
+    //marginTop: HEIGHT * 0.01,
+    //backgroundColor: 'red'
   },
   fab:
   {

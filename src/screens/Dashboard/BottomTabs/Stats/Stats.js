@@ -2462,8 +2462,6 @@ const styles = StyleSheet.create({
     ...fontFamily.bold,
     width: W * 0.4
   }
-
-
 })
 
 export default Stats

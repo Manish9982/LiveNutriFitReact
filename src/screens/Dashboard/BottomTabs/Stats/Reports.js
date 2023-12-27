@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, TouchableOpacity, View, Modal, Image, PermissionsAndroid, Alert } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View, Modal, Image, PermissionsAndroid, Alert, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import HeaderForSubmissionScreens from './HeaderForSubmissionScreens'
 import { Text, TextInput } from 'react-native-paper'
@@ -12,11 +12,12 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions'
 
 //lang chnge
 const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
+    en: english,
+    hi: hindi,
 });
 
 const Reports = ({ navigation }) => {
@@ -27,18 +28,18 @@ const Reports = ({ navigation }) => {
 
     useEffect(() => { getLanguge() }, [isFocused])
 
-  //lng
-  const getLanguge = async () => {
-    const lang = await getDataFromLocalStorage("lang")
-    if (lang == "en") {
-      changeLaguagee('en')
-    } else {
-      changeLaguagee('hi')
+    //lng
+    const getLanguge = async () => {
+        const lang = await getDataFromLocalStorage("lang")
+        if (lang == "en") {
+            changeLaguagee('en')
+        } else {
+            changeLaguagee('hi')
+        }
     }
-  }
-  const changeLaguagee = (languageKey) => {
-    strings.setLanguage(languageKey)
-  }
+    const changeLaguagee = (languageKey) => {
+        strings.setLanguage(languageKey)
+    }
 
     const [text, setText] = useState("")
     const [data, setData] = useState(null)
@@ -104,7 +105,7 @@ const Reports = ({ navigation }) => {
                     setDoc(null)
                     setPic(null)
                 }
-               // else ShortToast("You can not upload more than 5 links for now", "error", "")
+                // else ShortToast("You can not upload more than 5 links for now", "error", "")
                 else ShortToast(strings.Youcannotupload5, "error", "")
 
             }
@@ -145,48 +146,186 @@ const Reports = ({ navigation }) => {
     }
 
     const launchCam = async () => {
-        { /* const cameraOptions = await launchCamera((res) => console.log("peter----", res))
-        setImage(cameraOptions)
-        console.log(cameraOptions)
-    uploadPhoto()*/}
 
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                {
-                    title: "LiveNutriFit App Camera Permission",
-                    message:
-                        "LiveNutriFit App needs access to your camera " +
-                        "so you can take awesome pictures.",
-                    buttonNeutral: "Ask Me Later",
-                    buttonNegative: "Cancel",
-                    buttonPositive: "OK"
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                launchCamera(
-                    {
-                        includeBase64: false,
-                        mediaType: 'photo',
-                        quality: 0.5,
-                    },
-                    async (response) => {
-                        if (response.didCancel) {
-                            console.log('User cancelled image picker');
-                        } else if (response.error) {
-                            console.log('ImagePicker Error: ', response.error);
-                        } else {
-                            console.log(response)
-                            setPic(response)
-                            setVisible3(false)
-                        }
-                    },
-                )
-            } else {
-                ShortToast("Camera permission denied", "error", '');
-            }
-        } catch (err) {
-            ShortToast(err, "error", "");
+        if (Platform.OS == "android") {
+            check(PERMISSIONS.ANDROID.CAMERA)
+                .then((result) => {
+                    switch (result) {
+                        case RESULTS.UNAVAILABLE:
+                            //console.log('This feature is not available (on this device / in this context)');
+                            break;
+                        case RESULTS.DENIED:
+                            //console.log('The permission has not been requested / is denied but requestable');
+                            request(PERMISSIONS.ANDROID.CAMERA)
+                                .then((result) => {
+                                    switch (result) {
+                                        case RESULTS.UNAVAILABLE:
+                                            //console.log('This feature is not available (on this device / in this context)');
+                                            break;
+                                        case RESULTS.DENIED:
+                                            //console.log('The permission has not been requested / is denied but requestable');
+                                            Alert.alert("Error", "Camera Permission Not Granted")
+
+                                            break;
+                                        case RESULTS.LIMITED:
+                                            //console.log('The permission is limited: some actions are possible');
+                                            break;
+                                        case RESULTS.GRANTED:
+                                            //console.log('The permission is granted');
+                                            //setPermission1(true)
+                                            launchCamera({
+                                                includeBase64: false,
+                                                mediaType: 'photo',
+                                                quality: 0.5,
+                                            },
+                                                async (response) => {
+                                                    if (response.didCancel) {
+                                                        console.log('User cancelled image picker');
+                                                    } else if (response.error) {
+                                                        console.log('ImagePicker Error: ', response.error);
+                                                    } else {
+                                                        console.log(response)
+                                                        setPic(response)
+                                                        setVisible3(false)
+                                                    }
+                                                },
+                                            )
+                                            break;
+                                        case RESULTS.BLOCKED:
+                                            //console.log('The permission is denied and not requestable anymore');
+                                            break;
+                                    }
+                                })
+                                .catch((error) => {
+                                    // …
+                                });
+
+                            break;
+                        case RESULTS.LIMITED:
+                            //console.log('The permission is limited: some actions are possible');
+                            break;
+                        case RESULTS.GRANTED:
+                            //console.log('The permission is granted');
+                            //setPermission1(true)
+                            launchCamera(
+                                {
+                                    includeBase64: false,
+                                    mediaType: 'photo',
+                                    quality: 0.5,
+                                },
+                                async (response) => {
+                                    if (response.didCancel) {
+                                        console.log('User cancelled image picker');
+                                    } else if (response.error) {
+                                        console.log('ImagePicker Error: ', response.error);
+                                    } else {
+                                        console.log(response)
+                                        setPic(response)
+                                        setVisible3(false)
+                                    }
+                                },
+                            )
+                            break;
+                        case RESULTS.BLOCKED:
+                            //console.log('The permission is denied and not requestable anymore');
+                            break;
+                    }
+                })
+                .catch((error) => {
+                    // …
+                });
+        }
+        else {
+            check(PERMISSIONS.IOS.CAMERA)
+                .then((result) => {
+                    console.log("Camera OPEN=====>", result)
+                    console.log("Camera =====>", RESULTS.UNAVAILABLE)
+                    switch (result) {
+                        case RESULTS.UNAVAILABLE:
+                            Alert.alert('Feature Unavailable', 'This feature is not available on this device')
+                            console.log('This feature is not available (on this device / in this context)');
+                            break;
+                        case RESULTS.DENIED:
+                            //console.log('The permission has not been requested / is denied but requestable');
+                            request(PERMISSIONS.IOS.CAMERA)
+
+                                .then((result) => {
+                                    switch (result) {
+                                        case RESULTS.UNAVAILABLE:
+                                            //console.log('This feature is not available (on this device / in this context)');
+                                            break;
+                                        case RESULTS.DENIED:
+                                            //console.log('The permission has not been requested / is denied but requestable');
+                                            Alert.alert("Error", "Camera Permission Not Granted")
+
+                                            break;
+                                        case RESULTS.LIMITED:
+                                            //console.log('The permission is limited: some actions are possible');
+                                            break;
+                                        case RESULTS.GRANTED:
+                                            //console.log('The permission is granted');
+                                            //setPermission1(true)
+                                            launchCamera(
+                                                {
+                                                    includeBase64: false,
+                                                    mediaType: 'photo',
+                                                    quality: 0.5,
+                                                },
+                                                async (response) => {
+                                                    if (response.didCancel) {
+                                                        console.log('User cancelled image picker');
+                                                    } else if (response.error) {
+                                                        console.log('ImagePicker Error: ', response.error);
+                                                    } else {
+                                                        console.log(response)
+                                                        setPic(response)
+                                                        setVisible3(false)
+                                                    }
+                                                },
+                                            )
+                                            break;
+                                        case RESULTS.BLOCKED:
+                                            //console.log('The permission is denied and not requestable anymore');
+                                            break;
+                                    }
+                                })
+                                .catch((error) => {
+                                    // …
+                                });
+                            break;
+                        case RESULTS.LIMITED:
+                            //console.log('The permission is limited: some actions are possible');
+                            break;
+                        case RESULTS.GRANTED:
+                            //console.log('The permission is granted');
+                            //setPermission1(true)
+                            launchCamera(
+                                {
+                                    includeBase64: false,
+                                    mediaType: 'photo',
+                                    quality: 0.5,
+                                },
+                                async (response) => {
+                                    if (response.didCancel) {
+                                        console.log('User cancelled image picker');
+                                    } else if (response.error) {
+                                        console.log('ImagePicker Error: ', response.error);
+                                    } else {
+                                        console.log(response)
+                                        setPic(response)
+                                        setVisible3(false)
+                                    }
+                                },
+                            )
+                            break;
+                        case RESULTS.BLOCKED:
+                            //console.log('The permission is denied and not requestable anymore');
+                            break;
+                    }
+                })
+                .catch((error) => {
+                    // …
+                });
         }
 
     }
@@ -325,9 +464,6 @@ const Reports = ({ navigation }) => {
         setVisible3(false)
     }
 
-
-
-
     const uploadDoc = async () => {
 
         const userType = await getDataFromLocalStorage('user_type')
@@ -361,7 +497,7 @@ const Reports = ({ navigation }) => {
                     setVisible2(false)
                 }
                 else {
-                 //   ShortToast("You can not upload more than 1 file for now.", "error", "")
+                    //   ShortToast("You can not upload more than 1 file for now.", "error", "")
                     ShortToast(strings.Youcannotuploadfiles1, "error", "")
                 }
 
@@ -478,9 +614,14 @@ const Reports = ({ navigation }) => {
         loader ?
             <Loader />
             :
-            <View>
+            <View style={
+                {
+                    height: H * 0.91,
+                    //backgroundColor: 'red'
+                }
+            }>
                 <HeaderForSubmissionScreens Title={strings.UploadReports} />
-                <View>
+                <View style={{}}>
                     <Modal
                         visible={visible}
                         transparent={true}
@@ -617,15 +758,6 @@ const Reports = ({ navigation }) => {
                                     textAlign: "center",
                                     paddingVertical: H * 0.02
                                 }}>{strings.UploadAttachments}</Text>
-                                <View style={{
-                                    flexDirection: "row",
-                                    backgroundColor: colors.OFFWHITE,
-                                    borderRadius: 4,
-                                    justifyContent: "center",
-
-                                }}>
-
-                                </View>
                                 <TextInput
                                     left={
                                         <TextInput.Icon
@@ -635,7 +767,10 @@ const Reports = ({ navigation }) => {
                                                 backgroundColor: doc || pic ? "yellow" : "white"
                                             }}
                                             color={doc || pic ? colors.GREEN : "grey"}
-                                            onPress={() => setVisible3()}
+                                            onPress={() => {
+                                                setVisible2(false)
+                                                setVisible3(true)
+                                            }}
                                         />}
 
                                     multiline
@@ -775,28 +910,9 @@ const Reports = ({ navigation }) => {
                             </View>
                         </View>
                     </Modal>
-                    {/*  <TextInput
-                    //textBreakStrategy="balanced"
-                    // textAlign='left'
-                    placeholder='Enter Description Here'
-                    multiline={true}
-                    numberOfLines={4}
-                    //textAlignVertical="auto"
-                    activeUnderlineColor={colors.GREEN}
-                    value={description}
-                    onChangeText={(t) => { setDescription(t) }}
-                    maxLength={100}
-                    style={{
-                        marginVertical: H * 0.02,
-                        //height: H * 0.15,
-                        width: W * 0.9,
-                        backgroundColor: "white",
-                        alignSelf: "center"
-                    }} /> */}
-
                     <View style={{
                         backgroundColor: "white",
-                        height: H * 0.6,
+                        height: H * 0.56,
                         marginTop: H * 0.02,
                         width: W * 0.9,
                         alignSelf: "center",
@@ -820,10 +936,8 @@ const Reports = ({ navigation }) => {
                         style={{
                             marginTop: H * 0.02
                         }}>
-                        <GreenButton Title={strings.AddReportLinks}/>
+                        <GreenButton Title={strings.AddReportLinks} />
                     </TouchableOpacity>
-
-
                     <TouchableOpacity
                         onPress={() => setVisible2(true)}
                         style={{
@@ -831,9 +945,6 @@ const Reports = ({ navigation }) => {
                         }}>
                         <GreenButton Title={strings.AddFiles} />
                     </TouchableOpacity>
-
-
-
                 </View>
             </View >
     )

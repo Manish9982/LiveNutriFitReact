@@ -6,10 +6,9 @@ import { H, W } from '../../colorSchemes/ColorSchemes';
 const Loader = () => {
     return (
         <View style={{
+            height: H * 0.8,
             justifyContent: 'center',
             alignItems: 'center',
-            height: H,
-            width: W,
             backgroundColor: 'white',
         }}>
             <LottieView
