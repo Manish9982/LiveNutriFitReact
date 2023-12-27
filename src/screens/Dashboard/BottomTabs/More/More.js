@@ -519,6 +519,17 @@ const More = ({ navigation }) => {
 
               {/* <Divider style={styles.dividerStyle} /> */}
 
+              <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
+                <View style={styles.displayBar}>
+
+                  <Image source={require('../../../../assets/images/Reminder.jpg')}
+                    style={styles.imageContainer} />
+
+                  <Text style={styles.text1}>{strings.reminder}</Text>
+                </View>
+              </TouchableOpacity>
+              <Divider style={styles.dividerStyle} />
+
 
               <TouchableOpacity onPress={() => {
                 //ShortToast('Coming Soon..', 'warning', '')
@@ -621,17 +632,9 @@ const More = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
-              {/* <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}> */}
               {/********************************************Reminder**********************************************/}
-              {/* <View style={styles.displayBar}>
-
-                  <Image source={require('../../../../assets/images/Reminder.jpg')}
-                    style={styles.imageContainer} />
-
-                  <Text style={styles.text1}>{strings.reminder}</Text>
-                </View> */}
-              {/* </TouchableOpacity> */}
-              {/* <Divider style={styles.dividerStyle} /> */}
+              
+              {/*}
               <TouchableOpacity onPress={() => { navigation.navigate("CustomerSupport") }}>
                 <View style={styles.displayBar}>
 

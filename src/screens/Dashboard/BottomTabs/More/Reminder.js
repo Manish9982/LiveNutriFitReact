@@ -18,6 +18,7 @@ import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native';
 import { getDataFromLocalStorage } from '../../../../local storage/LocalStorage'
 import { ShortToast } from '../../../../colorSchemes/ColorSchemes'
+import Loader from '../../../../assets/components/Loader'
 
 
 
@@ -139,20 +140,10 @@ const Reminder = ({ navigation }) => {
 
     return (
         loader ?
-            <View style={{
-                height: H,
-                width: W,
-                alignItems: "center",
-                justifyContent: "center"
-            }}>
-                <ActivityIndicator size="large"
-                    color={colors.GREEN} />
-            </View>
-
+            
+        <Loader/>
 
             :
-
-
 
             <View>
                 <HeaderForSubmissionScreens Title={strings.Reminder} />
