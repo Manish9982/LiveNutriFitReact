@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import WebView from 'react-native-webview'
-import { H, W } from '../../../../colorSchemes/ColorSchemes'
+import { Constants, H, W } from '../../../../colorSchemes/ColorSchemes'
 import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
@@ -43,7 +43,7 @@ const TermsAndCondtitons = () => {
             }}>
                 <WebView
                   startInLoadingState={true}
-                source={{ uri: 'https://livenutrifit.com/terms-conditions-2/' }} />
+                source={{ uri: `${Constants.BASE_URL}terms-conditions-2/` }} />
             </View>
         </View>
     )

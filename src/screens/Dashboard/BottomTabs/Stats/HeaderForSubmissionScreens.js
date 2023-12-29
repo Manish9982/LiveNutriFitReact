@@ -14,7 +14,7 @@ const HeaderForSubmissionScreens = (props) => {
                 <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }}
                     onPress={() => { navigation.goBack() }} />
 
-                <Appbar.Content style={{ alignItems: "center", marginRight: Platform.OS == 'android' ? W * 0.125 : W * 0.125 }}
+                <Appbar.Content style={{ alignItems: "center", marginRight: Platform.OS == 'android' ? W * 0.125 : null }}
                     title={<Text style={{
                         color: "white", fontSize: fontSizes.XL,
                         ...fontFamily.bold

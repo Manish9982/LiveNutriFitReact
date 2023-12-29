@@ -112,131 +112,13 @@ const ReminderExcercise = () => {
         <View>
             <HeaderForSubmissionScreens Title="Exercise Reminder" />
             <View style={styles.mainContainer}>
-                {/* {
-                    show == true ? <DateTimePicker
-                        mode={"time"} // THIS DOES NOT WORK ON ANDROID. IT DISPLAYS ONLY A DATE PICKER.
-                        //display='clock' // Android Only  
-                        is24Hour={true} // Android Only 
-                        value={date}
-                        onChange={(t) => {
-                            setChecked(false)
-                            console.log(t)
-                            setShow(false)
-                            setDate(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)))
-                            storeDataInLocalStorage('alarmE1', JSON.stringify(t.nativeEvent.timestamp))
-                            setTimeStamp(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0))
-                            console.log("New", moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0))
-                        }}
-                    />
-                        :
-                        null
-
-                } */}
-                {
-                    show2 == true ? <DateTimePicker
-                        mode={"time"} // THIS DOES NOT WORK ON ANDROID. IT DISPLAYS ONLY A DATE PICKER.
-                        //display='clock' // Android Only  
-                        is24Hour={true} // Android Only 
-                        value={date2}
-                        onChange={(t) => {
-                            setChecked2(false)
-                            setShow2(false)
-                            setDate2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)))
-                            storeDataInLocalStorage('alarmE2', JSON.stringify(t.nativeEvent.timestamp))
-                            setTimeStamp2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)).getTime())
-                            console.log("paris", new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)).getTime())
-
-                            storeDataInLocalStorage("time", JSON.stringify(date2) )
-
-                            console.log("timeStamppppppppppppp======================", date2)
-                            //ToastAndroid.show(`Alarm will ring in ${(t.nativeEvent.timestamp - dateForRef)} hours ${(t.nativeEvent.timestamp - dateForRef)} minutes`, ToastAndroid.SHORT)
-                        }}
-                    />
-                        :
-                        null
-                }
-                {
-                    show3 == true ? <DateTimePicker
-                        mode={"date"} // THIS DOES NOT WORK ON ANDROID. IT DISPLAYS ONLY A DATE PICKER.
-                        //display='clock' // Android Only  
-                        is24Hour={true} // Android Only 
-                        value={date2}
-                        onChange={(t) => {
-                            setChecked2(false)
-                            setShow3(false)
-                            setDate2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)))
-                            storeDataInLocalStorage('alarmE2', JSON.stringify(t.nativeEvent.timestamp))
-                            setTimeStamp2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)).getTime())
-                            //ToastAndroid.show(`Alarm will ring in ${(t.nativeEvent.timestamp - dateForRef)} hours ${(t.nativeEvent.timestamp - dateForRef)} minutes`, ToastAndroid.SHORT)
-                        }}
-                    />
-                        :
-                        null
-                }
-
-                {/* <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginVertical: H * 0.04,
-                }}>
-                    <Text style={{ marginLeft: WIDTH * 0.03, fontSize: fontSizes.XL }}>Turn off Reminders</Text>
-                    <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={colors.GREEN} style={styles.switch} />
-                </View>
-                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginVertical: H * 0.02,
-                    }}>
-                        <Checkbox
-                            disabled={isSwitchOn}
-                            style={styles.checkBox}
-                            color={colors.GREEN}
-                            status={checked ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setChecked((prev) => {
-                                    if (prev == true) {
-
-                                        return false
-                                    }
-                                    else if (prev == false) {
-                                        onCreateTriggerNotificationDaily(timeStamp, "Excercise Reminder!", "It's Time for your workout.", "1")
-                                        //ToastAndroid.show(`Alarm will ring in ${(new Date(date).getHours() - new Date(dateForRef).getHours())} hours ${(new Date(date).getMinutes() - new Date(dateForRef).getMinutes())} minutes`, ToastAndroid.SHORT)
-                                        ToastAndroid.show(`Alarm will ring at ${((new Date(date).getHours()).toString().padStart(2, 0))}:${((new Date(date).getMinutes()).toString().padStart(2, 0))} daily`, ToastAndroid.SHORT)
-                                        return true
-                                    }
-                                });
-                            }}
-                        />
-                        <Text style={[styles.text1, { marginLeft: WIDTH * 0.04, width: W * 0.4 }]}>Remind me every day at</Text>
-                        <TouchableOpacity
-                            style={{
-                                position: "absolute",
-                                left: W * 0.56,
-                            }}
-                            onPress={() => setShow(true)}>
-                            <Text style={styles.text2}>{converter(date.getHours())}:{converter(date.getMinutes())}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => { setShow(true) }}
-                            style={{
-                                position: "absolute",
-                                left: W * 0.68,
-
-                            }} >
-
-                            <Text style={styles.text2}>{converter(date.getDate())}/{converter(date.getMonth())}/{date.getFullYear()}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View> 
-                <Divider style={{ borderWidth: 0.2, borderColor: 'silver' }} /> */}
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     marginVertical: H * 0.02,
                 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Checkbox
+                        <Checkbox.Android
                             disabled={isSwitchOn}
                             style={styles.checkBox}
                             color={colors.GREEN}
@@ -269,55 +151,10 @@ const ReminderExcercise = () => {
                                 });
                             }}
                         />
-                        <Text style={[styles.text1, { marginLeft: WIDTH * 0.04 }]}>Remind me{" "}
-                            <Text onPress={() => {
-                                setFrequency(
-                                    (prev) => {
-                                        if (prev == "once") {
-                                            setChecked2(false)
-                                            return "hourly"
-                                        }
-                                        else if (prev == "hourly") {
-                                            setChecked2(false)
-                                            return "daily"
-                                        }
-                                        else if (prev == "daily") {
-                                            setChecked2(false)
-                                            return "weekly"
-                                        }
-                                        else if (prev == "weekly") {
-                                            setChecked2(false)
-                                            return "once"
-                                        }
-                                    })
-                            }}
-                                style={[styles.text2, { padding: 0 }]}>{frequency}
-                            </Text>
-
-                        </Text>
-                        <TouchableOpacity
-                            style={{
-                                position: "absolute",
-                                left: W * 0.56,
-                                flexDirection: "row"
-                            }}
-                            onPress={() => {
-                                setShow2(true)
-                            }}>
-                            <Text 
-                            style={[styles.text2,
-                             { marginRight: W * 0.02 }]}>
-                                {converter(date2.getHours())}:{converter(date2.getMinutes())}</Text>
-
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => { setShow3(true) }}
-                            style={{
-                                position: "absolute",
-                                left: W * 0.68,
-                                flexDirection: "row"
-                            }} >
-                            <Text style={[styles.text2, { left: W * 0.015}]}>{converter(date2.getDate())}/{converter(date2.getMonth() + 1)}/{date2.getFullYear()}</Text>
+                        <Text>Remind me </Text>
+                        <Text>everyday at </Text>
+                        <TouchableOpacity style={styles.durationContainer}>
+                            <Text>11:26 AM</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -353,6 +190,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#e1e3e6',
         padding: W * 0.01,
         borderRadius: 5,
+    },
+    durationContainer:
+    {
+        backgroundColor: colors.DARK_GRAY,
+        padding: 5,
+        borderRadius: 8,
     }
 })
 export default ReminderExcercise

@@ -18,9 +18,9 @@ const Customloader = () => {
                 shadowOpacity: 0.2,
                 shadowRadius: 2,
                 shadowOffset: { width: 0, height: 2 },
-
-                elevation:10, borderWidth:1, borderColor:"grey"
-
+                elevation:10, 
+                borderWidth:1, 
+                borderColor:"grey"
             }}
         >
             <ActivityIndicator

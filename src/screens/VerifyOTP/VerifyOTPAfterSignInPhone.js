@@ -4,7 +4,7 @@ import { Text } from 'react-native-paper'
 import { getDataFromLocalStorage, storeDataInLocalStorage, } from '../../local storage/LocalStorage'
 import RNRestart from 'react-native-restart'
 import DataContext from '../../context/DataContext'
-import { colors, fontSizes, ShortToast } from '../../colorSchemes/ColorSchemes'
+import { colors, Constants, fontSizes, ShortToast } from '../../colorSchemes/ColorSchemes'
 import OTPinputComponent from '../VerifyOTP/OTPinputComponent'
 import Loader from '../../assets/components/Loader'
 
@@ -38,26 +38,26 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
   useEffect(() => { getLanguge() }, [isFocused])
 
 
-//lng
-const getLanguge = async () => {
-  setLoader(true)
-  const lang = await getDataFromLocalStorage("lang")
+  //lng
+  const getLanguge = async () => {
+    setLoader(true)
+    const lang = await getDataFromLocalStorage("lang")
 
-  if (lang == "en") {
-    changeLaguagee('en')
+    if (lang == "en") {
+      changeLaguagee('en')
 
-  } else {
-    changeLaguagee('hi')
+    } else {
+      changeLaguagee('hi')
+
+    }
+    setLoader(false)
 
   }
-  setLoader(false)
-
-}
 
 
-const changeLaguagee = (languageKey) => {
-  strings.setLanguage(languageKey)
-}
+  const changeLaguagee = (languageKey) => {
+    strings.setLanguage(languageKey)
+  }
 
   const otpRequestedAgain = async () => {
     setLoader(true)
@@ -70,12 +70,12 @@ const changeLaguagee = (languageKey) => {
       body: formdata,
     };
     try {
-      const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
+      const response = await fetch(`${Constants.BASE_URL}panel/Signup/login`, requestOptions)
       const result = await response.json()
       if (result.status === 200) {
         setOtp(result.otp)
         ShortToast(result.message, 'success', '')
-       // ShortToast(`${result.otp}`, 'warning', '')
+        // ShortToast(`${result.otp}`, 'warning', '')
       }
 
     } catch (error) {
@@ -94,7 +94,7 @@ const changeLaguagee = (languageKey) => {
       body: formdata,
     };
     try {
-      const response = await fetch("https://livenutrifit.com/panel/Signup/verifyOTP", requestOptions)
+      const response = await fetch(`${Constants.BASE_URL}panel/Signup/verifyOTP`, requestOptions)
       const result = await response.json()
       console.log("result= ", result)
 
@@ -102,7 +102,7 @@ const changeLaguagee = (languageKey) => {
         storeDataInLocalStorage('Token', result.token)                       //Store Token                //change stack value for navigating to bottom tabs
         storeDataInLocalStorage('mobile', mobile)
         storeDataInLocalStorage('user_id', JSON.stringify(result.user_id))
-        storeDataInLocalStorage('user_type', (result.user_type))   
+        storeDataInLocalStorage('user_type', (result.user_type))
         storeDataInLocalStorage('registerStatus', result.register_status)
         storeDataInLocalStorage('wrid', result.wrd_id)
 

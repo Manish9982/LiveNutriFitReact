@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View, Dimensions, Linking, ToastAndroid, StatusBar, } from 'react-native'
 import { TextInput, Text, configureFonts, DefaultTheme, Provider as PaperProvider, ActivityIndicator, Checkbox } from 'react-native-paper';
-import { fontSizes, colors, H, W, ShortToast, fontFamily } from '../../colorSchemes/ColorSchemes'
+import { fontSizes, colors, H, W, ShortToast, fontFamily, Constants } from '../../colorSchemes/ColorSchemes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, { useState, useContext, useEffect } from 'react'
 import DataContext from '../../context/DataContext';
@@ -63,7 +63,7 @@ const Signin = ({ navigation, route }) => {
 
 
     const openURL = async () => {
-        { Linking.openURL('https://livenutrifit.com/terms-conditions-2/') }
+        { Linking.openURL(`${Constants.BASE_URL}terms-conditions-2/`) }
     }
     const signInPressed = async () => {
 
@@ -87,7 +87,7 @@ const Signin = ({ navigation, route }) => {
                     body: formdata,
                 };
                 try {
-                    const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
+                    const response = await fetch(`${Constants.BASE_URL}panel/Signup/login`, requestOptions)
                     const result = await response.json()
                     console.log(result)
                     if (result.status === 200) {
@@ -126,7 +126,7 @@ const Signin = ({ navigation, route }) => {
                 };
                 try {
                     //const response = await fetch("https://lnf.bizhawkztest.com/public/Signup/login", requestOptions)
-                    const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
+                    const response = await fetch(`${Constants.BASE_URL}panel/Signup/login`, requestOptions)
                     const result = await response.json()
                     console.log(result)
                     if (result.status === 200) {
@@ -185,7 +185,7 @@ const Signin = ({ navigation, route }) => {
                     body: formdata,
                 };
                 try {
-                    const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
+                    const response = await fetch(`${Constants.BASE_URL}panel/Signup/login`, requestOptions)
                     const result = await response.json()
                     console.log(result)
                     if (result.status === 200) {

@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import React, { useEffect } from 'react'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import WebView from 'react-native-webview'
-import { H, W } from '../../../../colorSchemes/ColorSchemes'
+import { Constants, H, W } from '../../../../colorSchemes/ColorSchemes'
 import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens'
 import { getDataFromLocalStorage } from '../../../../local storage/LocalStorage'
 
@@ -27,7 +27,7 @@ useEffect(() => {
             <HeaderForSubmissionScreens Title="Announcements" />
             <WebView
               startInLoadingState={true}
-                source={{ uri: `https://livenutrifit.com/panel/notification_list/${ JSON.parse( route.params.UserID)}` }}
+                source={{ uri: `${Constants.BASE_URL}notification_list/${ JSON.parse( route.params.UserID)}` }}
              //   "https://lnf.bizhawkztest.com/public/notification_list/\(userID)"
                 style={{ height: H, width: W, }} />
 

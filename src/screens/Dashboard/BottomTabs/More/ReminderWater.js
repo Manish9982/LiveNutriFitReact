@@ -20,50 +20,7 @@ const ReminderWater = () => {
     var today = (currentDate.getDate()).toString().padStart(2, 0)
     var month = (currentDate.getMonth() + 1).toString().padStart(2, 0)
     var year = currentDate.getFullYear()
-    //  useEffect(() => { getUserAlarms() }, [])
 
-    // const getUserAlarms = async () => {
-    //     const temp = await getDataFromLocalStorage('alarmE1')
-    //     if (temp) {
-    //         setDate(new Date(JSON.parse(temp)))
-    //         onCreateTriggerNotification((JSON.parse(temp)))
-    //     }
-    //     else {
-    //         setDate(new Date())
-    //     }
-
-    //     const temp2 = await getDataFromLocalStorage('alarmE2')
-    //     if (temp2) {
-    //         onCreateTriggerNotification((JSON.parse(temp2)))
-    //         setDate2(new Date(JSON.parse(temp2)))
-    //     }
-    //     else setDate2(new Date())
-    //     const temp3 = await getDataFromLocalStorage('alarmE3')
-    //     if (temp3) {
-    //         onCreateTriggerNotification((JSON.parse(temp3)))
-    //         setDate3(new Date(JSON.parse(temp3)))
-    //     }
-    //     else setDate3(new Date())
-    //     const temp4 = await getDataFromLocalStorage('alarmE4')
-    //     if (temp4) {
-    //         onCreateTriggerNotification((JSON.parse(temp4)))
-    //         setDate4(new Date(JSON.parse(temp4)))
-    //     }
-    //     else setDate4(new Date())
-    //     const temp5 = await getDataFromLocalStorage('alarmE5')
-    //     if (temp5) {
-    //         onCreateTriggerNotification((JSON.parse(temp5)))
-    //         setDate5(new Date(JSON.parse(temp5)))
-    //     }
-    //     else setDate5(new Date())
-    //     const temp6 = await getDataFromLocalStorage('alarmE6')
-    //     if (temp6) {
-    //         onCreateTriggerNotification((JSON.parse(temp6)))
-    //         setDate6(new Date(JSON.parse(temp6)))
-    //     }
-    //     else setDate6(new Date())
-
-    // }
 
     const alarm = new Date()
     const alarm2 = new Date()
@@ -112,138 +69,56 @@ const ReminderWater = () => {
         <View>
             <HeaderForSubmissionScreens Title="Water Reminder" />
             <View style={styles.mainContainer}>
-                {
-                    show2 == true ? <DateTimePicker
-                        mode={"time"} // THIS DOES NOT WORK ON ANDROID. IT DISPLAYS ONLY A DATE PICKER.
-                        //display='clock' // Android Only  
-                        is24Hour={true} // Android Only 
-                        value={date2}
-                        onChange={(t) => {
-                            setChecked2(false)
-                            setShow2(false)
-                            setDate2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)))
-                            storeDataInLocalStorage('alarmE2', JSON.stringify(t.nativeEvent.timestamp))
-                            setTimeStamp2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)).getTime())
-                            console.log("paris", new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)).getTime())
-                            //ToastAndroid.show(`Alarm will ring in ${(t.nativeEvent.timestamp - dateForRef)} hours ${(t.nativeEvent.timestamp - dateForRef)} minutes`, ToastAndroid.SHORT)
-
-                        }}
-                    />
-                        :
-                        null
-                }
-                {
-                    show3 == true ? <DateTimePicker
-                        mode={"date"} // THIS DOES NOT WORK ON ANDROID. IT DISPLAYS ONLY A DATE PICKER.
-                        //display='clock' // Android Only  
-                        is24Hour={true} // Android Only 
-                        value={date2}
-                        onChange={(t) => {
-                            setChecked2(false)
-                            setShow3(false)
-                            setDate2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)))
-                            storeDataInLocalStorage('alarmE2', JSON.stringify(t.nativeEvent.timestamp))
-                            setTimeStamp2(new Date(moment(t.nativeEvent.timestamp).seconds(0).milliseconds(0)).getTime())
-
-                            //ToastAndroid.show(`Alarm will ring in ${(t.nativeEvent.timestamp - dateForRef)} hours ${(t.nativeEvent.timestamp - dateForRef)} minutes`, ToastAndroid.SHORT)
-
-                        }}
-                    />
-                        :
-                        null
-                }
-
-
-
-               
                 <View style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    alignItems: 'center',
                     marginVertical: H * 0.02,
                 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Checkbox
-                            disabled={isSwitchOn}
-                            style={styles.checkBox}
-                            color={colors.GREEN}
-                            status={checked2 ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setChecked2((prev) => {
-                                    if (prev == true) {
+                    <Checkbox.Android
+                        disabled={isSwitchOn}
+                        style={styles.checkBox}
+                        color={colors.GREEN}
+                        status={checked2 ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            setChecked2((prev) => {
+                                if (prev == true) {
 
-                                        return false
+                                    return false
+                                }
+                                else if (prev == false) {
+                                    if (frequency == "once") {
+                                        onCreateTriggerNotification(timeStamp2, "Water Reminder!", "Remember to keep yourself hydrated.", "1")
+                                        ToastAndroid.show(`Alarm will ring in ${new Date((Number.parseInt(date2.getTime(), 10))).getHours() - new Date(dateForRef).getHours()} hours ${new Date((Number.parseInt(date2.getTime(), 10))).getMinutes() - new Date(dateForRef).getMinutes()} minutes`, ToastAndroid.SHORT)
                                     }
-                                    else if (prev == false) {
-                                        if (frequency == "once") {
-                                            onCreateTriggerNotification(timeStamp2, "Water Reminder!", "Remember to keep yourself hydrated.", "1")
-                                            ToastAndroid.show(`Alarm will ring in ${new Date((Number.parseInt(date2.getTime(), 10))).getHours() - new Date(dateForRef).getHours()} hours ${new Date((Number.parseInt(date2.getTime(), 10))).getMinutes() - new Date(dateForRef).getMinutes()} minutes`, ToastAndroid.SHORT)
-                                        }
-                                        else if (frequency == "hourly") {
-                                            onCreateTriggerNotificationHourly(timeStamp2, "Water Reminder!", "Remember to keep yourself hydrated.", "1")
-                                            ToastAndroid.show(`Alarm will ring hourly`, ToastAndroid.SHORT)
-                                        }
-                                        else if (frequency == "daily") {
-                                            onCreateTriggerNotificationDaily(timeStamp2, "Water Reminder!", "Remember to keep yourself hydrated.", "1")
-                                            ToastAndroid.show(`Alarm will ring daily`, ToastAndroid.SHORT)
-                                        }
-                                        else if (frequency == "weekly") {
-                                            onCreateTriggerNotificationWeekly(timeStamp2, "Water Reminder!", "Remember to keep yourself hydrated.", "1")
-                                            ToastAndroid.show(`Alarm will ring every week`, ToastAndroid.SHORT)
-                                        }
-                                        return true
+                                    else if (frequency == "hourly") {
+                                        onCreateTriggerNotificationHourly(timeStamp2, "Water Reminder!", "Remember to keep yourself hydrated.", "1")
+                                        ToastAndroid.show(`Alarm will ring hourly`, ToastAndroid.SHORT)
                                     }
-                                });
-                            }}
-                        />
-                        <Text style={[styles.text1, { marginLeft: WIDTH * 0.04 }]}>Remind me{" "}
-
-                            <Text onPress={() => {
-                                setFrequency(
-                                    (prev) => {
-                                        if (prev == "once") {
-                                            setChecked2(false)
-                                            return "hourly"
-                                        }
-                                        else if (prev == "hourly") {
-                                            setChecked2(false)
-                                            return "daily"
-                                        }
-                                        else if (prev == "daily") {
-                                            setChecked2(false)
-                                            return "weekly"
-                                        }
-                                        else if (prev == "weekly") {
-                                            setChecked2(false)
-                                            return "once"
-                                        }
-                                    })
-                            }}
-                                style={[styles.text2, { padding: 0 }]}>{frequency}
-                            </Text>
-
-                        </Text>
-                        <TouchableOpacity
-                            style={{
-                                position: "absolute",
-                                left: W * 0.56,
-                                flexDirection: "row"
-                            }}
-                            onPress={() => {
-                                setShow2(true)
-                            }}>
-                            <Text style={[styles.text2, { marginRight: W * 0.02 }]}>{converter(date2.getHours())}:{converter(date2.getMinutes())}</Text>
+                                    else if (frequency == "daily") {
+                                        onCreateTriggerNotificationDaily(timeStamp2, "Water Reminder!", "Remember to keep yourself hydrated.", "1")
+                                        ToastAndroid.show(`Alarm will ring daily`, ToastAndroid.SHORT)
+                                    }
+                                    else if (frequency == "weekly") {
+                                        onCreateTriggerNotificationWeekly(timeStamp2, "Water Reminder!", "Remember to keep yourself hydrated.", "1")
+                                        ToastAndroid.show(`Alarm will ring every week`, ToastAndroid.SHORT)
+                                    }
+                                    return true
+                                }
+                            });
+                        }}
+                    />
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+                        <Text>Remind me to hydrate </Text>
+                        <TouchableOpacity style={styles.durationContainer}>
+                            <Text>every 3 hours</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => { setShow3(true) }}
-                            style={{
-                                position: "absolute",
-                                left: W * 0.68,
-                                flexDirection: "row"
-                            }} >
 
-                            <Text style={[styles.text2, { left: W * 0.015 }]}>{converter(date2.getDate())}/{converter(date2.getMonth() + 1)}/{date2.getFullYear()}</Text>
-                        </TouchableOpacity>
                     </View>
+
+
 
                 </View >
             </View>
@@ -277,6 +152,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#e1e3e6',
         padding: W * 0.01,
         borderRadius: 5,
+    },
+    durationContainer:
+    {
+        backgroundColor: colors.DARK_GRAY,
+        padding: 5,
+        borderRadius:8,
     }
 })
 export default ReminderWater

@@ -1,6 +1,6 @@
 import { View, Image, Dimensions, StyleSheet, TouchableOpacity, StatusBar, ToastAndroid, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../colorSchemes/ColorSchemes'
+import { colors, Constants, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../colorSchemes/ColorSchemes'
 import { Text, configureFonts, DefaultTheme, Provider as PaperProvider, ActivityIndicator, Dialog, Portal, Button, TextInput } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient'
 import { getDataFromLocalStorage, storeDataAuth } from '../../local storage/LocalStorage';
@@ -81,7 +81,7 @@ const RegisterOrSignIn = ({ navigation }) => {
                 body: formdata,
             };
             try {
-                const response = await fetch("https://livenutrifit.com/panel/corporate_exist", requestOptions)
+                const response = await fetch(`${Constants.BASE_URL}panel/corporate_exist`, requestOptions)
                 const result = await response.json()
 
                 console.log("result === ", result)
@@ -121,11 +121,11 @@ const RegisterOrSignIn = ({ navigation }) => {
         try {
 
 
-            const response = await fetch("https://livenutrifit.com/panel/textlist", requestOptions)
+            const response = await fetch(`${Constants.BASE_URL}panel/textlist`, requestOptions)
             const result = await response.json()
             setData(result)
 
-            console.log("Hindi " , result)
+            console.log("Hindi ", result)
 
 
             setLoader(false)

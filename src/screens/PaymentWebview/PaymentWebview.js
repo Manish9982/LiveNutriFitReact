@@ -83,11 +83,11 @@ const PaymentWebview = ({ navigation, route }) => {
                 startInLoadingState={true}
 
                 onNavigationStateChange={(info) => {
-                    if (info?.url?.includes("https://livenutrifit.com/fail")) {
+                    if (info?.url?.includes(`${Constants.BASE_URL}fail`)) {
 
                         navigation.navigate("BottomTabs")
 
-                    } else if (info?.url?.includes("https://livenutrifit.com/success")) {
+                    } else if (info?.url?.includes(`${Constants.BASE_URL}success`)) {
 
                         storeDataInLocalStorage("paiduserStatus", "PaymentDone")
 
@@ -102,8 +102,8 @@ const PaymentWebview = ({ navigation, route }) => {
                     console.log("PAyURL == ", info)
                 }}
 
-                
-                source={{ uri: `https://livenutrifit.com/panel/user-payuser/${base64.encode(route.params.UserID)}/${base64.encode(route.params.Amount)}` }}
+
+                source={{ uri: `${Constants.BASE_URL}user-payuser/${base64.encode(route.params.UserID)}/${base64.encode(route.params.Amount)}` }}
             />
 
 

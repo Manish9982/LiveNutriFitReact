@@ -7,7 +7,7 @@ import base64 from 'react-native-base64'
 import { useIsFocused } from '@react-navigation/native'
 import Loader from '../assets/components/Loader'
 import { getDataFromLocalStorage } from '../local storage/LocalStorage'
-import { H, W } from '../colorSchemes/ColorSchemes'
+import { Constants, H, W } from '../colorSchemes/ColorSchemes'
 import HeaderForSubmissionScreens from '../screens/Dashboard/BottomTabs/Stats/HeaderForSubmissionScreens'
 
 
@@ -45,7 +45,7 @@ const FAQWebView = () => {
         setUserId(userd) 
         encodeBase64((userd))
 
-        console.log("GAURAVAVAVAVVA=========", `https://livenutrifit.com/shop/?uid=${base64.encode(userd)}`)
+        console.log("GAURAVAVAVAVVA=========", `${Constants.BASE_URL}shop/?uid=${base64.encode(userd)}`)
     }
 
 
@@ -74,7 +74,7 @@ const FAQWebView = () => {
                     //  renderLoading={LoadingIndicatorView()}
                     startInLoadingState={true}
                     injectedJavaScript={runFirst}
-                    source={{ uri: `https://livenutrifit.com/frequently-asked-questions/` }}
+                    source={{ uri: `${Constants.BASE_URL}frequently-asked-questions/` }}
                     style={{ height: H, width: W, }} />
             </View>
     )

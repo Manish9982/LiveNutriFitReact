@@ -14,7 +14,16 @@ export const W = Dimensions.get('window').width
 
 
 //export const URL = 'https://lnf.bizhawkztest.com/public/'
-export const URL = 'https://livenutrifit.com/panel/'
+// export const Constants =
+// {
+//    BASE_URL: 'https://livenutrifit.com/'
+// }
+export const Constants =
+{
+   BASE_URL: 'https://uat.livenutrifit.com/'
+}
+
+
 
 export const colors = {
    GREEN2: '#cded9a',
@@ -105,7 +114,9 @@ export function convertTimestampToYYYYMMDD(timestamp) {
 
 export const GetApiData = async (ApiName) => {
    //  const URL = "https://lnf.bizhawkztest.com/public/"
-   const URL = "https://livenutrifit.com/panel/"
+   console.log(`formdata of GET ${ApiName} ====>`)
+   console.log("API URL ==>", `${Constants.BASE_URL}panel/${ApiName}`)
+   const URL = Constants.BASE_URL
    const token = await getDataFromLocalStorage('Token')
    var myHeaders = new Headers();
    myHeaders.append("Authorization", `Bearer ${token}`);
@@ -116,24 +127,22 @@ export const GetApiData = async (ApiName) => {
       redirect: 'follow'
    };
    try {
-      const response = await fetch(`${URL}${ApiName}`, requestOptions)
+      const response = await fetch(`${Constants.BASE_URL}panel/${ApiName}`, requestOptions)
       const result = await response.json()
       return result
    } catch (error) {
-      ToastAndroid.show(`${error}`, ToastAndroid.SHORT)
-      ToastAndroid.show(`${ApiName}`, ToastAndroid.SHORT)
-
+      ShortToast(`${error}`, "error", "")
+      ShortToast(`${ApiName}`, "error", "")
    }
-
 }
 
 export const PostApiData = async (ApiName, formdata) => {
    const netinfo = await NetInfo.fetch()
    // console.log(netinfo)
-
+   console.log("API URL ==>", `${Constants.BASE_URL}panel/${ApiName}`)
    if (netinfo.isConnected) {
       //const URL = "https://lnf.bizhawkztest.com/public/"
-      const URL = "https://livenutrifit.com/panel/"
+      const URL = Constants.BASE_URL
       const token = await getDataFromLocalStorage('Token')
       console.log("TOKEN == ", token)
       var myHeaders = new Headers();
@@ -146,7 +155,7 @@ export const PostApiData = async (ApiName, formdata) => {
       };
       try {
          console.log(`formdata of ${ApiName} ====> `, formdata)
-         const response = await fetch(`${URL}${ApiName}`, requestOptions)
+         const response = await fetch(`${Constants.BASE_URL}panel/${ApiName}`, requestOptions)
          const result = await response.json()
          if (result.status == '403') {
             try {
@@ -155,6 +164,7 @@ export const PostApiData = async (ApiName, formdata) => {
                RNRestart.Restart()
             } catch (e) {
                ShortToast(`${e}`, "error", "")
+               ShortToast(`${ApiName}`, "error", "")
             }
          }
          else {
@@ -192,7 +202,7 @@ export const ShortToast = (msg, style, title) => {
    }
    else {
       if (style == 'error') {
-         Alert.alert('Error', msg)
+         Alert.alert('Error', `${msg}`)
       }
       else {
          Alert.alert('Info', msg)

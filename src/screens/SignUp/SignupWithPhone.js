@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View, Dimensions, Linking, ActivityIndicator, StatusBar } from 'react-native'
 import { TextInput, Text, configureFonts, DefaultTheme, Provider as PaperProvider, Checkbox } from 'react-native-paper';
-import { fontSizes, colors, ShortToast, H, fontFamily } from '../../colorSchemes/ColorSchemes'
+import { fontSizes, colors, ShortToast, H, fontFamily, Constants } from '../../colorSchemes/ColorSchemes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, { useState, useEffect } from 'react'
 import { storeDataInLocalStorage } from '../../local storage/LocalStorage';
@@ -101,10 +101,10 @@ const SignupWithPhone = ({ navigation }) => {
 
 
     const openURL = async () => {
-        { Linking.openURL('https://livenutrifit.com/terms-conditions-2/') }
+        { Linking.openURL(`${Constants.BASE_URL}terms-conditions-2/`) }
     }
     const openURL2 = async () => {
-        { Linking.openURL('https://livenutrifit.com/hippa-notice/') }
+        { Linking.openURL(`${Constants.BASE_URL}hippa-notice/`) }
     }
 
     const signUpPressed = async () => {
@@ -158,7 +158,7 @@ const SignupWithPhone = ({ navigation }) => {
                     body: formdata,
                 };
                 try {
-                    const response = await fetch("https://livenutrifit.com/panel/Signup", requestOptions)
+                    const response = await fetch(`${Constants.BASE_URL}panel/Signup`, requestOptions)
                     const result = await response.json()
                     console.log("Signup Result====>>>>>   ", result)
                     setDataFromApi(result)

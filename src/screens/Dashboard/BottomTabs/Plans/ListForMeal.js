@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/dist/FontAwesome';
-import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes';
+import { colors, Constants, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes';
 import { Text } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import { getDataFromLocalStorage } from '../../../../local storage/LocalStorage';
@@ -392,7 +392,7 @@ const ListForMeal = (props) => {
                                 </Modal>
                                 {/* <Image source={{ uri: 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg' }} */}
 
-                                <Image source={{ uri: `${"https://livenutrifit.com/panel/csvfile/"}${props.Image} ` }}
+                                <Image source={{ uri: `${Constants.BASE_URL}csvfile/${props.Image} ` }}
 
                                     style={{
                                         height: H * 0.055,

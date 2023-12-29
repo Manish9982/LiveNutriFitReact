@@ -3,7 +3,7 @@ import { Alert, SafeAreaView, StatusBar } from 'react-native'
 import { Appbar, Text, TextInput } from 'react-native-paper';
 import { WebView } from 'react-native-webview';
 import { Header } from 'react-native/Libraries/NewAppScreen';
-import { colors, fontSizes, H, W, fontFamily } from '../../colorSchemes/ColorSchemes';
+import { colors, fontSizes, H, W, fontFamily, Constants } from '../../colorSchemes/ColorSchemes';
 
 import { useEffect } from 'react';
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../local storage/LocalStorage';
@@ -91,11 +91,11 @@ const StripePaymentWebview = ({ navigation, route }) => {
                 startInLoadingState={true}
 
                 onNavigationStateChange={(info) => {
-                    if (info?.url?.includes("https://livenutrifit.com/fail")) {
+                    if (info?.url?.includes(`${Constants.BASE_URL}fail`)) {
 
                         navigation.navigate("BottomTabs")
 
-                    } else if (info?.url?.includes("https://livenutrifit.com/success")) {
+                    } else if (info?.url?.includes(`${Constants.BASE_URL}success`)) {
 
                         storeDataInLocalStorage("paiduserStatus", "PaymentDone")
 
@@ -111,9 +111,9 @@ const StripePaymentWebview = ({ navigation, route }) => {
                 }}
 
 
-                source={{ uri: `https://livenutrifit.com/panel/user-paystripe/${base64.encode(route?.params?.UserID)}/${base64.encode(route?.params?.Amount)}/${base64.encode(route?.params?.PlanDuration)}/installment` }}
+                source={{ uri: `${Constants.BASE_URL}user-paystripe/${base64.encode(route?.params?.UserID)}/${base64.encode(route?.params?.Amount)}/${base64.encode(route?.params?.PlanDuration)}/installment` }}
 
-            // source={{ uri: `https://livenutrifit.com/panel/user-paystripe/${base64.encode(route?.params?.UserID)}/${base64.encode("1")}/${base64.encode(route?.params?.PlanDuration)}/$installment` }}
+            // source={{ uri: `${Constants.BASE_URL}user-paystripe/${base64.encode(route?.params?.UserID)}/${base64.encode("1")}/${base64.encode(route?.params?.PlanDuration)}/$installment` }}
 
             />
 

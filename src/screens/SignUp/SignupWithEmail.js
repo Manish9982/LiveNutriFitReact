@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View, Dimensions, Linking, Alert, ActivityIndicator, ToastAndroid } from 'react-native'
 import { TextInput, Text, configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { fontSizes, colors, H, ShortToast, fontFamily, W } from '../../colorSchemes/ColorSchemes'
+import { fontSizes, colors, H, ShortToast, fontFamily, W, Constants } from '../../colorSchemes/ColorSchemes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, { useState, useContext } from 'react'
 import DataContext from '../../context/DataContext';
@@ -67,10 +67,10 @@ const SignupWithEmail = ({ navigation }) => {
 
 
     const openURL = async () => {
-        { Linking.openURL('https://livenutrifit.com/terms-conditions-2/') }
+        { Linking.openURL(`${Constants.BASE_URL}terms-conditions-2/`) }
     }
     const openURL2 = async () => {
-        { Linking.openURL('https://livenutrifit.com/hippa-notice/') }
+        { Linking.openURL(`${Constants.BASE_URL}hippa-notice/`) }
     }
 
     const signUpPressed = async () => {
@@ -88,7 +88,7 @@ const SignupWithEmail = ({ navigation }) => {
                 body: formdata,
             };
             try {
-                const response = await fetch("https://livenutrifit.com/Signup", requestOptions)
+                const response = await fetch(`${Constants.BASE_URL}Signup`, requestOptions)
                 const result = await response.json()
                 console.log(result)
                 setDataFromApi(result)

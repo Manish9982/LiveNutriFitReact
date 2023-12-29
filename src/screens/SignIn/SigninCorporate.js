@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View, Dimensions, Linking, ToastAndroid, StatusBar, } from 'react-native'
 import { TextInput, Text, configureFonts, DefaultTheme, Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
-import { fontSizes, colors, H, W, ShortToast, fontFamily } from '../../colorSchemes/ColorSchemes'
+import { fontSizes, colors, H, W, ShortToast, fontFamily, Constants } from '../../colorSchemes/ColorSchemes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, { useState, useContext, useEffect } from 'react'
 import DataContext from '../../context/DataContext';
@@ -82,7 +82,7 @@ const SigninCorporate = ({ navigation, route }) => {
 
 
     const openURL = async () => {
-        { Linking.openURL('https://livenutrifit.com/terms-conditions-2/') }
+        { Linking.openURL(`${Constants.BASE_URL}terms-conditions-2/`) }
     }
 
 
@@ -108,7 +108,7 @@ const SigninCorporate = ({ navigation, route }) => {
                 redirect: 'follow'
             };
             try {
-                const response = await fetch("https://livenutrifit.com/panel/corperate-login", requestOptions)
+                const response = await fetch(`${Constants.BASE_URL}panel/corperate-login`, requestOptions)
                 const result = await response.json()
 
                 console.log("RESULT STATUS= ", result)
@@ -156,7 +156,7 @@ const SigninCorporate = ({ navigation, route }) => {
                 redirect: 'follow'
             };
             try {
-                const response = await fetch("https://livenutrifit.com/panel/corperate-login", requestOptions)
+                const response = await fetch(`${Constants.BASE_URL}panel/corperate-login`, requestOptions)
                 const result = await response.json()
 
                 if (result.status === 200) {

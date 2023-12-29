@@ -4,7 +4,7 @@ import { Text } from 'react-native-paper'
 import { storeDataInLocalStorage, } from '../../local storage/LocalStorage'
 import RNRestart from 'react-native-restart'
 import DataContext from '../../context/DataContext'
-import { colors, fontSizes, ShortToast } from '../../colorSchemes/ColorSchemes'
+import { colors, Constants, fontSizes, ShortToast } from '../../colorSchemes/ColorSchemes'
 import OTPinputComponent from '../VerifyOTP/OTPinputComponent'
 ///////////////////////////////////////for email only////////////////////////////////////////////////
 const HEIGHT = Dimensions.get('window').height
@@ -27,7 +27,7 @@ const VerifyOTPAfterRegistrationPhone = ({ navigation, route }) => {
             body: formdata,
         };
         try {
-            const response = await fetch("https://livenutrifit.com/panel/Signup/login", requestOptions)
+            const response = await fetch(`${Constants.BASE_URL}panel/Signup/login`, requestOptions)
             const result = await response.json()
             console.log(result)
             if (result.status === 200) {
@@ -50,7 +50,7 @@ const VerifyOTPAfterRegistrationPhone = ({ navigation, route }) => {
             body: formdata,
         };
 
-        const response = await fetch("https://livenutrifit.com/panel/Signup/verifyOTP", requestOptions)
+        const response = await fetch(`${Constants.BASE_URL}panel/Signup/verifyOTP`, requestOptions)
         const result = await response.json()
         console.log(result)
         if (result.status === 200) {
