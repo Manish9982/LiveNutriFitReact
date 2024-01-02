@@ -46,7 +46,11 @@ const LNFShopWebView = ({ navigation }) => {
                     <WebView
                         startInLoadingState={true}
                         renderLoading={renderLoading}
-
+                        injectedJavaScript={`
+                        var style = document.createElement('style');
+                        style.innerHTML = "div#new-shop { display: block !important; }";
+                        document.head.appendChild(style);
+                      `}
                         source={{ uri: `${Constants.BASE_URL}shop/?uid=${base64.encode(userId)}&type=mob` }}
                         style={{ height: H * 0.95, width: W, }}
 
@@ -56,9 +60,9 @@ const LNFShopWebView = ({ navigation }) => {
 
                             } else if (info.url == `${Constants.BASE_URL}success/`) {
                                 navigation.navigate("Stats")
-                                 // Alert.alert("Alert", info.url)
+                                // Alert.alert("Alert", info.url)
                                 //  Alert.alert('Payment successfull', 'Your payment has been done sucessfully , press OKAY to go to dashboard!', [
-                               //  {text: 'OKAY', onPress: () => { navigation.navigate("BottomTabs")  }},]);
+                                //  {text: 'OKAY', onPress: () => { navigation.navigate("BottomTabs")  }},]);
                             } else {
 
                             }

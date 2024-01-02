@@ -301,6 +301,7 @@ const Signin = ({ navigation, route }) => {
                                     </View>
 
                                     <TextInput style={styles.textInput}
+                                        autoCapitalize='none'
                                         placeholder={strings.EnterEmailIdPhoneNumber}
                                         activeUnderlineColor={colors.GREEN}
                                         value={mobile}
@@ -345,10 +346,7 @@ const Signin = ({ navigation, route }) => {
 
 
                                 </View>
-
-
                                 :
-
                                 <View
                                     style={{
                                     }}>
@@ -394,8 +392,10 @@ const Signin = ({ navigation, route }) => {
                                     </View>
 
                                     <TextInput style={styles.textInput}
+                                        autoCapitalize='none'
                                         placeholder={strings.EnterEmailId}
                                         activeUnderlineColor={colors.GREEN}
+                                        //activeUnderlineColor={"red"}
                                         value={email}
                                         onChangeText={(text) => { setEmail(text) }}
                                     />
@@ -412,7 +412,7 @@ const Signin = ({ navigation, route }) => {
 
 
                                     <TouchableOpacity
-                                        onPress={() => { navigation.navigate("ForgetPassword") }}
+                                        onPress={() => { navigation.navigate("ForgetPassword", { 'email': email }) }}
                                         style={{
                                             alignItems: 'flex-end',
                                             width: W * 0.9,
@@ -430,7 +430,7 @@ const Signin = ({ navigation, route }) => {
                                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
 
                                         <View style={{
-                                        }}><Checkbox style={{
+                                        }}><Checkbox.Android style={{
 
                                         }}
                                             onPress={handleCheckBoxToggle}

@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Dimensions, StatusBar, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { useState , useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { configureFonts, DefaultTheme, TextInput, Provider as PaperProvider, Appbar } from 'react-native-paper'
 import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../colorSchemes/ColorSchemes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -20,8 +20,8 @@ import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
 
 //lang chnge
 const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
+    en: english,
+    hi: hindi,
 });
 
 
@@ -29,17 +29,17 @@ const strings = new LocalizedStrings({
 
 
 const fontConfig = {
-            fontFamily: 'Montserrat-Regular',
-            fontWeight: 'normal',
-            fontSize: fontSizes.LAR,
+    fontFamily: 'Montserrat-Regular',
+    fontWeight: 'normal',
+    fontSize: fontSizes.LAR,
 };
 
 const theme = {
     ...DefaultTheme,
-    fonts: configureFonts({config:fontConfig}),
+    fonts: configureFonts({ config: fontConfig }),
 };
 
-const ForgetPassword = ({ navigation }) => {
+const ForgetPassword = ({ navigation, route }) => {
     const [password, setPassword] = useState("")
     const [confirmpassword, setConfirmPassword] = useState("")
     const [email, setEmail] = useState("")
@@ -54,17 +54,18 @@ const ForgetPassword = ({ navigation }) => {
 
 
     const getLanguge = async () => {
-      // setLoader(true)
+        // setLoader(true)
+        setEmail(route?.params?.email)
         const lang = await getDataFromLocalStorage("lang")
-    
+
         strings.setLanguage(lang)
 
-       setLoader(false)
-    
-      }
-    
-    
-    
+        setLoader(false)
+
+    }
+
+
+
 
     const forgetPassword = async () => {
         setLoader(true)
@@ -171,8 +172,9 @@ const ForgetPassword = ({ navigation }) => {
                                         fontSize: fontSizes.LAR,
                                         height: 40,
                                         marginTop: H * 0.03,
-                                        padding: 1  }}
-                                        
+                                        padding: 1
+                                    }}
+
                                         placeholder={strings.EnterEmailAddress}
                                         activeUnderlineColor={colors.GREEN}
                                         value={email}
