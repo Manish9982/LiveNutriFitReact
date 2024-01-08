@@ -283,7 +283,7 @@ export default english = {
     GroceryList: "Your Grocery List",
     AddGroceries: "Add Groceries",
     GroceryListTitle: "Grocery List",
-    totalpointstext: "Your 21 free reward points have been added to your total score",
+    totalpointstext: "Your 1000 free reward points have been added to your total score",
     AsyouareaPaidUseryoucannotupgradeplan: "As you are a Paid/Corporate User, you cannot upgrade plan!",
     Profiling: "Profiling",
     Wehaveidealplanforyou: "We have ideal plan for you",

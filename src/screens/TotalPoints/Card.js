@@ -25,9 +25,9 @@ const strings = new LocalizedStrings({
 });
 
 
-const Card = (props) => {
+const Card = ({ points, maxPoints, date, cardData }) => {
     const isFocused = useIsFocused()
-    useEffect(() => { openFirstCard() }, [])
+    //useEffect(() => { openFirstCard() }, [])
     useEffect(() => { getLanguge() }, [isFocused])
 
 
@@ -39,7 +39,7 @@ const Card = (props) => {
             strings.setLanguage(lang)
         }
     }
-   
+
 
 
     //  const [dataFromApi, setDataFromApi] = React.useState(null)
@@ -54,40 +54,13 @@ const Card = (props) => {
     // setDataFromApi(result)
     //console.log(result)
     //}
-    const openFirstCard = () => {
-        if (props.Key == '0') {
-            setVisible(true)
-        }
-    }
-    const TextThrow = (num) => {
-        if (num == "1") {
-            return strings.MealPlan
-        }
-        if (num == "2") {
-            return strings.ExcercisesPlan
-        }
-        if (num == "3") {
-            return strings.Sleep
-        }
-        if (num == "4") {
-            return strings.Hydration
-        }
-        if (num == "5") {
-            return strings.Fasting
-        }
-        if (num == "6") {
-            return strings.MoodText
-        }
-        if (num == "7") {
-            return strings.Monitoring
-        }
-    }
+
 
     const IconThrow = (num) => {
-        if (num == 0)
-            return <Entypo name="cross" size={25} color={"red"} />
-        else
+        if (num)
             return <Icon name='check' size={25} color='#b2de72' />
+        else
+            return <Entypo name="cross" size={25} color={"red"} />
     }
 
     return (
@@ -95,51 +68,31 @@ const Card = (props) => {
             <View style={styles.totalPoints}>
                 <View style={{ flexDirection: 'row', }}>
                     {myIcon}
-                    <Text style={{ fontFamily: 'Montserrat-Regular', paddingLeft: W * 0.03, color: 'black' }}>{props.TotalPointsToday}</Text>
-                    <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, paddingTop: W * 0.014, paddingLeft: W * 0.01, color: "silver" }}>/21</Text>
+                    <Text style={{ fontFamily: 'Montserrat-Regular', paddingLeft: W * 0.03, color: 'black' }}>{points}</Text>
+                    <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, paddingTop: W * 0.014, paddingLeft: W * 0.01, color: "silver" }}>/{maxPoints}</Text>
                 </View>
-                <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', marginLeft: W * 0.4, fontSize: fontSizes.LAR }}>{props.Date}</Text>
+                <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', marginLeft: W * 0.4, fontSize: fontSizes.LAR }}>{date}</Text>
                 <TouchableOpacity onPress={() => { setVisible(!visible) }}>
                     <Icon name='downcircleo' size={25} color='#dfe5eb' />
                 </TouchableOpacity>
             </View>
-            {visible ? <View>
-                <View style={styles.displayActivity}>
-                    {IconThrow(props.Aid1)}
-                    <Text style={styles.textActivity}>{TextThrow(props.Id1)}</Text>
-                    <Text style={styles.textStyleForPoints}>{props.Id1 == "7" ? props.Aid1.length : props.Aid1}</Text>
+            {visible ?
+                <View>
+                    {
+                        cardData?.map((item, index) => {
+                            return (
+                                <View
+                                    key={index}
+                                    style={styles.displayActivity}>
+                                    {IconThrow(item?.activity_completed)}
+                                    <Text style={styles.textActivity}>{item?.activity_name}</Text>
+                                    <Text style={styles.textStyleForPoints}>{item?.selected_option}</Text>
+                                </View>
+                            )
+                        })
+                    }
+
                 </View>
-                <View style={styles.displayActivity}>
-                    {IconThrow(props.Aid2)}
-                    <Text style={styles.textActivity}>{TextThrow(props.Id2)}</Text>
-                    <Text style={styles.textStyleForPoints}>{props.Id2 == "7" ? props.Aid2.length : props.Aid2}</Text>
-                </View>
-                <View style={styles.displayActivity}>
-                    {IconThrow(props.Aid3)}
-                    <Text style={styles.textActivity}>{TextThrow(props.Id3)}</Text>
-                    <Text style={styles.textStyleForPoints}>{props.Id3 == "7" ? props.Aid3.length : props.Aid3}</Text>
-                </View>
-                <View style={styles.displayActivity}>
-                    {IconThrow(props.Aid4)}
-                    <Text style={styles.textActivity}>{TextThrow(props.Id4)}</Text>
-                    <Text style={styles.textStyleForPoints}>{props.Id4 == "7" ? props.Aid4.length : props.Aid4}</Text>
-                </View>
-                <View style={styles.displayActivity}>
-                    {IconThrow(props.Aid5)}
-                    <Text style={styles.textActivity}>{TextThrow(props.Id5)}</Text>
-                    <Text style={styles.textStyleForPoints}>{props.Id5 == "7" ? props.Aid5.length : props.Aid5}</Text>
-                </View>
-                <View style={styles.displayActivity}>
-                    {IconThrow(props.Aid6)}
-                    <Text style={styles.textActivity}>{TextThrow(props.Id6)}</Text>
-                    <Text style={styles.textStyleForPoints}>{props.Id6 == "7" ? props.Aid6.length : props.Aid6}</Text>
-                </View>
-                <View style={styles.displayActivity}>
-                    {IconThrow(props.Aid7)}
-                    <Text style={styles.textActivity}>{TextThrow(props.Id7)}</Text>
-                    <Text style={styles.textStyleForPoints}>{props.Id7 == "7" ? props.Aid7.length : props.Aid7}</Text>
-                </View>
-            </View>
                 :
                 null}
 

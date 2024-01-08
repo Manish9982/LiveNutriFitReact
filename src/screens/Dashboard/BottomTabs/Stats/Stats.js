@@ -35,8 +35,6 @@ const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
 const Stats = (props) => {
-
-  const isFocused = useIsFocused();
   const [data, setData] = useState(null)
   const [showLoader, setShowLoader] = useState(true)
   const [dataForPaidUser, setDataForPaidUser] = useState(null)
@@ -61,11 +59,37 @@ const Stats = (props) => {
   const [showInputForGratification, setShowInputForGratification] = useState(false)
   const [text, setText] = useState("")
   const [paiduserstatusModal, setPaiduserstatusModal] = useState("")
-
-  const { Nlanguagee } = useContext(DataContext)
-  const [languagee, setLanguagee] = Nlanguagee
   const [notificationCount, setNotificationCount] = useState("")
-
+    
+  const {
+    Nlanguagee,
+    Nvisible,
+    Nheading,
+    NsubHeading,
+    NvisibleSnackOne,
+    NvisibleSnackTwo,
+    NvisibleSnackThree,
+    NisInfoButtonVisible,
+    NquestionNumber,
+    Nnum,
+    NglobalBmi,
+    Ncrrnt,
+    Ntrgt,
+    Nht,
+    Nfeet,
+    Ninch,
+    NvisibleMood,
+  } = useContext(DataContext)
+  const [visible, setVisible] = Nvisible
+  const [heading, setHeading] = Nheading
+  const [subHeading, setSubHeading] = NsubHeading
+  const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
+  const [crrnt, setCrrnt] = Ncrrnt
+  const [trgt, setTrgt] = Ntrgt
+  const [visibleMood, setVisibleMood] = NvisibleMood
+  const [languagee, setLanguagee] = Nlanguagee
+  
+  const isFocused = useIsFocused();
   ////////////////////////////////////////////
 
 
@@ -176,52 +200,8 @@ const Stats = (props) => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  const {
-    Nvisible,
-    Nheading,
-    NsubHeading,
-    NvisibleSnackOne,
-    NvisibleSnackTwo,
-    NvisibleSnackThree,
-    NisInfoButtonVisible,
-    NquestionNumber,
-    Nnum,
-    NglobalBmi,
-    Ncrrnt,
-    Ntrgt,
-    Nht,
-    Nfeet,
-    Ninch,
-    NvisibleMood,
-  } = useContext(DataContext)
-  const [visible, setVisible] = Nvisible
-  const [heading, setHeading] = Nheading
-  const [subHeading, setSubHeading] = NsubHeading
-  const [visibleSnackOne, setVisibleSnackOne] = NvisibleSnackOne
-  const [visibleSnackTwo, setVisibleSnackTwo] = NvisibleSnackTwo
-  const [visibleSnackThree, setVisibleSnackThree] = NvisibleSnackThree
-  const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
-  const [questionNumber, setQuestionNumber] = NquestionNumber
-  const [num, setNum] = Nnum
-  const [globalBmi, setGlobalBmi] = NglobalBmi
-  const [crrnt, setCrrnt] = Ncrrnt
-  const [trgt, setTrgt] = Ntrgt
-  const [ht, setHt] = Nht
-  const [feet, setFeet] = Nfeet
-  const [inch, setInch] = Ninch
-  const [visibleMood, setVisibleMood] = NvisibleMood
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const [state, setState] = React.useState({ open: false });
-
-  const onStateChange = ({ open }) => setState({ open });
-
-  const { open } = state;
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const onDismissSnackBarOne = () => setVisibleSnackOne(false);
-  const onDismissSnackBarTwo = () => setVisibleSnackTwo(false);
-  const onDismissSnackBarThree = () => setVisibleSnackThree(false);
-
 
   const getFirstTimeLoginStatus = async () => {
     const temp = await getDataFromLocalStorage('firstTimeLogin')
@@ -258,9 +238,12 @@ const Stats = (props) => {
       formdata.append("target_weight", targetWeight)
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result?.status == "200") {
+        getDataForFreeUser()
         getDataForPaidUser()
         ShortToast('Success', 'success', '')
         setEditWeights(false)
+        setCurrentWeight('')
+        setTargetWeight('')
       }
     }
   }
@@ -281,8 +264,11 @@ const Stats = (props) => {
 
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result.status == 200) {
+        getDataForFreeUser()
         getDataForPaidUser()
         setEditSugar(false)
+        setFastingSugar('')
+        setNonFastingSugar('')
       }
     }
     else {
@@ -296,8 +282,11 @@ const Stats = (props) => {
 
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result.status == 200) {
+        getDataForFreeUser()
         getDataForPaidUser()
         setEditSugar(false)
+        setFastingSugar('')
+        setNonFastingSugar('')
         ShortToast(JSON.stringify(result?.message), 'success', '')
 
       }
@@ -334,9 +323,13 @@ const Stats = (props) => {
 
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result.status == 200) {
+        getDataForFreeUser()
         getDataForPaidUser()
         { flagg2 > 2 ? null : ShortToast('Success', 'success', '') }
         setEditBp(false)
+        setSystolic('')
+        setDiastolic('')
+        setBpm('')
       }
     }
   }
@@ -377,7 +370,7 @@ const Stats = (props) => {
     storeDataInLocalStorage("stackValue", "3")
     storeDataInLocalStorage("user_type", JSON.stringify(result?.user_type))
     //console.log("tempPaid", temp)
-    console.log("response user freeuser =================>  ", JSON.stringify(result?.user_type))
+    console.log("response user freeuser =================>  ", result)
     //console.log("response user freeuser =================>  ", result)
 
   }
@@ -397,13 +390,13 @@ const Stats = (props) => {
     console.log("PAID +++++++++++++ ", result)
     if (result?.status == "200") {
       setDataForPaidUser(result)
-      setCurrentWeight(result?.single[0]?.attribute_value[0])
-      setTargetWeight(result?.single[0]?.attribute_value[1])
-      setFastingSugar(result?.single[1]?.attribute_value[0])
-      setNonFastingSugar(result?.single[1]?.attribute_value[1])
-      setSystolic(result?.single[2]?.attribute_value[0])
-      setDiastolic(result?.single[2]?.attribute_value[1])
-      setBpm(result?.single[2]?.attribute_value[2])
+      // setCurrentWeight(result?.single[0]?.attribute_value[0])
+      // setTargetWeight(result?.single[0]?.attribute_value[1])
+      // setFastingSugar(result?.single[1]?.attribute_value[0])
+      // setNonFastingSugar(result?.single[1]?.attribute_value[1])
+      // setSystolic(result?.single[2]?.attribute_value[0])
+      // setDiastolic(result?.single[2]?.attribute_value[1])
+      // setBpm(result?.single[2]?.attribute_value[2])
     }
   }
   const getName = async () => {
@@ -414,7 +407,6 @@ const Stats = (props) => {
     if (result?.status == 200) {
       setName(result?.data[0]?.name)
     }
-
     else {
       ShortToast(result?.message, 'error', '')
     }
@@ -428,6 +420,7 @@ const Stats = (props) => {
   for (let i = 0; i < data?.data?.length; i++) {
     myloop.push(
       <InfoCard
+        numberOfCoins={data?.data[i]?.number_of_coins}
         Location={data?.data[i]?.icon}
         Key={i}
         key={i}
@@ -1092,6 +1085,8 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     setEditWeights(false)
+                    setCurrentWeight('')
+                    setTargetWeight('')
                   }}
                   style={{
                     width: W * 0.18,
@@ -1272,6 +1267,8 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     setEditSugar(false)
+                    setFastingSugar('')
+                    setNonFastingSugar('')
                   }}
                   style={{
                     width: W * 0.18,
@@ -1395,6 +1392,8 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     setEditSugar(false)
+                    setFastingSugar('')
+                    setNonFastingSugar('')
                   }}
                   style={{
                     width: W * 0.18,
@@ -1429,7 +1428,7 @@ const Stats = (props) => {
               alignSelf: "center",
               justifyContent: "center",
               alignItems: "center",
-              top: H * 0.35,
+              top: H * 0.2,
               elevation: 5,
               width: W * 0.8,
             }}>
@@ -1584,6 +1583,9 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     setEditBp(false)
+                    setSystolic('')
+                    setDiastolic('')
+                    setBpm('')
                   }}
                   style={{
                     width: W * 0.18,
@@ -1703,6 +1705,9 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     setEditBp(false)
+                    setSystolic('')
+                    setDiastolic('')
+                    setBpm('')
                   }}
                   style={{
                     width: W * 0.18,
@@ -1816,6 +1821,9 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     setEditBp(false)
+                    setSystolic('')
+                    setDiastolic('')
+                    setBpm('')
                   }}
                   style={{
                     width: W * 0.18,

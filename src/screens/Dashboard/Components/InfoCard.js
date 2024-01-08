@@ -64,19 +64,11 @@ const InfoCard = (props) => {
 
 
     const navigation = useNavigation();
-    useEffect(() => { loadPreviousData() }, [])
 
     const [activity_id, setActivity_id] = useState('')
-    const [bgclr1, setBgclr1] = useState('white')
-    const [bgclr2, setBgclr2] = useState('white')
-    const [bgclr3, setBgclr3] = useState('white')
-    const [medals, setMedals] = useState(0)
 
-    const { Nvisible, Nheading, NsubHeading, NvisibleSnackOne, NvisibleSnackTwo, NvisibleSnackThree, NvisibleMood } = useContext(DataContext)
+    const { NvisibleSnackOne, NvisibleSnackTwo, NvisibleSnackThree, NvisibleMood } = useContext(DataContext)
 
-    const [visible, setVisible] = Nvisible
-    const [heading, setHeading] = Nheading
-    const [subHeading, setSubHeading] = NsubHeading
     const [visibleSnackOne, setVisibleSnackOne] = NvisibleSnackOne
     const [visibleSnackTwo, setVisibleSnackTwo] = NvisibleSnackTwo
     const [visibleSnackThree, setVisibleSnackThree] = NvisibleSnackThree
@@ -191,7 +183,7 @@ const InfoCard = (props) => {
 
 
     function Medals() {
-        if (medals === 1) {
+        if (props?.numberOfCoins === 1) {
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     {medalIcon}
@@ -199,7 +191,7 @@ const InfoCard = (props) => {
             )
 
         }
-        else if (medals === 2) {
+        else if (props?.numberOfCoins === 2) {
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
 
@@ -212,7 +204,7 @@ const InfoCard = (props) => {
 
 
         }
-        else if (medals === 3) {
+        else if (props?.numberOfCoins === 3) {
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     {medalIcon}
@@ -226,42 +218,6 @@ const InfoCard = (props) => {
             return null
         }
     }
-    const loadPreviousData = () => {
-        if (props.Text == "Monitoring") {
-            if (props.SelectedOption.includes('1')) {
-                setBgclr1(colors.BEST_COLOR)
-                setMedals(props.SelectedOption.length)
-
-            }
-            if (props.SelectedOption.includes('2')) {
-                setBgclr2(colors.BEST_COLOR)
-                setMedals(props.SelectedOption.length)
-
-            }
-            if (props.SelectedOption.includes('3')) {
-                setBgclr3(colors.BEST_COLOR)
-                setMedals(props.SelectedOption.length)
-            }
-        }
-        else {
-            if (props.SelectedOption == '1') {
-                setBgclr1(colors.BAD_COLOR)
-                setMedals(3)
-            }
-            if (props.SelectedOption == '2') {
-                setBgclr2(colors.GOOD_COLOR)
-                setMedals(3)
-            }
-            if (props.SelectedOption == '3') {
-                setBgclr3(colors.BEST_COLOR)
-                setMedals(3)
-            }
-        }
-    }
-
-
-
-
 
     const sendFirstChoiceToApi = async () => {
 
@@ -272,7 +228,6 @@ const InfoCard = (props) => {
         formdata.append("selected_option", "1");
         const result = await PostApiData('add_user_activity_data', formdata)
         //console.log(result)
-
     }
     const sendSecondChoiceToApi = async () => {
 
@@ -294,137 +249,62 @@ const InfoCard = (props) => {
         // console.log(result)
     }
     const firstChoiceTrigger = async (heading) => {
-
-        if (heading == 'Monitoring') {
-
-            setBgclr1(
-                (prev) => {
-                    if (prev == colors.BEST_COLOR) {
-                        return "white"
-                    }
-                    else {
-                        props?.onPressWeight(prev => !prev)
-                        return colors.BEST_COLOR
-                    }
-                }
-            )
-            if (bgclr1 == colors.BEST_COLOR) {
-                await sendFirstChoiceToApi()
-                setMedals(prev => prev - 1)
-                await props.onPressButton()
-            }
-            if (bgclr1 == 'white') {
-                await sendFirstChoiceToApi()
-                setMedals(prev => prev + 1)
-                await props.onPressButton()
-            }
-
-        }
-        else {
-            sendFirstChoiceToApi()
-            props.onPressButton()
-            setBgclr2('white')
-            setBgclr3('white')
-            //setMedals(1)
-            setMedals(3)
-            setBgclr1(colors.BAD_COLOR)
+        await sendFirstChoiceToApi()
+        await props.onPressButton()
+        if (props?.Text == 'Monitoring' && !props?.SelectedOption?.includes(1)) {
+            props?.onPressWeight()
         }
     }
+
     const secondChoiceTrigger = async (heading) => {
-        if (heading == 'Monitoring') {
-
-            setBgclr2(
-                (prev) => {
-                    if (prev == colors.BEST_COLOR) {
-                        return "white"
-                    }
-                    else {
-                        props?.onPressSugar(prev => !prev)
-                        return colors.BEST_COLOR
-                    }
-                }
-            )
-            if (bgclr2 == colors.BEST_COLOR) {
-                await sendSecondChoiceToApi()
-                setMedals(prev => prev - 1)
-                await props.onPressButton()
-            }
-            if (bgclr2 == 'white') {
-                await sendSecondChoiceToApi()
-                setMedals(prev => prev + 1)
-                await props.onPressButton()
-            }
-
-        }
-        else {
-            await sendSecondChoiceToApi()
-            await props.onPressButton()
-            setBgclr1('white')
-            setBgclr3('white')
-            //setMedals(2)
-            setMedals(3)
-            setBgclr2(colors.GOOD_COLOR)
-
+        await sendSecondChoiceToApi()
+        await props.onPressButton()
+        if (props?.Text == 'Monitoring' && !props?.SelectedOption?.includes(2)) {
+            props?.onPressSugar()
         }
     }
     const thirdChoiceTrigger = async (heading) => {
-        if (heading == 'Monitoring') {
-            setBgclr3(
-                (prev) => {
-                    if (prev == colors.BEST_COLOR) {
-                        return "white"
-                    }
-                    else {
-                        props?.onPressBP(prev => !prev)
-                        return colors.BEST_COLOR
-                    }
-                }
-            )
-            if (bgclr3 == colors.BEST_COLOR) {
-                await sendThirdChoiceToApi()
-                setMedals(prev => prev - 1)
-                await props.onPressButton()
+        await sendThirdChoiceToApi()
+        await props.onPressButton()
+        if (props?.Text == 'Monitoring' && !props?.SelectedOption?.includes(3)) {
+            props?.onPressBP()
+        }
+    }
+    const throwColor = (n) => {
+        if (props?.SelectedOption?.includes(1) && n == '1') {
+            if (props?.Text == 'Monitoring') {
+                //props?.onPressWeight()
+                return colors.BEST_COLOR
             }
-            if (bgclr3 == 'white') {
-                await sendThirdChoiceToApi()
-                setMedals(prev => prev + 1)
-                await props.onPressButton()
+            return colors.BAD_COLOR
+        }
+        else if (props?.SelectedOption?.includes(2) && n == '2') {
+            if (props?.Text == 'Monitoring') {
+                //props?.onPressSugar()
+                return colors.BEST_COLOR
             }
+            return colors.GOOD_COLOR
+        }
+        else if (props?.SelectedOption?.includes(3) && n == '3') {
+            if (props?.Text == 'Monitoring') {
+                //props?.onPressBP()
+                return colors.BEST_COLOR
+            }
+            return colors.BEST_COLOR
         }
         else {
-            await sendThirdChoiceToApi()
-            await props.onPressButton()
-            setBgclr1('white')
-            setBgclr2('white')
-            setBgclr3(colors.BEST_COLOR)
-            setMedals(3)
-
+            return "white"
         }
     }
 
     const openInformationofindex = (num) => {
         console.log("i button is pressed")
     }
-
-    const openSnackbarOne = () => {
-        onToggleSnackBarOne()
-    }
-    const openSnackbarTwo = () => {
-        onToggleSnackBarTwo()
-    }
-    const openSnackbarThree = () => {
-        onToggleSnackBarThree()
-    }
-
-
+    console.log('props?.SelectedOption', (props?.SelectedOption))
     return (
         <DataState>
-
             <PaperProvider theme={theme}>
-
-
                 <View>
-
                     <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, width: '100%', }}>
                         <Image source={{ uri: props.Location }}
                             style={{ marginLeft: WIDTH * 0.02, height: HEIGHT * 0.035, width: HEIGHT * 0.035, borderRadius: HEIGHT * 0.035 / 2 }} />
@@ -438,8 +318,6 @@ const InfoCard = (props) => {
                         <View style={{ width: 80, position: 'absolute', left: WIDTH * 0.73, }}>
                             <Medals />
                         </View>
-
-
                     </View>
                     <View style={styles.userChoiceBar}>
 
@@ -447,14 +325,10 @@ const InfoCard = (props) => {
                             if (props.Attributes[0] == "1") {
                                 setVisibleMood(true)
                             }
-                            else if (props.Attributes[0] !== "Weight" && props.Attributes[0] !== "1") {
-                                // ShortToast(getBadMessage(), 'success', '')
-                            }
-
                             firstChoiceTrigger(props.Text)
 
                         }}
-                            style={[styles.choiceButtons, { backgroundColor: bgclr1 }]}>
+                            style={[styles.choiceButtons, { backgroundColor: throwColor(1) }]}>
 
 
                             {props.Attributes[0] == 1 ? <Image source={require('../../../assets/icons/sad.png')}
@@ -474,7 +348,7 @@ const InfoCard = (props) => {
 
                             secondChoiceTrigger(props.Text)
                         }}
-                            style={[styles.choiceButtons, { backgroundColor: bgclr2 }]}>
+                            style={[styles.choiceButtons, { backgroundColor: throwColor(2) }]}>
 
                             {props.Attributes[1] == 2 ? <Image source={require('../../../assets/icons/confused.png')}
                                 style={{ height: 20, width: 20, alignSelf: 'center' }} />
@@ -489,7 +363,7 @@ const InfoCard = (props) => {
 
                             thirdChoiceTrigger(props.Text)
                         }}
-                            style={[styles.choiceButtons, { backgroundColor: bgclr3 }]}>
+                            style={[styles.choiceButtons, { backgroundColor: throwColor(3) }]}>
                             {props.Attributes[2] == 3 ? <Image source={require('../../../assets/icons/happy.png')}
                                 style={{ height: 20, width: 20, alignSelf: 'center', }} />
                                 :

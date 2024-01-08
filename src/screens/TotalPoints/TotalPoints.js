@@ -14,8 +14,6 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import DataContext from '../../context/DataContext'
 import Loader from '../../assets/components/Loader'
-
-
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
@@ -41,7 +39,14 @@ const myIcon2 = <Image source={require('../../assets/icons/reward.jpg')}
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
+
 const TotalPoints = () => {
+    const [refreshing, setRefreshing] = React.useState(false);
+    const [camVisible, setCamVisible] = React.useState(false)
+    const [dataFromApi, setDataFromApi] = React.useState(null);
+    const [loader, setLoader] = React.useState(true)
+    const { NisInfoButtonVisible } = useContext(DataContext)
+    const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
 
     const isFocused = useIsFocused()
 
@@ -66,12 +71,8 @@ const TotalPoints = () => {
         getTotalPoints()
         wait(2000).then(() => setRefreshing(false));
     }, []);
-    const [refreshing, setRefreshing] = React.useState(false);
-    const [camVisible, setCamVisible] = React.useState(false)
-    const [dataFromApi, setDataFromApi] = React.useState(null);
-    const [loader, setLoader] = React.useState(true)
-    const { NisInfoButtonVisible } = useContext(DataContext)
-    const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
+
+
     const requestCameraPermission = async () => {
         try {
             const granted = await PermissionsAndroid.request(
@@ -180,7 +181,8 @@ const TotalPoints = () => {
         formdata.append("user_id", JSON.parse(temp));
         const result = await PostApiData('get_total_point', formdata)
         setDataFromApi(result)
-        console.log(result)
+        //setDataFromApi(DATA)
+        console.log('get_total_point', result)
         setIsInfoButtonVisible(false)
         setLoader(false)
     }
@@ -200,26 +202,12 @@ const TotalPoints = () => {
     var monthName = moment.months(monthNum);
 
     const renderItem = ({ item, index }) => {
-        console.log('item', item)
         return (
             <Card
-                Key={index}
-                TotalPointsToday={item?.total_pont}
-                Date={item?.date}
-                Aid1={item?.child?.[0]?.selected_option}
-                Aid2={item?.child?.[1]?.selected_option}
-                Aid3={item?.child?.[2]?.selected_option}
-                Aid4={item?.child?.[3]?.selected_option}
-                Aid5={item?.child?.[4]?.selected_option}
-                Aid6={item?.child?.[5]?.selected_option}
-                Aid7={item?.child?.[6]?.selected_option}
-                Id1={item?.child?.[0]?.activity_id}
-                Id2={item?.child?.[1]?.activity_id}
-                Id3={item?.child?.[2]?.activity_id}
-                Id4={item?.child?.[3]?.activity_id}
-                Id5={item?.child?.[4]?.activity_id}
-                Id6={item?.child?.[5]?.activity_id}
-                Id7={item?.child?.[6]?.activity_id}
+                maxPoints={item?.max_points}
+                points={item?.total_pont}
+                date={item?.date}
+                cardData={item?.child}
             />)
     }
 

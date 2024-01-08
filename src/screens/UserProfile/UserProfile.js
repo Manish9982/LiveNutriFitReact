@@ -1,4 +1,4 @@
-import { StyleSheet, View, Dimensions, Image, TouchableOpacity, ScrollView, RefreshControl, StatusBar, Modal, Alert, PermissionsAndroid } from 'react-native'
+import { StyleSheet, View, Dimensions, Image, TouchableOpacity, ScrollView, RefreshControl, StatusBar, Modal, Alert, PermissionsAndroid, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Text, Appbar, TextInput, ActivityIndicator } from 'react-native-paper'
 import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../colorSchemes/ColorSchemes'
@@ -13,6 +13,7 @@ import { useIsFocused } from '@react-navigation/native'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
+import { check, request } from 'react-native-permissions'
 
 
 
@@ -32,8 +33,22 @@ const wait = (timeout) => {
 
 
 const UserProfile = ({ navigation }) => {
+    const [dataFromApi, setDataFromApi] = useState(null)
+    const [loader, setLoader] = useState(true)
+    const [refreshing, setRefreshing] = useState(false)
+    const [lastRefresh, setLastRefresh] = useState(null)
+    const [bioModal, setBioModal] = useState(false)
+    const [camVisible, setCamVisible] = useState(false)
+    const [image, setImage] = useState(null)
+    const [text, setText] = useState("")
+
     const isFocused = useIsFocused()
-    useEffect(() => { getLanguge() }, [isFocused])
+
+    useEffect(() => {
+        getLanguge()
+        getDataForUserProfile()
+        requestCameraPermission()
+    }, [isFocused])
 
 
     //lng
@@ -50,11 +65,9 @@ const UserProfile = ({ navigation }) => {
 
     }
 
-
     const changeLaguagee = (languageKey) => {
         strings.setLanguage(languageKey)
     }
-
 
     const navigationTOScreen = async () => {
         const userType = await getDataFromLocalStorage('user_type')
@@ -69,33 +82,17 @@ const UserProfile = ({ navigation }) => {
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },
-                { text: 'OK', onPress: () => { { navigation.navigate("Upgrade") } } },
+                {
+                    text: 'OK',
+                    onPress: () => { { navigation.navigate("Upgrade") } }
+                },
             ]);
-
-
-
         } else {
 
         }
 
     }
 
-
-
-
-
-    useEffect(() => {
-        getDataForUserProfile()
-        requestCameraPermission()
-    }, [isFocused])
-    const [dataFromApi, setDataFromApi] = useState(null)
-    const [loader, setLoader] = useState(true)
-    const [refreshing, setRefreshing] = useState(false)
-    const [lastRefresh, setLastRefresh] = useState(null)
-    const [bioModal, setBioModal] = useState(false)
-    const [camVisible, setCamVisible] = useState(false)
-    const [image, setImage] = useState(null)
-    const [text, setText] = useState("")
     const date = new Date()
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -103,28 +100,61 @@ const UserProfile = ({ navigation }) => {
         setLastRefresh(`${(date.getHours()).toString().padStart(2, 0)}:${(date.getMinutes()).toString().padStart(2, 0)}`)
         wait(2000).then(() => setRefreshing(false))
     }, []);
+    // const requestCameraPermission = async () => {
+    //     try {
+    //         const granted = await PermissionsAndroid.request(
+    //             PermissionsAndroid.PERMISSIONS.CAMERA,
+    //             {
+    //                 title: "LiveNutriFit App Camera Permission",
+    //                 message:
+    //                     "LiveNutriFit App needs access to your camera " +
+    //                     "so you can take awesome pictures.",
+    //                 buttonNeutral: "Ask Me Later",
+    //                 buttonNegative: "Cancel",
+    //                 buttonPositive: "OK"
+    //             }
+    //         );
+    //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    //             console.log("You can use the camera");
+    //         } else {
+    //             console.log("Camera permission denied");
+    //         }
+    //     } catch (err) {
+    //         ShortToast(err, "error", "");
+    //     }
+    // };
+
+    const redirectToSettings = () => {
+        if (Platform.OS === 'ios') {
+          Linking.openSettings();
+        } else {
+          openSettings();
+        }
+      };
+
     const requestCameraPermission = async () => {
         try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                {
-                    title: "LiveNutriFit App Camera Permission",
-                    message:
-                        "LiveNutriFit App needs access to your camera " +
-                        "so you can take awesome pictures.",
-                    buttonNeutral: "Ask Me Later",
-                    buttonNegative: "Cancel",
-                    buttonPositive: "OK"
-                }
+            const permissionStatus = await check(
+              Platform.select({
+                android: 'android.permission.CAMERA',
+                ios: 'camera',
+              })
             );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log("You can use the camera");
+            if (permissionStatus === 'granted') {
+              // Permission already granted
+              // Proceed with using the camera
             } else {
-                console.log("Camera permission denied");
+              // Permission hasn't been granted yet
+              await request(
+                Platform.select({
+                  android: 'android.permission.CAMERA',
+                  ios: 'camera',
+                })
+              );
             }
-        } catch (err) {
-            ShortToast(err, "error", "");
-        }
+          } catch (error) {
+            console.error('Error checking camera permission: ', error);
+          }
     };
 
     const launchCam = async () => {
@@ -233,262 +263,260 @@ const UserProfile = ({ navigation }) => {
     return (
         <View>
             <StatusBar backgroundColor={colors.GREEN} />
-            <Appbar.Header style={styles.appBar}>
-                <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
-                <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>
-                    {strings.MyProfile}</Text>} />
-
-            </Appbar.Header>
-            {loader ? <View style={{
-                height: H,
-                width: W,
-                alignItems: "center",
-                justifyContent: "center"
-            }}>
-                <ActivityIndicator size="large"
-                    color={colors.GREEN} />
-            </View>
-                :
-                <ScrollView contentContainerStyle={styles.mainContainer}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }
-                >
-                    <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
-                        <TouchableOpacity onPress={() => { setCamVisible(true) }}>
-                            <Image source={{ uri: dataFromApi?.data[0].profile_pic }}
-                                style={styles.userImageContainer}
+            <HeaderForSubmissionScreens Title="My Profile" />
+            {
+                loader
+                    ?
+                    <View style={{
+                        height: H,
+                        width: W,
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}>
+                        <ActivityIndicator size="large"
+                            color={colors.GREEN} />
+                    </View>
+                    :
+                    <ScrollView contentContainerStyle={styles.mainContainer}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={onRefresh}
                             />
-                        </TouchableOpacity>
-                        <Modal
-                            visible={camVisible}
-                            transparent={true}
-                        >
-                            <View style={{
-                                height: H,
-                                width: W,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                flexDirection: "row",
-                                backgroundColor: 'rgba(0, 0, 0, 0.5)'
-
-                            }}>
+                        }
+                    >
+                        <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
+                            <TouchableOpacity onPress={() => { setCamVisible(true) }}>
+                                <Image source={{ uri: dataFromApi?.data[0].profile_pic }}
+                                    style={styles.userImageContainer}
+                                />
+                            </TouchableOpacity>
+                            <Modal
+                                visible={camVisible}
+                                transparent={true}
+                            >
                                 <View style={{
-                                    backgroundColor: colors.OFFWHITE,
-                                    borderRadius: 4,
-                                    height: H * 0.32,
-                                    width: W * 0.85,
+                                    height: H,
+                                    width: W,
                                     justifyContent: "center",
-                                    elevation: 8
+                                    alignItems: "center",
+                                    flexDirection: "row",
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+
                                 }}>
-                                    <Text style={{
-                                        ...fontFamily.bold,
-                                        top: -H * 0.06,
-                                        left: W * 0.05,
-                                        fontSize: fontSizes.XXL
-                                    }}>Choose</Text>
                                     <View style={{
-                                        flexDirection: "row",
                                         backgroundColor: colors.OFFWHITE,
                                         borderRadius: 4,
+                                        height: H * 0.32,
+                                        width: W * 0.85,
                                         justifyContent: "center",
-
+                                        elevation: 8
                                     }}>
-                                        <TouchableOpacity onPress={() => { launchCam() }}>
-                                            <View style={{
-                                                alignItems: "center",
-                                                marginHorizontal: W * 0.1,
-                                                marginVertical: H * 0.01,
-                                            }}>
-                                                <AntDesign name="camera" size={50} color={"silver"} />
-                                                <Text style={{
-                                                    ...fontFamily.bold,
-                                                    fontSize: fontSizes.MED
-                                                }}>Camera</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => { launchGallery() }}>
-                                            <View style={{
-                                                alignItems: "center",
-                                                marginHorizontal: W * 0.1,
-                                                marginVertical: H * 0.01,
-                                            }}>
-                                                <AntDesign name="picture" size={50} color={"silver"} />
-                                                <Text style={{
-                                                    ...fontFamily.bold,
-                                                    fontSize: fontSizes.MED
-                                                }}>Gallery</Text>
-                                            </View>
+                                        <Text style={{
+                                            ...fontFamily.bold,
+                                            top: -H * 0.06,
+                                            left: W * 0.05,
+                                            fontSize: fontSizes.XXL
+                                        }}>Choose</Text>
+                                        <View style={{
+                                            flexDirection: "row",
+                                            backgroundColor: colors.OFFWHITE,
+                                            borderRadius: 4,
+                                            justifyContent: "center",
+
+                                        }}>
+                                            <TouchableOpacity onPress={() => { launchCam() }}>
+                                                <View style={{
+                                                    alignItems: "center",
+                                                    marginHorizontal: W * 0.1,
+                                                    marginVertical: H * 0.01,
+                                                }}>
+                                                    <AntDesign name="camera" size={50} color={"silver"} />
+                                                    <Text style={{
+                                                        ...fontFamily.bold,
+                                                        fontSize: fontSizes.MED
+                                                    }}>Camera</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => { launchGallery() }}>
+                                                <View style={{
+                                                    alignItems: "center",
+                                                    marginHorizontal: W * 0.1,
+                                                    marginVertical: H * 0.01,
+                                                }}>
+                                                    <AntDesign name="picture" size={50} color={"silver"} />
+                                                    <Text style={{
+                                                        ...fontFamily.bold,
+                                                        fontSize: fontSizes.MED
+                                                    }}>Gallery</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <TouchableOpacity onPress={() => setCamVisible(false)}
+                                        >
+                                            <Text style={{
+                                                textAlign: "right",
+                                                ...fontFamily.bold,
+                                                color: "red",
+                                                top: H * 0.055,
+                                                left: -W * 0.06
+                                            }}>CANCEL</Text>
                                         </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity onPress={() => setCamVisible(false)}
-                                    >
-                                        <Text style={{
-                                            textAlign: "right",
-                                            ...fontFamily.bold,
-                                            color: "red",
-                                            top: H * 0.055,
-                                            left: -W * 0.06
-                                        }}>CANCEL</Text>
-                                    </TouchableOpacity>
                                 </View>
+                            </Modal>
+
+                            <View style={{ justifyContent: 'center' }}>
+                                <Text style={styles.text2}>{dataFromApi?.data[0].name}</Text>
+                                <Text style={styles.text1}>{dataFromApi?.data?.[0]?.food_profile}</Text>
                             </View>
-                        </Modal>
-
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text style={styles.text2}>{dataFromApi?.data[0].name}</Text>
-                            <Text style={styles.text1}>{dataFromApi?.data?.[0]?.food_profile}</Text>
-                        </View>
-                    </View>
-
-
-                    <>
-                        {dataFromApi?.data[0].mobile == null || dataFromApi?.data[0].mobile == "" ? null :
-                            <>
-                                <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
-                                    <Image source={require('../../assets/icons/phone-call.png')}
-                                        style={styles.userIconContainer} />
-                                    <Text style={styles.text1}>{dataFromApi?.data[0].mobile}</Text>
-                                </View>
-                            </>}
-                    </>
-
-                    <>
-                        {(dataFromApi?.data[0]?.email == "null" ||
-                            dataFromApi?.data[0].email == null ||
-                            dataFromApi?.data[0].email == "") ? null :
-                            <>
-                                <View style={{ flexDirection: 'row', marginTop: H * 0.04 }}>
-                                    <Image source={require('../../assets/icons/email.png')}
-                                        style={styles.userIconContainer} />
-                                    <Text style={styles.text1}>{dataFromApi?.data[0].email}</Text>
-                                </View>
-                            </>
-
-                        }
-
-                    </>
-
-
-
-
-                    <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
-                        <View style={styles.containersAdjacent}>
-                            <Text style={[styles.text2, { fontSize: fontSizes.XXXL }]}>
-                                {dataFromApi?.data[0].total_point}</Text>
-                            <Text style={styles.text1}>{strings.TotalPoints}</Text>
                         </View>
 
-                        <View style={styles.containersAdjacent}>
-                            {/* <TouchableOpacity onPress={() => navigationTOScreen()}
+
+                        <>
+                            {dataFromApi?.data[0].mobile == null || dataFromApi?.data[0].mobile == "" ? null :
+                                <>
+                                    <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
+                                        <Image source={require('../../assets/icons/phone-call.png')}
+                                            style={styles.userIconContainer} />
+                                        <Text style={styles.text1}>{dataFromApi?.data[0].mobile}</Text>
+                                    </View>
+                                </>}
+                        </>
+
+                        <>
+                            {(dataFromApi?.data[0]?.email == "null" ||
+                                dataFromApi?.data[0].email == null ||
+                                dataFromApi?.data[0].email == "") ? null :
+                                <>
+                                    <View style={{ flexDirection: 'row', marginTop: H * 0.04 }}>
+                                        <Image source={require('../../assets/icons/email.png')}
+                                            style={styles.userIconContainer} />
+                                        <Text style={styles.text1}>{dataFromApi?.data[0].email}</Text>
+                                    </View>
+                                </>
+
+                            }
+
+                        </>
+
+
+
+
+                        <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
+                            <View style={styles.containersAdjacent}>
+                                <Text style={[styles.text2, { fontSize: fontSizes.XXXL }]}>
+                                    {dataFromApi?.data[0].total_point}</Text>
+                                <Text style={styles.text1}>{strings.TotalPoints}</Text>
+                            </View>
+
+                            <View style={styles.containersAdjacent}>
+                                {/* <TouchableOpacity onPress={() => navigationTOScreen()}
                                 style={styles.button}>
                                 <Text style={styles.text3}>{strings.Upgrade}</Text>
                             </TouchableOpacity> */}
 
-                            <Text style={{
-
-                                width: W * 0.57,
-                                ...fontFamily.bold,
-                                alignSelf: 'center',
-                                textAlign: 'center',
-                                paddingHorizontal: W * 0.01,
-                            }}>{strings.LastUpdatedat} {lastRefresh}</Text>
-                        </View>
-                    </View>
-                    <Modal visible={bioModal}
-                        transparent={true}>
-                        <View
-                            style={{
-                                height: H,
-                                width: W,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                backgroundColor: "rgba(0,0,0,0.3)"
-                            }}
-                        >
-                            <View style={{
-                                //height: H * 0.3,
-                                backgroundColor: colors.OFFWHITE,
-                                // backgroundColor: "red",
-                                width: W * 0.85,
-                                alignSelf: "center",
-                                justifyContent: "center",
-                                //alignItems: "center",
-                                borderRadius: 8,
-                                elevation: 8,
-                                paddingVertical: H * 0.05,
-                            }}
-                            >
                                 <Text style={{
+
+                                    width: W * 0.57,
                                     ...fontFamily.bold,
-                                    fontSize: fontSizes.XL,
-                                    paddingBottom: H * 0.01,
-                                    marginLeft: W * 0.08
-                                }}>
-                                    Your Bio:
-                                </Text>
-                                <TextInput
-                                    //textBreakStrategy="balanced"
-                                    // textAlign='left'
-                                    multiline={true}
-                                    numberOfLines={4}
-                                    //textAlignVertical="auto"
-                                    activeUnderlineColor={colors.GREEN}
-                                    value={text}
-                                    onChangeText={(t) => { setText(t) }}
-                                    maxLength={100}
-                                    style={{
-                                        //height: H * 0.15,
-                                        width: W * 0.7,
-                                        backgroundColor: "white",
-                                        alignSelf: "center"
-                                    }} />
-                                <View style={{
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    width: W * 0.6,
-                                    alignSelf: "center"
-                                }}>
-                                    <TouchableOpacity onPress={() => {
-                                        //  handleCustomAnswer()
-                                        uploadBio()
-
-                                    }}>
-                                        <Text style={{
-                                            ...fontFamily.bold,
-                                            color: colors.GREEN,
-                                            fontSize: fontSizes.XL,
-                                            paddingTop: H * 0.028,
-                                        }}>
-                                            SUBMIT
-                                        </Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => {
-
-                                        setBioModal(false)
-                                        //setSelectedOption("")
-                                    }}
-                                    >
-                                        <Text style={{
-                                            ...fontFamily.bold,
-                                            color: "red",
-                                            fontSize: fontSizes.XL,
-                                            paddingTop: H * 0.028,
-                                        }}>
-                                            CANCEL
-                                        </Text>
-                                    </TouchableOpacity>
-                                </View>
+                                    alignSelf: 'center',
+                                    textAlign: 'center',
+                                    paddingHorizontal: W * 0.01,
+                                }}>{strings.LastUpdatedat} {lastRefresh}</Text>
                             </View>
                         </View>
-                    </Modal>
+                        <Modal visible={bioModal}
+                            transparent={true}>
+                            <View
+                                style={{
+                                    height: H,
+                                    width: W,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    backgroundColor: "rgba(0,0,0,0.3)"
+                                }}
+                            >
+                                <View style={{
+                                    //height: H * 0.3,
+                                    backgroundColor: colors.OFFWHITE,
+                                    // backgroundColor: "red",
+                                    width: W * 0.85,
+                                    alignSelf: "center",
+                                    justifyContent: "center",
+                                    //alignItems: "center",
+                                    borderRadius: 8,
+                                    elevation: 8,
+                                    paddingVertical: H * 0.05,
+                                }}
+                                >
+                                    <Text style={{
+                                        ...fontFamily.bold,
+                                        fontSize: fontSizes.XL,
+                                        paddingBottom: H * 0.01,
+                                        marginLeft: W * 0.08
+                                    }}>
+                                        Your Bio:
+                                    </Text>
+                                    <TextInput
+                                        //textBreakStrategy="balanced"
+                                        // textAlign='left'
+                                        multiline={true}
+                                        numberOfLines={4}
+                                        //textAlignVertical="auto"
+                                        activeUnderlineColor={colors.GREEN}
+                                        value={text}
+                                        onChangeText={(t) => { setText(t) }}
+                                        maxLength={100}
+                                        style={{
+                                            //height: H * 0.15,
+                                            width: W * 0.7,
+                                            backgroundColor: "white",
+                                            alignSelf: "center"
+                                        }} />
+                                    <View style={{
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        width: W * 0.6,
+                                        alignSelf: "center"
+                                    }}>
+                                        <TouchableOpacity onPress={() => {
+                                            //  handleCustomAnswer()
+                                            uploadBio()
+
+                                        }}>
+                                            <Text style={{
+                                                ...fontFamily.bold,
+                                                color: colors.GREEN,
+                                                fontSize: fontSizes.XL,
+                                                paddingTop: H * 0.028,
+                                            }}>
+                                                SUBMIT
+                                            </Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => {
+
+                                            setBioModal(false)
+                                            //setSelectedOption("")
+                                        }}
+                                        >
+                                            <Text style={{
+                                                ...fontFamily.bold,
+                                                color: "red",
+                                                fontSize: fontSizes.XL,
+                                                paddingTop: H * 0.028,
+                                            }}>
+                                                CANCEL
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
 
 
 
-                    {/* <TouchableOpacity onPress={() => { setBioModal(true) }}>
+                        {/* <TouchableOpacity onPress={() => { setBioModal(true) }}>
                         <View style={{ flexDirection: 'row' }}>
                          <Image source={require('../../assets/icons/inverted-commas.png')}
                                 style={styles.userIconContainer} /> 
@@ -498,7 +526,7 @@ const UserProfile = ({ navigation }) => {
                             </View>
                         </View>
                     </TouchableOpacity> */}
-                    {/* <TouchableOpacity>
+                        {/* <TouchableOpacity>
                         <View style={{ flexDirection: 'row' }}>
                             <Image source={require('../../assets/icons/pin.png')}
                                 style={styles.userIconContainer} />
@@ -508,29 +536,29 @@ const UserProfile = ({ navigation }) => {
                             </View>
                         </View>
                     </TouchableOpacity> */}
-                    <TouchableOpacity onPress={() => { navigation.navigate("editProfile") }}>
-                        <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
-                            <Image source={require('../../assets/icons/about.png')}
-                                style={styles.userIconContainer} />
-                            <View>
-                                <Text style={styles.text2}>{strings.BasicInformation}</Text>
-                                <Text style={styles.text1}>{strings.HeightWeightAgeGenderActivity}</Text>
+                        <TouchableOpacity onPress={() => { navigation.navigate("editProfile") }}>
+                            <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
+                                <Image source={require('../../assets/icons/about.png')}
+                                    style={styles.userIconContainer} />
+                                <View>
+                                    <Text style={styles.text2}>{strings.BasicInformation}</Text>
+                                    <Text style={styles.text1}>{strings.HeightWeightAgeGenderActivity}</Text>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
-                            <Image source={require('../../assets/icons/report.png')}
-                                style={styles.userIconContainer} />
-                            <View>
-                                <Text style={styles.text2}>{strings.goals}</Text>
-                                <Text 
-                                
-                                style={styles.text1}>{dataFromApi?.data?.[0]?.goal?.answer.join(",")}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
+                                <Image source={require('../../assets/icons/report.png')}
+                                    style={styles.userIconContainer} />
+                                <View>
+                                    <Text style={styles.text2}>{strings.goals}</Text>
+                                    <Text
+
+                                        style={styles.text1}>{dataFromApi?.data?.[0]?.goal?.answer.join(",")}</Text>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableOpacity>
-                    {/*  <TouchableOpacity>
+                        </TouchableOpacity>
+                        {/*  <TouchableOpacity>
                         <View style={{ flexDirection: 'row' }}>
                             <Image source={require('../../assets/icons/cutlery.png')}
                                 style={styles.userIconContainer} />
@@ -540,8 +568,8 @@ const UserProfile = ({ navigation }) => {
                             </View>
                         </View>
                     </TouchableOpacity>*/}
-                    <TouchableOpacity>
-                        {/* <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity>
+                            {/* <View style={{ flexDirection: 'row' }}>
                             <Image source={require('../../assets/icons/credit-card.png')}
                                 style={styles.userIconContainer} />
                             <View>
@@ -549,9 +577,9 @@ const UserProfile = ({ navigation }) => {
                                 <Text style={styles.text1}>{strings.YourPaymentDetails}</Text>
                             </View>
                         </View> */}
-                    </TouchableOpacity>
+                        </TouchableOpacity>
 
-                </ScrollView >
+                    </ScrollView >
             }
 
         </View >
@@ -594,7 +622,7 @@ const styles = StyleSheet.create({
     {
         color: 'black',
         fontSize: fontSizes.MED,
-        width:W*0.9
+        width: W * 0.9
     },
     button:
     {
