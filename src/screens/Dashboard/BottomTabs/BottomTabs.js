@@ -103,9 +103,7 @@ const BottomTabs = ({ route }) => {
         if (type === EventType.PRESS) {
           if (detail?.notification?.data?.ctype == "1") {
             navigation.navigate("Coach")
-
           }
-
         }
       }
     );
@@ -117,8 +115,6 @@ const BottomTabs = ({ route }) => {
   const { Nmessages, Ncount } = useContext(DataContext)
   const [messages, setMessages] = Nmessages
   const [count, setCount] = Ncount
-
-
 
   const getMessageCount = async () => {
     const temp = await getDataFromLocalStorage('user_id')
@@ -133,10 +129,7 @@ const BottomTabs = ({ route }) => {
       }
       else setCount(result.count)
     }
-
   }
-
-
 
   const getMessages = async () => {
     var formdata = new FormData();
@@ -154,7 +147,6 @@ const BottomTabs = ({ route }) => {
       setCount(result2.count)
     }
   }
-
 
   const getChatStatus = async () => {
     const temp = await getDataFromLocalStorage('stackValue')
@@ -174,8 +166,6 @@ const BottomTabs = ({ route }) => {
   }
   const setRegStatus = async () => {
     const temp = await getDataFromLocalStorage('user_id')
-
-
     var formdata = new FormData();
     formdata.append("id", JSON.parse(temp));
     formdata.append("register_status", "1")
@@ -215,24 +205,17 @@ const BottomTabs = ({ route }) => {
             return <Image source={require('../../../assets/icons/home.png')}
               tintColor={color}
               style={{ height: 24, aspectRatio: 8 / 8 }} />
-
           }
           else if (propsTab.route.name === 'Coach') {
-
             return <Image source={require('../../../assets/icons/comment.png')}
               tintColor={color}
               style={{ height: 24, aspectRatio: 8 / 8 }} />
           }
-
-
           else if (propsTab.route.name === 'LNF Shop') {
-
             return <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3144/3144456.png' }}
               tintColor={color}
               style={{ height: 24, aspectRatio: 8 / 8 }} />
           }
-
-
           // else if (propsTab.route.name === 'More') {
           //   return <Image source={require('../../../assets/icons/more.png')}
           //     tintColor={color}
@@ -247,31 +230,21 @@ const BottomTabs = ({ route }) => {
           paddingBottom: Platform.OS == 'android' ? H * 0.01 : H * 0.03,
           //paddingTop: Platform.OS == 'android' ? 3 : 10
         },
-
         tabBarLabelStyle: {
           fontSize: fontSizes.MED,
           fontFamily: 'Montserrat-Medium'
 
         },
-
         initialRouteName: " "
-
       })} >
-
       <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Home" : "Home" }} />
       {/* <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Upgrade" : "Upgrade" }} /> */}
       <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Plans" : "Plans" }} />
       <Tab.Screen name="Coach" component={Coach} options={{ tabBarHideOnKeyboard: true, tabBarBadge: count, tabBarLabel: (languagee || langTypeText) == "en" ? "Message" : "Message" }} />
-
       {/* {hidetab == "India" ? <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "LNF Shop" : "LNF शॉप" }} />
         : null} */}
-
       <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "LNF Shop" : "LNF Shop" }} />
     </Tab.Navigator>
-
-
-
-
     //   <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: languagee == "en" ? "Home" : "होम"}} />
     //   <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: languagee == "en" ? "Upgrade" : "अपग्रेड" }} />
     //   <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: languagee == "en" ? "Plans" : "प्लान्स" }} />
