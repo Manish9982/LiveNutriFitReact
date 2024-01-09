@@ -40,7 +40,7 @@
   <key>NSPhotoLibraryUsageDescription</key>
   <string>We need to access the library in order to send image to coach</string>
   <key>NSCameraUsageDescription</key>
-  <string>We need access to camera in order to send camera image to caoch</string>
+  <string>We need access to camera in order to send camera image to coach</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

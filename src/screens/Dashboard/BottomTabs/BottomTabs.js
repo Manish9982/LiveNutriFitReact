@@ -1,6 +1,6 @@
 
 import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, Dimensions, Image, Alert } from 'react-native';
+import { StyleSheet, Dimensions, Image, Alert, Platform } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -11,7 +11,7 @@ import MoreNavigation from './More/MoreNavigation';
 import StatsNav from './Stats/StatsNav';
 
 
-import { colors, fontSizes, PostApiData } from '../../../colorSchemes/ColorSchemes';
+import { colors, fontSizes, H, PostApiData } from '../../../colorSchemes/ColorSchemes';
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../local storage/LocalStorage';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import messaging from '@react-native-firebase/messaging';
@@ -60,8 +60,8 @@ const BottomTabs = ({ route }) => {
     getChatStatus()
   }, [])
   React.useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      displayNotification(remoteMessage.notification.title, remoteMessage.notification.body)
+    const unsubscribe = messaging()?.onMessage(async remoteMessage => {
+      displayNotification(remoteMessage?.notification?.title, remoteMessage?.notification?.body)
       getMessages()
 
     });
@@ -86,8 +86,8 @@ const BottomTabs = ({ route }) => {
 
   React.useEffect(() => {
     messaging()
-      .getInitialNotification()
-      .then(remoteMessage => {
+      ?.getInitialNotification()
+      ?.then(remoteMessage => {
         if (remoteMessage?.data?.ctype == "1") {
           navigation.navigate("Coach")
 
@@ -110,7 +110,7 @@ const BottomTabs = ({ route }) => {
       }
     );
     return () => {
-      notificationPressSubscription?.remove();
+      // notificationPressSubscription?.remove();
     };
   }, [])
 
@@ -243,8 +243,9 @@ const BottomTabs = ({ route }) => {
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
         tabBarStyle: {
-          height: HEIGHT * 0.08,
-          paddingBottom: 3
+          height: H * 0.1,
+          paddingBottom: Platform.OS == 'android' ? H * 0.01 : H * 0.03,
+          //paddingTop: Platform.OS == 'android' ? 3 : 10
         },
 
         tabBarLabelStyle: {

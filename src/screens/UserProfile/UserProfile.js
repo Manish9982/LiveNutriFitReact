@@ -14,6 +14,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import { check, request } from 'react-native-permissions'
+import { requestCameraAndGalleryPermissions } from '../../colorSchemes/RequestPermissions'
 
 
 
@@ -47,7 +48,8 @@ const UserProfile = ({ navigation }) => {
     useEffect(() => {
         getLanguge()
         getDataForUserProfile()
-        requestCameraPermission()
+        //requestCameraPermission()
+        requestCameraAndGalleryPermissions()
     }, [isFocused])
 
 
@@ -400,9 +402,6 @@ const UserProfile = ({ navigation }) => {
 
                         </>
 
-
-
-
                         <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
                             <View style={styles.containersAdjacent}>
                                 <Text style={[styles.text2, { fontSize: fontSizes.XXXL }]}>
@@ -483,7 +482,6 @@ const UserProfile = ({ navigation }) => {
                                         <TouchableOpacity onPress={() => {
                                             //  handleCustomAnswer()
                                             uploadBio()
-
                                         }}>
                                             <Text style={{
                                                 ...fontFamily.bold,
@@ -513,9 +511,6 @@ const UserProfile = ({ navigation }) => {
                                 </View>
                             </View>
                         </Modal>
-
-
-
                         {/* <TouchableOpacity onPress={() => { setBioModal(true) }}>
                         <View style={{ flexDirection: 'row' }}>
                          <Image source={require('../../assets/icons/inverted-commas.png')}
@@ -622,7 +617,7 @@ const styles = StyleSheet.create({
     {
         color: 'black',
         fontSize: fontSizes.MED,
-        width: W * 0.9
+        //width: W * 0.9
     },
     button:
     {

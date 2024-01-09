@@ -60,7 +60,7 @@ const Stats = (props) => {
   const [text, setText] = useState("")
   const [paiduserstatusModal, setPaiduserstatusModal] = useState("")
   const [notificationCount, setNotificationCount] = useState("")
-    
+
   const {
     Nlanguagee,
     Nvisible,
@@ -88,7 +88,7 @@ const Stats = (props) => {
   const [trgt, setTrgt] = Ntrgt
   const [visibleMood, setVisibleMood] = NvisibleMood
   const [languagee, setLanguagee] = Nlanguagee
-  
+
   const isFocused = useIsFocused();
   ////////////////////////////////////////////
 
@@ -477,25 +477,42 @@ const Stats = (props) => {
     const myLoopTwo = []                                                //values of weigth, Sugar, BP/////////////////////////////////////////
     for (let i = 0; i < item?.attribute?.length - 1; i++) {
       myLoopTwo.push(
-        <>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}
+          key={i}>
 
-          <View style={{ flex: 1, alignSelf: 'center' }}
-            key={i}>
+          <View
+            style={{
+
+            }}
+          >
             <TouchableOpacity
               onPress={() => {
                 handleTextPress(item.attribute[i])
               }}>
-              {<Text key={i + 1} style={{
+              {<Text style={{
                 ...fontFamily.bold,
-                fontSize: fontSizes.XXL, marginBottom: HEIGHT * 0.013, textAlign: 'center'
+                fontSize: fontSizes.XXL,
+                marginBottom: HEIGHT * 0.013,
+                textAlign: 'center'
               }}>{(item.attribute_value[i] == "") ? "--" : item.attribute_value[i]}</Text>}
             </TouchableOpacity>
-            <Text key={i + 2} style={{ fontSize: fontSizes.MED, textAlign: 'center' }}>{item.attribute[i]}</Text>
+            <Text style={{
+              fontSize: fontSizes.MED,
+              textAlign: 'center'
+            }}>{item.attribute[i]}</Text>
           </View>
-          <Divider key={i + 3}
-            style={{ borderWidth: 0.5, borderColor: "silver", height: HEIGHT * 0.09, width: 0.5 }} />
-
-        </>
+          <Divider
+            style={{
+              borderWidth: 0.5,
+              borderColor: "silver",
+              height: HEIGHT * 0.09,
+              width: 0.5,
+              marginLeft: W * 0.05
+            }} />
+        </View>
       )
     }
     /*///Weigth, Sugar, BP////*////////////////////////////////////////////////////////////////////////////////////////////
@@ -534,7 +551,7 @@ const Stats = (props) => {
             width: WIDTH * 0.88,
             flexWrap: 'wrap',
           }}>
-            <View style={{ flexDirection: 'row', width: WIDTH * 0.7 }}>
+            <View style={{ flexDirection: 'row', width: WIDTH * 0.7, justifyContent: 'space-evenly' }}>
               {myLoopTwo}
             </View>
             <View style={{
@@ -2188,11 +2205,6 @@ const Stats = (props) => {
               }}
             /> */}
 
-
-
-
-
-
           </Portal>
           {/*<FAB
             visible={isInfoButtonVisible}
@@ -2230,12 +2242,12 @@ const Stats = (props) => {
                 <FlatList
                   data={dataForPaidUser?.single}
                   renderItem={renderItem}
-                  keyExtractor={(item, index) => 'key' + index}
+                  keyExtractor={(item, index) => `${index}`}
                 />
                 <FlatList
                   data={dataForPaidUser?.data}
                   renderItem={renderItemTwo}
-                  keyExtractor={(item, index) => 'key' + index}
+                  keyExtractor={(item, index) => `${index}`}
                   numColumns={2} />
 
                 {/*  <Image source={require('../../../../assets/icons/blog.png')}

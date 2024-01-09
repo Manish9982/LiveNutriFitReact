@@ -9,7 +9,7 @@ import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
 import HeaderForSubmissionScreens from '../Dashboard/BottomTabs/Stats/HeaderForSubmissionScreens'
 import moment from 'moment'
 import Card from './Card'
-import { Text } from 'react-native-paper'
+import { ProgressBar, Text } from 'react-native-paper'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import DataContext from '../../context/DataContext'
@@ -18,6 +18,9 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import { useIsFocused } from '@react-navigation/native'
+import { ColorProperties } from 'react-native-reanimated/lib/typescript/reanimated2/Colors'
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated'
+import LottieView from 'lottie-react-native'
 
 
 
@@ -31,8 +34,8 @@ const strings = new LocalizedStrings({
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
-const myIcon = <Image source={require('../../assets/icons/reward.jpg')}
-    style={{ height: 20, width: 20, borderRadius: 10 }} />
+const myIcon = <Image source={require('../../assets/icons/goldcoin.png')}
+    style={{ height: 50, width: 50, borderRadius: 10, marginHorizontal: 5 }} />
 const myIcon2 = <Image source={require('../../assets/icons/reward.jpg')}
     style={{ height: 15, width: 15, borderRadius: 7.5 }} />
 
@@ -49,8 +52,10 @@ const TotalPoints = () => {
     const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
 
     const isFocused = useIsFocused()
+    const rotation = useSharedValue(0);
 
     useEffect(() => {
+        rotate()
         getTotalPoints()
         requestCameraPermission()
     }, [])
@@ -71,6 +76,15 @@ const TotalPoints = () => {
         getTotalPoints()
         wait(2000).then(() => setRefreshing(false));
     }, []);
+
+    const rotate = () => {
+        rotation.value = withRepeat(
+            withTiming
+                (360, { duration: 4000, easing: Easing.linear }),
+            -1,
+            true
+        );
+    };
 
 
     const requestCameraPermission = async () => {
@@ -186,6 +200,12 @@ const TotalPoints = () => {
         setIsInfoButtonVisible(false)
         setLoader(false)
     }
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ perspective: 200 }, { rotateY: `${rotation.value}deg` }],
+        };
+    });
+
     const showChildren = () => {
         return (
             <TouchableOpacity onPress={() => { setCamVisible(true) }}>
@@ -211,7 +231,7 @@ const TotalPoints = () => {
             />)
     }
 
-
+    console.log('dataFromApi?.total_point', dataFromApi?.status_point)
     return (
         loader
             ?
@@ -233,32 +253,7 @@ const TotalPoints = () => {
                             onRefresh={onRefresh} />
                     } >
 
-
-                    <View style={styles.detailsContainer}>
-                        <View style={{ alignItems: 'center' }}>
-                            <AnimatedCircularProgress
-                                size={65}
-                                width={2}
-                                fill={(dataFromApi?.data?.[0]?.total_pont / 21) * 100}
-                                tintColor={colors.GREEN}
-                                backgroundColor="white"
-                                children={() => showChildren()} />
-                            <Text style={{ fontFamily: 'Montserrat-Regular' }}>{dataFromApi?.user_name}</Text>
-                        </View>
-                        {myIcon}
-                        <View>
-                            <Text style={{
-                                fontFamily: 'Montserrat-SemiBold',
-                                color: 'black',
-                                fontSize: fontSizes.XXL,
-                                marginLeft: WIDTH * 0.07
-                            }}>{dataFromApi?.total_point}</Text>
-                            <Text style={{
-                                fontFamily: 'Montserrat-Regular',
-                                color: 'black', fontSize: fontSizes.LAR
-                            }}>{strings.TotalPoints}</Text>
-                        </View>
-                        {/* {<TouchableOpacity
+                    {/* {<TouchableOpacity
                             onPress={() => { ShortToast('Feature will be available soon..', 'warning', '') }}
                             style={styles.redeemPointsButton}>
                             <Text style={{
@@ -267,7 +262,63 @@ const TotalPoints = () => {
                             }}>{strings.RedeemPoints}</Text>
                         </TouchableOpacity>} */}
 
+                    <View style={styles.detailsContainer}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                            <View style={{ alignSelf: 'flex-start', alignItems: 'center' }}>
+                                <AnimatedCircularProgress
+                                    size={65}
+                                    width={2}
+                                    fill={((Number.parseInt(dataFromApi?.total_point, 10) / Number.parseInt(dataFromApi?.status_point, 10)) * 100)}
+                                    tintColor={colors.GREEN}
+                                    backgroundColor="white"
+                                    children={() => showChildren()} />
+                                <Text style={{ fontFamily: 'Montserrat-Regular' }}>{dataFromApi?.user_name}</Text>
+                            </View>
 
+                            <View style={styles.pointsInfoContainer}>
+                                <LottieView
+                                    style={{
+                                        height: 100,
+                                        width: 100,
+                                        left: 20,
+                                        top: -20
+                                    }}
+                                    source={require('../../assets/animations/reward_points.json')}
+                                    autoPlay loop />
+                                <View>
+                                    <Text style={styles.totalPointsEarned}>{strings.TotalPoints}</Text>
+                                    <Text style={{ top: -20 }}>
+                                        <Text style={{
+                                            fontFamily: 'Montserrat-SemiBold',
+                                            color: 'black',
+                                            fontSize: fontSizes.XXXL,
+                                            fontWeight: '700',
+                                            paddingHorizontal: 5,
+                                            top: -20,
+                                        }}>{dataFromApi?.total_point}/</Text>
+                                        <Text style={{
+                                            fontFamily: 'Montserrat-SemiBold',
+                                            color: 'black',
+                                            fontSize: fontSizes.MED,
+                                            paddingHorizontal: 5,
+                                            top: -20,
+                                        }}>{dataFromApi?.status_point}</Text>
+                                    </Text>
+                                    <ProgressBar
+                                        style={styles.progressBar}
+                                        color={colors.GREEN}
+                                        progress={(Number.parseInt(dataFromApi?.total_point, 10) / Number.parseInt(dataFromApi?.status_point, 10))}
+                                        children={() => { return (<Text>Hi</Text>) }}
+                                    />
+                                </View>
+
+                            </View>
+
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.pointsInfo}>{dataFromApi?.current_user_status}</Text>
+                            <Text style={styles.neededPointsInfo}>{dataFromApi?.next_user_status}</Text>
+                        </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{
@@ -406,7 +457,6 @@ const TotalPoints = () => {
                     </Modal>
                     <View style={{
                         height: H * 0.5,
-
                     }}>
                         <FlatList data={dataFromApi?.data}
                             renderItem={renderItem}
@@ -448,13 +498,15 @@ const styles = StyleSheet.create({
     },
     detailsContainer:
     {
-        backgroundColor: '#eaedf2',
-        width: WIDTH,
-        height: HEIGHT * 0.2,
-        marginTop: HEIGHT * 0.01,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-evenly'
+        //backgroundColor: '#eaedf2',
+        backgroundColor: colors.DARK_GRAY,
+        margin: 10,
+        //alignItems: 'center',
+        justifyContent: 'space-evenly',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 15,
+        //flexDirection: 'row',
     },
     secondaryMidContainer:
     {
@@ -480,6 +532,57 @@ const styles = StyleSheet.create({
         padding: HEIGHT * 0.01,
         width: WIDTH,
         marginTop: HEIGHT * 0.05
+    },
+    progressBar:
+    {
+        borderRadius: 8,
+        height: 14,
+        width: 100,
+        top: -20,
+    },
+    progressBarContainer:
+    {
+        justifyContent: 'space-evenly',
+        //alignItems: 'center',
+        //backgroundColor: 'red',
+        width: '35%',
+        //padding: 5,
+        //height: '80%'
+    },
+    horizontalContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        width: '100%'
+    },
+    pointsInfo:
+    {
+        fontSize: 12,
+        width: '90%',
+        alignSelf: 'center',
+        marginVertical: 5,
+        fontWeight: '600'
+    },
+    neededPointsInfo:
+    {
+        fontSize: 12,
+        width: '90%',
+        alignSelf: 'center'
+    },
+    pointsInfoContainer:
+    {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        padding: 5,
+        alignItems: 'center',
+    },
+    totalPointsEarned:
+    {
+        fontSize: 12,
+        top: -20
+    },
+    infoContainer:
+    {
+        top: -12
     }
 })
 export default TotalPoints
