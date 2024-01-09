@@ -34,7 +34,6 @@ const OTPinputComponent = () => {
                     }
                     }
                     onFocus={() => { firstTextInput.current.clear() }}
-
                 />
             </View>
             <View style={styles.otpBox}>

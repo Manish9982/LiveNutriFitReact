@@ -55,7 +55,7 @@ const TotalPoints = () => {
     const rotation = useSharedValue(0);
 
     useEffect(() => {
-        rotate()
+        //rotate()
         getTotalPoints()
         requestCameraPermission()
     }, [])
@@ -77,14 +77,14 @@ const TotalPoints = () => {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    const rotate = () => {
-        rotation.value = withRepeat(
-            withTiming
-                (360, { duration: 4000, easing: Easing.linear }),
-            -1,
-            true
-        );
-    };
+    // const rotate = () => {
+    //     rotation.value = withRepeat(
+    //         withTiming
+    //             (360, { duration: 4000, easing: Easing?.linear }),
+    //         -1,
+    //         true
+    //     );
+    // };
 
 
     const requestCameraPermission = async () => {
@@ -215,8 +215,8 @@ const TotalPoints = () => {
                 </View>
             </TouchableOpacity>
         )
-
     }
+
     const date = new Date()
     var monthNum = date.getMonth();
     var monthName = moment.months(monthNum);
@@ -231,28 +231,22 @@ const TotalPoints = () => {
             />)
     }
 
-    console.log('dataFromApi?.total_point', dataFromApi?.status_point)
+    console.log('dataFromApi?.total_point', dataFromApi?.next_user_status)
     return (
         loader
             ?
             <Loader />
-
             :
-
             <View>
-
                 <StatusBar
                     backgroundColor={colors.GREEN} />
-
                 <HeaderForSubmissionScreens Title={strings.TotalPoints} />
-
                 <View contentContainerstyle={styles.mainContainer}
                     refreshControl={
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={onRefresh} />
                     } >
-
                     {/* {<TouchableOpacity
                             onPress={() => { ShortToast('Feature will be available soon..', 'warning', '') }}
                             style={styles.redeemPointsButton}>
@@ -261,7 +255,6 @@ const TotalPoints = () => {
                                 textAlign: 'center', fontSize: fontSizes.MED
                             }}>{strings.RedeemPoints}</Text>
                         </TouchableOpacity>} */}
-
                     <View style={styles.detailsContainer}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
                             <View style={{ alignSelf: 'flex-start', alignItems: 'center' }}>
@@ -274,14 +267,14 @@ const TotalPoints = () => {
                                     children={() => showChildren()} />
                                 <Text style={{ fontFamily: 'Montserrat-Regular' }}>{dataFromApi?.user_name}</Text>
                             </View>
-
                             <View style={styles.pointsInfoContainer}>
                                 <LottieView
                                     style={{
                                         height: 100,
                                         width: 100,
                                         left: 20,
-                                        top: -20
+                                        top: -20,
+                                        //backgroundColor:'red'
                                     }}
                                     source={require('../../assets/animations/reward_points.json')}
                                     autoPlay loop />
@@ -307,13 +300,11 @@ const TotalPoints = () => {
                                     <ProgressBar
                                         style={styles.progressBar}
                                         color={colors.GREEN}
-                                        progress={(Number.parseInt(dataFromApi?.total_point, 10) / Number.parseInt(dataFromApi?.status_point, 10))}
-                                        children={() => { return (<Text>Hi</Text>) }}
+                                        progress={(Number.parseInt(dataFromApi?.total_point, 10) / Number.parseInt(dataFromApi?.status_point, 10))|| 0}
+                                        //children={() => { return (<Text>Hi</Text>) }}
                                     />
                                 </View>
-
                             </View>
-
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.pointsInfo}>{dataFromApi?.current_user_status}</Text>
@@ -336,7 +327,6 @@ const TotalPoints = () => {
                     <View style={styles.secondaryMidContainer}>
                         <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', fontSize: fontSizes.LAR }}>{monthName} {(date.getFullYear())}</Text>
                         {/*  <TouchableOpacity style={{ flexDirection: 'row' }}>
-
                         <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, marginLeft: WIDTH * 0.4 }}>Monthly </Text>
                         <Icon name='right' size={15} color='#bcc1c6' />
                 </TouchableOpacity>*/}
@@ -470,11 +460,7 @@ const TotalPoints = () => {
                     }}> {myIcon2} {strings.totalpointstext}</Text>
                 </View>
             </View>
-
-
     )
-
-
 }
 
 const styles = StyleSheet.create({

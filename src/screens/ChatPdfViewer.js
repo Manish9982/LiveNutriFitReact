@@ -11,47 +11,28 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const ChatPdfViewer = ({ route }) => {
     console.log("URL === ", route?.params?.url)
     return (
-
         <>
-
-
             <View style={{
                 flex: 1,
             }}>
                 <HeaderForSubmissionScreens Title="PDF Viewer" />
-
                 <FAB
                     onPress={() => {
                         Linking.openURL(route?.params?.url)
                     }}
-
-
                     icon="download"
                     style={styles.fabbutton}
                 />
-
-
-
                 <WebView
                     startInLoadingState={true}
                     scalesPageToFit={true}
                     setBuiltInZoomControls={false}
                     bounces={false}
                     decelerationRate="normal"
-
                     //source={{ uri: `http://docs.google.com/gview?embedded=true&url=${route?.params?.url}` }}
-
                     source={{ uri: `http://docs.google.com/gview?embedded=true&url=${route?.params?.url}` }}
-
-
                     style={{ height: H, width: W, }} />
-
-
-
             </View>
-
-
-
         </>
     )
 
@@ -79,10 +60,7 @@ const styles = StyleSheet.create({
         bottom: 40,
         zIndex: 100,
         right: 10
-
-
     }
-
 });
 
 

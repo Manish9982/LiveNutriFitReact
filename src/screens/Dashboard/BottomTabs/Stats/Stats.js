@@ -25,8 +25,6 @@ const strings = new LocalizedStrings({
   hi: hindi,
 });
 
-
-
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
@@ -91,12 +89,7 @@ const Stats = (props) => {
 
   const isFocused = useIsFocused();
   ////////////////////////////////////////////
-
-
-
   const spinValue = new Animated.Value(0);
-
-
   // Next, interpolate beginning and end values (in this case 0 and 1)
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
@@ -110,8 +103,6 @@ const Stats = (props) => {
       getName()
       getNotificationCount()
     }
-
-
   }, [isFocused]);
 
   const scrollRef = useRef(null)
@@ -128,15 +119,12 @@ const Stats = (props) => {
     )
   ).start();
 
-
-
   useEffect(() => {
     if (isFocused) {
       getPaidUserStatus()
     }
     getLanguge()
   }, [isFocused])
-
 
   useEffect(() => { getFirstTimeLoginStatus() }, [])
 
@@ -171,24 +159,17 @@ const Stats = (props) => {
     // getDataForPaidUser()
   }
 
-
-
-
   const getPaidUserStatus = async () => {
     const paidUserStatus = await getDataFromLocalStorage("paiduserStatus")
 
     if (paidUserStatus == "PaymentDone") {
       //  props.navigation.navigate("")
       setPaiduserstatusModal(true)
-
     } else if (paidUserStatus == "PaymentDoneWithQuestions") {
-
       setPaiduserstatusModal(false)
-
     } else {
       setPaiduserstatusModal(false)
     }
-
   }
 
   const onRefresh = React.useCallback(() => {
@@ -196,7 +177,6 @@ const Stats = (props) => {
     getDataForFreeUser()
     getDataForPaidUser()
     getName()
-
     wait(2000).then(() => setRefreshing(false));
   }, []);
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,7 +203,6 @@ const Stats = (props) => {
       props.navigation.navigate('Gratification')
     }
   }
-
 
   const updateWeightValues = async () => {
     if (currentWeight == "" || currentWeight.length == 0 || targetWeight == "" || targetWeight.length == 0) {
@@ -261,7 +240,6 @@ const Stats = (props) => {
       formdata.append("type", "Sugar");
       formdata.append("fasting", fastingSugar);
       formdata.append("nonfasting", nonFastingSugar);
-
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result.status == 200) {
         getDataForFreeUser()
@@ -279,7 +257,6 @@ const Stats = (props) => {
       formdata.append("type", "Sugar");
       formdata.append("fasting", fastingSugar);
       formdata.append("nonfasting", nonFastingSugar);
-
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result.status == 200) {
         getDataForFreeUser()
@@ -288,7 +265,6 @@ const Stats = (props) => {
         setFastingSugar('')
         setNonFastingSugar('')
         ShortToast(JSON.stringify(result?.message), 'success', '')
-
       }
       //  }
       {/*  else {
@@ -320,7 +296,6 @@ const Stats = (props) => {
       formdata.append("systolic", systolic);
       formdata.append("diastolic", diastolic);
       formdata.append("bpm", bpm);
-
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result.status == 200) {
         getDataForFreeUser()
@@ -333,7 +308,6 @@ const Stats = (props) => {
       }
     }
   }
-
 
   const handleTextPress = (t) => {
     if (t == "Current Weight") {
@@ -359,7 +333,6 @@ const Stats = (props) => {
       setEditBp(true)
     }
   }
-
 
   const getDataForFreeUser = async () => {
     var formdata = new FormData();
@@ -413,8 +386,6 @@ const Stats = (props) => {
     setShowLoader(false)
   }
 
-
-
   var myloop = []
   /////////////////////////////////////Power of Seven Cards//////////////////////////////////////////////
   for (let i = 0; i < data?.data?.length; i++) {
@@ -435,7 +406,6 @@ const Stats = (props) => {
         onPressSugar={setEditSugar}
         onPressBP={setEditBp}
       />
-
     );
   }
 
@@ -482,7 +452,6 @@ const Stats = (props) => {
             flexDirection: 'row',
           }}
           key={i}>
-
           <View
             style={{
 
@@ -519,7 +488,6 @@ const Stats = (props) => {
     return (
       <View style={styles.cardForMonitoringStats}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
-
           <Text style={{ ...fontFamily.bold, marginLeft: WIDTH * 0.02 }}>{item.heading}</Text>
           <View style={{
             backgroundColor: getColorForBg(item?.attribute[item?.attribute?.length - 1]),
@@ -544,7 +512,6 @@ const Stats = (props) => {
           </View>
         </View>
         <View style={{ flexDirection: 'row', }}>
-
           <View style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -561,26 +528,17 @@ const Stats = (props) => {
               alignItems: 'center',
               marginRight: WIDTH * 0.01
             }}>
-
               <TouchableOpacity
                 onPress={() => {
                   setIsInfoButtonVisible(false)
-
                   item.heading == 'Weight' && props.navigation.navigate("OnDetailsSubmitScreenOne")
                   item.heading == 'Sugar' && props.navigation.navigate("OnDetailsSubmitScreenTwo", { "flag": dataForPaidUser?.single[1]?.attribute_value })
                   item.heading == 'Blood Pressure' && props.navigation.navigate("OnDetailsSubmitScreenThree")
-
-
                   //item.heading == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
-
                   // if (data?.user_type == "3" || data?.user_type == "2") {
-
                   //   item.heading == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
-
                   // } else {
-
                   //   item.heading == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
-
                   // }
                 }}
                 style={styles.nextButton}>
@@ -600,7 +558,6 @@ const Stats = (props) => {
   const renderItemTwo = ({ item }) => {
     const getColor = (heading, subHeading) => {
       if (heading == "BMI") {
-
         if (subHeading == "Underweight") {
           return "#b58502"
         }
@@ -634,11 +591,6 @@ const Stats = (props) => {
           return "red"
         }
       }
-
-
-
-
-
     }
     return (
       item.heading !== "Calories" ?
@@ -652,7 +604,6 @@ const Stats = (props) => {
             item.heading == "BMR" && ShortToast("Your BMR Value is calculated based on your provided details. Please contact your Coach if you wish to Change it.", "warning", "")
             item.heading == "WHR" && props.navigation.navigate("WHRSubmitMedium")
             item.heading == "Reports" && props.navigation.navigate("Reports")
-
           }}
         >
           <View style={{
@@ -713,23 +664,17 @@ const Stats = (props) => {
     console.log("Gaurav== =================================", result)
     if (result.status == 200) {
       setNotificationCount(result.count)
-
     } else {
-
       ShortToast(result?.message, 'error', '')
     }
-
     // setLoader(false)
   }
 
   const openNotification = async () => {
     readNotificationCount()
-
     const userID = await getDataFromLocalStorage('user_id')
     props.navigation.navigate("NotificationWebView", { "UserID": `${userID}` })
-
     console.log("userID== ", userID)
-
   }
 
   const readNotificationCount = async () => {
@@ -740,8 +685,6 @@ const Stats = (props) => {
     const result = await PostApiData('group_read_message', formdata)
     if (result.status == 200) {
       console.log("GauravNotificationCount  == ", result)
-
-
     } else {
       ShortToast(result?.message, 'error', '')
     }
@@ -798,7 +741,6 @@ const Stats = (props) => {
                   }}
                   tintColor={"green"} />
               </TouchableOpacity>
-
               {/*LNF Logo and Name*/}
               <View style={{
                 //backgroundColor: 'red',
@@ -808,14 +750,11 @@ const Stats = (props) => {
                 left: W * 0.1,
                 width: W * 0.45,
                 alignItems: 'center'
-
               }}>
-
                 <TouchableOpacity style={{}}>
                   <Image source={require('../../../../assets/icons/LNF2.png')}
                     style={{ height: 30, width: 80, alignSelf: "center", resizeMode: "contain" }} />
                 </TouchableOpacity>
-
                 <Text
                   numberOfLines={2}
                   style={{
@@ -831,25 +770,19 @@ const Stats = (props) => {
                   width: W * 0.4,
                   backgroundColor: "red"
                 }}>Hello, Manish</Text> */}
-
               </View>
-
               {/*Total Points and Notifications*/}
               <View style={{
                 flexDirection: 'row'
               }}>
-
-
                 <View>
                   <TouchableOpacity
-
                     onPress={() => {
                       props.navigation.navigate("Total Points")
                     }}
                     style={{
                       height: 20,
                       width: 20,
-
                       alignSelf: 'center',
                     }}>
                     <Animated.Image source={require('../../../../assets/icons/star.png')}
@@ -865,13 +798,10 @@ const Stats = (props) => {
                       }}
                     />
                   </TouchableOpacity>
-
                   <TouchableOpacity
-
                     onPress={() => {
                       props.navigation.navigate("Total Points")
                     }}
-
                     style={{
                       height: H * 0.027,
                       width: W * 0.2,
@@ -888,10 +818,7 @@ const Stats = (props) => {
                     }}>{data?.totalpoint}</Text>
                   </TouchableOpacity>
                 </View>
-
-
                 <TouchableOpacity
-
                   onPress={() => {
                     openNotification()
                   }}
@@ -914,13 +841,10 @@ const Stats = (props) => {
                     }}
                   />
                 </TouchableOpacity>
-
                 {notificationCount == "0" ? null : <TouchableOpacity
-
                   onPress={() => {
                     openNotification()
                   }}
-
                   style={{
                     height: H * 0.027,
                     width: H * 0.027,
@@ -938,49 +862,32 @@ const Stats = (props) => {
                     ...fontFamily.bold,
                   }}>{notificationCount}</Text>
                 </TouchableOpacity>}
-
-
               </View>
-
             </Appbar.Header>
-
             <Divider style={{
               color: 'silver',
               height: 0.5,
               width: '100%'
             }} />
-
-
-
-
-
-
           </View>
           <DoubleTapBackButtonToCloseApp />
-
           {/**Edit Current Weight///////////////////////////////////////////////// */}
           {firstTimeLogin ?
             <>
-
               <LottieView style={{ zIndex: 100, top: -H * 0.44, left: -W * 0.24 }}
                 source={require('../../../../assets/animations/pointer.json')}
                 autoPlay loop />
-
             </>
             :
             <></>}
-
           {/*Edit Weights Modal*/}
           <Modal
             style={{
-
             }}
             animationType="fade"
             transparent={true}
             visible={editWeights}>
-
             {/* Input Weights Pop Up */}
-
             <View style={{
               width: W * 0.8,
               backgroundColor: colors.OFFWHITE,
@@ -992,7 +899,6 @@ const Stats = (props) => {
               elevation: 5,
               padding: 10,
             }}>
-
               <Image source={require('../../../../assets/icons/weight-loss.png')}
                 style={{
                   height: H * 0.05,
@@ -1113,7 +1019,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: colors.FONT_BLACK
@@ -1210,7 +1115,6 @@ const Stats = (props) => {
                 <Text numberOfLines={1}
                   adjustsFontSizeToFit
                   style={styles.attributeHeading}>{strings.nonfating} </Text>
-
                 <TextInput
                   onChangeText={(t) => {
                     if (t == '0') {
@@ -1265,7 +1169,6 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     updateSugarValues()
-
                   }}
                   style={{
                     width: W * 0.18,
@@ -1275,7 +1178,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: "white"
@@ -1295,7 +1197,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: colors.FONT_BLACK
@@ -1390,7 +1291,6 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     // updateValueNonFastingSugar()
-
                   }}
                   style={{
                     width: W * 0.18,
@@ -1400,7 +1300,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: "white"
@@ -1420,7 +1319,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: colors.FONT_BLACK
@@ -1433,7 +1331,6 @@ const Stats = (props) => {
           {/**Edit Systolic///////////////////////////////////////////////// */}
           <Modal
             style={{
-
             }}
             animationType="fade"
             transparent={true}
@@ -1486,9 +1383,7 @@ const Stats = (props) => {
                   marginLeft: W * 0.01
                 }}></Text>
               </View>
-
               {/* Diastolic BP Input Container */}
-
               <View style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -1521,9 +1416,7 @@ const Stats = (props) => {
                   marginLeft: W * 0.01
                 }}></Text>
               </View>
-
               {/* BPM BP Input Container */}
-
               <View style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -1556,7 +1449,6 @@ const Stats = (props) => {
                   marginLeft: W * 0.01
                 }}></Text>
               </View>
-
               {/* BP Input and Cancel Button Container */}
               <View style={{
                 flexDirection: "row",
@@ -1566,7 +1458,6 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     {
-
                       if (systolic < 85 || systolic > 180) {
                         if (flagg2 > 2) {
                           ShortToast("Your Systolic BP Level Seems to be Critcial, Kindly consult a Doctor", 'error', '')
@@ -1591,7 +1482,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: "white"
@@ -1612,7 +1502,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: colors.FONT_BLACK
@@ -1686,7 +1575,6 @@ const Stats = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     {
-
                       if (diastolic < 55 || diastolic > 120) {
                         if (flagg1 > 2) {
                           ShortToast("Your Diastolic BP Level Seems to be Critical, Kindly Consult a Doctor", 'error', '')
@@ -1701,8 +1589,6 @@ const Stats = (props) => {
                       else {
                         //updateValueDiastolicBp()
                       }
-
-
                     }
                   }}
                   style={{
@@ -1713,7 +1599,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: "white"
@@ -1734,7 +1619,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: colors.FONT_BLACK
@@ -1829,7 +1713,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: "white"
@@ -1850,7 +1733,6 @@ const Stats = (props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: H * 0.03,
-
                   }}>
                   <Text style={{
                     color: colors.FONT_BLACK
@@ -1859,7 +1741,6 @@ const Stats = (props) => {
               </View>
             </View>
           </Modal>
-
           <Modal visible={firstTimeLogin}
             transparent={true}>
             <View
@@ -1914,8 +1795,6 @@ const Stats = (props) => {
               </View>
             </View>
           </Modal>
-
-
           {/* modal for paid user status */}
           <Modal
             visible={paiduserstatusModal}
@@ -1977,7 +1856,6 @@ const Stats = (props) => {
               </View>
             </View>
           </Modal>
-
           <Modal visible={visibleMood}
             transparent={true}>
             <View
@@ -2077,13 +1955,9 @@ const Stats = (props) => {
               </View>
             </View>
           </Modal>
-
           {/**Edit bpm///////////////////////////////////////////////// */}
-
           <Portal>
-
             <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-
               <Dialog.Title style={{ textAlign: 'center' }}>{heading}</Dialog.Title>
               <Dialog.Content>
                 <Paragraph>{subHeading}</Paragraph>
@@ -2106,7 +1980,6 @@ const Stats = (props) => {
                   onDismissSnackBarThree()
                 },
               }}>
-
               <Text style={{
                 color: colors.FONT_BLACK,
                 textAlign: "center"
@@ -2144,19 +2017,8 @@ const Stats = (props) => {
                 },
               }}>
               <Text>Well Done. Keep it Up!</Text>
-
             </Snackbar>*/}
-
-
-
-
-
-
-
-
-
             {/* change to comment */}
-
             {/* <FAB.Group
               style={{}}
               fabStyle={{ backgroundColor: colors.ORANGE, marginBottom: H * 0.11 }}
@@ -2171,7 +2033,6 @@ const Stats = (props) => {
                     setIsInfoButtonVisible(false)
                     props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
                   },
-
                 },
                 {
                   icon: require('../../../../assets/icons/blog.png'),
@@ -2204,7 +2065,6 @@ const Stats = (props) => {
                 }
               }}
             /> */}
-
           </Portal>
           {/*<FAB
             visible={isInfoButtonVisible}
@@ -2228,7 +2088,6 @@ const Stats = (props) => {
                 else setIsInfoButtonVisible(true)
               }}
               scrollEventThrottle={400}
-
               // onMomentumScrollEnd={() => setIsInfoButtonVisible(true)}
               refreshControl={
                 <RefreshControl
@@ -2249,14 +2108,12 @@ const Stats = (props) => {
                   renderItem={renderItemTwo}
                   keyExtractor={(item, index) => `${index}`}
                   numColumns={2} />
-
                 {/*  <Image source={require('../../../../assets/icons/blog.png')}
                     style={{
                       height: H * 0.12,
                       width: H * 0.12,
                     }}
                   />*/}
-
               </View>
             </ScrollView>
           </View>
