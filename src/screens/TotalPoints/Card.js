@@ -65,25 +65,36 @@ const Card = ({ points, maxPoints, date, cardData }) => {
 
     return (
         <View>
-            <View style={styles.totalPoints}>
-                <View style={{ flexDirection: 'row', }}>
+            <View style={[styles.totalPoints, { borderBottomRightRadius: visible ? 0 : 8, borderBottomLeftRadius: visible ? 0 : 8 }]}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     {myIcon}
                     <Text style={{ fontFamily: 'Montserrat-Regular', paddingLeft: W * 0.03, color: 'black' }}>{points}</Text>
-                    <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, paddingTop: W * 0.014, paddingLeft: W * 0.01, color: "silver" }}>/{maxPoints}</Text>
+                    <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, paddingTop: W * 0.014, color: "silver" }}>/{maxPoints}</Text>
                 </View>
-                <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', marginLeft: W * 0.4, fontSize: fontSizes.LAR }}>{date}</Text>
-                <TouchableOpacity onPress={() => { setVisible(!visible) }}>
-                    <Icon name='downcircleo' size={25} color='#dfe5eb' />
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', fontSize: fontSizes.LAR, paddingRight: 5 }}>{date}</Text>
+                    <TouchableOpacity onPress={() => { setVisible(!visible) }}>
+                        {
+                            visible
+                                ?
+                                <Icon name='upcircleo' size={25} color='#dfe5eb' />
+                                :
+                                <Icon name='downcircleo' size={25} color='#dfe5eb' />
+                        }
+                    </TouchableOpacity>
+                </View>
             </View>
             {visible ?
                 <View>
                     {
-                        cardData?.map((item, index) => {
+                        cardData?.map((item, index, self) => {
                             return (
                                 <View
                                     key={index}
-                                    style={styles.displayActivity}>
+                                    style={[styles.displayActivity, {
+                                        borderBottomLeftRadius: self?.length == index + 1 ? 8 : 0,
+                                        borderBottomRightRadius: self?.length == index + 1 ? 8 : 0,
+                                    }]}>
                                     {IconThrow(item?.activity_completed)}
                                     <Text style={styles.textActivity}>{item?.activity_name}</Text>
                                     <Text style={styles.textStyleForPoints}>{item?.selected_option}</Text>
@@ -109,9 +120,13 @@ const styles = StyleSheet.create({
     },
     displayActivity:
     {
+        width: W * 0.9,
+        backgroundColor: colors.OFFWHITE,
         flexDirection: 'row',
         paddingHorizontal: W * 0.05,
-        paddingVertical: W * 0.01
+        paddingVertical: W * 0.01,
+        alignSelf: 'center',
+        backgroundColor: '#fff',
     },
     textActivity:
     {
@@ -147,13 +162,12 @@ const styles = StyleSheet.create({
     totalPoints:
     {
         flexDirection: 'row',
-        paddingHorizontal: W * 0.05,
         justifyContent: 'space-between',
         // marginHorizontal:W*0.03,
-        backgroundColor: 'white',
-        padding: H * 0.015,
-        width: W * 0.96,
-        marginTop: H * 0.05,
+        backgroundColor: '#fff',
+        padding: H * 0.018,
+        width: W * 0.9,
+        marginTop: H * 0.02,
         alignItems: "center",
         alignSelf: "center",
         borderRadius: 8,

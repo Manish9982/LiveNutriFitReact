@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, TouchableOpacity, View, Image, RefreshControl, StatusBar, FlatList, Modal, PermissionsAndroid } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, View, Image, RefreshControl, StatusBar, FlatList, Modal, PermissionsAndroid, Platform } from 'react-native'
 import React, { useEffect, useContext } from 'react'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../colorSchemes/ColorSchemes'
@@ -21,8 +21,6 @@ import { useIsFocused } from '@react-navigation/native'
 import { ColorProperties } from 'react-native-reanimated/lib/typescript/reanimated2/Colors'
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated'
 import LottieView from 'lottie-react-native'
-
-
 
 //lang chnge
 const strings = new LocalizedStrings({
@@ -211,7 +209,7 @@ const TotalPoints = () => {
             <TouchableOpacity onPress={() => { setCamVisible(true) }}>
                 <View style={{ padding: 0 }}>
                     <Image source={{ uri: dataFromApi?.profile }}
-                        style={{ height: 55, width: 55, borderRadius: 25 }} />
+                        style={{ height: 75, width: 75, borderRadius: 80 / 2, borderWidth: 0.5, borderColor: colors.GREEN_DARK_TRANSPARENT }} />
                 </View>
             </TouchableOpacity>
         )
@@ -230,8 +228,6 @@ const TotalPoints = () => {
                 cardData={item?.child}
             />)
     }
-
-    console.log('dataFromApi?.total_point', dataFromApi?.next_user_status)
     return (
         loader
             ?
@@ -255,122 +251,6 @@ const TotalPoints = () => {
                                 textAlign: 'center', fontSize: fontSizes.MED
                             }}>{strings.RedeemPoints}</Text>
                         </TouchableOpacity>} */}
-                    <View style={styles.detailsContainer}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                            <View style={{ alignSelf: 'flex-start', alignItems: 'center' }}>
-                                <AnimatedCircularProgress
-                                    size={65}
-                                    width={2}
-                                    fill={((Number.parseInt(dataFromApi?.total_point, 10) / Number.parseInt(dataFromApi?.status_point, 10)) * 100)}
-                                    tintColor={colors.GREEN}
-                                    backgroundColor="white"
-                                    children={() => showChildren()} />
-                                <Text style={{ fontFamily: 'Montserrat-Regular' }}>{dataFromApi?.user_name}</Text>
-                            </View>
-                            <View style={styles.pointsInfoContainer}>
-                                <LottieView
-                                    style={{
-                                        height: 100,
-                                        width: 100,
-                                        left: 20,
-                                        top: -20,
-                                        //backgroundColor:'red'
-                                    }}
-                                    source={require('../../assets/animations/reward_points.json')}
-                                    autoPlay loop />
-                                <View>
-                                    <Text style={styles.totalPointsEarned}>{strings.TotalPoints}</Text>
-                                    <Text style={{ top: -20 }}>
-                                        <Text style={{
-                                            fontFamily: 'Montserrat-SemiBold',
-                                            color: 'black',
-                                            fontSize: fontSizes.XXXL,
-                                            fontWeight: '700',
-                                            paddingHorizontal: 5,
-                                            top: -20,
-                                        }}>{dataFromApi?.total_point}/</Text>
-                                        <Text style={{
-                                            fontFamily: 'Montserrat-SemiBold',
-                                            color: 'black',
-                                            fontSize: fontSizes.MED,
-                                            paddingHorizontal: 5,
-                                            top: -20,
-                                        }}>{dataFromApi?.status_point}</Text>
-                                    </Text>
-                                    <ProgressBar
-                                        style={styles.progressBar}
-                                        color={colors.GREEN}
-                                        progress={(Number.parseInt(dataFromApi?.total_point, 10) / Number.parseInt(dataFromApi?.status_point, 10))|| 0}
-                                        //children={() => { return (<Text>Hi</Text>) }}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.pointsInfo}>{dataFromApi?.current_user_status}</Text>
-                            <Text style={styles.neededPointsInfo}>{dataFromApi?.next_user_status}</Text>
-                        </View>
-                    </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={{
-                            fontFamily: 'Montserrat-Regular',
-                            fontSize: fontSizes.LAR,
-                            color: 'black',
-                            marginLeft: WIDTH * 0.03,
-                            marginVertical: HEIGHT * 0.03
-                        }}>{strings.PointslastsyncedonToday}, {(date.getHours()).toString().padStart(2, 0)}:{(date.getMinutes()).toString().padStart(2, 0)}</Text>
-                        <TouchableOpacity onPress={() => { getTotalPoints() }}
-                            style={{ position: 'absolute', top: HEIGHT * 0.025, left: WIDTH * 0.88 }}>
-                            <Icon name='reload1' size={20} color='#676c73' />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.secondaryMidContainer}>
-                        <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', fontSize: fontSizes.LAR }}>{monthName} {(date.getFullYear())}</Text>
-                        {/*  <TouchableOpacity style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, marginLeft: WIDTH * 0.4 }}>Monthly </Text>
-                        <Icon name='right' size={15} color='#bcc1c6' />
-                </TouchableOpacity>*/}
-                    </View>
-                    {/* <View style={styles.totalPoints}>
-                    <View style={{ flexDirection: 'row', }}>
-                        {myIcon}
-                        <Text style={{ fontFamily: 'Montserrat-Regular', paddingLeft: WIDTH * 0.03, color: 'black' }}>{dataFromApi?.data?.[0]?.total_pont}</Text>
-                        <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, paddingTop: WIDTH * 0.014, paddingLeft: WIDTH * 0.01, color: "silver" }}>/21</Text>
-                    </View>
-                    <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', marginLeft: WIDTH * 0.4, fontSize: fontSizes.LAR }}>{dataFromApi?.data?.[0].date}</Text>
-                    <Icon name='downcircleo' size={25} color='#dfe5eb' />
-                </View>
-                <View>
-                    <View style={styles.displayActivity}>
-                        <Icon name='check' size={25} color='#b2de72' />
-                        <Text style={styles.textActivity}>Meal Plan</Text>
-                    </View>
-                    <View style={styles.displayActivity}>
-                        <Icon name='check' size={25} color='#b2de72' />
-                        <Text style={styles.textActivity}>Excercise</Text>
-                    </View>
-                    <View style={styles.displayActivity}>
-                        <Icon name='check' size={25} color='#b2de72' />
-                        <Text style={styles.textActivity}>Sleep</Text>
-                    </View>
-                    <View style={styles.displayActivity}>
-                        <Icon name='check' size={25} color='#b2de72' />
-                        <Text style={styles.textActivity}>Hydration</Text>
-                    </View>
-                    <View style={styles.displayActivity}>
-                        <Icon name='check' size={25} color='#b2de72' />
-                        <Text style={styles.textActivity}>Mood</Text>
-                    </View>
-                    <View style={styles.displayActivity}>
-                        <Icon name='check' size={25} color='#b2de72' />
-                        <Text style={styles.textActivity}>Fasting</Text>
-                    </View>
-                    <View style={styles.displayActivity}>
-                        <Icon name='check' size={25} color='#b2de72' />
-                        <Text style={styles.textActivity}>Monitoring</Text>
-                    </View>
-                </View>
-                */}
                     <Modal
                         visible={camVisible}
                         transparent={true}
@@ -403,7 +283,6 @@ const TotalPoints = () => {
                                     backgroundColor: colors.OFFWHITE,
                                     borderRadius: 4,
                                     justifyContent: "center",
-
                                 }}>
                                     <TouchableOpacity onPress={() => { launchCam() }}>
                                         <View style={{
@@ -445,19 +324,106 @@ const TotalPoints = () => {
                             </View>
                         </View>
                     </Modal>
-                    <View style={{
-                        height: H * 0.5,
-                    }}>
+                    <View style={styles.detailsContainer}>
+                        {/* Primary Container Profile Info */}
+                        <View style={{ flexDirection: 'row', }} >
+                            {/* Profile Pic + Name Container */}
+                            <View style={styles.profilePicAndName}>
+                                {/* Profile Pic and Name */}
+                                <AnimatedCircularProgress
+                                    size={90}
+                                    width={6}
+                                    fill={((Number.parseInt(dataFromApi?.total_point, 10) / Number.parseInt(dataFromApi?.status_point, 10)) * 100)}
+                                    tintColor={colors.GREEN}
+                                    backgroundColor="white"
+                                    children={() => showChildren()} />
+                                <Text style={{ fontFamily: 'Montserrat-SemiBold', fontWeight: '500', fontSize: fontSizes.XL }}>{dataFromApi?.user_name}</Text>
+                            </View>
+                            {/* Points Info + Progress Bar Container */}
+                            <View style={styles.pointsInfoContainer}>
+                                {/* Points Info + Animation */}
+                                <View style={styles.pointsInfoAndAnimation}>
+                                    <Text>Reward Points</Text>
+                                    <View style={styles.horizontalContainer}>
+                                        <LottieView
+                                            style={{
+                                                height: 35,
+                                                width: 35,
+                                                //backgroundColor:'red'
+                                            }}
+                                            source={require('../../assets/animations/reward_points.json')}
+                                            autoPlay loop />
+                                        <Text style={styles.textPoints}>{dataFromApi?.total_point}</Text>
+                                    </View>
+                                </View>
+                                {/* Progress Bar */}
+                                <View>
+                                    <ProgressBar
+                                        style={styles.progressBar}
+                                        color={colors.GREEN}
+                                        progress={(Number.parseInt(dataFromApi?.total_point, 10) / Number.parseInt(dataFromApi?.status_point, 10)) || 0}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                        {/* Primary Container Rewards Offer Status Info */}
+                        <View style={styles.rewardsOfferStatusInfo}>
+                            {/* Container Eligible for discount info */}
+                            <View >
+                                <Text style={styles.pointsInfo}>{dataFromApi?.current_user_status}</Text>
+                                <Text style={styles.neededPointsInfo}>{dataFromApi?.next_user_status}</Text>
+                            </View>
+                            {/* Status Info and Estimated time to reach */}
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <View>
+                                    <Image source={{ uri: dataFromApi?.status_image }}
+                                        style={styles.statusImage}
+                                    />
+                                </View>
+                                <View>
+                                    <Text>
+                                        <Text style={styles.rewardsFonts}>{dataFromApi?.reward_offer}%</Text>
+                                        <Text style={[styles.rewardsFonts, { fontSize: fontSizes.SM }]}>ffer</Text>
+                                    </Text>
+                                    <Text>Rewards</Text>
+                                </View>
+                                <View style={styles.numberOfDays}>
+                                    <Text style={styles.numberOfDaysText}>{Number.parseInt(dataFromApi?.reward_days, 10)}</Text>
+                                    <Text style={styles.daysText}>Days</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    {/* Points Last Synced View */}
+                    <View style={styles.lastSyncedContainer}>
+                        <Text style={{
+                            fontFamily: 'Montserrat-Regular',
+                            fontSize: fontSizes.LAR,
+                            color: 'black',
+                        }}>{strings.PointslastsyncedonToday}, {(date.getHours()).toString().padStart(2, 0)}:{(date.getMinutes()).toString().padStart(2, 0)}</Text>
+                        <TouchableOpacity onPress={() => { getTotalPoints() }}
+                            style={{}}>
+                            <Icon name='reload1' size={20} color='#676c73' />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.secondaryMidContainer}>
+                        {/* <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', fontSize: fontSizes.LAR }}>{monthName} {(date.getFullYear())}</Text> */}
+                        {/*  <TouchableOpacity style={{ flexDirection: 'row' }}>
+                        <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, marginLeft: WIDTH * 0.4 }}>Monthly </Text>
+                        <Icon name='right' size={15} color='#bcc1c6' />
+                </TouchableOpacity>*/}
+                    </View>
+                    <View style={styles.cardList}>
                         <FlatList data={dataFromApi?.data}
                             renderItem={renderItem}
                             keyExtractor={(item, index) => `${index}`} />
                     </View>
-                    <Text style={{
+                    {/* <Text style={{
                         ...fontFamily.bold,
                         alignSelf: "center",
                         fontSize: fontSizes.SM,
                         marginTop: H * 0.02,
-                    }}> {myIcon2} {strings.totalpointstext}</Text>
+                    }}> {myIcon2} {strings.totalpointstext}</Text> */}
                 </View>
             </View>
     )
@@ -472,8 +438,8 @@ const styles = StyleSheet.create({
     displayActivity:
     {
         flexDirection: 'row',
-        paddingHorizontal: WIDTH * 0.05,
-        paddingVertical: WIDTH * 0.01
+        // paddingHorizontal: WIDTH * 0.05,
+        // paddingVertical: WIDTH * 0.01
     },
     textActivity:
     {
@@ -484,21 +450,23 @@ const styles = StyleSheet.create({
     },
     detailsContainer:
     {
-        //backgroundColor: '#eaedf2',
-        backgroundColor: colors.DARK_GRAY,
-        margin: 10,
-        //alignItems: 'center',
-        justifyContent: 'space-evenly',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 15,
-        //flexDirection: 'row',
+        // //backgroundColor: '#eaedf2',
+        // backgroundColor: colors.DARK_GRAY,
+        // margin: 10,
+        // //alignItems: 'center',
+        // justifyContent: 'space-evenly',
+        // paddingHorizontal: 15,
+        // paddingVertical: 10,
+        // borderRadius: 15,
+        // //flexDirection: 'row',
+        backgroundColor: '#fff',
+        padding: 8,
     },
     secondaryMidContainer:
     {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: WIDTH * 0.03,
+        // paddingHorizontal: WIDTH * 0.03,
     },
     redeemPointsButton:
     {
@@ -511,64 +479,135 @@ const styles = StyleSheet.create({
     totalPoints:
     {
         flexDirection: 'row',
-        paddingHorizontal: WIDTH * 0.05,
+        // paddingHorizontal: WIDTH * 0.05,
         justifyContent: 'space-between',
         // marginHorizontal:WIDTH*0.03,
         backgroundColor: '#f3f7fa',
-        padding: HEIGHT * 0.01,
+        // padding: HEIGHT * 0.01,
         width: WIDTH,
         marginTop: HEIGHT * 0.05
     },
     progressBar:
     {
         borderRadius: 8,
-        height: 14,
-        width: 100,
-        top: -20,
-    },
-    progressBarContainer:
-    {
-        justifyContent: 'space-evenly',
-        //alignItems: 'center',
-        //backgroundColor: 'red',
-        width: '35%',
-        //padding: 5,
-        //height: '80%'
-    },
-    horizontalContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        width: '100%'
+        height: 10,
+        //width: W * 0.7,
+        alignSelf: 'center'
     },
     pointsInfo:
     {
         fontSize: 12,
-        width: '90%',
-        alignSelf: 'center',
-        marginVertical: 5,
-        fontWeight: '600'
+        //alignSelf: 'center',
+        fontWeight: '600',
+        marginBottom: 10,
     },
     neededPointsInfo:
     {
         fontSize: 12,
-        width: '90%',
-        alignSelf: 'center'
+        marginBottom: 10,
+        //alignSelf: 'center'
     },
     pointsInfoContainer:
     {
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        padding: 5,
-        alignItems: 'center',
+        alignSelf: 'stretch',
+        flex: 1,
+        padding: 15,
+        //backgroundColor:'purple'
     },
     totalPointsEarned:
     {
         fontSize: 12,
         top: -20
     },
-    infoContainer:
+    pointsInfoAndAnimation:
     {
-        top: -12
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    profilePicAndName:
+    {
+        alignSelf: 'flex-start',
+        alignItems: 'center',
+        //backgroundColor:'green'
+    },
+    horizontalContainer:
+    {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    textPoints:
+    {
+        fontWeight: Platform.OS == 'android' ? null : '700',
+        fontFamily: 'Montserrat-Bold',
+        fontSize: fontSizes.XXXL
+    },
+    rewardsOfferStatusInfo:
+    {
+        backgroundColor: '#fff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4.65,
+        borderRadius: 8,
+        elevation: 6,
+        marginVertical: 4,
+        padding: 15,
+    },
+    rewardsFonts:
+    {
+        color: colors.REWARDS_TEXT,
+        fontSize: fontSizes.XXXL,
+        fontWeight: Platform.OS == 'android' ? null : '700',
+        fontFamily: 'Montserrat-Bold'
+    },
+    numberOfDays:
+    {
+        backgroundColor: colors.GREEN_TRANSPARENT,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+        aspectRatio: 1,
+    },
+    numberOfDaysText:
+    {
+        color: colors.GREEN_DARK_TRANSPARENT,
+        fontWeight: Platform.OS == 'android' ? null : '700',
+        fontFamily: 'Montserrat-Bold',
+        fontSize: fontSizes.XXXL
+    },
+    daysText:
+    {
+
+    },
+    statusImage:
+    {
+        height: H * 0.09,
+        aspectRatio: 1,
+    },
+    lastSyncedContainer:
+    {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        paddingTop: 8,
+        paddingVertical: 8,
+        backgroundColor: '#fff'
+    },
+    cardList:
+    {
+        height: H * 0.38,
+        //backgroundColor: colors.GREEN_TRANSPARENT,
+        padding: 5,
+        //margin: 5,
+        marginBottom: 0,
+        borderRadius: 8,
+        //borderColor: colors.GREEN_DARK_TRANSPARENT,
+        //borderWidth: 0.5,
     }
 })
 export default TotalPoints

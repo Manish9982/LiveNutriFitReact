@@ -45,6 +45,9 @@ export const colors = {
    DARK_GRAY: '#D3D3D3',
    LIGHT_GRAY: 'lightGrey',
    'LIGHT_SILVER': '#e1e1e1',
+   REWARDS_TEXT: '#E19044',
+   GREEN_TRANSPARENT: 'rgba(128, 192, 67, 0.15)',
+   GREEN_DARK_TRANSPARENT: '#7DBD41'
 };
 
 export const fontSizes = {
