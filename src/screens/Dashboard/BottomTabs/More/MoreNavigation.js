@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import More from './More'
 import Reminder from './Reminder'
 import LeadershipBoard from './LeadershipBoard'
-import ReminderExcercise from './ReminderExcercise'
+import ReminderExercise from './ReminderExercise'
 import ReminderFood from './ReminderFood'
 import ReminderMedicine from './ReminderMedicine'
 import ReminderWater from './ReminderWater'
@@ -38,7 +38,7 @@ const MoreNavigation = ({ navigation, route }) => {
             <Stack.Screen name="MoreNav" component={More} />
             <Stack.Screen name="Reminder" component={Reminder} />
             <Stack.Screen name="LeadershipBoard" component={LeadershipBoard} />
-            <Stack.Screen name="ReminderExcercise" component={ReminderExcercise} />
+            <Stack.Screen name="ReminderExercise" component={ReminderExercise} />
             <Stack.Screen name="ReminderFood" component={ReminderFood} />
             <Stack.Screen name="ReminderMedicine" component={ReminderMedicine} />
             <Stack.Screen name="ReminderWater" component={ReminderWater} />
@@ -56,8 +56,6 @@ const MoreNavigation = ({ navigation, route }) => {
             <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} />
             <Stack.Screen name="GroceryList" component={GroceryList} />
             <Stack.Screen name="NotificationWebView" component={NotificationWebView} />
-
-
         </Stack.Navigator>
     )
 }

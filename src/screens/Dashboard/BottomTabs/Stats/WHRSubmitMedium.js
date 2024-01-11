@@ -39,10 +39,10 @@ const WHRSubmitMedium = ({ navigation }) => {
         getGraphForSystolic(`${selectedYear}-${selectedMonth}-11`)
     }, [])
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         strings.setLanguage(lang)
 

@@ -35,10 +35,10 @@ const SubmitMood = () => {
         getSelectedOption()
     }, [])
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
 
         strings.setLanguage(lang)
@@ -57,7 +57,7 @@ const SubmitMood = () => {
     //     formdata.append("activity_id", "6")
     //     const task = await PostApiData('user_dashboard_progress_details_today', formdata)
     //     console.log(task)
-    //     //getLanguge()
+    //     //getLanguage()
     //     setData(task)
     //     setLoader(false)
     // }

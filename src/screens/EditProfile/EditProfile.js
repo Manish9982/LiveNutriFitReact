@@ -82,7 +82,7 @@ const EditProfile = ({ navigation }) => {
   useEffect(() => { getDataFromApi() }, [])
   useEffect(() => { setChecked() }, [])
 
-  useEffect(() => { getLanguge() }, [isFocused])
+  useEffect(() => { getLanguage() }, [isFocused])
 
 
   const handleDateChange = useCallback((event, newDate) => {
@@ -100,19 +100,19 @@ const EditProfile = ({ navigation }) => {
   }
 
   //lng
-  const getLanguge = async () => {
+  const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
     if (lang == "en") {
-      changeLaguagee('en')
+      changeLanguage('en')
     } else {
-      changeLaguagee('hi')
+      changeLanguage('hi')
 
     }
 
   }
 
 
-  const changeLaguagee = (languageKey) => {
+  const changeLanguage = (languageKey) => {
     strings.setLanguage(languageKey)
   }
 

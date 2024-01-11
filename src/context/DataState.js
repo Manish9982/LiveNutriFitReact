@@ -30,14 +30,14 @@ const DataState = (props) => {
     const [visibleMood, setVisibleMood] = useState(false)
     const [myMeals, setMyMeals] = useState(null)
     const [data, setData] = useState(null)
-    const [myExcercise, setMyExcercise] = useState(null)
+    const [myExercise, setMyExercise] = useState(null)
     const [messages, setMessages] = useState([])
     const [count, setCount] = useState(null)
     const [weight, setWeight] = useState()
     const [weight2, setWeight2] = useState()
     const [weight3, setWeight3] = useState()
 
-    const [languagee, setLanguagee] = useState()
+    const [language, setLanguage] = useState()
 
 
     return (
@@ -49,8 +49,8 @@ const DataState = (props) => {
             NvisibleSnackThree: [visibleSnackThree, setVisibleSnackThree], NisInfoButtonVisible: [isInfoButtonVisible, setIsInfoButtonVisible],
             NglobalBmi: [globalBmi, setGlobalBmi], Ncrrnt: [crrnt, setCrrnt], Ntrgt: [trgt, setTrgt], Nht: [ht, setHt], Nfeet: [feet, setFeet], Ninch: [inch, setInch],
             NvisibleMood: [visibleMood, setVisibleMood], NmyMeals: [myMeals, setMyMeals], Ndata: [data, setData],
-            NmyExcercise: [myExcercise, setMyExcercise], Nmessages: [messages, setMessages], Ncount: [count, setCount], Nweight: [weight, setWeight],
-            Nweight2: [weight2, setWeight2], Nweight3: [weight3, setWeight3], Nlanguagee: [languagee, setLanguagee]
+            NmyExercise: [myExercise, setMyExercise], Nmessages: [messages, setMessages], Ncount: [count, setCount], Nweight: [weight, setWeight],
+            Nweight2: [weight2, setWeight2], Nweight3: [weight3, setWeight3], Nlanguage: [language, setLanguage]
         }}>
 
             {props.children}

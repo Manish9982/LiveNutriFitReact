@@ -26,16 +26,16 @@ export default function PsychologyQuestions({ navigation }) {
     }, [])
 
 
-    useEffect(() => { getLanguge() }, [isFocused])
-  
+    useEffect(() => { getLanguage() }, [isFocused])
+
     //lng
-    const getLanguge = async () => {
-        const lang = await getDataFromLocalStorage("lang")  
+    const getLanguage = async () => {
+        const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
             strings.setLanguage(lang)
         } else {
             strings.setLanguage(lang)
-  
+
         }
     }
 
@@ -70,15 +70,15 @@ export default function PsychologyQuestions({ navigation }) {
         if (result.status == '200') {
             setData(result)
             setSelectedOption1(result?.data?.[0]?.selected_option)
-            submitPoints(result?.data?.[0]?.selected_option, "1")
-            submitPoints(result?.data?.[1]?.selected_option, "2")
-            submitPoints(result?.data?.[2]?.selected_option, "3")
-            submitPoints(result?.data?.[3]?.selected_option, "4")
-            submitPoints(result?.data?.[4]?.selected_option, "5")
-            submitPoints(result?.data?.[5]?.selected_option, "6")
-            submitPoints(result?.data?.[6]?.selected_option, "7")
-            submitPoints(result?.data?.[7]?.selected_option, "8")
-            submitPoints(result?.data?.[8]?.selected_option, "9")
+            // submitPoints(result?.data?.[0]?.selected_option, "1")
+            // submitPoints(result?.data?.[1]?.selected_option, "2")
+            // submitPoints(result?.data?.[2]?.selected_option, "3")
+            // submitPoints(result?.data?.[3]?.selected_option, "4")
+            // submitPoints(result?.data?.[4]?.selected_option, "5")
+            // submitPoints(result?.data?.[5]?.selected_option, "6")
+            // submitPoints(result?.data?.[6]?.selected_option, "7")
+            // submitPoints(result?.data?.[7]?.selected_option, "8")
+            // submitPoints(result?.data?.[8]?.selected_option, "9")
             setSelectedOption2(result?.data?.[1]?.selected_option)
             setSelectedOption3(result?.data?.[2]?.selected_option)
             setSelectedOption4(result?.data?.[3]?.selected_option)
@@ -195,10 +195,6 @@ export default function PsychologyQuestions({ navigation }) {
         }
     }
 
-
-
-
-
     console.log("myArr", first + second + third + fourth + fifth + sixth + seventh + eighth + ninth)
 
     return (
@@ -206,10 +202,9 @@ export default function PsychologyQuestions({ navigation }) {
         loader ?
             <Loader />
             :
-
-            <View style={{ paddingBottom: H * 0.16 }}>
+            <View style={{ flex: 1 }}>
                 <HeaderForSubmissionScreens Title={strings.Psychology} />
-                <ScrollView contentContainerStyle={{ alignItems: "center" }}>
+                <ScrollView contentContainerStyle={{ alignItems: "center",  }}>
                     <View
                         style={styles.bubble}>
                         <Text

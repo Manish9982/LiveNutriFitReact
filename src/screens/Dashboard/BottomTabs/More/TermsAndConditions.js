@@ -18,10 +18,10 @@ const strings = new LocalizedStrings({
 
 const TermsAndCondtitons = () => {
     useEffect(() => {
-        getLanguge()
+        getLanguage()
       }, [])
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         // setLoader(true)
           const lang = await getDataFromLocalStorage("lang")
           strings.setLanguage(lang)

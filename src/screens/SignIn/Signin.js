@@ -36,10 +36,10 @@ const theme = {
 
 const Signin = ({ navigation, route }) => {
     const isFocused = useIsFocused()
-    useEffect(() => { getLanguge() }, [isFocused])
-    const { Nmobile, Notp, Nlanguagee } = useContext(DataContext)
+    useEffect(() => { getLanguage() }, [isFocused])
+    const { Nmobile, Notp, Nlanguage } = useContext(DataContext)
     const [mobile, setMobile] = Nmobile
-    const [languagee, setLanguagee] = Nlanguagee
+    const [language, setLanguage] = Nlanguage
     const [otp, setOtp] = Notp
     const [loader, setLoader] = useState(false)
     const [userType, setUserType] = useState(null)
@@ -49,10 +49,10 @@ const Signin = ({ navigation, route }) => {
     const [isChecked, setChecked] = useState(false);
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         setLoader(true)
         const lang = await getDataFromLocalStorage("lang")
-        strings.setLanguage(languagee)
+        strings.setLanguage(language)
         setLoader(false)
     }
 

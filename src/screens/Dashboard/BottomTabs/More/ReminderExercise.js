@@ -14,7 +14,7 @@ import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens';
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
-const ReminderExcercise = () => {
+const ReminderExercise = () => {
     const dateForRef = Date.now()
     const currentDate = new Date()
     var today = (currentDate.getDate()).toString().padStart(2, 0)
@@ -91,7 +91,6 @@ const ReminderExcercise = () => {
     const onToggleSwitch = () => {
         setIsSwitchOn((prev) => {
             if (prev == false) {
-
                 setChecked(false)
                 setChecked2(false)
                 return (
@@ -131,19 +130,19 @@ const ReminderExcercise = () => {
                                     }
                                     else if (prev == false) {
                                         if (frequency == "once") {
-                                            onCreateTriggerNotification(timeStamp2, "Excercise Reminder!", "It's Time for your workout.", "1")
+                                            onCreateTriggerNotification(timeStamp2, "Exercise Reminder!", "It's Time for your workout.", "1")
                                             ToastAndroid.show(`Alarm will ring in ${new Date((Number.parseInt(date2.getTime(), 10))).getHours() - new Date(dateForRef).getHours()} hours ${new Date((Number.parseInt(date2.getTime(), 10))).getMinutes() - new Date(dateForRef).getMinutes()} minutes`, ToastAndroid.SHORT)
                                         }
                                         else if (frequency == "hourly") {
-                                            onCreateTriggerNotificationHourly(timeStamp2, "Excercise Reminder!", "It's Time for your workout.", "1")
+                                            onCreateTriggerNotificationHourly(timeStamp2, "Exercise Reminder!", "It's Time for your workout.", "1")
                                             ToastAndroid.show(`Alarm will ring hourly`, ToastAndroid.SHORT)
                                         }
                                         else if (frequency == "daily") {
-                                            onCreateTriggerNotificationDaily(timeStamp2, "Excercise Reminder!", "It's Time for your workout.", "1")
+                                            onCreateTriggerNotificationDaily(timeStamp2, "Exercise Reminder!", "It's Time for your workout.", "1")
                                             ToastAndroid.show(`Alarm will ring daily`, ToastAndroid.SHORT)
                                         }
                                         else if (frequency == "weekly") {
-                                            onCreateTriggerNotificationWeekly(timeStamp2, "Excercise Reminder!", "It's Time for your workout.", "1")
+                                            onCreateTriggerNotificationWeekly(timeStamp2, "Exercise Reminder!", "It's Time for your workout.", "1")
                                             ToastAndroid.show(`Alarm will ring every week`, ToastAndroid.SHORT)
                                         }
                                         return true
@@ -198,4 +197,4 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     }
 })
-export default ReminderExcercise
+export default ReminderExercise

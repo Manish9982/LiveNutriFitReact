@@ -35,18 +35,18 @@ const Plans = ({ navigation }) => {
 
   const isFocused = useIsFocused()
 
-  useEffect(() => { getLanguge() }, [isFocused])
+  useEffect(() => { getLanguage() }, [isFocused])
   //lng
-  const getLanguge = async () => {
+  const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
     if (lang == "en") {
-      changeLaguagee('en')
+      changeLanguage('en')
     } else {
-      changeLaguagee('hi')
+      changeLanguage('hi')
     }
   }
 
-  const changeLaguagee = (languageKey) => {
+  const changeLanguage = (languageKey) => {
     strings.setLanguage(languageKey)
   }
   useEffect(() => {
@@ -64,7 +64,7 @@ const Plans = ({ navigation }) => {
   const refContainer = useRef(null)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [selectedDate, setSelectedDate] = useState("")
-  const { NmyMeals, NmyExcercise, NisInfoButtonVisible } = useContext(DataContext)
+  const { NmyMeals, NmyExercise, NisInfoButtonVisible } = useContext(DataContext)
   const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
   useEffect(() => {
     const getDataFromApi = async () => {
@@ -80,7 +80,7 @@ const Plans = ({ navigation }) => {
   }, [isFocused])
 
   const [myMeals, setMyMeals] = NmyMeals
-  const [myExcercise, setMyExcercise] = NmyExcercise
+  const [myExercise, setMyExercise] = NmyExercise
   const [myData, setMyData] = useState(null)
   const [buttonBgColor, setButtonBgColor] = useState('orange')
   const [buttonBgColor2, setButtonBgColor2] = useState('white')
@@ -115,7 +115,7 @@ const Plans = ({ navigation }) => {
   const onRefresh = () => {
     setIsRefreshing(true)
     getMeals()
-    getExcercise(datee)
+    getExercise(datee)
     // and set isRefreshing to false at the end of your callApiMethod()
   }
 
@@ -150,7 +150,7 @@ const Plans = ({ navigation }) => {
 
 
 
-  const getExcercise = async (date) => {
+  const getExercise = async (date) => {
 
     setLoader(true)
     const temp = await getDataFromLocalStorage('user_id')
@@ -166,10 +166,10 @@ const Plans = ({ navigation }) => {
     console.log("EXC DATA == ", result)
 
     if (result.status == '200') {
-      setMyExcercise(result)
+      setMyExercise(result)
     }
     else {
-      setMyExcercise(null)
+      setMyExercise(null)
       ShortToast(result.message, 'error', '')
     }
     setIsRefreshing(false)
@@ -184,7 +184,7 @@ const Plans = ({ navigation }) => {
     const result = await PostApiData('get_meal_list', formdata)
     console.log(result)
     if (result.status == '200') {
-      getExcercise(datee)
+      getExercise(datee)
 
       setMyMeals(result)
     }
@@ -225,7 +225,7 @@ const Plans = ({ navigation }) => {
   }
   const handleTouchExercise = (date, index) => {
     setSelectedDate(date)
-    getExcercise(date)
+    getExercise(date)
   }
 
 
@@ -245,7 +245,7 @@ const Plans = ({ navigation }) => {
     setTextColor2('white')
     setMealMenuIsVisible(false)
     setSelectedDate("")
-    //getExcercise(date)
+    //getExercise(date)
   }
 
   const renderMealOrExerciseList = (data, renderItemFunction) => {
@@ -369,7 +369,7 @@ const Plans = ({ navigation }) => {
                 <TouchableOpacity
                   // onPress={() =>mealMenuIsVisible ? refContainer.current.scrollToIndex({ animated: true, index: 5 }):null}>
                   onPress={() => mealMenuIsVisible ? handleTouch((myData?.date[5]), 5) : handleTouchExercise(myData?.date[5], 5)}>
-                  {/* onPress={() =>{getExcercise()}}> */}
+                  {/* onPress={() =>{getExercise()}}> */}
 
                   <Text style={styles.daysView}>{myData?.days[5]}</Text>
                   <View style={[styles.dateView, { backgroundColor: throwColorBubble(myData?.date[5]) }]}>
@@ -380,7 +380,7 @@ const Plans = ({ navigation }) => {
                 <TouchableOpacity
                   // onPress={() => mealMenuIsVisible ? refContainer.current.scrollToIndex({ animated: true, index: 6 }):null}>
                   onPress={() => mealMenuIsVisible ? handleTouch((myData?.date[6]), 6) : handleTouchExercise(myData?.date[6], 6)}>
-                  {/* onPress={() =>{getExcercise()}}> */}
+                  {/* onPress={() =>{getExercise()}}> */}
 
                   <Text style={styles.daysView}>{myData?.days[6]}</Text>
                   <View style={[styles.dateView, { backgroundColor: throwColorBubble(myData?.date[6]) }]}>
@@ -399,9 +399,9 @@ const Plans = ({ navigation }) => {
                   <Text style={[styles.textStyle, { color: textColor }]}>{strings.MealPlan}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.mealButton, { backgroundColor: buttonBgColor2 }]}>
-                  {/* <TouchableOpacity onPress={() => { ShortToast("Generating Excercise Plan. Please Check Again After Sometime.", "warning", "") }} style={[styles.excerciseButton, { backgroundColor: buttonBgColor2 }]}> */}
-                  {/* <Text style={[styles.textStyle, { color: textColor2 }]}>Excercises Plan</Text> */}
-                  <Text style={[styles.textStyle, { color: textColor2 }]}>{strings.ExcercisesPlan}</Text>
+                  {/* <TouchableOpacity onPress={() => { ShortToast("Generating Exercise Plan. Please Check Again After Sometime.", "warning", "") }} style={[styles.ExerciseButton, { backgroundColor: buttonBgColor2 }]}> */}
+                  {/* <Text style={[styles.textStyle, { color: textColor2 }]}>Exercises Plan</Text> */}
+                  <Text style={[styles.textStyle, { color: textColor2 }]}>{strings.ExercisesPlan}</Text>
                 </TouchableOpacity>
 
               </View>
@@ -409,7 +409,7 @@ const Plans = ({ navigation }) => {
                 mealMenuIsVisible ? (
                   renderMealOrExerciseList(myMeals?.data, renderItem2)
                 ) : (
-                  renderMealOrExerciseList(myExcercise?.data, renderItem)
+                  renderMealOrExerciseList(myExercise?.data, renderItem)
                 )
               }
             </View>
@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  excerciseButton:
+  ExerciseButton:
   {
     height: HEIGHT * 0.06,
     width: WIDTH * 0.35,

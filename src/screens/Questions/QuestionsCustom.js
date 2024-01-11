@@ -25,9 +25,9 @@ const QuestionsCustom = ({ navigation, route }) => {
     const [langText, setLangText] = useState('')
 
     const isFocused = useIsFocused()
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         setLangText(lang)
         strings.setLanguage(lang)

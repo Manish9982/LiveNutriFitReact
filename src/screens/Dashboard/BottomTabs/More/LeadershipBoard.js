@@ -15,8 +15,8 @@ import { useIsFocused } from '@react-navigation/native'
 
 //lang chnge
 const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
+    en: english,
+    hi: hindi,
 });
 
 
@@ -31,27 +31,21 @@ const LeadershipBoard = () => {
     const isFocused = useIsFocused()
 
     useEffect(() => { getDataFromApi() }, [])
-
-    useEffect(() => { getLanguge() }, [isFocused])
-
-
+    useEffect(() => { getLanguage() }, [isFocused])
     //lng
-    const getLanguge = async () => {
-      const lang = await getDataFromLocalStorage("lang")
-  
-      if (lang == "en") {
-        changeLaguagee('en')
-  
-      } else {
-        changeLaguagee('hi')
-  
-      }
-  
+    const getLanguage = async () => {
+        const lang = await getDataFromLocalStorage("lang")
+
+        if (lang == "en") {
+            changeLanguage('en')
+        } else {
+            changeLanguage('hi')
+        }
     }
-  
-  
-    const changeLaguagee = (languageKey) => {
-      strings.setLanguage(languageKey)
+
+
+    const changeLanguage = (languageKey) => {
+        strings.setLanguage(languageKey)
     }
 
     const [selectedId, setSelectedId] = useState(null)
@@ -61,12 +55,8 @@ const LeadershipBoard = () => {
     const [textColor2, setTextColor2] = useState('black')
     const [buttonBgColor, setButtonBgColor] = useState(colors.GREEN)
     const [buttonBgColor2, setButtonBgColor2] = useState('white')
-
     ///sorting array function
-
-
     ///
-
     const handleOnPress1 = () => {
         setButtonBgColor(colors.GREEN)
         setButtonBgColor2('white')
@@ -89,7 +79,6 @@ const LeadershipBoard = () => {
             setSelectedId(id)
 
         }
-
 
         return (
             <>
@@ -118,8 +107,8 @@ const LeadershipBoard = () => {
         const userType = await getDataFromLocalStorage('user_type')
         console.log("type== ", userType)
 
-        if(userType=="5"){  // modified 1 to 5
-            const result = await GetApiData(`leadershipboard?user_id=${JSON.parse(temp) }`)
+        if (userType == "5") {  // modified 1 to 5
+            const result = await GetApiData(`leadershipboard?user_id=${JSON.parse(temp)}`)
             // result?.data?.sort(function (a, b) {
             //     var keyA = a?.total_point,
             //         keyB = b?.total_point;
@@ -128,13 +117,12 @@ const LeadershipBoard = () => {
             //     if (keyA > keyB) return 1;
             //     return 0;
             // });
-       // modified to comment
+            // modified to comment
             setMyData(result)
             console.log(result)
             setLoader(false)
-
-        }else{
-            const result = await GetApiData(`leadershipboard?user_id=${JSON.parse(temp) }&user_type=${JSON.parse(userType) }`)  // modified 3 from string usertype
+        } else {
+            const result = await GetApiData(`leadershipboard?user_id=${JSON.parse(temp)}&user_type=${JSON.parse(userType)}`)  // modified 3 from string usertype
             // result?.data?.sort(function (a, b) {
             //     var keyA = a?.total_point,
             //         keyB = b?.total_point;
@@ -143,21 +131,18 @@ const LeadershipBoard = () => {
             //     if (keyA > keyB) return 1;
             //     return 0;
             // });
-    
+
             setMyData(result)
             console.log(result)
             setLoader(false)
         }
-
-
-      
     }
     const getDataFromApi2 = async () => {
         const userID = await getDataFromLocalStorage('user_id')
         const userType = await getDataFromLocalStorage('user_type')
         setLoader(true)
 
-        if(userType=="1"){    //same as above api
+        if (userType == "1") {    //same as above api
             const temp = date.getMonth() + 1
             const result = await GetApiData(`leadershipboard?month=${temp}&user_id=${JSON.parse(userID)}`)
             console.log(result)
@@ -171,10 +156,9 @@ const LeadershipBoard = () => {
             // });
             setMyData(result)
             setLoader(false)
-            
-        }else{
+        } else {
             const temp = date.getMonth() + 1
-            const result = await GetApiData(`leadershipboard?month=${temp}&user_id=${JSON.parse(userID)}&user_type=${JSON.parse(userType) }`)
+            const result = await GetApiData(`leadershipboard?month=${temp}&user_id=${JSON.parse(userID)}&user_type=${JSON.parse(userType)}`)
             console.log(result)
             // result?.data?.sort(function (a, b) {
             //     var keyA = a?.total_point,
@@ -187,8 +171,6 @@ const LeadershipBoard = () => {
             setMyData(result)
             setLoader(false)
         }
-
-     
     }
 
     const renderItem = ({ item, index }) => {
@@ -206,8 +188,10 @@ const LeadershipBoard = () => {
 
     return (
         loader ?
-            <View style={{ justifyContent: 'center', alignItems: 'center', 
-            height: HEIGHT, width: WIDTH }}>
+            <View style={{
+                justifyContent: 'center', alignItems: 'center',
+                height: HEIGHT, width: WIDTH
+            }}>
                 <ActivityIndicator size="large"
                     color={colors.GREEN} />
             </View>
@@ -236,7 +220,7 @@ const LeadershipBoard = () => {
                     <TouchableOpacity onPress={() => { handleOnPress1() }} style={[styles.mealButton, { backgroundColor: buttonBgColor }]}>
                         <Text style={[styles.textStyle, { color: textColor }]}>{strings.AllTime}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.excerciseButton, { backgroundColor: buttonBgColor2 }]}>
+                    <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.ExerciseButton, { backgroundColor: buttonBgColor2 }]}>
                         <Text style={[styles.textStyle, { color: textColor2 }]}>{strings.ThisMonth}</Text>
                     </TouchableOpacity>
 
@@ -356,7 +340,7 @@ const styles = StyleSheet.create({
         marginHorizontal: WIDTH * 0.05,
         elevation: 2,
     },
-    excerciseButton:
+    ExerciseButton:
     {
         height: HEIGHT * 0.06,
         width: WIDTH * 0.35,

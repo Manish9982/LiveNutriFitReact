@@ -44,7 +44,7 @@ const Reminder = ({ navigation }) => {
     }
 
     useEffect(() => {
-        getLanguge(),
+        getLanguage(),
             getTimevalue()
         //getReminders()
 
@@ -59,7 +59,7 @@ const Reminder = ({ navigation }) => {
         console.log("lang", JSON.parse(time))
     }
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         setLoader(true)
         const lang = await getDataFromLocalStorage("lang")
 
@@ -84,7 +84,7 @@ const Reminder = ({ navigation }) => {
             navigation.navigate("ReminderWater")
 
         } else if (title == "Exercise Reminder") {
-            navigation.navigate("ReminderExcercise")
+            navigation.navigate("ReminderExercise")
 
         } else {
 
@@ -175,7 +175,7 @@ const Reminder = ({ navigation }) => {
                         </View>
                     </TouchableOpacity>
                     <Divider />
-                    <TouchableOpacity onPress={() => { navigation.navigate("ReminderExcercise") }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate("ReminderExercise") }}>
                         <View style={styles.displayContainer}>
                             <Image source={require('../../../../assets/icons/fitness.png')}
                                 style={styles.imageContainer} />

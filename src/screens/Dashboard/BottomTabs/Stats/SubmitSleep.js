@@ -30,22 +30,22 @@ const SubmitSleep = () => {
 
     const isFocused = useIsFocused()
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
 
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
 
         }
 
     }
 
 
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 
@@ -70,7 +70,7 @@ const SubmitSleep = () => {
         formdata.append("activity_id", "3")
         const task = await PostApiData('user_dashboard_progress_details_today', formdata)
         console.log(task)
-        //+ getLanguge()
+        //+ getLanguage()
         setData(task)
         setLoader(false)
     }
@@ -81,7 +81,7 @@ const SubmitSleep = () => {
         formdata.append("activity_id", "3");
         const result = await PostApiData('DashboardApi/new_weekly_overview', formdata)
         setGraphData(result)
-        //getLanguge()
+        //getLanguage()
         setLoaderGraph(false)
     }
     const dontDisplay = () => {

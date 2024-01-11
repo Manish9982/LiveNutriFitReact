@@ -31,25 +31,25 @@ const SubmitMonitoring = () => {
         getCalendar()
         getWeeklyOverview()
     }, [])
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         console.log("language======== ", lang)
 
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
 
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
 
         }
 
     }
 
 
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 

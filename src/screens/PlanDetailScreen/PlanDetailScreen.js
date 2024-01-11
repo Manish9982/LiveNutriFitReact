@@ -53,10 +53,10 @@ const PlanDetailScreen = ({ navigation, route }) => {
     }
 
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         setLoader(true)
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {

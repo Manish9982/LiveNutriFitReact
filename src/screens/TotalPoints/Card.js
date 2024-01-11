@@ -28,10 +28,10 @@ const strings = new LocalizedStrings({
 const Card = ({ points, maxPoints, date, cardData }) => {
     const isFocused = useIsFocused()
     //useEffect(() => { openFirstCard() }, [])
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
             strings.setLanguage(lang)

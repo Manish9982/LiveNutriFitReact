@@ -40,18 +40,18 @@ const SliderIntro = ({ navigation }) => {
     const isFocused = useIsFocused()
 
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         setLoader(true)
         const lang = await getDataFromLocalStorage("lang")
 
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
 
         }
 
@@ -60,7 +60,7 @@ const SliderIntro = ({ navigation }) => {
     }
 
 
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 

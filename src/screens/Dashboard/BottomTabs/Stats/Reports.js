@@ -26,18 +26,18 @@ const Reports = ({ navigation }) => {
         getAttachments()
     }, [])
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
         }
     }
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 
@@ -616,8 +616,7 @@ const Reports = ({ navigation }) => {
             :
             <View style={
                 {
-                    height: H * 0.91,
-                    //backgroundColor: 'red'
+
                 }
             }>
                 <HeaderForSubmissionScreens Title={strings.UploadReports} />
@@ -912,7 +911,7 @@ const Reports = ({ navigation }) => {
                     </Modal>
                     <View style={{
                         backgroundColor: "white",
-                        height: H * 0.56,
+                        height: H * 0.54,
                         marginTop: H * 0.02,
                         width: W * 0.9,
                         alignSelf: "center",

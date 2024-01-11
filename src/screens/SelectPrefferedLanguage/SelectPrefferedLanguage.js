@@ -21,13 +21,12 @@ const SelectPrefferedLanguage = ({ navigation }) => {
     }, [isFocused])
 
     const [data, setData] = useState(null)
-    const [language, setLanguage] = useState("1")
     const [showLoader, setShowLoader] = useState(true)
 
 
-    const { Nlanguagee } = useContext(DataContext)
+    const { Nlanguage } = useContext(DataContext)
 
-    const [languagee, setLanguagee] = Nlanguagee
+    const [language, setLanguage] = Nlanguage
 
 
 
@@ -44,18 +43,18 @@ const SelectPrefferedLanguage = ({ navigation }) => {
 
         if (n == '2') {
             // ShortToast("Hindi content will be available soon..", 'warning', '')
-            setLanguagee("hi")
+            setLanguage("hi")
             storeDataInLocalStorage('lang', "hi")
           //  navigation.replace("SliderIntro")  // modified to comment
 
         } else if (n == "1") {
-            setLanguagee("en")
+            setLanguage("en")
 
             storeDataInLocalStorage('lang', "en")
             navigation.replace("SliderIntro")
         }
         else {
-            setLanguagee("en")
+            setLanguage("en")
             storeDataInLocalStorage('lang', "en")
             navigation.replace("SliderIntro")
         }

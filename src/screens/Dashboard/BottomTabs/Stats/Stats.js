@@ -60,7 +60,7 @@ const Stats = (props) => {
   const [notificationCount, setNotificationCount] = useState("")
 
   const {
-    Nlanguagee,
+    Nlanguage,
     Nvisible,
     Nheading,
     NsubHeading,
@@ -85,7 +85,7 @@ const Stats = (props) => {
   const [crrnt, setCrrnt] = Ncrrnt
   const [trgt, setTrgt] = Ntrgt
   const [visibleMood, setVisibleMood] = NvisibleMood
-  const [languagee, setLanguagee] = Nlanguagee
+  const [language, setLanguage] = Nlanguage
 
   const isFocused = useIsFocused();
   ////////////////////////////////////////////
@@ -123,7 +123,7 @@ const Stats = (props) => {
     if (isFocused) {
       getPaidUserStatus()
     }
-    getLanguge()
+    getLanguage()
   }, [isFocused])
 
   useEffect(() => { getFirstTimeLoginStatus() }, [])
@@ -140,17 +140,17 @@ const Stats = (props) => {
     scrollRef.current.scrollTo({ y: 430, animated: true });
   }
   //lng
-  const getLanguge = async () => {
+  const getLanguage = async () => {
     setShowLoader(true)
     const lang = await getDataFromLocalStorage("lang")
     if (lang == "en") {
-      changeLaguagee('en')
+      changeLanguage('en')
     } else {
-      changeLaguagee('hi')
+      changeLanguage('hi')
     }
     setShowLoader(false)
   }
-  const changeLaguagee = (languageKey) => {
+  const changeLanguage = (languageKey) => {
     strings.setLanguage(languageKey)
   }
 
@@ -1777,7 +1777,7 @@ const Stats = (props) => {
                   paddingHorizontal: W * 0.025,
                   lineHeight: H * 0.03
                 }}>
-                  You have won 21 points on Successful Signup. You can check your Total Points from above.
+                  You have won 1000 points on Successful Signup. You can check your Total Points from above.
                 </Text>
                 <TouchableOpacity onPress={() => {
                   setFirstTimeLogin(false)
@@ -2119,7 +2119,6 @@ const Stats = (props) => {
           </View>
         </View>
       </>
-
   )
 }
 const styles = StyleSheet.create({

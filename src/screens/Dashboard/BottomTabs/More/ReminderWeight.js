@@ -9,7 +9,7 @@ import { storeDataInLocalStorage } from '../../../../local storage/LocalStorage'
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
-const ReminderExcercise = () => {
+const ReminderExercise = () => {
 
     const alarm = new Date()
     const alarm2 = new Date()
@@ -324,4 +324,4 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     }
 })
-export default ReminderExcercise
+export default ReminderExercise

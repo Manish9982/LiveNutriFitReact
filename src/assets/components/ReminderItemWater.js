@@ -117,7 +117,7 @@ const ReminderItemWater = ({ date, reminder, remindersection, time, checked, onC
                         storeDataInLocalStorage('alarmE1',
                             JSON.stringify(t.nativeEvent.timestamp))
                         onCreateTriggerNotification(t.nativeEvent.timestamp - 50000,
-                            "Excercise Reminder!", "It's Time for your workout.", "1")
+                            "Exercise Reminder!", "It's Time for your workout.", "1")
                     }}
                 />
                     :

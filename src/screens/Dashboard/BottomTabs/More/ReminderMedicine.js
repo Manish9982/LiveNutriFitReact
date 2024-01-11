@@ -9,7 +9,7 @@ import { storeDataInLocalStorage, getDataFromLocalStorage } from '../../../../lo
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
-const ReminderExcercise = () => {
+const ReminderExercise = () => {
 
     useEffect(() => { getUserAlarms() }, [])
 
@@ -355,4 +355,4 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     }
 })
-export default ReminderExcercise
+export default ReminderExercise

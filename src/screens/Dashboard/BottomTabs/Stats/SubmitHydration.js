@@ -35,27 +35,27 @@ const SubmitHydration = () => {
         getWeeklyOverview()
     }, [])
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         strings.setLanguage(lang)
     }
 
 
     //     if (lang == "en") {
-    //         changeLaguagee('en')
+    //         changeLanguage('en')
 
     //     } else {
-    //         changeLaguagee('hi')
+    //         changeLanguage('hi')
 
     //     }
 
     // }
 
 
-    // const changeLaguagee = (languageKey) => {
+    // const changeLanguage = (languageKey) => {
     //     strings.setLanguage(languageKey)
     // }
 
@@ -96,7 +96,7 @@ const SubmitHydration = () => {
         formdata.append("activity_id", "4");
         const result = await PostApiData('DashboardApi/new_weekly_overview', formdata)
         setGraphData(result)
-        //getLanguge()
+        //getLanguage()
 
         setLoaderGraph(false)
     }

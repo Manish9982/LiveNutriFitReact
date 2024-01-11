@@ -28,18 +28,18 @@ const Goal = () => {
   const isFocused = useIsFocused()
 
   useEffect(() => { getUserTasks() }, [])
- useEffect(() => { getLanguge() }, [isFocused])
+ useEffect(() => { getLanguage() }, [isFocused])
   
 
-  const getLanguge = async () => {
+  const getLanguage = async () => {
     setLoader(true)
     const lang = await getDataFromLocalStorage("lang")
     strings.setLanguage(lang)
 
     // if (lang == "en") {
-    //   changeLaguagee('en')
+    //   changeLanguage('en')
     // } else {
-    //   changeLaguagee('hi')
+    //   changeLanguage('hi')
     // }
     setLoader(false)
   }

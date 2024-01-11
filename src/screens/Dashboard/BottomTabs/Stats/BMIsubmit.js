@@ -38,10 +38,10 @@ const BMIsubmit = ({ navigation, route }) => {
     getGraphForSystolic(`${selectedYear}-${selectedMonth}-11`)
   }, [])
 
-  useEffect(() => { getLanguge() }, [isFocused])
+  useEffect(() => { getLanguage() }, [isFocused])
 
   //lng
-  const getLanguge = async () => {
+  const getLanguage = async () => {
       const lang = await getDataFromLocalStorage("lang")
       if (lang == "en") {
           strings.setLanguage(lang)

@@ -23,20 +23,20 @@ import LocalizedStrings from 'react-native-localization';
 
 const ListForExercise = (props) => {
     useEffect(() => { console.log("props" ,props), setLikedExercise(props.Liked) }, [props.Liked])
-    const { NmyExcercise } = useContext(DataContext)
+    const { NmyExercise } = useContext(DataContext)
     const navigation = useNavigation()
 
     const [likedExercise, setLikedExercise] = useState(true)
     const [expand, setExpand] = useState(false)
     const [visibleMood, setVisibleMood] = useState(false)
-    const [myExcercise, setMyExcercise] = NmyExcercise
+    const [myExercise, setMyExercise] = NmyExercise
     const [loader, setLoader] = useState(false)
     
 
     useEffect(() => {
-        getLanguge()
+        getLanguage()
     }, [])
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         strings.setLanguage(lang)
         console.log("currentLanguage", lang)
@@ -57,7 +57,7 @@ const ListForExercise = (props) => {
             formdata2.append("user_id", JSON.parse(temp));
             const result = await PostApiData('get_userexcersie_list', formdata2)
             if (result.status == '200') {
-                setMyExcercise(result)
+                setMyExercise(result)
                 ShortToast(resultExercise.message, 'success', '')
             }
             else {

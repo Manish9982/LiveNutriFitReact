@@ -178,7 +178,7 @@ export const PostApiData = async (ApiName, formdata) => {
 
       } catch (error) {
          const temp = await getDataFromLocalStorage('user_id')
-         ToastAndroid.show(`${error}`, ToastAndroid.SHORT)
+         //ToastAndroid.show(`${error}`, ToastAndroid.SHORT)
          //ShortToast(`Message for Developer: Api That Failed: ${ApiName} for User ID:${temp}`, "error", "")
          ShortToast(`Something went wrong`, "error", "")
       }
@@ -192,13 +192,13 @@ export const PostApiData = async (ApiName, formdata) => {
 export const ShortToast = (msg, style, title) => {
    if (Platform.OS == "android") {
       SweetAlert.showAlertWithOptions({
-         title: JSON.stringify(msg),
+         title: msg,
          subTitle: '',
          confirmButtonTitle: 'OK',
          confirmButtonColor: colors.GREEN,
          otherButtonTitle: 'Cancel',
          otherButtonColor: '#dedede',
-         style: JSON.stringify(style),
+         style: style,
          cancellable: true,
       },
          callback => console.log('callback'))
@@ -264,9 +264,6 @@ export function cmToFeetAndInches(cm) {
       inches: remainingInches
    };
 }
-
-
-
 
 const styles = StyleSheet.create({
    container: {

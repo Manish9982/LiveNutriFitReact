@@ -30,7 +30,7 @@ const UpgradeStack = ({ navigation }) => {
 
     useEffect(() => {
         getDataFromApi()
-        getLanguge()
+        getLanguage()
     }, [isFocused])
 
     // useEffect(() => {
@@ -54,7 +54,7 @@ const UpgradeStack = ({ navigation }) => {
 
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
             strings.setLanguage(lang)
@@ -202,7 +202,7 @@ const UpgradeStack = ({ navigation }) => {
                 </View>
                 <View style={styles.conditionsContainer}>
                     {checkIcon}
-                    {/* <Text style={styles.textConditions}>Unlock over 100+ medal and excercise plans</Text> */}
+                    {/* <Text style={styles.textConditions}>Unlock over 100+ medal and Exercise plans</Text> */}
                     <Text style={styles.textConditions}>{strings.Unlockover100mealandexerciseplans}</Text>
                 </View>
                 <View style={styles.conditionsContainer}>

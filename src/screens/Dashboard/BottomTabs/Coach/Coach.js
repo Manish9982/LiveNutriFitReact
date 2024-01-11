@@ -19,8 +19,8 @@ import english from '../../../../en'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
 import DocumentPicker from 'react-native-document-picker'
+import { requestCameraAndGalleryPermissions } from '../../../../colorSchemes/RequestPermissions'
 
 
 
@@ -73,8 +73,7 @@ const Coach = ({ navigation }) => {
 
   useEffect(() => {
     getMessages(),
-
-      getLanguge(),
+      getLanguage(),
       setIsInfoButtonVisible(false)
     requestCameraPermission()
     markMessageAsRead()
@@ -87,7 +86,7 @@ const Coach = ({ navigation }) => {
   }, [])
 
   //lng
-  const getLanguge = async () => {
+  const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
     strings.setLanguage(lang)
   }
@@ -330,6 +329,20 @@ const Coach = ({ navigation }) => {
         ShortToast(err, "error", "");
       }
     }
+    else {
+      try {
+        const pic = await ImagePicker.openCamera({
+          width: 300,
+          height: 400,
+          cropping: true,
+        });
+        console.log("CAmPic======>", pic)
+        uploadCamPic(pic)
+        setCamVisible(false)
+      } catch (err) {
+        ShortToast(`${err}`, 'error', '');
+      }
+    }
   };
 
   const launchGallery = async () => {
@@ -397,6 +410,9 @@ const Coach = ({ navigation }) => {
       } catch (err) {
         ShortToast(err, "error", "");
       }
+    }
+    else {
+      requestCameraAndGalleryPermissions()
     }
 
   }
@@ -789,7 +805,7 @@ const Coach = ({ navigation }) => {
           {/* <TouchableOpacity onPress={() => { handleOnPress1() }} style={[styles.mealButton, { backgroundColor: buttonBgColor }]}>
             <Text style={[styles.textStyle, { color: textColor }]}>{strings.Coach}</Text>
           </TouchableOpacity> */}
-          {/* <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.excerciseButton, { backgroundColor: buttonBgColor2 }]}>
+          {/* <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.ExerciseButton, { backgroundColor: buttonBgColor2 }]}>
             <Text style={[styles.textStyle, { color: textColor2 }]}>{strings.Doctor}</Text>
           </TouchableOpacity> */}
 
@@ -993,9 +1009,10 @@ const Coach = ({ navigation }) => {
             alignItems: "center"
           }}>
               <View style={{
-                //paddingVertical: H * 0.05,
-                height: H * 0.5,
-                width: W * 0.9,
+                padding: 10,
+                alignSelf:'center',
+                // height: H * 0.5,
+                 width: W * 0.9,
                 backgroundColor: "white",
                 borderRadius: 10,
                 justifyContent: "space-between",
@@ -1009,7 +1026,8 @@ const Coach = ({ navigation }) => {
                   style={{}}
                 />
                 <Text style={{
-                  ...fontFamily.bold
+                  ...fontFamily.bold,
+                  marginTop: 10,
                 }}>
                   {strings.comments} :
                 </Text>
@@ -1017,16 +1035,17 @@ const Coach = ({ navigation }) => {
                   value={description}
                   onChangeText={(t) => { setDescription(t) }}
                   style={{
-                    height: H * 0.08,
                     width: W * 0.8,
                     alignSelf: "center",
-                    backgroundColor: colors.OFFWHITE
+                    backgroundColor: colors.OFFWHITE,
+                    marginTop: 10,
                   }}
                 />
 
                 <View style={{
                   flexDirection: "row",
                   width: W,
+                  marginTop: 10,
                   justifyContent: "space-evenly"
                 }}>
                   <TouchableOpacity
@@ -1239,7 +1258,7 @@ const makeStyles = (H, W) => StyleSheet.create({
     // borderTopLeftRadius: 8,
     // borderBottomLeftRadius: 8,
   },
-  excerciseButton:
+  ExerciseButton:
   {
     height: H * 0.06,
     width: W * 0.5,

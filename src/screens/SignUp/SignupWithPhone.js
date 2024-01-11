@@ -53,7 +53,7 @@ const SignupWithPhone = ({ navigation }) => {
 
     const isFocused = useIsFocused()
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
 
 
@@ -61,24 +61,24 @@ const SignupWithPhone = ({ navigation }) => {
         setChecked(prev => !prev);
     };
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         setLoaderNeeded(true)
         const lang = await getDataFromLocalStorage("lang")
 
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
             setTangText("1")
 
         } else {
             setTangText("2")
-            changeLaguagee('hi')
+            changeLanguage('hi')
         }
 
         setLoaderNeeded(false)
 
     }
 
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 

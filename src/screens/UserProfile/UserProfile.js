@@ -46,7 +46,7 @@ const UserProfile = ({ navigation }) => {
     const isFocused = useIsFocused()
 
     useEffect(() => {
-        getLanguge()
+        getLanguage()
         getDataForUserProfile()
         //requestCameraPermission()
         requestCameraAndGalleryPermissions()
@@ -54,20 +54,20 @@ const UserProfile = ({ navigation }) => {
 
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
 
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
 
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
 
         }
 
     }
 
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 

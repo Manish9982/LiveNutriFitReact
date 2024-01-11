@@ -52,11 +52,11 @@ export default function YourHealthIndexForFreeUser({ navigation, route }) {
     }, [])
 
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         strings.setLanguage(lang)
         const userTypeValue = await getDataFromLocalStorage('user_type')

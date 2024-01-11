@@ -58,10 +58,10 @@ const TotalPoints = () => {
         requestCameraPermission()
     }, [])
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         setLoader(true)
         const lang = await getDataFromLocalStorage("lang")
         strings.setLanguage(lang)
@@ -187,7 +187,7 @@ const TotalPoints = () => {
     }
     const getTotalPoints = async () => {
         setLoader(true)
-        //  getLanguge()
+        //  getLanguage()
         var formdata = new FormData();
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("user_id", JSON.parse(temp));

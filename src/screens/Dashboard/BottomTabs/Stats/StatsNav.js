@@ -1,7 +1,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Stats from './Stats';
-import SubmitExcercise from './SubmitExcercise';
+import SubmitExercise from './SubmitExercise';
 import SubmitFasting from './SubmitFasting';
 import SubmitMealPlan from './SubmitMealPlan';
 import SubmitSleep from './SubmitSleep';
@@ -33,7 +33,7 @@ const StatsNav = ({ navigation }) => {
         }}>
             <Stack.Screen name="Stats" component={Stats} />
             <Stack.Screen name="SubmitMealPlan" component={SubmitMealPlan} />
-            <Stack.Screen name="SubmitExcercise" component={SubmitExcercise} />
+            <Stack.Screen name="SubmitExercise" component={SubmitExercise} />
             <Stack.Screen name="SubmitSleep" component={SubmitSleep} />
             <Stack.Screen name="SubmitHydration" component={SubmitHydration} />
             <Stack.Screen name="SubmitMood" component={SubmitMood} />

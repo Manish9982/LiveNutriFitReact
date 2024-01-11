@@ -47,17 +47,17 @@ const theme = {
 
 const InfoCard = (props) => {
     const isFocused = useIsFocused()
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
         }
     }
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 
@@ -85,7 +85,7 @@ const InfoCard = (props) => {
             navigation.navigate("SubmitMealPlan")
         }
         else if (id == "Exercise") {
-            navigation.navigate("SubmitExcercise")
+            navigation.navigate("SubmitExercise")
         }
         else if (id == "Sleep") {
             navigation.navigate("SubmitSleep")

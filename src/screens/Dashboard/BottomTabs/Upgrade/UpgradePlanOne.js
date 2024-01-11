@@ -37,26 +37,26 @@ const UpgradePlanOne = ({ navigation, route }) => {
 
     useEffect(() => {
 
-        getLanguge()
+        getLanguage()
 
     }, [isFocused])
 
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
 
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
 
         }
 
     }
 
 
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 
@@ -1897,7 +1897,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
                         </View>
                         <View style={styles.conditionsContainer}>
                             {checkIcon}
-                            {/* <Text style={styles.textConditions}>Unlock over 100+ medal and excercise plans</Text> */}
+                            {/* <Text style={styles.textConditions}>Unlock over 100+ medal and Exercise plans</Text> */}
                             <Text style={styles.textConditions}>{strings.Unlockover100mealandexerciseplans}</Text>
                         </View>
                         <View style={styles.conditionsContainer}>

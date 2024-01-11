@@ -42,7 +42,7 @@ const PaidCustomQuestions = ({ navigation, route }) => {
     }, [])
 
 
-    useEffect(() => { getLanguge(), getPLanDuration() }, [isFocused])
+    useEffect(() => { getLanguage(), getPLanDuration() }, [isFocused])
 
 
     const getPLanDuration = async () => {
@@ -54,19 +54,19 @@ const PaidCustomQuestions = ({ navigation, route }) => {
 
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
             getQuestions("1")
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
             getQuestions("2")
 
         }
     }
 
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 

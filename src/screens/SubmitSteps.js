@@ -72,7 +72,7 @@ const SubmitSteps = () => {
         getSelectedOption()
     }, [])
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
 
     const languages = [
         { label: 'MI Band', value: 'mi' },
@@ -82,7 +82,7 @@ const SubmitSteps = () => {
     ];
 
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
 
         strings.setLanguage(lang)

@@ -24,10 +24,10 @@ const WHRsubmit = ({ navigation }) => {
 
   const [loader, setLoader] = useState(false)
 
-  useEffect(() => { getLanguge() }, [isFocused])
+  useEffect(() => { getLanguage() }, [isFocused])
 
   //lng
-  const getLanguge = async () => {
+  const getLanguage = async () => {
     setLoader(true)
     
     const lang = await getDataFromLocalStorage("lang")

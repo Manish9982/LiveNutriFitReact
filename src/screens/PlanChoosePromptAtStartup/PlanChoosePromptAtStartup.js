@@ -28,7 +28,7 @@ const strings = new LocalizedStrings({
 
 export default function PlanChoosePromptAtStartup({ navigation }) {
     const isFocused = useIsFocused()
-    // useEffect(() => { getLanguge() }, [isFocused])
+    // useEffect(() => { getLanguage() }, [isFocused])
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -42,14 +42,14 @@ export default function PlanChoosePromptAtStartup({ navigation }) {
 
     const [duration, setDuration] = useState("3 months")
     useEffect(() => {
-        getLanguge()
+        getLanguage()
     }, [])
 
 
 
 
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         setShowLoader(true)
         const lang = await getDataFromLocalStorage("lang")
         const userType = await getDataFromLocalStorage("user_type")

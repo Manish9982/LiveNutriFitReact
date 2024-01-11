@@ -42,8 +42,8 @@ const HEIGHT = Dimensions.get('window').height
 
 const BottomTabs = ({ route }) => {
 
-  const { Nlanguagee } = useContext(DataContext)
-  const [languagee, setLanguagee] = Nlanguagee
+  const { Nlanguage } = useContext(DataContext)
+  const [language, setLanguage] = Nlanguage
 
   const [langTypeText, setLangTypeText] = useState("")
   const [hidetab, sethHidetab] = useState("")
@@ -70,11 +70,11 @@ const BottomTabs = ({ route }) => {
   }, []);
 
 
-  React.useEffect(() => { getLanguge() }, [])
+  React.useEffect(() => { getLanguage() }, [])
 
 
 
-  const getLanguge = async () => {
+  const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
     const countrySelected = await getDataFromLocalStorage("country")
     strings.setLanguage(lang)
@@ -237,19 +237,19 @@ const BottomTabs = ({ route }) => {
         },
         initialRouteName: " "
       })} >
-      <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Home" : "Home" }} />
-      {/* <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Upgrade" : "Upgrade" }} /> */}
-      <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "Plans" : "Plans" }} />
-      <Tab.Screen name="Coach" component={Coach} options={{ tabBarHideOnKeyboard: true, tabBarBadge: count, tabBarLabel: (languagee || langTypeText) == "en" ? "Message" : "Message" }} />
-      {/* {hidetab == "India" ? <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "LNF Shop" : "LNF शॉप" }} />
+      <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: (language || langTypeText) == "en" ? "Home" : "Home" }} />
+      {/* <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: (language || langTypeText) == "en" ? "Upgrade" : "Upgrade" }} /> */}
+      <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: (language || langTypeText) == "en" ? "Plans" : "Plans" }} />
+      <Tab.Screen name="Coach" component={Coach} options={{ tabBarHideOnKeyboard: true, tabBarBadge: count, tabBarLabel: (language || langTypeText) == "en" ? "Message" : "Message" }} />
+      {/* {hidetab == "India" ? <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (language || langTypeText) == "en" ? "LNF Shop" : "LNF शॉप" }} />
         : null} */}
-      <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (languagee || langTypeText) == "en" ? "LNF Shop" : "LNF Shop" }} />
+      <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (language || langTypeText) == "en" ? "LNF Shop" : "LNF Shop" }} />
     </Tab.Navigator>
-    //   <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: languagee == "en" ? "Home" : "होम"}} />
-    //   <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: languagee == "en" ? "Upgrade" : "अपग्रेड" }} />
-    //   <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: languagee == "en" ? "Plans" : "प्लान्स" }} />
-    //   <Tab.Screen name="Coach" component={Coach} options={{ tabBarStyle: { display: 'none' }, tabBarBadge: count, tabBarLabel: languagee == "en" ? "Coach" : "कोच" }} />
-    //   <Tab.Screen name="More" component={MoreNavigation} options={{ tabBarLabel: languagee == "en" ? "More" : "मोर" }} />
+    //   <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: language == "en" ? "Home" : "होम"}} />
+    //   <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: language == "en" ? "Upgrade" : "अपग्रेड" }} />
+    //   <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: language == "en" ? "Plans" : "प्लान्स" }} />
+    //   <Tab.Screen name="Coach" component={Coach} options={{ tabBarStyle: { display: 'none' }, tabBarBadge: count, tabBarLabel: language == "en" ? "Coach" : "कोच" }} />
+    //   <Tab.Screen name="More" component={MoreNavigation} options={{ tabBarLabel: language == "en" ? "More" : "मोर" }} />
     // </Tab.Navigator>
   )
 }

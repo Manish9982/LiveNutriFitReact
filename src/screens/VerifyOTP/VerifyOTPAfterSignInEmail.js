@@ -36,19 +36,19 @@ const VerifyOTPAfterSignInEmail = ({ navigation, route }) => {
   const isFocused = useIsFocused()
 
 
-  useEffect(() => { getLanguge() }, [isFocused])
+  useEffect(() => { getLanguage() }, [isFocused])
 
 
 //lng
-const getLanguge = async () => {
+const getLanguage = async () => {
   setLoader(true)
   const lang = await getDataFromLocalStorage("lang")
 
   if (lang == "en") {
-    changeLaguagee('en')
+    changeLanguage('en')
 
   } else {
-    changeLaguagee('hi')
+    changeLanguage('hi')
 
   }
   setLoader(false)
@@ -56,7 +56,7 @@ const getLanguge = async () => {
 }
 
 
-const changeLaguagee = (languageKey) => {
+const changeLanguage = (languageKey) => {
   strings.setLanguage(languageKey)
 }
 

@@ -12,11 +12,7 @@ import { getDataFromLocalStorage } from '../../../../local storage/LocalStorage'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
-
-
 import { useIsFocused } from '@react-navigation/native';
-
-
 import DataContext from '../../../../context/DataContext';
 import Loader from '../../../../assets/components/Loader';
 import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens';
@@ -32,8 +28,8 @@ const WIDTH = Dimensions.get('window').width
 
 const More = ({ navigation }) => {
   const isFocused = useIsFocused()
-  const { Nlanguagee } = useContext(DataContext)
-  const [languagee, setLanguagee] = Nlanguagee
+  const { Nlanguage } = useContext(DataContext)
+  const [language, setLanguage] = Nlanguage
   const [pdfURL, setPdfURL] = useState("")
   const [notificationCount, setNotificationCount] = useState("")
   const [usertypetext, setUsertypetext] = useState("")
@@ -47,31 +43,29 @@ const More = ({ navigation }) => {
 
   useEffect(() => {
     // changeLanguageAPI()
-    getLanguge()
+    getLanguage()
   }, [])
 
   useEffect(() => {
-
     toastuserType()
     getuserType()
-
     getNotificationCount()
   }, [isFocused])
 
 
-  const getLanguge = async () => {
+  const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
     if (lang == "en") {
-      changeLaguagee('en')
+      changeLanguage('en')
       setLangTypeText("1")
     } else {
       setLangTypeText("2")
-      changeLaguagee('hi')
+      changeLanguage('hi')
     }
   }
 
 
-  const changeLaguagee = (languageKey) => {
+  const changeLanguage = (languageKey) => {
     strings.setLanguage(languageKey)
     // strings.setLanguage("en")
     setLangText2(languageKey)
@@ -84,9 +78,7 @@ const More = ({ navigation }) => {
       // convert to Hindi from english
       //  setLangText("English")   // convert to Hindi from english
     }
-
   }
-
 
   useEffect(() => {
     removeValue()
@@ -98,7 +90,6 @@ const More = ({ navigation }) => {
     } catch (e) {
       // remove error
     }
-
     console.log('Done.')
   }
 
@@ -145,7 +136,7 @@ const More = ({ navigation }) => {
     formdata.append("country", "IN")
     const result = await PostApiData('update_user_language', formdata)
     if (result.status == 200) {
-      getLanguge()
+      getLanguage()
     } else {
       ShortToast(result?.message, 'error', '')
     }
@@ -161,14 +152,10 @@ const More = ({ navigation }) => {
     console.log("Gaurav== ", result)
     if (result.status == 200) {
       //  setNotificationCount(result.count)
-
       setData(result)
-
     } else {
-
       ShortToast(result?.message, 'error', '')
     }
-
     setLoader(false)
   }
 
@@ -198,10 +185,7 @@ const More = ({ navigation }) => {
     formdata.append("id", JSON.parse(temp))
     const result = await PostApiData('group_read_message', formdata)
     if (result.status == 200) {
-
       console.log("GauravNotificationCount  == ", result)
-
-
     } else {
       //ShortToast(result?.message, 'error', '')
     }
@@ -239,14 +223,11 @@ const More = ({ navigation }) => {
       await AsyncStorage.clear()
     } catch (e) {
     }
-
     console.log('Done.')
-
-
   }
+
   const openURL = () => {
     navigation.navigate("BlogWebView")
-
     // Alert.alert("Coming Soon", "Feature Comming Soon!")
   }
   return (
@@ -405,7 +386,7 @@ const More = ({ navigation }) => {
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
 
-              {/* <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
+              <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
                 <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/images/Reminder.jpg')}
@@ -414,8 +395,7 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.reminder}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} /> */}
-
+              <Divider style={styles.dividerStyle} />
 
               <TouchableOpacity onPress={() => {
                 //ShortToast('Coming Soon..', 'warning', '')

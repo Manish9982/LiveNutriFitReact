@@ -44,7 +44,7 @@ const ForgetPassword = ({ navigation, route }) => {
     const [confirmpassword, setConfirmPassword] = useState("")
     const [email, setEmail] = useState("")
     const [loader, setLoader] = useState("")
-    useEffect(() => { getLanguge() }, [])
+    useEffect(() => { getLanguage() }, [])
 
 
     const testEmail = (text) => {
@@ -53,7 +53,7 @@ const ForgetPassword = ({ navigation, route }) => {
     }
 
 
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         // setLoader(true)
         setEmail(route?.params?.email)
         const lang = await getDataFromLocalStorage("lang")

@@ -24,27 +24,27 @@ const date = new Date()
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
-const SubmitExcercise = () => {
+const SubmitExercise = () => {
     const isFocused = useIsFocused()
 
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
     //lng
-    const getLanguge = async () => {
+    const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         console.log("language======== ", lang)
 
         if (lang == "en") {
-            changeLaguagee('en')
+            changeLanguage('en')
 
         } else {
-            changeLaguagee('hi')
+            changeLanguage('hi')
 
         }
 
     }
 
 
-    const changeLaguagee = (languageKey) => {
+    const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 
@@ -71,7 +71,7 @@ const SubmitExcercise = () => {
     //     formdata.append("activity_id", "2")
     //     const task = await PostApiData('user_dashboard_progress_details_today', formdata)
     //     console.log(task)
-    //     //getLanguge()
+    //     //getLanguage()
     //     setData(task)
     //     setLoader(false)
     // }
@@ -172,7 +172,7 @@ const SubmitExcercise = () => {
             </View >
             :
             <View>
-                <HeaderForSubmissionScreens Title={strings.ExcerciseProgress} />
+                <HeaderForSubmissionScreens Title={strings.ExerciseProgress} />
                 <View style={styles.mainContainer}>
                     <View style={styles.Calendar}>
                         <View style={styles.displayDataContainer}>
@@ -201,7 +201,7 @@ const SubmitExcercise = () => {
 
                         </View>
                     </View>
-                    <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL }}>{strings.TodaysExcercise}</Text>
+                    <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL }}>{strings.TodaysExercise}</Text>
                     <View style={styles.ApiDataText}>
                         <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{attributeShow(data)}</Text>
                     </View>
@@ -498,4 +498,4 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 })
-export default SubmitExcercise
+export default SubmitExercise

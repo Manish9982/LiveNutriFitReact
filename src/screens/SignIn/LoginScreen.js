@@ -11,7 +11,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 const LoginScreen = ({ navigation, route }) => {
     const isFocused = useIsFocused()
-    useEffect(() => { getLanguge() }, [isFocused])
+    useEffect(() => { getLanguage() }, [isFocused])
     
     const [email, setEmail] = useState("")
 
