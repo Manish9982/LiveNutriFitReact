@@ -11,12 +11,9 @@ import { getDataFromLocalStorage } from '../../../local storage/LocalStorage';
 import DataState from '../../../context/DataState';
 import DataContext from '../../../context/DataContext';
 
-
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../hi'
 import english from '../../../en'
-
-
 
 //lang chnge
 const strings = new LocalizedStrings({
@@ -24,19 +21,16 @@ const strings = new LocalizedStrings({
     hi: hindi,
 });
 
-
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
 const fontConfig = {
-
     android: {
         regular: {
             fontFamily: 'Montserrat-Regular',
             fontWeight: 'normal',
             fontSize: fontSizes.MED,
         }
-
     }
 };
 
@@ -57,30 +51,24 @@ const InfoCard = (props) => {
             changeLanguage('hi')
         }
     }
+
     const changeLanguage = (languageKey) => {
         strings.setLanguage(languageKey)
     }
 
-
-
     const navigation = useNavigation();
 
     const [activity_id, setActivity_id] = useState('')
-
     const { NvisibleSnackOne, NvisibleSnackTwo, NvisibleSnackThree, NvisibleMood } = useContext(DataContext)
-
     const [visibleSnackOne, setVisibleSnackOne] = NvisibleSnackOne
     const [visibleSnackTwo, setVisibleSnackTwo] = NvisibleSnackTwo
     const [visibleSnackThree, setVisibleSnackThree] = NvisibleSnackThree
     const [visibleMood, setVisibleMood] = NvisibleMood
-
     const arrowIcon = <Icon name="right" size={20} color='white' />
     const arrowIcon2 = <Icon name="down" size={20} color='white' />
     const medalIcon = <Image source={require('../../../assets/icons/goldcoin.png')}
         style={{ height: 20, width: 20 }} />
-
     const ArrowPressed = (id) => {
-
         if (id == "Meal Plan") {
             navigation.navigate("SubmitMealPlan")
         }
@@ -155,11 +143,6 @@ const InfoCard = (props) => {
         return OkArray[Math.floor(Math.random() * OkArray.length)]
     }
 
-
-
-
-
-
     // const getBadMessage = () => {
     //     const BadArray = ["Don't worry! The future belongs to those who believe in the beauty of their dreams.",
     //         "Relax! Think of tomorrow, the past can't be mended.",
@@ -172,11 +155,12 @@ const InfoCard = (props) => {
 
 
     const getBadMessage = () => {
-        const BadArray = [strings.DontworryThefuturebelongstothosewhobelieveinthebeautyoftheirdreams,
-        strings.RelaxThinkoftomorrow,
-        strings.NoworriesYesterday,
-        strings.Itsok,
-        strings.NoProblem,
+        const BadArray = [
+            strings.DontworryThefuturebelongstothosewhobelieveinthebeautyoftheirdreams,
+            strings.RelaxThinkoftomorrow,
+            strings.NoworriesYesterday,
+            strings.Itsok,
+            strings.NoProblem,
         ]
         return BadArray[Math.floor(Math.random() * BadArray.length)]
     }
@@ -194,15 +178,10 @@ const InfoCard = (props) => {
         else if (props?.numberOfCoins === 2) {
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-
                     {medalIcon}
-
                     {medalIcon}
-
                 </View>
             )
-
-
         }
         else if (props?.numberOfCoins === 3) {
             return (
@@ -212,7 +191,6 @@ const InfoCard = (props) => {
                     {medalIcon}
                 </View>
             )
-
         }
         else {
             return null
@@ -345,11 +323,9 @@ const InfoCard = (props) => {
                             else if (props.Attributes[1] !== "Sugar" && props.Attributes[1] !== "2") {
                                 //ShortToast(getOkMessage(), 'success', '')
                             }
-
                             secondChoiceTrigger(props.Text)
                         }}
                             style={[styles.choiceButtons, { backgroundColor: throwColor(2) }]}>
-
                             {props.Attributes[1] == 2 ? <Image source={require('../../../assets/icons/confused.png')}
                                 style={{ height: 20, width: 20, alignSelf: 'center' }} />
                                 :
@@ -360,7 +336,6 @@ const InfoCard = (props) => {
                             if (props.Attributes[2] !== "BP") {
                                 //  ShortToast(getBestMessage(), 'success', '')
                             }
-
                             thirdChoiceTrigger(props.Text)
                         }}
                             style={[styles.choiceButtons, { backgroundColor: throwColor(3) }]}>

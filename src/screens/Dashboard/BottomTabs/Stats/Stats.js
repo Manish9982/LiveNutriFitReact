@@ -409,7 +409,7 @@ const Stats = (props) => {
     );
   }
 
-  const renderItem = ({ item }) => {
+  const renderItem = (item, index) => {
     const getColorForText = (t) => {
       if (t == "Underweight") {
         return "#b58502"
@@ -486,7 +486,9 @@ const Stats = (props) => {
     }
     /*///Weigth, Sugar, BP////*////////////////////////////////////////////////////////////////////////////////////////////
     return (
-      <View style={styles.cardForMonitoringStats}>
+      <View
+        key={index}
+        style={styles.cardForMonitoringStats}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
           <Text style={{ ...fontFamily.bold, marginLeft: WIDTH * 0.02 }}>{item.heading}</Text>
           <View style={{
@@ -555,7 +557,7 @@ const Stats = (props) => {
       </View>)
   }
   //////////////////////////////////////Pain, BMI, BMR/////////////////////////////
-  const renderItemTwo = ({ item }) => {
+  const renderItemTwo = (item, index) => {
     const getColor = (heading, subHeading) => {
       if (heading == "BMI") {
         if (subHeading == "Underweight") {
@@ -594,7 +596,9 @@ const Stats = (props) => {
     }
     return (
       item.heading !== "Calories" ?
-        <TouchableOpacity style={styles.renderItemTwoContainer}
+        <TouchableOpacity
+          key={index}
+          style={styles.renderItemTwoContainer}
           onPress={() => {
             setIsInfoButtonVisible(false)
             item.heading == "Calories" ? ShortToast('Calorie Budget is handled by Coach. Kindly contact your Coach', 'error', '') : null
@@ -628,7 +632,6 @@ const Stats = (props) => {
                   item.heading == "BMR" && ShortToast("Your BMR Value is calculated based on your provided details. Please contact your Coach if you wish to Change it.", "warning", "")
                   item.heading == "WHR" && props.navigation.navigate("WHRSubmitMedium")
                   item.heading == "Reports" && props.navigation.navigate("Reports")
-
                 }}>
                 <LinearGradient colors={[colors.ORANGE, colors.ORANGE2, colors.ORANGE3]}
                   style={styles.smallNextButton}>
@@ -828,7 +831,7 @@ const Stats = (props) => {
                     // left: W * 0.88,
                     // top: H * 0.021,
                     // position: 'absolute'
-                    //  marginTop:H*0.004,
+                    // marginTop:H*0.004,
                   }}>
                   <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/891/891012.png" }}
                     style={{
@@ -849,7 +852,7 @@ const Stats = (props) => {
                     height: H * 0.027,
                     width: H * 0.027,
                     borderRadius: H * 0.03 / 2,
-                    // backgroundColor: "red",
+                    //backgroundColor: "red",
                     //position: 'absolute',
                     //left: W * 0.92,
                     justifyContent: 'center',
@@ -2098,16 +2101,33 @@ const Stats = (props) => {
               {myloop}
               {/*********************PAID USER*******************/}
               <View style={{ marginTop: HEIGHT * 0.02, alignItems: 'center' }}>
-                <FlatList
+                {/* <FlatList
                   data={dataForPaidUser?.single}
                   renderItem={renderItem}
                   keyExtractor={(item, index) => `${index}`}
-                />
-                <FlatList
+                /> */}
+                {/* <FlatList
                   data={dataForPaidUser?.data}
                   renderItem={renderItemTwo}
                   keyExtractor={(item, index) => `${index}`}
-                  numColumns={2} />
+                  numColumns={2} /> */}
+                {
+                  dataForPaidUser?.single?.map((item, index) => {
+                    return (
+                      renderItem(item, index)
+                    )
+                  })
+                }
+                <View style={styles.renderItemTwoViewContainer}>
+                  {
+                    dataForPaidUser?.data?.map((item, index) => {
+                      return (
+                        renderItemTwo(item, index)
+                      )
+                    })
+                  }
+                </View>
+
                 {/*  <Image source={require('../../../../assets/icons/blog.png')}
                     style={{
                       height: H * 0.12,
@@ -2295,6 +2315,13 @@ const styles = StyleSheet.create({
     elevation: 1,
     ...ShadowsiOS,
 
+  },
+  renderItemTwoViewContainer:
+  {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    //backgroundColor: 'red',
+    justifyContent: 'center'
   },
   nextButton:
   {

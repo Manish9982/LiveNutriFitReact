@@ -22,9 +22,6 @@ const strings = new LocalizedStrings({
     hi: hindi,
 });
 
-
-
-
 const data = ['Option 1', 'Option 2', 'Option 3', 'Option 4']; // Your array of values
 
 //linechartdata

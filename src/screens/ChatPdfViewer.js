@@ -5,7 +5,6 @@ import { H, W, colors } from '../colorSchemes/ColorSchemes';
 import HeaderForSubmissionScreens from './Dashboard/BottomTabs/Stats/HeaderForSubmissionScreens';
 import { ActivityIndicator, FAB, Text } from 'react-native-paper';
 import WebView from 'react-native-webview';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const ChatPdfViewer = ({ route }) => {

@@ -23,8 +23,6 @@ export const Constants =
    BASE_URL: 'https://uat.livenutrifit.com/'
 }
 
-
-
 export const colors = {
    GREEN2: '#cded9a',
    GREEN: '#a6d957',
@@ -49,7 +47,6 @@ export const colors = {
    GREEN_TRANSPARENT: 'rgba(128, 192, 67, 0.15)',
    GREEN_DARK_TRANSPARENT: '#7DBD41'
 };
-
 export const fontSizes = {
    EXTRASM: 8,
    SM: 10,
@@ -80,7 +77,7 @@ export const ShadowsiOS = {
    shadowColor: '#8b8b8c',
    shadowOpacity: 0.5,
    shadowRadius: 2,
-   shadowOffset: { width: 0, height: 5 }
+   shadowOffset: { width: 0, height: 0 }
 }
 
 export const formatDate = (inputDate) => {
