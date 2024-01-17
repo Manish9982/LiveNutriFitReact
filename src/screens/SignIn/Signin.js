@@ -9,7 +9,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import Loader from '../../assets/components/Loader'
 import { useIsFocused } from '@react-navigation/native';
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage';
-
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
@@ -21,7 +20,6 @@ const strings = new LocalizedStrings({
     hi: hindi,
 });
 
-
 const fontConfig = {
     fontFamily: 'Montserrat-Regular',
     fontWeight: 'normal',
@@ -32,7 +30,6 @@ const theme = {
     ...DefaultTheme,
     fonts: configureFonts({ config: fontConfig }),
 };
-
 
 const Signin = ({ navigation, route }) => {
     const isFocused = useIsFocused()
@@ -47,7 +44,6 @@ const Signin = ({ navigation, route }) => {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [isChecked, setChecked] = useState(false);
-
     //lng
     const getLanguage = async () => {
         setLoader(true)
@@ -56,20 +52,16 @@ const Signin = ({ navigation, route }) => {
         setLoader(false)
     }
 
-
     const handleCheckBoxToggle = () => {
         setChecked(prev => !prev);
     };
 
-
     const openURL = async () => {
-        { Linking.openURL(`${Constants.BASE_URL}terms-conditions-2/`) }
+        Linking.openURL(`${Constants.BASE_URL}terms-conditions-2/`)
     }
+
     const signInPressed = async () => {
-
-
         storeDataInLocalStorage('country', countryType)
-
         if (isChecked) {
             setLoader(true)
             if (mobile.length === 0) {
@@ -81,7 +73,6 @@ const Signin = ({ navigation, route }) => {
                 var formdata = new FormData();
                 formdata.append("email", mobile);
                 formdata.append("country", "india");
-
                 var requestOptions = {
                     method: 'POST',
                     body: formdata,
@@ -102,14 +93,11 @@ const Signin = ({ navigation, route }) => {
                             setLoader(false)
                             navigation.navigate("VerifyOTPAfterSignInEmail", { "email": mobile })
                         }, 500);
-
                     }
                     else {
                         setLoader(false)
                         ShortToast(result?.message, 'error', '')
                     }
-
-
                 } catch (error) {
                     ShortToast("Internal Server Error :"`${error}`, 'error', '')
                 }
@@ -119,7 +107,6 @@ const Signin = ({ navigation, route }) => {
                 var formdata = new FormData();
                 formdata.append("mobile", mobile);
                 formdata.append("country", "india");
-
                 var requestOptions = {
                     method: 'POST',
                     body: formdata,
@@ -130,16 +117,14 @@ const Signin = ({ navigation, route }) => {
                     const result = await response.json()
                     console.log(result)
                     if (result.status === 200) {
-
                         navigate(result)
-
                     }
                     else if (mobile.length === 0) {
                         ShortToast('Kindly Fill in your Details!', 'error', '')
                         setLoader(false)
                     }
                     else {
-                        ShortToast(result.message, 'error', '')
+                        ShortToast(result?.message, 'error', '')
                         setLoader(false)
                     }
                 } catch (error) {
@@ -147,21 +132,12 @@ const Signin = ({ navigation, route }) => {
                 }
             }
         } else {
-            ShortToast("Please accept terms and condtions !", "error")
+            ShortToast("Please accept terms and conditions!", "error")
         }
-
-
-
-
-
     }
-
-
-
 
     const signInPressedUS = async () => {
         storeDataInLocalStorage('country', countryType)
-
         if (isChecked) {
             setLoader(true)
             if (email.length === 0) {
@@ -178,8 +154,6 @@ const Signin = ({ navigation, route }) => {
                 formdata.append("email", email);
                 formdata.append("password", password);
                 formdata.append("country", "other");
-
-
                 var requestOptions = {
                     method: 'POST',
                     body: formdata,
@@ -189,26 +163,18 @@ const Signin = ({ navigation, route }) => {
                     const result = await response.json()
                     console.log(result)
                     if (result.status === 200) {
-
                         navigateUS(result)
-
                     } else {
                         setLoader(false)
-
                         ShortToast(result.message, 'error', '')
-
                     }
-
                 } catch (error) {
                     ShortToast(`Internal Server Error :${error}`, 'error', '')
                 }
-
             }
         } else {
             ShortToast("Please accept terms and conditions!", "error")
         }
-
-
     }
 
     const navigate = (result) => {
@@ -239,7 +205,6 @@ const Signin = ({ navigation, route }) => {
                 <PaperProvider theme={theme}>
                     <View style={styles.mainContainer}>
                         <StatusBar backgroundColor={colors.GREEN} />
-
                         <LinearGradient colors={[colors.GREEN, colors.GREEN3, colors.GREEN3]}
                             style={styles.upperContainer}>
                             <View style={{}}>
@@ -247,237 +212,204 @@ const Signin = ({ navigation, route }) => {
                                 <Text style={styles.welcomeText}>{strings.Gladtomeetyou}</Text>
                             </View>
                         </LinearGradient>
-
                         <View style={styles.lowerContainer}>
-
                             <Text style={styles.text}>{strings.SignIn}</Text>
-
                             <Text style={styles.text3}>{strings.Pleaseenteryourcredentialstocontinue}</Text>
-
-
-                            {countryType == "India" ?
-
-                                <View
-                                    style={{
-                                    }}>
-                                    <View style={{
-                                        flexDirection: "row",
-                                        marginHorizontal: H * 0.02,
-                                        marginTop: 5,
-                                        height: H * 0.05,
-                                    }}>
-                                        <TouchableOpacity
-                                            onPress={() => { setCountryType("India") }}
-                                            style={{
-                                                backgroundColor: countryType == "India" ? colors.GREEN : "white",
-                                                borderColor: colors.GREEN,
-                                                alignItems: 'center',
-                                                width: W * 0.41,
-                                                borderRadius: 8,
-                                                justifyContent: 'center',
-                                                borderColor: colors.GREEN,
-                                                borderWidth: 1
-                                            }}>
-                                            <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity
-                                            onPress={() => { setCountryType("other") }}
-
-                                            style={{
-                                                backgroundColor: countryType == "other" ? colors.GREEN : "white",
-                                                borderColor: 'gray',
-                                                borderWidth: 1,
-                                                borderColor: colors.GREEN,
-                                                alignItems: "center",
-                                                width: W * 0.40,
-                                                justifyContent: 'center',
-                                                borderRadius: 8,
-                                                marginStart: 10
-                                            }}>
-                                            <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S</Text>
-                                        </TouchableOpacity>
-
-                                    </View>
-
-                                    <TextInput style={styles.textInput}
-                                        autoCapitalize='none'
-                                        placeholder={strings.EnterEmailIdPhoneNumber}
-                                        activeUnderlineColor={colors.GREEN}
-                                        value={mobile}
-                                        onChangeText={(text) => { setMobile(text) }}
-                                    />
-
-                                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
-
-
-                                        <Checkbox.Android style={{
-                                        }}
-                                            onPress={handleCheckBoxToggle}
-                                            status={isChecked ? 'checked' : 'unchecked'}
-                                            color={colors.GREEN} />
-
-                                        <Text style={styles.textBySignin}>{strings.bysignin}</Text>
-                                        <TouchableOpacity onPress={() => { openURL() }}>
-                                            <Text style={[styles.tncText,]}>{strings.termsandcondition}</Text>
-                                        </TouchableOpacity>
-
-                                    </View>
-
-                                    <View style={{ alignItems: 'center', marginTop: 25 }}>
-
-                                        <TouchableOpacity onPress={() => {
-                                            signInPressed()
-                                        }}
-                                            style={styles.button}>
-                                            <Text style={styles.textAgree}>{strings.AgredSignIn}</Text>
-                                        </TouchableOpacity>
-
-                                    </View>
-
-                                    <View style={styles.textContainerForAlignment}>
-
-                                        <Text style={styles.textUniversal}>{strings.donthaveanaccount} </Text>
-                                        <TouchableOpacity onPress={() => { navigation.navigate('SignupPhone') }}>
-                                            <Text style={styles.text2}>{strings.craeteone}</Text>
-                                        </TouchableOpacity>
-
-                                    </View>
-
-
-                                </View>
-                                :
-                                <View
-                                    style={{
-                                    }}>
-                                    <View style={{
-                                        flexDirection: "row",
-                                        marginHorizontal: H * 0.02,
-                                        marginTop: 5,
-                                        height: H * 0.05,
-                                    }}>
-
-                                        <TouchableOpacity
-                                            onPress={() => { setCountryType("India") }}
-                                            style={{
-                                                backgroundColor: countryType == "India" ? colors.GREEN : "white",
-                                                borderColor: colors.GREEN,
-                                                alignItems: 'center',
-                                                width: W * 0.41,
-                                                borderRadius: 8,
-                                                justifyContent: 'center',
-                                                borderColor: colors.GREEN,
-                                                borderWidth: 1
-                                            }}>
-                                            <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity
-                                            onPress={() => { setCountryType("other") }}
-
-                                            style={{
-                                                backgroundColor: countryType == "other" ? colors.GREEN : "white",
-                                                borderColor: 'gray',
-                                                borderWidth: 1,
-                                                borderColor: colors.GREEN,
-                                                alignItems: "center",
-                                                width: W * 0.40,
-                                                justifyContent: 'center',
-                                                borderRadius: 8,
-                                                marginStart: 10
-                                            }}>
-                                            <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S</Text>
-                                        </TouchableOpacity>
-
-                                    </View>
-
-                                    <TextInput style={styles.textInput}
-                                        autoCapitalize='none'
-                                        placeholder={strings.EnterEmailId}
-                                        activeUnderlineColor={colors.GREEN}
-                                        //activeUnderlineColor={"red"}
-                                        value={email}
-                                        onChangeText={(text) => { setEmail(text) }}
-                                    />
-
-
-                                    <TextInput style={styles.textInput}
-                                        placeholder={strings.EnterPassword}
-                                        activeUnderlineColor={colors.GREEN}
-                                        value={password}
-                                        secureTextEntry={true}
-
-                                        onChangeText={(text) => { setPassword(text) }}
-                                    />
-
-
-                                    <TouchableOpacity
-                                        onPress={() => { navigation.navigate("ForgetPassword", { 'email': email }) }}
+                            {
+                                countryType == "India" ?
+                                    <View
                                         style={{
-                                            alignItems: 'flex-end',
-                                            width: W * 0.9,
-                                            borderRadius: 8,
-                                            marginTop: H * 0.025,
-                                            justifyContent: 'flex-end',
-                                            fontFamily: 'Montserrat-Medium',
                                         }}>
-                                        <Text style={{
-                                            textAlign: 'right',
-                                            color: "green"
-                                        }}>{strings.ForgotPassword}</Text>
-
-                                    </TouchableOpacity>
-                                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
-
                                         <View style={{
-                                        }}><Checkbox.Android style={{
+                                            flexDirection: "row",
+                                            marginHorizontal: H * 0.02,
+                                            marginTop: 5,
+                                            height: H * 0.05,
+                                        }}>
+                                            <TouchableOpacity
+                                                onPress={() => { setCountryType("India") }}
+                                                style={{
+                                                    backgroundColor: countryType == "India" ? colors.GREEN : "white",
+                                                    borderColor: colors.GREEN,
+                                                    alignItems: 'center',
+                                                    width: W * 0.41,
+                                                    borderRadius: 8,
+                                                    justifyContent: 'center',
+                                                    borderColor: colors.GREEN,
+                                                    borderWidth: 1
+                                                }}>
+                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India</Text>
+                                            </TouchableOpacity>
 
-                                        }}
-                                            onPress={handleCheckBoxToggle}
-                                            status={isChecked ? 'checked' : 'unchecked'}
-                                            color={colors.GREEN} />
+                                            <TouchableOpacity
+                                                onPress={() => { setCountryType("other") }}
+
+                                                style={{
+                                                    backgroundColor: countryType == "other" ? colors.GREEN : "white",
+                                                    borderColor: 'gray',
+                                                    borderWidth: 1,
+                                                    borderColor: colors.GREEN,
+                                                    alignItems: "center",
+                                                    width: W * 0.40,
+                                                    justifyContent: 'center',
+                                                    borderRadius: 8,
+                                                    marginStart: 10
+                                                }}>
+                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S</Text>
+                                            </TouchableOpacity>
+
                                         </View>
 
+                                        <TextInput style={styles.textInput}
+                                            autoCapitalize='none'
+                                            placeholder={strings.EnterEmailIdPhoneNumber}
+                                            activeUnderlineColor={colors.GREEN}
+                                            value={mobile}
+                                            onChangeText={(text) => { setMobile(text) }}
+                                        />
 
-                                        <Text style={styles.textBySignin}>{strings.bysignin} </Text>
-                                        <TouchableOpacity onPress={() => { openURL() }}>
+                                        <View style={{ flexDirection: 'row', marginTop: 10 }}>
 
-                                            <Text style={styles.tncText}>{strings.termsandcondition}</Text>
-                                        </TouchableOpacity>
 
+                                            <Checkbox.Android style={{
+                                            }}
+                                                onPress={handleCheckBoxToggle}
+                                                status={isChecked ? 'checked' : 'unchecked'}
+                                                color={colors.GREEN} />
+
+                                            <Text style={styles.textBySignin}>{strings.bysignin}</Text>
+                                            <TouchableOpacity onPress={() => { openURL() }}>
+                                                <Text style={[styles.tncText,]}>{strings.termsandcondition}</Text>
+                                            </TouchableOpacity>
+
+                                        </View>
+
+                                        <View style={{ alignItems: 'center', marginTop: 25 }}>
+
+                                            <TouchableOpacity onPress={() => {
+                                                signInPressed()
+                                            }}
+                                                style={styles.button}>
+                                                <Text style={styles.textAgree}>{strings.AgredSignIn}</Text>
+                                            </TouchableOpacity>
+
+                                        </View>
+
+                                        <View style={styles.textContainerForAlignment}>
+
+                                            <Text style={styles.textUniversal}>{strings.donthaveanaccount} </Text>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('SignupPhone') }}>
+                                                <Text style={styles.text2}>{strings.craeteone}</Text>
+                                            </TouchableOpacity>
+
+                                        </View>
                                     </View>
-
-                                    <View style={{
-                                        alignItems: 'center',
-                                        marginTop: 25
-                                    }}>
-
-                                        <TouchableOpacity onPress={() => {
-                                            signInPressedUS()
-                                        }}
-                                            style={styles.button}>
-                                            <Text style={styles.textAgree}>{strings.AgredSignIn}</Text>
+                                    :
+                                    <View
+                                        style={{
+                                        }}>
+                                        <View style={{
+                                            flexDirection: "row",
+                                            marginHorizontal: H * 0.02,
+                                            marginTop: 5,
+                                            height: H * 0.05,
+                                        }}>
+                                            <TouchableOpacity
+                                                onPress={() => { setCountryType("India") }}
+                                                style={{
+                                                    backgroundColor: countryType == "India" ? colors.GREEN : "white",
+                                                    borderColor: colors.GREEN,
+                                                    alignItems: 'center',
+                                                    width: W * 0.41,
+                                                    borderRadius: 8,
+                                                    justifyContent: 'center',
+                                                    borderColor: colors.GREEN,
+                                                    borderWidth: 1
+                                                }}>
+                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                onPress={() => { setCountryType("other") }}
+                                                style={{
+                                                    backgroundColor: countryType == "other" ? colors.GREEN : "white",
+                                                    borderColor: 'gray',
+                                                    borderWidth: 1,
+                                                    borderColor: colors.GREEN,
+                                                    alignItems: "center",
+                                                    width: W * 0.40,
+                                                    justifyContent: 'center',
+                                                    borderRadius: 8,
+                                                    marginStart: 10
+                                                }}>
+                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <TextInput style={styles.textInput}
+                                            autoCapitalize='none'
+                                            placeholder={strings.EnterEmailId}
+                                            activeUnderlineColor={colors.GREEN}
+                                            //activeUnderlineColor={"red"}
+                                            value={email}
+                                            onChangeText={(text) => { setEmail(text) }}
+                                        />
+                                        <TextInput style={styles.textInput}
+                                            placeholder={strings.EnterPassword}
+                                            activeUnderlineColor={colors.GREEN}
+                                            value={password}
+                                            secureTextEntry={true}
+                                            onChangeText={(text) => { setPassword(text) }}
+                                        />
+                                        <TouchableOpacity
+                                            onPress={() => { navigation.navigate("ForgetPassword", { 'email': email }) }}
+                                            style={{
+                                                alignItems: 'flex-end',
+                                                width: W * 0.9,
+                                                borderRadius: 8,
+                                                marginTop: H * 0.025,
+                                                justifyContent: 'flex-end',
+                                                fontFamily: 'Montserrat-Medium',
+                                            }}>
+                                            <Text style={{
+                                                textAlign: 'right',
+                                                color: "green"
+                                            }}>{strings.ForgotPassword}</Text>
                                         </TouchableOpacity>
-
+                                        <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                            <View style={{
+                                            }}><Checkbox.Android
+                                                    onPress={handleCheckBoxToggle}
+                                                    status={isChecked ? 'checked' : 'unchecked'}
+                                                    color={colors.GREEN} />
+                                            </View>
+                                            <Text style={styles.textBySignin}>{strings.bysignin} </Text>
+                                            <TouchableOpacity onPress={() => { openURL() }}>
+                                                <Text style={styles.tncText}>{strings.termsandcondition}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={{
+                                            alignItems: 'center',
+                                            marginTop: 25
+                                        }}>
+                                            <TouchableOpacity onPress={() => {
+                                                signInPressedUS()
+                                            }}
+                                                style={styles.button}>
+                                                <Text style={styles.textAgree}>{strings.AgredSignIn}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={styles.textContainerForAlignment}>
+                                            <Text style={styles.textUniversal}>{strings.donthaveanaccount} </Text>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('SignupPhone') }}>
+                                                <Text style={styles.text2}>{strings.craeteone}</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
-
-                                    <View style={styles.textContainerForAlignment}>
-                                        <Text style={styles.textUniversal}>{strings.donthaveanaccount} </Text>
-                                        <TouchableOpacity onPress={() => { navigation.navigate('SignupPhone') }}>
-                                            <Text style={styles.text2}>{strings.craeteone}</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
                             }
                         </View>
                     </View>
-
                 </PaperProvider>
             </KeyboardAwareScrollView >
-
-
     )
-
 }
 
 const styles = StyleSheet.create({

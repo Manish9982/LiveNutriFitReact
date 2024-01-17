@@ -10,26 +10,21 @@ import HeaderForSubmissionScreens from '../Dashboard/BottomTabs/Stats/HeaderForS
 import moment from 'moment'
 import { Text } from 'react-native-paper'
 import Entypo from 'react-native-vector-icons/Entypo'
-
-
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 
 import { useIsFocused } from '@react-navigation/native';
 
-
 const strings = new LocalizedStrings({
     en: english,
     hi: hindi,
 });
 
-
 const Card = ({ points, maxPoints, date, cardData }) => {
     const isFocused = useIsFocused()
     //useEffect(() => { openFirstCard() }, [])
     useEffect(() => { getLanguage() }, [isFocused])
-
 
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
@@ -39,19 +34,16 @@ const Card = ({ points, maxPoints, date, cardData }) => {
             strings.setLanguage(lang)
         }
     }
-
-
-
     //  const [dataFromApi, setDataFromApi] = React.useState(null)
     const [visible, setVisible] = useState(false)
     const myIcon = <Image source={require('../../assets/icons/reward.jpg')}
         style={{ height: 20, width: 20, borderRadius: 10 }} />
-    //   const getTotalPoints = async () => {
-    //      var formdata = new FormData();
-    //      const temp = await getDataFromLocalStorage('user_id')
-    //    formdata.append("user_id", JSON.parse(temp));
-    //  const result = await PostApiData('get_total_point', formdata)
-    // setDataFromApi(result)
+    //const getTotalPoints = async () => {
+    //var formdata = new FormData();
+    //const temp = await getDataFromLocalStorage('user_id')
+    //formdata.append("user_id", JSON.parse(temp));
+    //const result = await PostApiData('get_total_point', formdata)
+    //setDataFromApi(result)
     //console.log(result)
     //}
 
@@ -102,7 +94,6 @@ const Card = ({ points, maxPoints, date, cardData }) => {
                             )
                         })
                     }
-
                 </View>
                 :
                 null}
