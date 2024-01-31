@@ -67,16 +67,10 @@ const Reports = ({ navigation }) => {
                 setVisible2(true)
             }
         } else {
-
             setVisible2(true)
 
         }
-
     }
-
-
-
-
 
     const submitLink = async () => {
         setLoader(true)
@@ -107,7 +101,6 @@ const Reports = ({ navigation }) => {
                 }
                 // else ShortToast("You can not upload more than 5 links for now", "error", "")
                 else ShortToast(strings.Youcannotupload5, "error", "")
-
             }
             else {
                 ShortToast("Required Field Missing", "error", "")
@@ -137,12 +130,7 @@ const Reports = ({ navigation }) => {
                 ShortToast("Required Field Missing", "error", "")
             }
         }
-
-
-
-
         setLoader(false)
-
     }
 
     const launchCam = async () => {
@@ -598,15 +586,7 @@ const Reports = ({ navigation }) => {
             setDoc(null)
             setPic(null)
             getAttachments()
-
-
-
-
         }
-
-
-
-
     }
 
 

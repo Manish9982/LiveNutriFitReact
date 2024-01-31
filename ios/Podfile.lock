@@ -550,6 +550,11 @@ PODS:
     - React-Core
   - RNShare (10.0.2):
     - React-Core
+  - RNSound (0.11.2):
+    - React-Core
+    - RNSound/Core (= 0.11.2)
+  - RNSound/Core (0.11.2):
+    - React-Core
   - RNSVG (14.1.0):
     - React-Core
   - RNSweetAlert (3.1.0)
@@ -623,6 +628,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
+  - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNSweetAlert (from `../node_modules/react-native-sweet-alert`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -773,6 +779,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNShare:
     :path: "../node_modules/react-native-share"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNSweetAlert:
@@ -857,6 +865,7 @@ SPEC CHECKSUMS:
   RNReanimated: 8a6a83984cb4d61ebf1065b6137150b6b31ce609
   RNScreens: 3e56c56bd35436215a56f48a753e30e8ce018a09
   RNShare: 859ff710211285676b0bcedd156c12437ea1d564
+  RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   RNSweetAlert: 1aa4e70d8f8540aa6b9c18c019f62a25e36720b6
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17

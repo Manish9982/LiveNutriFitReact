@@ -7,13 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export async function requestUserPermission() {
+export async function requestUserPermissionAndGetToken() {
     const authStatus = await messaging().requestPermission();
     const enabled =
         authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
         authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
+        getFcmToken()
         console.log('Authorization status:', authStatus);
     }
 }

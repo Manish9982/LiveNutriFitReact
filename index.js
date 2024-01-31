@@ -7,12 +7,10 @@ import App from './App';
 import messaging, { firebase } from '@react-native-firebase/messaging';
 import { name as appName } from './app.json';
 import notifee, { EventType } from '@notifee/react-native';
-import { displayNotification } from './src/assets/components/NotificationServices';
-import { storeDataInLocalStorage } from './src/local storage/LocalStorage';
-import { Text } from 'react-native-paper';
+import { Text, TextInput } from 'react-native-paper';
 
 if (Platform.OS == "ios") {
-    firebase.initializeApp()
+    //firebase.initializeApp()
 
 
     notifee.onBackgroundEvent(async ({ type, detail }) => {

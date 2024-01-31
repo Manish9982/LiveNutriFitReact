@@ -52,7 +52,7 @@ const BottomTabs = ({ route }) => {
 
   const navigation = useNavigation()
   React.useEffect(() => { storeDataInLocalStorage('stackValue', '3') }, [])
-  React.useEffect(() => { setRegStatus() }, [])
+  //React.useEffect(() => { setRegStatus() }, [])
   React.useEffect(() => {
     getCoach()
     sendFcmToken()
@@ -164,14 +164,14 @@ const BottomTabs = ({ route }) => {
     const result = await PostApiData('get_device_token', formdata)
     console.log(result)
   }
-  const setRegStatus = async () => {
-    const temp = await getDataFromLocalStorage('user_id')
-    var formdata = new FormData();
-    formdata.append("id", JSON.parse(temp));
-    formdata.append("register_status", "1")
-    const result = await PostApiData('registerstatus', formdata)
-    console.log(result)
-  }
+  // const setRegStatus = async () => {
+  //   const temp = await getDataFromLocalStorage('user_id')
+  //   var formdata = new FormData();
+  //   formdata.append("id", JSON.parse(temp));
+  //   formdata.append("register_status", "1")
+  //   const result = await PostApiData('registerstatus', formdata)
+  //   console.log(result)
+  // }
 
   const getCoach = async () => {
     var formdata = new FormData();

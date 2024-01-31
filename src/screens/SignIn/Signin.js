@@ -44,6 +44,7 @@ const Signin = ({ navigation, route }) => {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [isChecked, setChecked] = useState(false);
+    const [secureTextEntry1, setSecureTextEntry1] = useState(true)
     //lng
     const getLanguage = async () => {
         setLoader(true)
@@ -356,8 +357,9 @@ const Signin = ({ navigation, route }) => {
                                             placeholder={strings.EnterPassword}
                                             activeUnderlineColor={colors.GREEN}
                                             value={password}
-                                            secureTextEntry={true}
                                             onChangeText={(text) => { setPassword(text) }}
+                                            secureTextEntry={secureTextEntry1}
+                                            right={<TextInput.Icon icon="eye" onPress={() => setSecureTextEntry1(prev => !prev)} color={secureTextEntry1 ? null : colors.GREEN} />}
                                         />
                                         <TouchableOpacity
                                             onPress={() => { navigation.navigate("ForgetPassword", { 'email': email }) }}

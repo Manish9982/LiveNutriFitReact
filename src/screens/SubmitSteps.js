@@ -86,9 +86,6 @@ const SubmitSteps = () => {
 
     }
 
-
-
-
     const getCalendar = async () => {
         const result = await GetApiData('calendar')
         setMyCalendar(result)

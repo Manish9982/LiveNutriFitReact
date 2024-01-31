@@ -50,6 +50,8 @@ const SignupWithPhone = ({ navigation }) => {
     const [langText, setTangText] = useState("")
     const [countryType, setCountryType] = useState("India")
     const [isChecked, setChecked] = useState(false);
+    const [secureTextEntry1, setSecureTextEntry1] = useState(true)
+    const [secureTextEntry2, setSecureTextEntry2] = useState(true)
 
     const isFocused = useIsFocused()
 
@@ -303,8 +305,8 @@ const SignupWithPhone = ({ navigation }) => {
                                 />
 
                                 <TextInput style={styles.textInput}
+                                    autoCapitalize='none'
                                     placeholder={strings.EnterEmailAddress}
-
                                     activeUnderlineColor={colors.GREEN}
                                     value={email}
                                     onChangeText={(text) => { setEmail(text) }}
@@ -316,12 +318,14 @@ const SignupWithPhone = ({ navigation }) => {
                                 <TextInput style={styles.textInput}
                                     placeholder={strings.EnterPassword}
                                     activeUnderlineColor={colors.GREEN}
+                                    //activeUnderlineColor={"red"}
                                     value={password}
                                     onChangeText={(text) => { setPassword(text) }}
                                     mode='outlined'
                                     outlineColor='#ebebeb'
-                                    secureTextEntry={true}
                                     activeOutlineColor={colors.GREEN}
+                                    secureTextEntry={secureTextEntry1}
+                                    right={<TextInput.Icon icon="eye" onPress={() => setSecureTextEntry1(prev => !prev)} color={secureTextEntry1 ? null : colors.GREEN} />}
                                 />
                                 <TextInput
                                     style={styles.textInput}
@@ -331,8 +335,8 @@ const SignupWithPhone = ({ navigation }) => {
                                     onChangeText={(text) => { setConfirmPassword(text) }}
                                     mode='outlined'
                                     outlineColor='#ebebeb'
-                                    secureTextEntry={true}
-
+                                    secureTextEntry={secureTextEntry2}
+                                    right={<TextInput.Icon icon="eye" onPress={() => setSecureTextEntry2(prev => !prev)} color={secureTextEntry2 ? null : colors.GREEN}/>}
                                     activeOutlineColor={colors.GREEN}
                                 />
 

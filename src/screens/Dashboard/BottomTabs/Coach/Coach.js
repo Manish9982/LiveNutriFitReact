@@ -72,11 +72,13 @@ const Coach = ({ navigation }) => {
 
 
   useEffect(() => {
-    getMessages(),
-      getLanguage(),
-      setIsInfoButtonVisible(false)
-    requestCameraPermission()
-    markMessageAsRead()
+    if (isFocused) {
+      getMessages(),
+        getLanguage(),
+        setIsInfoButtonVisible(false)
+      requestCameraPermission()
+      markMessageAsRead()
+    }
   }, [isFocused])
 
 
@@ -1010,9 +1012,9 @@ const Coach = ({ navigation }) => {
           }}>
               <View style={{
                 padding: 10,
-                alignSelf:'center',
+                alignSelf: 'center',
                 // height: H * 0.5,
-                 width: W * 0.9,
+                width: W * 0.9,
                 backgroundColor: "white",
                 borderRadius: 10,
                 justifyContent: "space-between",

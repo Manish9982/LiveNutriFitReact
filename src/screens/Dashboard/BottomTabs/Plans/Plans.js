@@ -35,7 +35,11 @@ const Plans = ({ navigation }) => {
 
   const isFocused = useIsFocused()
 
-  useEffect(() => { getLanguage() }, [isFocused])
+  useEffect(() => {
+    isFocused
+      &&
+      getLanguage()
+  }, [isFocused])
   //lng
   const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
@@ -76,7 +80,9 @@ const Plans = ({ navigation }) => {
   }, [])
 
   useEffect(() => {
-    getMeals()
+    if (isFocused) {
+      getMeals()
+    }
   }, [isFocused])
 
   const [myMeals, setMyMeals] = NmyMeals
@@ -91,11 +97,9 @@ const Plans = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const onViewCallBack = React.useCallback((viewableItems) => {
-    console.log(viewableItems.viewableItems[0].index)
     setCurrentIndex(viewableItems.viewableItems[0].index)
   }, [mealMenuIsVisible])
   const onViewCallBack2 = React.useCallback((viewableItems) => {
-    console.log(viewableItems)
     // Use viewable items in state or as intended
   }, [mealMenuIsVisible])
   const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
@@ -105,9 +109,6 @@ const Plans = ({ navigation }) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
     const index = (event.nativeEvent.contentOffset.y) / slideSize;
     const roundIndex = Math.round(index);
-    console.log("contentHeight", slideSize)
-    console.log("offset", event.nativeEvent.contentOffset.y)
-    console.log("index", index)
     // setCurrentIndex(Math.round(roundIndex * 10))
   }
 
@@ -151,21 +152,17 @@ const Plans = ({ navigation }) => {
 
 
   const getExercise = async (date) => {
-
-    setLoader(true)
     const temp = await getDataFromLocalStorage('user_id')
     var formdata = new FormData();
     formdata.append("user_id", JSON.parse(temp));
     formdata.append("date", date);
     formdata.append("month", month);
     formdata.append("year", year);
-
-
     const result = await PostApiData('get_userexcersie_list', formdata)
 
-    console.log("EXC DATA == ", result)
+    console.log("get_userexcersie_list ====>", result)
 
-    if (result.status == '200') {
+    if (result?.status == '200') {
       setMyExercise(result)
     }
     else {
@@ -173,7 +170,6 @@ const Plans = ({ navigation }) => {
       ShortToast(result.message, 'error', '')
     }
     setIsRefreshing(false)
-    setLoader(false)
   }
 
   const getMeals = async () => {
@@ -182,18 +178,18 @@ const Plans = ({ navigation }) => {
     var formdata = new FormData();
     formdata.append("user_id", JSON.parse(temp));
     const result = await PostApiData('get_meal_list', formdata)
-    console.log(result)
-    if (result.status == '200') {
-      getExercise(datee)
+    console.log("get_meal_list ====>", result)
 
+    if (result?.status == '200') {
+      getExercise(datee)
       setMyMeals(result)
+      setLoader(false)
     }
     else {
       setMyMeals(null)
       ShortToast(result.message, 'error', '')
     }
     setIsRefreshing(false)
-    setLoader(false)
 
   }
 
@@ -214,7 +210,6 @@ const Plans = ({ navigation }) => {
         date={item?.date}
         day={item?.day}
         meals={item?.meals}
-
       />
     )
   }

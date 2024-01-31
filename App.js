@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useRef } from 'react'
 // stackValue 1=> SignIn,  2 => Splash , 3=> BottomTabs
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -20,7 +20,7 @@ import BootSplash from './src/screens/BootSplash/BootSplash';
 import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import Questions from './src/screens/Questions/Questions';
 import { colors, fontSizes, PostApiData } from './src/colorSchemes/ColorSchemes';
-import { Alert, LogBox } from "react-native";
+import { Alert, AppState, LogBox } from "react-native";
 import UserProfile from './src/screens/UserProfile/UserProfile';
 import EditProfile from './src/screens/EditProfile/EditProfile';
 
@@ -39,7 +39,7 @@ import ExploreNow from './src/screens/PlanChoosePromptAtStartup/ExploreNow';
 import Blank from './src/screens/Blank/Blank';
 import QuestionsCustom from './src/screens/Questions/QuestionsCustom';
 import Gratification from './src/screens/Dashboard/BottomTabs/More/Gratification';
-import { getFcmToken, NotificationListener, requestUserPermission } from './src/assets/components/PushNotificationsServices';
+import { getFcmToken, NotificationListener, requestUserPermissionAndGetToken } from './src/assets/components/PushNotificationsServices';
 import { checkNotificationPermission, createChannel, displayNotification } from './src/assets/components/NotificationServices';
 import ChatImageDisplay from './src/screens/Dashboard/BottomTabs/Coach/ChatImageDisplay';
 import messaging from '@react-native-firebase/messaging'
@@ -91,12 +91,51 @@ const App = () => {
   //const { Nmessages } = useContext(DataContext)
   //const [messages, setMessages] = Nmessages
 
+  const appState = useRef(AppState.currentState);
+
   useEffect(() => {
-    requestUserPermission()
-    getFcmToken()
-   // NotificationListener()
     checkNotificationPermission()
+    requestUserPermissionAndGetToken()
+    // NotificationListener()
   }, [])
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        console.log('App has come to the foreground!');
+        foregroundApi()
+      }
+      else if (appState.current.match(/active/) && nextAppState == 'inactive') {
+        console.log('App has come to the Background!');
+        backgroundApi()
+      }
+
+      appState.current = nextAppState;
+      //console.log('AppState', appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  const foregroundApi = async () => {
+    var formdata = new FormData()
+    const temp = await getDataFromLocalStorage('user_id')
+    formdata.append("user_id", JSON.parse(temp))
+    formdata.append('login_time', Date.now())
+    const result = await PostApiData('user_session_activity', formdata)
+  }
+  const backgroundApi = async () => {
+    var formdata = new FormData()
+    const temp = await getDataFromLocalStorage('user_id')
+    formdata.append("user_id", JSON.parse(temp))
+    formdata.append('logout_time', Date.now())
+    const result = await PostApiData('user_session_activity', formdata)
+  }
 
 
   return (

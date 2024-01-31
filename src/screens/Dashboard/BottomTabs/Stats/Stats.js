@@ -18,6 +18,7 @@ import { useIsFocused } from "@react-navigation/native"
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
+import Sound from 'react-native-sound';
 
 //lang chnge
 const strings = new LocalizedStrings({
@@ -58,6 +59,7 @@ const Stats = (props) => {
   const [text, setText] = useState("")
   const [paiduserstatusModal, setPaiduserstatusModal] = useState("")
   const [notificationCount, setNotificationCount] = useState("")
+  const [sound, setSound] = useState(null);
 
   const {
     Nlanguage,
@@ -105,19 +107,27 @@ const Stats = (props) => {
     }
   }, [isFocused]);
 
-  const scrollRef = useRef(null)
-
-  Animated.loop(
-    Animated.timing(
-      spinValue,
-      {
-        toValue: 1,
-        duration: 3000,
-        easing: Easing.linear, // Easing is an additional import from react-native
-        useNativeDriver: true  // To make use of native driver for performance
+  useEffect(() => {
+    // Load the sound when the component mounts
+    const soundObject = new Sound('coin_sound.mp3', Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.error('Failed to load the sound', error);
+      } else {
+        setSound(soundObject);
       }
-    )
-  ).start();
+    });
+
+    // Unload the sound when the component unmounts
+    return () => {
+      if (sound) {
+        sound.release();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    assignMealPlanAndExercisePlan()
+  }, [])
 
   useEffect(() => {
     if (isFocused) {
@@ -134,6 +144,23 @@ const Stats = (props) => {
     }
 
   }, [isFocused])
+
+
+  const scrollRef = useRef(null)
+
+  Animated.loop(
+    Animated.timing(
+      spinValue,
+      {
+        toValue: 1,
+        duration: 3000,
+        easing: Easing.linear, // Easing is an additional import from react-native
+        useNativeDriver: true  // To make use of native driver for performance
+      }
+    )
+  ).start();
+
+
 
   const onPressScroll = () => {
     //scrollRef.current.scrollToEnd({ animated: true })
@@ -152,6 +179,25 @@ const Stats = (props) => {
   }
   const changeLanguage = (languageKey) => {
     strings.setLanguage(languageKey)
+  }
+  const playSound = () => {
+    if (sound) {
+      sound.play((success) => {
+        if (success) {
+          console.log('Sound played successfully');
+        } else {
+          console.error('Failed to play the sound');
+        }
+      });
+    }
+  };
+
+  const assignMealPlanAndExercisePlan = async () => {
+    const temp = await getDataFromLocalStorage('user_id')
+    var formdata = new FormData();
+    formdata.append("id", JSON.parse(temp));
+    const result = await PostApiData('assign_meal', formdata)
+    console.log("assign_meal =====>", result)
   }
 
   const onPressButton = () => {
@@ -187,6 +233,7 @@ const Stats = (props) => {
     const temp = await getDataFromLocalStorage('firstTimeLogin')
     if (temp == 1) {
       setFirstTimeLogin(true)
+      playSound()
     }
   }
 
@@ -300,7 +347,7 @@ const Stats = (props) => {
       if (result.status == 200) {
         getDataForFreeUser()
         getDataForPaidUser()
-        { flagg2 > 2 ? null : ShortToast('Success', 'success', '') }
+        //{ flagg2 > 2 ? null : ShortToast('Success', 'success', '') }
         setEditBp(false)
         setSystolic('')
         setDiastolic('')
@@ -875,158 +922,164 @@ const Stats = (props) => {
           </View>
           <DoubleTapBackButtonToCloseApp />
           {/**Edit Current Weight///////////////////////////////////////////////// */}
-          {firstTimeLogin ?
-            <>
-              <LottieView style={{ zIndex: 100, top: -H * 0.44, left: -W * 0.24 }}
-                source={require('../../../../assets/animations/pointer.json')}
-                autoPlay loop />
-            </>
-            :
-            <></>}
+          {
+            firstTimeLogin
+            &&
+            <LottieView style={{ zIndex: 100, height: 90, width: 90, position: 'absolute', top: H * 0.1, right: -W * 0.04 }}
+              source={require('../../../../assets/animations/pointer.json')}
+              autoPlay loop />
+          }
           {/*Edit Weights Modal*/}
           <Modal
             style={{
+
             }}
-            animationType="fade"
+            animationType="slide"
+            //presentationStyle='fullScreen'
             transparent={true}
             visible={editWeights}>
             {/* Input Weights Pop Up */}
             <View style={{
-              width: W * 0.8,
-              backgroundColor: colors.OFFWHITE,
-              borderRadius: 10,
-              alignSelf: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              top: H * 0.35,
-              elevation: 5,
-              padding: 10,
+              backgroundColor: 'rgba(0,0,0,0.4)',
+              flex: 1
             }}>
-              <Image source={require('../../../../assets/icons/weight-loss.png')}
-                style={{
-                  height: H * 0.05,
-                  width: H * 0.05,
-                  marginBottom: H * 0.02,
-                }} />
-              {/* Current Weight Input Container */}
               <View style={{
-                flexDirection: "row",
-                alignItems: "center"
-              }}>
-                <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
-                <TextInput
-                  value={currentWeight}
-                  onChangeText={(t) => {
-                    if (t.length == 1 && (t == "-" || t == "." || t == "," || t == "0")) {
-                      ShortToast("Invalid Input", "error", "")
-                    }
-                    else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
-                      ShortToast("Invalid Input", "error", "")
-                    }
-                    else {
-                      setCrrnt(t)
-                      setCurrentWeight(t)
-                    }
-                  }}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
-                  style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  maxLength={3}
-                  keyboardType="number-pad" />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              {/* Target Weight Input Container */}
-              <View style={{
-                flexDirection: "row",
+                width: W * 0.8,
+                backgroundColor: colors.OFFWHITE,
+                borderRadius: 10,
+                alignSelf: "center",
+                justifyContent: "center",
                 alignItems: "center",
-                marginTop: 10
+                top: H * 0.07,
+                elevation: 5,
+                padding: 10,
               }}>
-                <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.Targetweight} </Text>
-                <TextInput
-                  underlineColor={colors.GREEN}
-                  onChangeText={(t) => {
-                    if (t.length == 1 && (t == "-" || t == "." || t == "," || t == "0")) {
-                      ShortToast("Invalid Input", "error", "")
-                    }
-                    else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
-                      ShortToast("Invalid Input", "error", "")
-                    }
-                    else if ((t.length == 2 || t.length == 3) && (((t > (data?.height * data?.height * 24.9))) || ((t < (data?.height * data?.height * 18.5))))) {
-                      ShortToast(`Please choose a Target Weight between ${(Math.round(((data?.height * data?.height * 18.5)) * 100) / 100).toFixed(0)} to ${(Math.round(((data?.height * data?.height * 24.9)) * 100) / 100).toFixed(0)} According to your BMI.`, "error", "")
-                      setTargetWeight("")
-                    }
-                    else {
-                      setTrgt(t)
-                      setTargetWeight(t)
-                    }
-                  }}
-                  value={targetWeight}
-                  activeUnderlineColor={colors.GREEN}
+                <Image source={require('../../../../assets/icons/weight-loss.png')}
                   style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad" />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              <View style={{ flexDirection: "row", width: W * 0.5, justifyContent: "space-evenly" }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    updateWeightValues()
-
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: colors.GREEN,
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-
-                  }}>
+                    height: H * 0.05,
+                    width: H * 0.05,
+                    marginBottom: H * 0.02,
+                  }} />
+                {/* Current Weight Input Container */}
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}>
+                  <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
+                  <TextInput
+                    value={currentWeight}
+                    onChangeText={(t) => {
+                      if (t.length == 1 && (t == "-" || t == "." || t == "," || t == "0")) {
+                        ShortToast("Invalid Input", "error", "")
+                      }
+                      else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
+                        ShortToast("Invalid Input", "error", "")
+                      }
+                      else {
+                        setCrrnt(t)
+                        setCurrentWeight(t)
+                      }
+                    }}
+                    underlineColor={colors.GREEN}
+                    activeUnderlineColor={colors.GREEN}
+                    style={{
+                      width: W * 0.2,
+                      height: H * 0.07,
+                      alignSelf: "center",
+                      backgroundColor: "white",
+                      margin: 5,
+                    }}
+                    maxLength={3}
+                    keyboardType="number-pad" />
                   <Text style={{
-                    color: "white"
-                  }}>{strings.Ok}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setEditWeights(false)
-                    setCurrentWeight('')
-                    setTargetWeight('')
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: "white",
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
+                    color: colors.FONT_BLACK,
+                    marginLeft: W * 0.01
+                  }}></Text>
+                </View>
+                {/* Target Weight Input Container */}
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 10
+                }}>
+                  <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.attributeHeading}>{strings.Targetweight} </Text>
+                  <TextInput
+                    underlineColor={colors.GREEN}
+                    onChangeText={(t) => {
+                      if (t.length == 1 && (t == "-" || t == "." || t == "," || t == "0")) {
+                        ShortToast("Invalid Input", "error", "")
+                      }
+                      else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
+                        ShortToast("Invalid Input", "error", "")
+                      }
+                      // else if ((t.length == 2 || t.length == 3) && (((t > (data?.height * data?.height * 24.9))) || ((t < (data?.height * data?.height * 18.5))))) {
+                      //   ShortToast(`Please choose a Target Weight between ${(Math.round(((data?.height * data?.height * 18.5)) * 100) / 100).toFixed(0)} to ${(Math.round(((data?.height * data?.height * 24.9)) * 100) / 100).toFixed(0)} According to your BMI.`, "error", "")
+                      //   setTargetWeight("")
+                      // }
+                      else {
+                        setTrgt(t)
+                        setTargetWeight(t)
+                      }
+                    }}
+                    value={targetWeight}
+                    activeUnderlineColor={colors.GREEN}
+                    style={{
+                      width: W * 0.2,
+                      height: H * 0.07,
+                      alignSelf: "center",
+                      backgroundColor: "white",
+                      margin: 5,
+                    }}
+                    keyboardType="number-pad" />
                   <Text style={{
-                    color: colors.FONT_BLACK
-                  }}>{strings.Cancel}</Text>
-                </TouchableOpacity>
+                    color: colors.FONT_BLACK,
+                    marginLeft: W * 0.01
+                  }}></Text>
+                </View>
+                <View style={{ flexDirection: "row", width: W * 0.5, justifyContent: "space-evenly" }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      updateWeightValues()
+
+                    }}
+                    style={{
+                      width: W * 0.18,
+                      height: H * 0.04,
+                      backgroundColor: colors.GREEN,
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: H * 0.03,
+
+                    }}>
+                    <Text style={{
+                      color: "white"
+                    }}>{strings.Ok}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setEditWeights(false)
+                      setCurrentWeight('')
+                      setTargetWeight('')
+                    }}
+                    style={{
+                      width: W * 0.18,
+                      height: H * 0.04,
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: H * 0.03,
+                    }}>
+                    <Text style={{
+                      color: colors.FONT_BLACK
+                    }}>{strings.Cancel}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </Modal>
@@ -1036,175 +1089,182 @@ const Stats = (props) => {
             style={{
               backgroundColor: "red"
             }}
-            animationType="fade"
+            animationType="slide"
             transparent={true}
             visible={editSugar}>
             <View style={{
-              padding: 10,
-              width: W * 0.7,
-              backgroundColor: colors.OFFWHITE,
-              borderRadius: 10,
-              alignSelf: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              top: H * 0.35,
-              elevation: 5,
-              width: W * 0.8,
+              backgroundColor: 'rgba(0,0,0,0.4)',
+              flex: 1
             }}>
-              <Image source={require('../../../../assets/icons/glucose-meter.png')}
-                style={{
-                  height: H * 0.05,
-                  width: H * 0.05,
-                  marginBottom: H * 0.02,
-                }} />
-              {/* Fasting Input View */}
               <View style={{
-                flexDirection: "row",
-                alignItems: "center"
-              }}>
-                <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.fasting} </Text>
-                <TextInput
-                  onChangeText={(t) => {
-                    if (t == '0') {
-                      ShortToast('Invalid Input', 'error', '')
-                    }
-                    else if (t <= 80) {
-                      setFastingSugar(t)
-                    }
-                    else if (t >= 80 && t <= 110) {
-                      setFastingSugar(t)
-                    }
-                    else if (t > 110 && t <= 180) {
-                      ShortToast("Your Fasting Sugar Seems to be Elevated", 'warning', '')
-                      setFastingSugar(t)
-                    }
-                    else if (t > 180 && t <= 250) {
-                      ShortToast("Your Fasting Sugar Seems to be High (Stage 1)", 'error', '')
-                      setFastingSugar(t)
-                    }
-                    else if (t > 250 && t <= 350) {
-                      ShortToast("Your Fasting Sugar Seems to be High (Stage 2)", 'error', '')
-                      setFastingSugar(t)
-                    }
-                    else if (t > 350) {
-                      ShortToast("Your Fasting Sugar Seems to be Critical. Please Consult a Doctor!", 'error', '')
-                    }
-                  }}
-                  value={fastingSugar}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
-                  style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad"
-                  maxLength={3} />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              {/* Non Fasting Input View */}
-              <View style={{
-                flexDirection: "row",
+                padding: 10,
+                width: W * 0.7,
+                backgroundColor: colors.OFFWHITE,
+                borderRadius: 10,
+                alignSelf: "center",
+                justifyContent: "center",
                 alignItems: "center",
-                marginTop: 10,
+                top: H * 0.07,
+                elevation: 5,
+                width: W * 0.8,
               }}>
-                <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.nonfating} </Text>
-                <TextInput
-                  onChangeText={(t) => {
-                    if (t == '0') {
-                      ShortToast('Invalid Input', 'error', '')
-                    }
-                    else if (t <= 90) {
-                      setNonFastingSugar(t)
-                    }
-                    else if (t >= 90 && t <= 140) {
-                      setNonFastingSugar(t)
-                    }
-                    else if (t > 140 && t <= 210) {
-                      ShortToast("Your Non Fasting Sugar Seems to be Elevated", 'warning', '')
-                      setNonFastingSugar(t)
-                    }
-                    else if (t > 210 && t <= 300) {
-                      ShortToast("Your Non Fasting Sugar Seems to be High (Stage 1)", 'error', '')
-                      setNonFastingSugar(t)
-                    }
-                    else if (t > 300 && t <= 380) {
-                      ShortToast("Your Non Fasting Sugar Seems to be High (Stage 2)", 'error', '')
-                      setNonFastingSugar(t)
-                    }
-                    else if (t > 380) {
-                      ShortToast("Your Non Fasting Sugar Seems To Be Critical. Please Consult A Doctor!", 'error', '')
-                    }
-                  }}
-                  value={nonFastingSugar}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
+                <Image source={require('../../../../assets/icons/glucose-meter.png')}
                   style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad"
-                  maxLength={3}
-                />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              {/* Touch and Cancel Button Container View*/}
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                width: W * 0.5
-              }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    updateSugarValues()
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: colors.GREEN,
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
+                    height: H * 0.05,
+                    width: H * 0.05,
+                    marginBottom: H * 0.02,
+                  }} />
+                {/* Fasting Input View */}
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}>
+                  <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.attributeHeading}>{strings.fasting} </Text>
+                  <TextInput
+                    onChangeText={(t) => {
+                      if (t == '0') {
+                        ShortToast('Invalid Input', 'error', '')
+                      }
+                      else if (t <= 80) {
+                        setFastingSugar(t)
+                      }
+                      else if (t >= 80 && t <= 110) {
+                        setFastingSugar(t)
+                      }
+                      else if (t > 110 && t <= 180) {
+                        //ShortToast("Your Fasting Sugar Seems to be Elevated", 'warning', '')
+                        setFastingSugar(t)
+                      }
+                      else if (t > 180 && t <= 250) {
+                        //ShortToast("Your Fasting Sugar Seems to be High (Stage 1)", 'error', '')
+                        setFastingSugar(t)
+                      }
+                      else if (t > 250 && t <= 350) {
+                        //ShortToast("Your Fasting Sugar Seems to be High (Stage 2)", 'error', '')
+                        setFastingSugar(t)
+                      }
+                      else if (t > 350) {
+                        //ShortToast("Your Fasting Sugar Seems to be Critical. Please Consult a Doctor!", 'error', '')
+                        setFastingSugar(t)
+                      }
+                    }}
+                    value={fastingSugar}
+                    underlineColor={colors.GREEN}
+                    activeUnderlineColor={colors.GREEN}
+                    style={{
+                      width: W * 0.2,
+                      height: H * 0.07,
+                      alignSelf: "center",
+                      backgroundColor: "white",
+                      margin: 5,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={3} />
                   <Text style={{
-                    color: "white"
-                  }}>{strings.Ok}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setEditSugar(false)
-                    setFastingSugar('')
-                    setNonFastingSugar('')
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: "white",
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
+                    color: colors.FONT_BLACK,
+                    marginLeft: W * 0.01
+                  }}></Text>
+                </View>
+                {/* Non Fasting Input View */}
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 10,
+                }}>
+                  <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.attributeHeading}>{strings.nonfating} </Text>
+                  <TextInput
+                    onChangeText={(t) => {
+                      if (t == '0') {
+                        ShortToast('Invalid Input', 'error', '')
+                      }
+                      else if (t <= 90) {
+                        setNonFastingSugar(t)
+                      }
+                      else if (t >= 90 && t <= 140) {
+                        setNonFastingSugar(t)
+                      }
+                      else if (t > 140 && t <= 210) {
+                        //ShortToast("Your Non Fasting Sugar Seems to be Elevated", 'warning', '')
+                        setNonFastingSugar(t)
+                      }
+                      else if (t > 210 && t <= 300) {
+                        //ShortToast("Your Non Fasting Sugar Seems to be High (Stage 1)", 'error', '')
+                        setNonFastingSugar(t)
+                      }
+                      else if (t > 300 && t <= 380) {
+                        //ShortToast("Your Non Fasting Sugar Seems to be High (Stage 2)", 'error', '')
+                        setNonFastingSugar(t)
+                      }
+                      else if (t > 380) {
+                        //ShortToast("Your Non Fasting Sugar Seems To Be Critical. Please Consult A Doctor!", 'error', '')
+                        setNonFastingSugar(t)
+                      }
+                    }}
+                    value={nonFastingSugar}
+                    underlineColor={colors.GREEN}
+                    activeUnderlineColor={colors.GREEN}
+                    style={{
+                      width: W * 0.2,
+                      height: H * 0.07,
+                      alignSelf: "center",
+                      backgroundColor: "white",
+                      margin: 5,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={3}
+                  />
                   <Text style={{
-                    color: colors.FONT_BLACK
-                  }}>{strings.Cancel}</Text>
-                </TouchableOpacity>
+                    color: colors.FONT_BLACK,
+                    marginLeft: W * 0.01
+                  }}></Text>
+                </View>
+                {/* Touch and Cancel Button Container View*/}
+                <View style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  width: W * 0.5
+                }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      updateSugarValues()
+                    }}
+                    style={{
+                      width: W * 0.18,
+                      height: H * 0.04,
+                      backgroundColor: colors.GREEN,
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: H * 0.03,
+                    }}>
+                    <Text style={{
+                      color: "white"
+                    }}>{strings.Ok}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setEditSugar(false)
+                      setFastingSugar('')
+                      setNonFastingSugar('')
+                    }}
+                    style={{
+                      width: W * 0.18,
+                      height: H * 0.04,
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: H * 0.03,
+                    }}>
+                    <Text style={{
+                      color: colors.FONT_BLACK
+                    }}>{strings.Cancel}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </Modal>
@@ -1214,119 +1274,124 @@ const Stats = (props) => {
             style={{
               backgroundColor: "red"
             }}
-            animationType="fade"
+            animationType="slide"
             transparent={true}
             visible={false}>
             <View style={{
-              height: H * 0.28,
-              width: W * 0.7,
-              backgroundColor: colors.OFFWHITE,
-              borderRadius: 10,
-              alignSelf: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              top: H * 0.35,
-              elevation: 5,
+              backgroundColor: 'rgba(0,0,0,0.4)',
+              flex: 1
             }}>
-              <Image source={require('../../../../assets/icons/glucose-meter.png')}
-                style={{
-                  height: H * 0.05,
-                  width: H * 0.05,
-                  marginBottom: H * 0.02,
-                }} />
               <View style={{
-                flexDirection: "row",
-                alignItems: "center"
+                height: H * 0.28,
+                width: W * 0.7,
+                backgroundColor: colors.OFFWHITE,
+                borderRadius: 10,
+                alignSelf: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                top: H * 0.07,
+                elevation: 5,
               }}>
-                <Text style={{
-                  ...fontFamily.bold
-                }}>{strings.nonfating}</Text>
-                <TextInput
-                  onChangeText={(t) => {
-                    if (t == '0') {
-                      ShortToast('Invalid Input', 'error', '')
-                    }
-                    else if (t <= 90) {
-                      setNonFastingSugar(t)
-                    }
-                    else if (t >= 90 && t <= 140) {
-                      setNonFastingSugar(t)
-                    }
-                    else if (t > 140 && t <= 210) {
-                      ShortToast("Your Non Fasting Sugar Seems to be Elevated", 'warning', '')
-                      setNonFastingSugar(t)
-                    }
-                    else if (t > 210 && t <= 300) {
-                      ShortToast("Your Non Fasting Sugar Seems to be High (Stage 1)", 'error', '')
-                      setNonFastingSugar(t)
-                    }
-                    else if (t > 300 && t <= 380) {
-                      ShortToast("Your Non Fasting Sugar Seems to be High (Stage 2)", 'error', '')
-                      setNonFastingSugar(t)
-                    }
-                    else if (t > 380) {
-                      ShortToast("Your Non Fasting Sugar Seems To Be Critical. Please Consult A Doctor!", 'error', '')
-                    }
-                  }}
-                  value={nonFastingSugar}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
+                <Image source={require('../../../../assets/icons/glucose-meter.png')}
                   style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad"
-                  maxLength={3}
-                />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                width: W * 0.5
-              }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    // updateValueNonFastingSugar()
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: colors.GREEN,
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
+                    height: H * 0.05,
+                    width: H * 0.05,
+                    marginBottom: H * 0.02,
+                  }} />
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}>
                   <Text style={{
-                    color: "white"
-                  }}>{strings.Ok}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setEditSugar(false)
-                    setFastingSugar('')
-                    setNonFastingSugar('')
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: "white",
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
+                    ...fontFamily.bold
+                  }}>{strings.nonfating}</Text>
+                  <TextInput
+                    onChangeText={(t) => {
+                      if (t == '0') {
+                        ShortToast('Invalid Input', 'error', '')
+                      }
+                      else if (t <= 90) {
+                        setNonFastingSugar(t)
+                      }
+                      else if (t >= 90 && t <= 140) {
+                        setNonFastingSugar(t)
+                      }
+                      else if (t > 140 && t <= 210) {
+                        ShortToast("Your Non Fasting Sugar Seems to be Elevated", 'warning', '')
+                        setNonFastingSugar(t)
+                      }
+                      else if (t > 210 && t <= 300) {
+                        ShortToast("Your Non Fasting Sugar Seems to be High (Stage 1)", 'error', '')
+                        setNonFastingSugar(t)
+                      }
+                      else if (t > 300 && t <= 380) {
+                        ShortToast("Your Non Fasting Sugar Seems to be High (Stage 2)", 'error', '')
+                        setNonFastingSugar(t)
+                      }
+                      else if (t > 380) {
+                        ShortToast("Your Non Fasting Sugar Seems To Be Critical. Please Consult A Doctor!", 'error', '')
+                      }
+                    }}
+                    value={nonFastingSugar}
+                    underlineColor={colors.GREEN}
+                    activeUnderlineColor={colors.GREEN}
+                    style={{
+                      width: W * 0.2,
+                      height: H * 0.07,
+                      alignSelf: "center",
+                      backgroundColor: "white",
+                      margin: 5,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={3}
+                  />
                   <Text style={{
-                    color: colors.FONT_BLACK
-                  }}>{strings.Cancel}</Text>
-                </TouchableOpacity>
+                    color: colors.FONT_BLACK,
+                    marginLeft: W * 0.01
+                  }}></Text>
+                </View>
+                <View style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  width: W * 0.5
+                }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      // updateValueNonFastingSugar()
+                    }}
+                    style={{
+                      width: W * 0.18,
+                      height: H * 0.04,
+                      backgroundColor: colors.GREEN,
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: H * 0.03,
+                    }}>
+                    <Text style={{
+                      color: "white"
+                    }}>{strings.Ok}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setEditSugar(false)
+                      setFastingSugar('')
+                      setNonFastingSugar('')
+                    }}
+                    style={{
+                      width: W * 0.18,
+                      height: H * 0.04,
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: H * 0.03,
+                    }}>
+                    <Text style={{
+                      color: colors.FONT_BLACK
+                    }}>{strings.Cancel}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </Modal>
@@ -1335,416 +1400,194 @@ const Stats = (props) => {
           <Modal
             style={{
             }}
-            animationType="fade"
+            animationType="slide"
             transparent={true}
             visible={editBp}>
             <View style={{
-              padding: 10,
-              backgroundColor: colors.OFFWHITE,
-              borderRadius: 10,
-              alignSelf: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              top: H * 0.2,
-              elevation: 5,
-              width: W * 0.8,
+              backgroundColor: 'rgba(0,0,0,0.4)',
+              flex: 1
             }}>
-              <Image source={require('../../../../assets/icons/hypertension.png')}
-                style={{
-                  height: H * 0.05,
-                  width: H * 0.05,
-                  marginBottom: H * 0.02,
-                }} />
-              {/* Systolic BP Input Container */}
               <View style={{
-                flexDirection: "row",
-                alignItems: "center"
-              }}>
-                <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.systolicBP}</Text>
-                <TextInput
-                  onChangeText={(t) => {
-                    if (t == '0') {
-                      ShortToast('Invalid Input', 'error', '')
-                    }
-                    else setSystolic(t)
-                  }}
-                  value={systolic}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
-                  style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad" />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              {/* Diastolic BP Input Container */}
-              <View style={{
-                flexDirection: "row",
+                padding: 10,
+                backgroundColor: colors.OFFWHITE,
+                borderRadius: 10,
+                alignSelf: "center",
+                justifyContent: "center",
                 alignItems: "center",
-                marginTop: 10,
+                top: H * 0.07,
+                elevation: 5,
+                width: W * 0.8,
               }}>
-                <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.diastolicBP}</Text>
-                <TextInput
-                  value={diastolic}
-                  onChangeText={(t) => {
-                    if (t == '0') {
-                      ShortToast('Invalid Input', 'error', '')
-                    }
-                    else
-                      setDiastolic(t)
-                  }}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
+                <Image source={require('../../../../assets/icons/hypertension.png')}
                   style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad" />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              {/* BPM BP Input Container */}
-              <View style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: 10,
-              }}>
-                <Text numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.attributeHeading}>{strings.BPM}</Text>
-                <TextInput
-                  onChangeText={(t) => {
-                    if (t == '0') {
-                      ShortToast('Invalid Input', 'error', '')
-                    }
-                    else
-                      setBpm(t)
-                  }}
-                  value={bpm}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
-                  style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad" />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              {/* BP Input and Cancel Button Container */}
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                width: W * 0.5
-              }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    {
-                      if (systolic < 85 || systolic > 180) {
-                        if (flagg2 > 2) {
-                          ShortToast("Your Systolic BP Level Seems to be Critcial, Kindly consult a Doctor", 'error', '')
+                    height: H * 0.05,
+                    width: H * 0.05,
+                    marginBottom: H * 0.02,
+                  }} />
+                {/* Systolic BP Input Container */}
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}>
+                  <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.attributeHeading}>{strings.systolicBP}</Text>
+                  <TextInput
+                    onChangeText={(t) => {
+                      if (t == '0') {
+                        ShortToast('Invalid Input', 'error', '')
+                      }
+                      else setSystolic(t)
+                    }}
+                    value={systolic}
+                    underlineColor={colors.GREEN}
+                    activeUnderlineColor={colors.GREEN}
+                    style={{
+                      width: W * 0.2,
+                      height: H * 0.07,
+                      alignSelf: "center",
+                      backgroundColor: "white",
+                      margin: 5,
+                    }}
+                    keyboardType="number-pad" />
+                  <Text style={{
+                    color: colors.FONT_BLACK,
+                    marginLeft: W * 0.01
+                  }}></Text>
+                </View>
+                {/* Diastolic BP Input Container */}
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 10,
+                }}>
+                  <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.attributeHeading}>{strings.diastolicBP}</Text>
+                  <TextInput
+                    value={diastolic}
+                    onChangeText={(t) => {
+                      if (t == '0') {
+                        ShortToast('Invalid Input', 'error', '')
+                      }
+                      else
+                        setDiastolic(t)
+                    }}
+                    underlineColor={colors.GREEN}
+                    activeUnderlineColor={colors.GREEN}
+                    style={{
+                      width: W * 0.2,
+                      height: H * 0.07,
+                      alignSelf: "center",
+                      backgroundColor: "white",
+                      margin: 5,
+                    }}
+                    keyboardType="number-pad" />
+                  <Text style={{
+                    color: colors.FONT_BLACK,
+                    marginLeft: W * 0.01
+                  }}></Text>
+                </View>
+                {/* BPM BP Input Container */}
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 10,
+                }}>
+                  <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.attributeHeading}>{strings.BPM}</Text>
+                  <TextInput
+                    onChangeText={(t) => {
+                      if (t == '0') {
+                        ShortToast('Invalid Input', 'error', '')
+                      }
+                      else
+                        setBpm(t)
+                    }}
+                    value={bpm}
+                    underlineColor={colors.GREEN}
+                    activeUnderlineColor={colors.GREEN}
+                    style={{
+                      width: W * 0.2,
+                      height: H * 0.07,
+                      alignSelf: "center",
+                      backgroundColor: "white",
+                      margin: 5,
+                    }}
+                    keyboardType="number-pad" />
+                  <Text style={{
+                    color: colors.FONT_BLACK,
+                    marginLeft: W * 0.01
+                  }}></Text>
+                </View>
+                {/* BP Input and Cancel Button Container */}
+                <View style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  width: W * 0.5
+                }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      {
+                        if (systolic < 85 || systolic > 180) {
                           updateBpValues()
+                          // if (flagg2 > 2) {
+                          //   //ShortToast("Your Systolic BP Level Seems to be Critcial, Kindly consult a Doctor", 'error', '')
+                          //   updateBpValues()
+                          // }
+                          // else {
+                          //   //setFlagg2(prev => prev + 1)
+                          //   //ShortToast("Your Systolic BP level doesn't seem to be normal. Kindly make sure you have took the correct reading", 'warning', '')
+                          //   //setSystolic("")
+                          // }
                         }
                         else {
-                          setFlagg2(prev => prev + 1)
-                          ShortToast("Your Systolic BP level doesn't seem to be normal. Kindly make sure you have took the correct reading", 'warning', '')
-                          setSystolic("")
+                          updateBpValues()
                         }
                       }
-                      else {
-                        updateBpValues()
-                      }
-                    }
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: colors.GREEN,
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
-                  <Text style={{
-                    color: "white"
-                  }}>{strings.Ok}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setEditBp(false)
-                    setSystolic('')
-                    setDiastolic('')
-                    setBpm('')
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: "white",
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
-                  <Text style={{
-                    color: colors.FONT_BLACK
-                  }}>{strings.Cancel}</Text>
-                </TouchableOpacity>
+                    }}
+                    style={{
+                      width: W * 0.18,
+                      height: H * 0.04,
+                      backgroundColor: colors.GREEN,
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: H * 0.03,
+                    }}>
+                    <Text style={{
+                      color: "white"
+                    }}>{strings.Ok}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setEditBp(false)
+                      setSystolic('')
+                      setDiastolic('')
+                      setBpm('')
+                    }}
+                    style={{
+                      width: W * 0.18,
+                      height: H * 0.04,
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: H * 0.03,
+                    }}>
+                    <Text style={{
+                      color: colors.FONT_BLACK
+                    }}>{strings.Cancel}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </Modal>
           {/**Edit Systolic///////////////////////////////////////////////// */}
-          {/**Edit diastolic///////////////////////////////////////////////// */}
           <Modal
-            style={{
-              backgroundColor: "red"
-            }}
-            animationType="fade"
-            transparent={true}
-            visible={false}>
-            <View style={{
-              height: H * 0.28,
-              width: W * 0.7,
-              backgroundColor: colors.OFFWHITE,
-              borderRadius: 10,
-              alignSelf: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              top: H * 0.35,
-              elevation: 5,
-            }}>
-              <Image source={require('../../../../assets/icons/hypertension.png')}
-                style={{
-                  height: H * 0.05,
-                  width: H * 0.05,
-                  marginBottom: H * 0.02,
-                }} />
-              <View style={{
-                flexDirection: "row",
-                alignItems: "center"
-              }}>
-                <Text style={{
-                  ...fontFamily.bold
-                }}>{strings.diastolicBP}</Text>
-                <TextInput
-                  value={diastolic}
-                  onChangeText={(t) => {
-                    if (t == '0') {
-                      ShortToast('Invalid Input', 'error', '')
-                    }
-                    else
-                      setDiastolic(t)
-                  }}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
-                  style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad" />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                width: W * 0.5
-              }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    {
-                      if (diastolic < 55 || diastolic > 120) {
-                        if (flagg1 > 2) {
-                          ShortToast("Your Diastolic BP Level Seems to be Critical, Kindly Consult a Doctor", 'error', '')
-                          //updateValueDiastolicBp()
-                        }
-                        else {
-                          setFlagg1(prev => prev + 1)
-                          ShortToast("Your Diastolic BP level doesn't seem to be normal. Kindly make sure you have took the correct reading", 'warning', '')
-                          setDiastolic("")
-                        }
-                      }
-                      else {
-                        //updateValueDiastolicBp()
-                      }
-                    }
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: colors.GREEN,
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
-                  <Text style={{
-                    color: "white"
-                  }}>{strings.Ok}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setEditBp(false)
-                    setSystolic('')
-                    setDiastolic('')
-                    setBpm('')
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: "white",
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
-                  <Text style={{
-                    color: colors.FONT_BLACK
-                  }}>{strings.Cancel}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-          {/**Edit diastolic///////////////////////////////////////////////// */}
-          {/**Edit bpm///////////////////////////////////////////////// */}
-          <Modal
-            style={{
-              backgroundColor: "red"
-            }}
-            animationType="fade"
-            transparent={true}
-            visible={false}>
-            <View style={{
-              height: H * 0.28,
-              width: W * 0.7,
-              backgroundColor: colors.OFFWHITE,
-              borderRadius: 10,
-              alignSelf: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              top: H * 0.35,
-              elevation: 5,
-            }}>
-              <Image source={require('../../../../assets/icons/hypertension.png')}
-                style={{
-                  height: H * 0.05,
-                  width: H * 0.05,
-                  marginBottom: H * 0.02,
-                }} />
-              <View style={{
-                flexDirection: "row",
-                alignItems: "center"
-              }}>
-                <Text style={{
-                  ...fontFamily.bold
-                }}>{strings.BPM}</Text>
-                <TextInput
-                  onChangeText={(t) => {
-                    if (t == '0') {
-                      ShortToast('Invalid Input', 'error', '')
-                    }
-                    else
-                      setBpm(t)
-                  }}
-                  value={bpm}
-                  underlineColor={colors.GREEN}
-                  activeUnderlineColor={colors.GREEN}
-                  style={{
-                    width: W * 0.2,
-                    height: H * 0.07,
-                    alignSelf: "center",
-                    backgroundColor: "white",
-                    margin: 5,
-                  }}
-                  keyboardType="number-pad" />
-                <Text style={{
-                  color: colors.FONT_BLACK,
-                  marginLeft: W * 0.01
-                }}></Text>
-              </View>
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                width: W * 0.5
-              }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    {
-                      if (bpm == "0" || bpm == " " || ((bpm.length == 2 && bpm < "40") || (bpm.length == 3 && bpm > "250"))) {
-                        ShortToast("Invalid Value", "warning", "")
-                        setBpm("")
-                      }
-                      else if (bpm.includes(".") || bpm.includes(",") || bpm.includes(" ") || bpm.includes("-")) {
-                        ShortToast("Invalid Value", "warning", "")
-                        setBpm("")
-                      }
-                      else {
-                        //updateValueBpmBp()
-                      }
-                    }
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: colors.GREEN,
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
-                  <Text style={{
-                    color: "white"
-                  }}>{strings.Ok}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setEditBp(false)
-                    setSystolic('')
-                    setDiastolic('')
-                    setBpm('')
-                  }}
-                  style={{
-                    width: W * 0.18,
-                    height: H * 0.04,
-                    backgroundColor: "white",
-                    borderRadius: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: H * 0.03,
-                  }}>
-                  <Text style={{
-                    color: colors.FONT_BLACK
-                  }}>{strings.Cancel}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-          <Modal visible={firstTimeLogin}
+            visible={firstTimeLogin}
+            //visible={true}
             transparent={true}>
             <View
               style={{
@@ -1755,6 +1598,7 @@ const Stats = (props) => {
                 backgroundColor: "rgba(0,0,0,0.3)"
               }}
             >
+
               <View style={{
                 height: H * 0.3,
                 backgroundColor: colors.OFFWHITE,
@@ -1767,6 +1611,23 @@ const Stats = (props) => {
                 elevation: 8,
               }}
               >
+                <LottieView
+                  style={{
+                    height: H * 0.7,
+                    width: W * 0.7,
+                    position: 'absolute',
+                    //zIndex: 1
+                  }}
+                  //onAnimationLoaded={playSound}
+                  source={require('../../../../assets/animations/congratulations.json')}
+                  autoPlay
+                  loop
+                />
+                {/* <TouchableOpacity 
+                style={{zIndex:200, backgroundColor:'red'}}
+                onPress={playSound}>
+                  <Text>Play Sound</Text>
+                </TouchableOpacity> */}
                 <Text style={{
                   ...fontFamily.bold,
                   fontSize: fontSizes.XXL,
@@ -1780,7 +1641,7 @@ const Stats = (props) => {
                   paddingHorizontal: W * 0.025,
                   lineHeight: H * 0.03
                 }}>
-                  You have won 1000 points on Successful Signup. You can check your Total Points from above.
+                  You have won 1000 reward points on successful signup. You can check your total reward points from above.
                 </Text>
                 <TouchableOpacity onPress={() => {
                   setFirstTimeLogin(false)
@@ -1865,12 +1726,13 @@ const Stats = (props) => {
               style={{
                 height: H,
                 width: W,
-                justifyContent: "center",
-                alignItems: "center",
+                //justifyContent: "center",
+                //alignItems: "center",
                 backgroundColor: "rgba(0,0,0,0.3)"
               }}
             >
               <View style={{
+                top: H * 0.07,
                 height: H * 0.4,
                 backgroundColor: colors.OFFWHITE,
                 // backgroundColor: "red",

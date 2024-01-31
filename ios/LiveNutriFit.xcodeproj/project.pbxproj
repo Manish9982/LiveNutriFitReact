@@ -33,6 +33,7 @@
 		7C6E0636A20343C787EBE565 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7952F2E75AF48D0BE43E609 /* Montserrat-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		89394FF42B3549C7000421C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89394FF32B3549C6000421C6 /* GoogleService-Info.plist */; };
+		89B137B42B5E4CDD0010B13E /* coin_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 89B137B32B5E4CDD0010B13E /* coin_sound.mp3 */; };
 		8C0F1CA7120444078530B4CE /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64455373A5EC436C868D269B /* Montserrat-ExtraBold.ttf */; };
 		9091936DDC4E44E48A8BC9D3 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F518CE5D791040C39B25B159 /* FontAwesome5_Brands.ttf */; };
 		9528D018B6324945AB162705 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9243B072B1F745ABA2FCA8C1 /* Montserrat-Medium.ttf */; };
@@ -103,6 +104,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LiveNutriFit/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89394FF32B3549C6000421C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89492C582B2197B8009E5798 /* LiveNutriFit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LiveNutriFit.entitlements; path = LiveNutriFit/LiveNutriFit.entitlements; sourceTree = "<group>"; };
+		89B137B32B5E4CDD0010B13E /* coin_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = coin_sound.mp3; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig"; path = "Target Support Files/Pods-LiveNutriFit-LiveNutriFitTests/Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig"; sourceTree = "<group>"; };
 		8A2D021D9EE2891926EF714B /* Pods_LiveNutriFit_LiveNutriFitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiveNutriFit_LiveNutriFitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CE6507921EF47F3BAFB9BBD /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat/static/Montserrat-Light.ttf"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				89B137B32B5E4CDD0010B13E /* coin_sound.mp3 */,
 				89394FF32B3549C6000421C6 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* LiveNutriFit */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -369,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				89B137B42B5E4CDD0010B13E /* coin_sound.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				46BC63FC21F3465AA4880977 /* AntDesign.ttf in Resources */,
 				B2ED24CC5DB344FE9FED6930 /* Entypo.ttf in Resources */,

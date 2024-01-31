@@ -386,7 +386,7 @@ const More = ({ navigation }) => {
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
 
-              <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
+              {/* <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
                 <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/images/Reminder.jpg')}
@@ -395,7 +395,7 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.reminder}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} />
+              <Divider style={styles.dividerStyle} /> */}
 
               <TouchableOpacity onPress={() => {
                 //ShortToast('Coming Soon..', 'warning', '')

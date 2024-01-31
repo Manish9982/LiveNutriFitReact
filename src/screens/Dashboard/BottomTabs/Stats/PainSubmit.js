@@ -233,7 +233,7 @@ const PainSubmit = ({ navigation, route }) => {
           ...fontFamily.bold,
           color: painColor,
           fontSize: fontSizes.greeting,
-          marginVertical: H * 0.1
+          marginVertical: H * 0.04
         }}>{(Math.round(painValue * 100) / 100).toFixed(2)}</Text>
         {/*<TextInput style={styles.textInput}
         onChangeText={(t) => { t > 10 ? (ToastAndroid.show("Max Value of Pain can be 10", ToastAndroid.SHORT)) : setPainValue(t) }}

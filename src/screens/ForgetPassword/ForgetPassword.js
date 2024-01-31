@@ -6,27 +6,16 @@ import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '..
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import LinearGradient from 'react-native-linear-gradient'
 import Loader from '../../assets/components/Loader'
-
-
-
-
-
-
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
-
 
 //lang chnge
 const strings = new LocalizedStrings({
     en: english,
     hi: hindi,
 });
-
-
-
-
 
 const fontConfig = {
     fontFamily: 'Montserrat-Regular',
@@ -46,7 +35,6 @@ const ForgetPassword = ({ navigation, route }) => {
     const [loader, setLoader] = useState("")
     useEffect(() => { getLanguage() }, [])
 
-
     const testEmail = (text) => {
         const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         return regex.test(text)
@@ -63,9 +51,6 @@ const ForgetPassword = ({ navigation, route }) => {
         setLoader(false)
 
     }
-
-
-
 
     const forgetPassword = async () => {
         setLoader(true)
@@ -88,18 +73,9 @@ const ForgetPassword = ({ navigation, route }) => {
                 ShortToast(result.message, 'error', '')
 
             }
-
-
         }
-
-
-
         setLoader(false)
     }
-
-
-
-
 
     return (
 
@@ -109,9 +85,6 @@ const ForgetPassword = ({ navigation, route }) => {
                 <Loader />
             </>
             :
-
-
-
             <KeyboardAwareScrollView>
 
                 <StatusBar backgroundColor={colors.GREEN} />
@@ -121,7 +94,6 @@ const ForgetPassword = ({ navigation, route }) => {
                 }}>
                     <Appbar.BackAction color={colors.GREEN}
                         style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
-
 
                     <Appbar.Content style={{
                         alignItems: "center",

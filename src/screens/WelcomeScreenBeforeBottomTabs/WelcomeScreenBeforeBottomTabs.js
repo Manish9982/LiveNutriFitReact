@@ -1,4 +1,4 @@
-import { View, Image, StatusBar, ImageBackground, TouchableOpacity, Modal, StyleSheet } from 'react-native'
+import { View, Image, StatusBar, ImageBackground, TouchableOpacity, Modal, StyleSheet, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { H, W, colors, fontSizes, PostApiData, fontFamily } from '../../colorSchemes/ColorSchemes'
 import { ActivityIndicator, Text } from 'react-native-paper'
@@ -14,7 +14,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import RNRestart from 'react-native-restart'
-import Customloader from '../../assets/components/Customloader'
+import Loader from '../../assets/components/Loader'
 
 
 //lang chnge
@@ -25,16 +25,28 @@ const strings = new LocalizedStrings({
 
 
 export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
-    const isFocused = useIsFocused()
 
+    const [colorOfCheckBox1, setColorOfCheckBox1] = useState("grey")
+    const [colorOfCheckBox2, setColorOfCheckBox2] = useState("grey")
+    const [colorOfCheckBox3, setColorOfCheckBox3] = useState("grey")
+    const [valueOfProgressBar, setValueOfProgressBar] = useState(1)
+    const [flag, setFlag] = useState(0)
+    const [name, setName] = useState("")
+    const [loader, setLoader] = useState(true)
+    const [customText, setCustomText] = useState(strings.PreparingYourPersonalizedMealPlan)
+    useEffect(() => {
+        //runProgressbarAndCheckbox()
+        setFlag(2)
+    }, [loader])
     useEffect(() => { registerStatus() }, [])
     useEffect(() => { firstLogin() }, [])
-
-
     useEffect(() => { getLanguage() }, [isFocused])
-
-
-   const navigationToDashboard = async () => {
+    const progres = useSharedValue(0)
+    const isFocused = useIsFocused()
+    const firstLogin = () => {
+        storeDataInLocalStorage('firstTimeLogin', '1')
+    }
+    const navigationToDashboard = async () => {
         await storeDataInLocalStorage('stackValue', "3")
         RNRestart.Restart()
     }
@@ -53,103 +65,86 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
         strings.setLanguage(languageKey)
     }
 
-    const progres = useSharedValue(0)
-    const [colorOfCheckBox1, setColorOfCheckBox1] = useState("grey")
-    const [colorOfCheckBox2, setColorOfCheckBox2] = useState("grey")
-    const [colorOfCheckBox3, setColorOfCheckBox3] = useState("grey")
-    const [valueOfProgressBar, setValueOfProgressBar] = useState(0)
-    const [flag, setFlag] = useState(0)
-    const [name, setName] = useState("")
-    const [loader, setLoader] = useState(true)
-    const [customText, setCustomText] = useState(strings.PreparingYourPersonalizedMealPlan)
-    useEffect(() => {
-        runProgressbarAndCheckbox()
-        setFlag(0)
-    }, [loader])
+    // const runProgressbarAndCheckbox = () => {
+    //     setTimeout(() => {
+    //         setValueOfProgressBar(0.1)
+    //         runBarToLevelTwo()
+    //         setCustomText(strings.PreparingYourPersonalizedMealPlan)
+    //     }, 1000);
+    //     const runBarToLevelTwo = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(0.2)
+    //             runBarToLevelThree()
+    //             setCustomText(strings.PreparingYourPersonalizedMealPlan)
+    //         }, 1000)
+    //     }
+    //     const runBarToLevelThree = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(0.3)
+    //             setColorOfCheckBox1("green")
+    //             runBarToLevelFour()
+    //             setCustomText(strings.PreparingYourPersonalizedMealPlan)
+    //             setFlag(1)
+    //         }, 1000)
+    //     }
+    //     const runBarToLevelFour = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(0.4)
+    //             runBarToLevelFive()
+    //             setCustomText(strings.PreparingYourPersonalizedMealPlan)
 
-    const firstLogin = () => {
-        storeDataInLocalStorage('firstTimeLogin', '1')
-    }
-    const runProgressbarAndCheckbox = () => {
-        setTimeout(() => {
-            setValueOfProgressBar(0.1)
-            runBarToLevelTwo()
-            setCustomText(strings.PreparingYourPersonalizedMealPlan)
-        }, 1000);
-        const runBarToLevelTwo = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(0.2)
-                runBarToLevelThree()
-                setCustomText(strings.PreparingYourPersonalizedMealPlan)
-            }, 1000)
-        }
-        const runBarToLevelThree = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(0.3)
-                setColorOfCheckBox1("green")
-                runBarToLevelFour()
-                setCustomText(strings.PreparingYourPersonalizedMealPlan)
-                setFlag(1)
-            }, 1000)
-        }
-        const runBarToLevelFour = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(0.4)
-                runBarToLevelFive()
-                setCustomText(strings.PreparingYourPersonalizedMealPlan)
+    //         }, 1000)
+    //     }
+    //     const runBarToLevelFive = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(0.5)
+    //             runBarToLevelSix()
+    //             setCustomText(strings.PreparingYourPersonalizedExercisePlan)
+    //         }, 1000)
+    //     }
+    //     const runBarToLevelSix = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(0.6)
+    //             setColorOfCheckBox2("green")
+    //             runBarToLevelSeven()
+    //             setCustomText(strings.PreparingYourPersonalizedExercisePlan)
+    //         }, 1000)
+    //     }
+    //     const runBarToLevelSeven = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(0.7)
+    //             runBarToLevelEight()
+    //             setCustomText(strings.PreparingYourPersonalizedExercisePlan)
 
-            }, 1000)
-        }
-        const runBarToLevelFive = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(0.5)
-                runBarToLevelSix()
-                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
-            }, 1000)
-        }
-        const runBarToLevelSix = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(0.6)
-                setColorOfCheckBox2("green")
-                runBarToLevelSeven()
-                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
-            }, 1000)
-        }
-        const runBarToLevelSeven = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(0.7)
-                runBarToLevelEight()
-                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
+    //         }, 1000)
+    //     }
+    //     const runBarToLevelEight = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(0.8)
+    //             runBarToLevelNine()
+    //             setCustomText(strings.PreparingYourPersonalizedExercisePlan)
+    //         }, 1000)
+    //     }
+    //     const runBarToLevelNine = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(0.9)
+    //             setColorOfCheckBox3("green")
+    //             runBarToLevelTen()
+    //             setCustomText(strings.PreparingYourPersonalizedExercisePlan)
+    //         }, 1000)
+    //     }
+    //     const runBarToLevelTen = () => {
+    //         setTimeout(() => {
+    //             setValueOfProgressBar(1)
+    //             progres.value = withSequence(withTiming(1.1), withSpring(1))
+    //             setCustomText(strings.PreparingYourPersonalizedExercisePlan)
+    //             setCustomText("")
+    //             setFlag(2)
+    //             //navigation.replace("PlanChoosePromptAtStartup")
+    //         }, 1000)
 
-            }, 1000)
-        }
-        const runBarToLevelEight = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(0.8)
-                runBarToLevelNine()
-                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
-            }, 1000)
-        }
-        const runBarToLevelNine = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(0.9)
-                setColorOfCheckBox3("green")
-                runBarToLevelTen()
-                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
-            }, 1000)
-        }
-        const runBarToLevelTen = () => {
-            setTimeout(() => {
-                setValueOfProgressBar(1)
-                progres.value = withSequence(withTiming(1.1), withSpring(1))
-                setCustomText(strings.PreparingYourPersonalizedExercisePlan)
-                setCustomText("")
-                setFlag(2)
-                //navigation.replace("PlanChoosePromptAtStartup")
-            }, 1000)
-
-        }
-    }
+    //     }
+    // }
     const reanimatedStyle = useAnimatedStyle(() => {
         return {
             transform: [{ scale: progres.value }],
@@ -163,7 +158,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("id", JSON.parse(temp))
         formdata.append("register_status", "1");
-        formdata.append("device_type", "android");
+        formdata.append("device_type", Platform.OS);
 
         const result = await PostApiData('registerstatus', formdata)
         console.log("resultstatus = ", result)
@@ -184,7 +179,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                     {/* <ActivityIndicator size={"large"}
                         color={colors.GREEN} /> */}
 
-                        <Customloader/>
+                    <Loader />
                 </View>
             </>
 
@@ -275,6 +270,14 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                             null}
                         {flag == 2 ?
                             <>
+                                {/* <Text
+                                    style={{
+                                        ...fontFamily.bold,
+                                        marginTop: flag == "2" ? H * 0.04 : H * 0.1,
+                                        fontSize: fontSizes.XL,
+                                        marginBottom: H * 0.05,
+                                        width: W * 0.8
+                                    }}>{strings.Wellprovidenutritional}</Text> */}
                                 <Text
                                     style={{
                                         ...fontFamily.bold,
@@ -282,30 +285,28 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                                         fontSize: fontSizes.XL,
                                         marginBottom: H * 0.05,
                                         width: W * 0.8
-                                    }}>{strings.Wellprovidenutritional}</Text>
+                                    }}>We thank you for choosing LiveNutriFit. A health and wellness platform which will start you on a "Healthy You" journey.{"\n\n"}
+                                    At LNF our focus is on "Lifestyle Modification", changing your relationship with Nutrition to help identify what works for you, and creating a personalized fitness regime. We believe in the power of habits for a fitter and energized you.</Text>
 
 
                             </>
                             :
                             null}
 
-                        <Text style={{
+                        {/* <Text style={{
                             width: W,
                             ...fontFamily.bold,
                             marginLeft: W * 0.15,
                             marginTop: flag == "1" ? H * 0.05 : H * 0.2
-                        }}>{customText}</Text>
+                        }}>{customText}</Text> */}
                         <TouchableOpacity
                             onPress={() => {
-                                if (flag == 2 && (valueOfProgressBar !== 1)) {
-                                    console.log("Do Nothing")
-                                }
-                                else if (flag == 2 && (valueOfProgressBar == 1))
-                                    //  navigation.replace("PlanChoosePromptAtStartup")
-
-                                    navigationToDashboard()
-
-
+                                // if (flag == 2 && (valueOfProgressBar !== 1)) {
+                                //     console.log("Do Nothing")
+                                // }
+                                // else if (flag == 2 && (valueOfProgressBar == 1))
+                                //     //  navigation.replace("PlanChoosePromptAtStartup")
+                                navigationToDashboard()
                             }}
                             style={{
                                 height: H * 0.07,

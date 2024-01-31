@@ -41,7 +41,11 @@ const theme = {
 
 const InfoCard = (props) => {
     const isFocused = useIsFocused()
-    useEffect(() => { getLanguage() }, [isFocused])
+    useEffect(() => {
+        if (isFocused) {
+            getLanguage()
+        }
+    }, [isFocused])
     //lng
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")

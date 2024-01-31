@@ -392,7 +392,7 @@ const ListForMeal = (props) => {
                                 </Modal>
                                 {/* <Image source={{ uri: 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg' }} */}
 
-                                <Image source={{ uri: `${Constants.BASE_URL}csvfile/${props.Image} ` }}
+                                <Image source={{ uri: `${Constants.BASE_URL}panel/csvfile/${props.Image}` }}
 
                                     style={{
                                         height: H * 0.055,
@@ -420,8 +420,6 @@ const ListForMeal = (props) => {
                                             width: W * 0.35
                                         }}>{props.Serving}</Text>
                                 </View>
-
-
                                 <View style={{
                                     position: "absolute",
                                     left: W * 0.61
@@ -441,7 +439,6 @@ const ListForMeal = (props) => {
                                                 <TouchableOpacity onPress={() => { setExpand(!expand) }}>
                                                     <AntDesign name="upcircleo" size={20} color="grey" />
                                                 </TouchableOpacity>
-
                                         }
                                     </Text>
                                 </View>
@@ -472,17 +469,10 @@ const ListForMeal = (props) => {
                                                 <AntDesign name="sync" size={fontSizes.XXL} color={"grey"} />
                                             </TouchableOpacity>
                                     }
-
-
                                 </View>
-
-
-
-
                                 <View style={{
                                     position: "absolute",
                                     left: W * 0.78,
-
                                 }}>
                                     {
                                         props.OnRepeat
@@ -512,14 +502,10 @@ const ListForMeal = (props) => {
                                             <>
                                             </>
                                     }
-
-
                                     <TouchableOpacity onPress={() => {
-
                                         handlingReplaceMeal()
                                         // setVisibleMood(true)
                                     }}>
-
                                         <>
                                             <Image source={require('../../../../assets/icons/shuffel.png')}
                                                 style={{
@@ -528,28 +514,9 @@ const ListForMeal = (props) => {
                                                     tintColor: "green"
                                                 }} />
                                         </>
-
-
-
                                     </TouchableOpacity>
-
-
                                 </View>
-
-
-
                             </View>
-
-
-
-
-
-
-
-
-
-
-
                             <View style={styles.calCount}>
                                 <Text style={styles.textCalCount}>{props.Calories1} </Text>
                             </View>

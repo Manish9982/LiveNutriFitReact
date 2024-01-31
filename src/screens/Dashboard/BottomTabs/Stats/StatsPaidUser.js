@@ -71,10 +71,7 @@ const StatsPaidUser = ({ navigation }) => {
     setDataForPaidUser(result)
     console.log(result)
     console.log("tempPaid", temp)
-
-
   }
-
 
   var myloop = []
   /////////////////////////////////////Power of Seven Cards//////////////////////////////////////////////
@@ -90,7 +87,6 @@ const StatsPaidUser = ({ navigation }) => {
         Information={data?.data[i]?.information}
         SelectedOption={data?.data[i]?.selected_option}
       />
-
     );
   }
 
