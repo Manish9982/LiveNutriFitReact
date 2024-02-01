@@ -104,10 +104,10 @@ const App = () => {
     const handleAppStateChange = nextAppState => {
       console.log('AppState Change:', nextAppState);
 
-      if (AppState.currentState.match(/background/) && nextAppState === 'active') {
+      if (nextAppState === 'active') {
         console.log('App has come to the foreground!');
         foregroundApi();
-      } else if (AppState.currentState.match(/active/) && nextAppState === 'background') {
+      } else if (nextAppState === 'background') {
         console.log('App has come to the Background!');
         backgroundApi();
       }

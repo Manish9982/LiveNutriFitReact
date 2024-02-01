@@ -48,8 +48,6 @@ const BottomTabs = ({ route }) => {
   const [langTypeText, setLangTypeText] = useState("")
   const [hidetab, sethHidetab] = useState("")
 
-
-  const appState = useRef(AppState.currentState);
   const navigation = useNavigation()
   React.useEffect(() => { storeDataInLocalStorage('stackValue', '3') }, [])
   //React.useEffect(() => { setRegStatus() }, [])
@@ -71,45 +69,6 @@ const BottomTabs = ({ route }) => {
 
 
   React.useEffect(() => { getLanguage() }, [])
-
-  React.useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
-      ) {
-        console.log('App has come to the foreground!');
-        foregroundApi()
-      }
-      else if (appState.current.match(/active/) && nextAppState == 'inactive') {
-        console.log('App has come to the Background!');
-        backgroundApi()
-      }
-
-      appState.current = nextAppState;
-      //console.log('AppState', appState.current);
-    });
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
-
-  const foregroundApi = async () => {
-    var formdata = new FormData()
-    const temp = await getDataFromLocalStorage('user_id')
-    formdata.append("user_id", JSON.parse(temp))
-    formdata.append('login_time', Date.now())
-    const result = await PostApiData('user_session_activity', formdata)
-  }
-  const backgroundApi = async () => {
-    var formdata = new FormData()
-    const temp = await getDataFromLocalStorage('user_id')
-    formdata.append("user_id", JSON.parse(temp))
-    formdata.append('logout_time', Date.now())
-    const result = await PostApiData('user_session_activity', formdata)
-  }
-
 
 
   const getLanguage = async () => {
