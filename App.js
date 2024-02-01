@@ -87,37 +87,40 @@ const theme = {
 const Stack = createNativeStackNavigator();
 
 LogBox.ignoreAllLogs();
+
 const App = () => {
+  //const appState = useRef(AppState.currentState);
   //const { Nmessages } = useContext(DataContext)
   //const [messages, setMessages] = Nmessages
 
-  const appState = useRef(AppState.currentState);
-
   useEffect(() => {
-    checkNotificationPermission()
-    requestUserPermissionAndGetToken()
+    console.log('Initial useEffect: checkNotificationPermission and requestUserPermissionAndGetToken');
+    checkNotificationPermission();
+    requestUserPermissionAndGetToken();
     // NotificationListener()
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
-      ) {
+    const handleAppStateChange = nextAppState => {
+      console.log('AppState Change:', nextAppState);
+
+      if (AppState.currentState.match(/background/) && nextAppState === 'active') {
         console.log('App has come to the foreground!');
-        foregroundApi()
-      }
-      else if (appState.current.match(/active/) && nextAppState == 'inactive') {
+        foregroundApi();
+      } else if (AppState.currentState.match(/active/) && nextAppState === 'background') {
         console.log('App has come to the Background!');
-        backgroundApi()
+        backgroundApi();
       }
 
-      appState.current = nextAppState;
-      //console.log('AppState', appState.current);
-    });
+      // Update the current app state
+      AppState.currentState = nextAppState;
+    };
+
+    console.log('Adding AppState change listener');
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
 
     return () => {
+      console.log('Removing AppState change listener');
       subscription.remove();
     };
   }, []);

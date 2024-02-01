@@ -13,6 +13,7 @@ import { useIsFocused } from '@react-navigation/native';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 
@@ -39,26 +40,26 @@ const VerifyOTPAfterSignInEmail = ({ navigation, route }) => {
   useEffect(() => { getLanguage() }, [isFocused])
 
 
-//lng
-const getLanguage = async () => {
-  setLoader(true)
-  const lang = await getDataFromLocalStorage("lang")
+  //lng
+  const getLanguage = async () => {
+    setLoader(true)
+    const lang = await getDataFromLocalStorage("lang")
 
-  if (lang == "en") {
-    changeLanguage('en')
+    if (lang == "en") {
+      changeLanguage('en')
 
-  } else {
-    changeLanguage('hi')
+    } else {
+      changeLanguage('hi')
+
+    }
+    setLoader(false)
 
   }
-  setLoader(false)
-
-}
 
 
-const changeLanguage = (languageKey) => {
-  strings.setLanguage(languageKey)
-}
+  const changeLanguage = (languageKey) => {
+    strings.setLanguage(languageKey)
+  }
 
 
   const otpRequestedAgain = async () => {
@@ -78,7 +79,7 @@ const changeLanguage = (languageKey) => {
       if (result.status === 200) {
         setOtp(result.otp)
         ShortToast(result.message, 'success', '')
-     //   ShortToast(`${result.otp}`, 'warning', '')
+        //   ShortToast(`${result.otp}`, 'warning', '')
       }
       else ShortToast(result.message, 'error', '')
 
@@ -95,11 +96,13 @@ const changeLanguage = (languageKey) => {
     var formdata = new FormData();
     formdata.append("otp", otp);
     formdata.append("email", route.params.email)
+    formdata.append("login_time", Date.now())
+    
     var requestOptions = {
       method: 'POST',
       body: formdata,
     };
-    
+
     try {
       const response = await fetch(`${Constants.BASE_URL}panel/Signup/verifyOTP`, requestOptions)
       const result = await response.json()
@@ -110,7 +113,7 @@ const changeLanguage = (languageKey) => {
         storeDataInLocalStorage('user_id', JSON.stringify(result.user_id))                          //save userId in local storage
         storeDataInLocalStorage('user_type', (result.user_type))                          //save usertype in local storage
         storeDataInLocalStorage('registerStatus', result.register_status)
-       storeDataInLocalStorage('wrid', result.wrd_id)
+        storeDataInLocalStorage('wrid', result.wrd_id)
 
         navigate()
 
@@ -120,7 +123,7 @@ const changeLanguage = (languageKey) => {
 
 
     } catch (error) {
-      
+
       ShortToast('Error!', 'error', '')
     }
     setLoader(false)
@@ -129,49 +132,48 @@ const changeLanguage = (languageKey) => {
   const navigate = async () => {
     setLoader(true)
     const temp = await getDataFromLocalStorage("registerStatus")
-    if (temp == '1' ) {
+    if (temp == '1') {
       { storeDataInLocalStorage('stackValue', '3') && RNRestart.Restart() }
-  }
+    }
     else {
-  { storeDataInLocalStorage('stackValue', '4') && RNRestart.Restart() }
-}
-setLoader(false)
+      { storeDataInLocalStorage('stackValue', '4') && RNRestart.Restart() }
+    }
+    setLoader(false)
   }
-console.log('DataContext-->', route.params.email)
-return (
-  loader
-    ?
-    <Loader />
-    :
-    <ScrollView contentContainerStyle={styles.mainContainer}>
-    <Text style={{ fontSize: fontSizes.LAR }}>{strings.OTPVerification}</Text>
-    <View style={{ alignItems: 'center' }}>
-        <Text style={{ color: '#adadaa' }}>{strings.Wehavesentthecodeto} </Text>
-        <Text style={{ fontSize: fontSizes.LAR }}>{route.params.email}</Text>
-    </View>
-    <View style={styles.inputContainer}>
-        <OTPinputComponent />
-    </View>
-    <View style={{ flexDirection: 'row' }}>
-        <Text style={{ color: '#adadaa' }}>{strings.didnotreceivecode}</Text><TouchableOpacity onPress={() => otpRequestedAgain()}>
+  console.log('DataContext-->', route.params.email)
+  return (
+    loader
+      ?
+      <Loader />
+      :
+      <KeyboardAwareScrollView contentContainerStyle={styles.mainContainer}>
+        <Text style={{ fontSize: fontSizes.LAR }}>{strings.OTPVerification}</Text>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ color: '#adadaa' }}>{strings.Wehavesentthecodeto} </Text>
+          <Text style={{ fontSize: fontSizes.LAR }}>{route.params.email}</Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <OTPinputComponent />
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ color: '#adadaa' }}>{strings.didnotreceivecode}</Text><TouchableOpacity onPress={() => otpRequestedAgain()}>
             <Text style={styles.text}>{strings.requestagain}</Text>
-        </TouchableOpacity>
-    </View>
+          </TouchableOpacity>
+        </View>
 
-    <TouchableOpacity
-        style={styles.button}
-        onPress={() => verifyOTP()}>
-        <Text style={{ color: 'white' }}>{strings.VerifySignIn}</Text>
-    </TouchableOpacity>
-</ScrollView>
-)
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => verifyOTP()}>
+          <Text style={{ color: 'white' }}>{strings.VerifySignIn}</Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
   mainContainer:
   {
-    height: HEIGHT,
-    width: WIDTH,
+    flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     //flexWrap:'wrap',

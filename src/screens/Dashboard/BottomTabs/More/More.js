@@ -219,11 +219,19 @@ const More = ({ navigation }) => {
   }
 
   const killApp = async () => {
-    try {
-      await AsyncStorage.clear()
-    } catch (e) {
+    setLoader(true)
+    const temp = await getDataFromLocalStorage('user_id')
+    var formdata = new FormData()
+    formdata.append("user_id", JSON.parse(temp));
+    formdata.append("logout_time", Date.now())
+    const result = await PostApiData('logout', formdata)
+    if (result?.status == "200") {
+      try {
+        await AsyncStorage.clear()
+      } catch (e) {
+      }
+      console.log('Done.')
     }
-    console.log('Done.')
   }
 
   const openURL = () => {

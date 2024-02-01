@@ -1641,7 +1641,7 @@ const Stats = (props) => {
                   paddingHorizontal: W * 0.025,
                   lineHeight: H * 0.03
                 }}>
-                  You have won 1000 reward points on successful signup. You can check your total reward points from above.
+                  You have won 1000 rewards on successful signup. You can check your total rewards from above.
                 </Text>
                 <TouchableOpacity onPress={() => {
                   setFirstTimeLogin(false)
@@ -1732,8 +1732,8 @@ const Stats = (props) => {
               }}
             >
               <View style={{
+                padding: 10,
                 top: H * 0.07,
-                height: H * 0.4,
                 backgroundColor: colors.OFFWHITE,
                 // backgroundColor: "red",
                 width: W * 0.85,
@@ -1769,10 +1769,14 @@ const Stats = (props) => {
 
                 <>
                   <TextInput
+                    maxLength={160}
+                    returnKeyType='done'
+                    blurOnSubmit={true}
+                    multiline
                     value={text}
                     onChangeText={(t) => setText(t)}
                     style={{
-                      height: H * 0.07,
+                      //height: H * 0.07,
                       width: W * 0.65,
                       backgroundColor: "white",
                       marginTop: H * 0.04,

@@ -1,5 +1,5 @@
 import { View, Alert, ToastAndroid, Dimensions, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useContext, useState , useEffect} from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Text } from 'react-native-paper'
 import { storeDataInLocalStorage, } from '../../local storage/LocalStorage'
 import RNRestart from 'react-native-restart'
@@ -13,12 +13,13 @@ import { getDataFromLocalStorage } from '../../local storage/LocalStorage';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 //lang chnge
 const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
+    en: english,
+    hi: hindi,
 });
 
 ///////////////////////////////////////for email only////////////////////////////////////////////////
@@ -38,23 +39,23 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
     useEffect(() => { getLanguage() }, [isFocused])
 
 
-  //lng
-  const getLanguage = async () => {
-    setLoader(true)
-    const lang = await getDataFromLocalStorage("lang")
-    if (lang == "en") {
-      changeLanguage('en')
-    } else {
-      changeLanguage('hi')
+    //lng
+    const getLanguage = async () => {
+        setLoader(true)
+        const lang = await getDataFromLocalStorage("lang")
+        if (lang == "en") {
+            changeLanguage('en')
+        } else {
+            changeLanguage('hi')
+        }
+        setLoader(false)
+
     }
-    setLoader(false)
-
-  }
 
 
-  const changeLanguage = (languageKey) => {
-    strings.setLanguage(languageKey)
-  }
+    const changeLanguage = (languageKey) => {
+        strings.setLanguage(languageKey)
+    }
 
     const otpRequestedAgain = async () => {
         setLoader(true)
@@ -85,7 +86,7 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
         var formdata = new FormData();
         formdata.append("otp", otp)
         formdata.append("email", route.params.email)
-
+        formdata.append("login_time", Date.now())
         var requestOptions = {
             method: 'POST',
             body: formdata,
@@ -98,10 +99,10 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
             storeDataInLocalStorage('Token', result.token)
             storeDataInLocalStorage('stackValue', '4')                        //Store Token
             storeDataInLocalStorage('mobile', mobile)
-            storeDataInLocalStorage('user_id', JSON.stringify(result.user_id))     
-            storeDataInLocalStorage('user_type', (result.user_type))    
-                   storeDataInLocalStorage('wrid', result.wrd_id)
-                      //save usertype in local storage
+            storeDataInLocalStorage('user_id', JSON.stringify(result.user_id))
+            storeDataInLocalStorage('user_type', (result.user_type))
+            storeDataInLocalStorage('wrid', result.wrd_id)
+            //save usertype in local storage
             //save userId in local storage
             { storeDataInLocalStorage('stackValue', '4') && navigation.replace("WelcomeScreenAfterRegistration") }                        //change stack value for navigating to bottom tabs
 
@@ -118,7 +119,7 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
             ?
             <Loader />
             :
-            <ScrollView contentContainerStyle={styles.mainContainer}>
+            <KeyboardAwareScrollView contentContainerStyle={styles.mainContainer}>
                 <Text style={{ fontSize: fontSizes.LAR }}>{strings.OTPVerification}</Text>
                 <View style={{ alignItems: 'center' }}>
                     <Text style={{ color: '#adadaa' }}>{strings.Wehavesentthecodeto} </Text>
@@ -140,15 +141,14 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
                     onPress={() => verifyOTP()}>
                     <Text style={{ color: 'white' }}>{strings.VerifySignIn}</Text>
                 </TouchableOpacity>
-            </ScrollView>
+            </KeyboardAwareScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     mainContainer:
     {
-        height: HEIGHT,
-        width: WIDTH,
+        flex: 1,
         justifyContent: 'space-evenly',
         alignItems: 'center',
         //flexWrap:'wrap',

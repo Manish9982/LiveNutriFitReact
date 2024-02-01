@@ -13,8 +13,8 @@ import { useIsFocused } from '@react-navigation/native'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
-import { check, request } from 'react-native-permissions'
-import { requestCameraAndGalleryPermissions } from '../../colorSchemes/RequestPermissions'
+import { PERMISSIONS, RESULTS, check, request, requestMultiple } from 'react-native-permissions'
+import ImagePicker from 'react-native-image-crop-picker'
 
 
 
@@ -49,7 +49,6 @@ const UserProfile = ({ navigation }) => {
         getLanguage()
         getDataForUserProfile()
         //requestCameraPermission()
-        requestCameraAndGalleryPermissions()
     }, [isFocused])
 
 
@@ -161,44 +160,43 @@ const UserProfile = ({ navigation }) => {
 
     const launchCam = async () => {
         try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                {
-                    title: "LiveNutriFit App Camera Permission",
-                    message:
-                        "LiveNutriFit App needs access to your camera " +
-                        "so you can take awesome pictures.",
-                    buttonNeutral: "Ask Me Later",
-                    buttonNegative: "Cancel",
-                    buttonPositive: "OK"
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                launchCamera(
-                    {
-                        includeBase64: false,
-                        mediaType: 'photo',
-                        quality: 0.5,
-                    },
-                    async (response) => {
-                        if (response.didCancel) {
-                            console.log('User cancelled image picker');
-                        } else if (response.error) {
-                            console.log('ImagePicker Error: ', response.error);
-                        } else {
-                            await uploadPhoto(response)
-                        }
-                    },
-                )
+            const statuses = await requestMultiple([
+              PERMISSIONS.IOS.CAMERA,
+              PERMISSIONS.IOS.PHOTO_LIBRARY,
+            ]);
+            console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
+            console.log('FaceID', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
+    
+            if (
+              statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
+              statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
+            ) 
+            {
+              try {
+                const pic = await ImagePicker.openCamera({
+                  width: 300,
+                  height: 400,
+                  cropping: true,
+                });
+                console.log("CAmPic======>", pic);
+                uploadPhoto(pic)
+              } 
+              catch (err) {
+                ShortToast(`${err}`, 'error', '');
+              }
             } else {
-                ShortToast("Camera Permission Denied. Kindly Grant Camera Access From Settings.", "error", "");
+              if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
+                Alert.alert("Camera is not accessible");
+                return false;
+              } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
+                Alert.alert("Photo Library is not accessible");
+                return false;
+              }
             }
-        } catch (err) {
-            ShortToast(err, "error", "");
+          } catch (err) {
+            ShortToast(`${err}`, 'error', '');
+          }
         }
-
-
-    }
 
     const uploadPhoto = async (pic) => {
         const temp = await getDataFromLocalStorage('user_id')

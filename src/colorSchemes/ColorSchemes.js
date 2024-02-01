@@ -159,7 +159,7 @@ export const PostApiData = async (ApiName, formdata) => {
          const result = await response.json()
          if (result.status == '403') {
             try {
-               ShortToast("Your session has expired. Logging you out now..", "error", "")
+               //ShortToast("Your session has expired. Logging you out now..", "error", "")
                await AsyncStorage.clear()
                RNRestart.Restart()
             } catch (e) {

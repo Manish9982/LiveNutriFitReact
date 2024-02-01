@@ -612,7 +612,6 @@ const Reports = ({ navigation }) => {
                             alignItems: "center",
                             flexDirection: "row",
                             backgroundColor: 'rgba(0, 0, 0, 0.5)'
-
                         }}>
                             <View style={{
                                 backgroundColor: colors.OFFWHITE,

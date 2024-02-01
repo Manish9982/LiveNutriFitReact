@@ -20,7 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DocumentPicker from 'react-native-document-picker'
-import { requestCameraAndGalleryPermissions } from '../../../../colorSchemes/RequestPermissions'
+import { PERMISSIONS, RESULTS, requestMultiple } from 'react-native-permissions'
 
 
 
@@ -76,7 +76,6 @@ const Coach = ({ navigation }) => {
       getMessages(),
         getLanguage(),
         setIsInfoButtonVisible(false)
-      requestCameraPermission()
       markMessageAsRead()
     }
   }, [isFocused])
@@ -332,20 +331,9 @@ const Coach = ({ navigation }) => {
       }
     }
     else {
-      try {
-        const pic = await ImagePicker.openCamera({
-          width: 300,
-          height: 400,
-          cropping: true,
-        });
-        console.log("CAmPic======>", pic)
-        uploadCamPic(pic)
-        setCamVisible(false)
-      } catch (err) {
-        ShortToast(`${err}`, 'error', '');
-      }
-    }
-  };
+      requestCameraPermission()
+    };
+  }
 
   const launchGallery = async () => {
     ImagePicker.openPicker({
@@ -390,7 +378,7 @@ const Coach = ({ navigation }) => {
   }
 
   const requestCameraPermission = async () => {
-    if (Platform.OS == "android") {
+    if (Platform.OS === "android") {
       try {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.CAMERA,
@@ -401,23 +389,67 @@ const Coach = ({ navigation }) => {
               "so you can take awesome pictures.",
             buttonNeutral: "Ask Me Later",
             buttonNegative: "Cancel",
-            buttonPositive: "OK"
+            buttonPositive: "OK",
           }
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log("You can use the camera");
+          try {
+            const pic = await ImagePicker.openCamera({
+              width: 300,
+              height: 400,
+              cropping: true,
+            });
+            console.log("CAmPic======>", pic);
+            uploadCamPic(pic);
+            setCamVisible(false);
+          } catch (err) {
+            ShortToast(`${err}`, 'error', '');
+          }
         } else {
-          console.log("Camera permission denied");
+          Alert.alert("Camera permission denied");
         }
       } catch (err) {
         ShortToast(err, "error", "");
       }
-    }
-    else {
-      requestCameraAndGalleryPermissions()
-    }
+    } else if (Platform.OS === "ios") {
+      try {
+        const statuses = await requestMultiple([
+          PERMISSIONS.IOS.CAMERA,
+          PERMISSIONS.IOS.PHOTO_LIBRARY,
+        ]);
+        console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
+        console.log('FaceID', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
 
-  }
+        if (
+          statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
+          statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
+        ) {
+          try {
+            const pic = await ImagePicker.openCamera({
+              width: 300,
+              height: 400,
+              cropping: true,
+            });
+            console.log("CAmPic======>", pic);
+            uploadCamPic(pic);
+            setCamVisible(false);
+          } catch (err) {
+            ShortToast(`${err}`, 'error', '');
+          }
+        } else {
+          if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
+            Alert.alert("Camera is not accessible");
+            return false;
+          } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
+            Alert.alert("Photo Library is not accessible");
+            return false;
+          }
+        }
+      } catch (err) {
+        ShortToast(`${err}`, 'error', '');
+      }
+    }
+  };
 
   const getTimeFromStamp = (timestamp) => {
 

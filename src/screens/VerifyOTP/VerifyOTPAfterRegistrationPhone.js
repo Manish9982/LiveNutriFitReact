@@ -44,7 +44,8 @@ const VerifyOTPAfterRegistrationPhone = ({ navigation, route }) => {
         var formdata = new FormData();
         formdata.append("otp", otp)
         formdata.append("mobile", route.params.mob)
-
+        formdata.append("login_time", Date.now())
+        
         var requestOptions = {
             method: 'POST',
             body: formdata,

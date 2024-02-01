@@ -12,6 +12,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import { useIsFocused } from '@react-navigation/native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 //lang chnge
@@ -89,6 +90,8 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
     var formdata = new FormData();
     formdata.append("otp", otp);
     formdata.append("mobile", route.params.mob)
+    formdata.append("login_time", Date.now())
+
     var requestOptions = {
       method: 'POST',
       body: formdata,
@@ -143,7 +146,7 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
       ?
       <Loader />
       :
-      <ScrollView contentContainerStyle={styles.mainContainer}>
+      <KeyboardAwareScrollView contentContainerStyle={styles.mainContainer}>
         <Text style={{ fontSize: fontSizes.LAR }}>{strings.OTPVerification}</Text>
         <View style={{ alignItems: 'center' }}>
           <Text style={{ color: '#adadaa' }}>{strings.Wehavesentthecodeto}</Text>
@@ -165,7 +168,7 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
           onPress={() => verifyOTP()}>
           <Text style={{ color: 'white' }}>{strings.VerifySignIn}</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </KeyboardAwareScrollView>
   )
 }
 
