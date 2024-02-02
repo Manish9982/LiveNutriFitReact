@@ -51,7 +51,7 @@ const VerifyOTPAfterRegistrationPhone = ({ navigation, route }) => {
             body: formdata,
         };
 
-        const response = await fetch(`${Constants.BASE_URL}panel/Signup/verifyOTP`, requestOptions)
+        const response = await fetch(`${Constants.BASE_URL}panel/verifyOTP`, requestOptions)
         const result = await response.json()
         console.log(result)
         if (result.status === 200) {

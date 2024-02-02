@@ -157,7 +157,7 @@ const BottomTabs = ({ route }) => {
     const temp2 = await getDataFromLocalStorage('fcmToken')
     formdata.append("id", JSON.parse(temp));
     formdata.append("fcm_token", temp2);
-    formdata.append("device_type", "1")
+    formdata.append("device_type", Platform.OS)
     const result = await PostApiData('get_device_token', formdata)
     console.log(result)
   }

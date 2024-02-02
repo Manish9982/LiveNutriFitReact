@@ -45,7 +45,7 @@ const SelectPrefferedLanguage = ({ navigation }) => {
             // ShortToast("Hindi content will be available soon..", 'warning', '')
             setLanguage("hi")
             storeDataInLocalStorage('lang', "hi")
-          //  navigation.replace("SliderIntro")  // modified to comment
+            navigation.replace("SliderIntro")  // modified to comment
 
         } else if (n == "1") {
             setLanguage("en")

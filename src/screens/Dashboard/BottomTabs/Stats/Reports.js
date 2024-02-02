@@ -172,9 +172,11 @@ const Reports = ({ navigation }) => {
                                                     } else if (response.error) {
                                                         console.log('ImagePicker Error: ', response.error);
                                                     } else {
+                                                        Alert.alert(response?.errorCode)
                                                         console.log(response)
                                                         setPic(response)
                                                         setVisible3(false)
+                                                        setVisible2(true)
                                                     }
                                                 },
                                             )
@@ -207,14 +209,17 @@ const Reports = ({ navigation }) => {
                                     } else if (response.error) {
                                         console.log('ImagePicker Error: ', response.error);
                                     } else {
+                                        Alert.alert('hi')
                                         console.log(response)
                                         setPic(response)
                                         setVisible3(false)
+                                        setVisible2(true)
                                     }
                                 },
                             )
                             break;
                         case RESULTS.BLOCKED:
+
                             //console.log('The permission is denied and not requestable anymore');
                             break;
                     }
@@ -234,12 +239,14 @@ const Reports = ({ navigation }) => {
                             console.log('This feature is not available (on this device / in this context)');
                             break;
                         case RESULTS.DENIED:
+                            Alert.alert('Feature Unavailable', 'This feature is not available on this device')
                             //console.log('The permission has not been requested / is denied but requestable');
                             request(PERMISSIONS.IOS.CAMERA)
 
                                 .then((result) => {
                                     switch (result) {
                                         case RESULTS.UNAVAILABLE:
+                                            Alert.alert('Feature Unavailable', 'This feature is not available on this device')
                                             //console.log('This feature is not available (on this device / in this context)');
                                             break;
                                         case RESULTS.DENIED:
@@ -248,6 +255,7 @@ const Reports = ({ navigation }) => {
 
                                             break;
                                         case RESULTS.LIMITED:
+                                            Alert.alert('Feature Unavailable', 'This feature is not available on this device')
                                             //console.log('The permission is limited: some actions are possible');
                                             break;
                                         case RESULTS.GRANTED:
@@ -263,11 +271,14 @@ const Reports = ({ navigation }) => {
                                                     if (response.didCancel) {
                                                         console.log('User cancelled image picker');
                                                     } else if (response.error) {
+                                                        Alert.alert('Feature Unavailable', response.error)
                                                         console.log('ImagePicker Error: ', response.error);
                                                     } else {
+                                                        Alert.alert('Feature Unavailable', 'This feature is not available on this device')
                                                         console.log(response)
                                                         setPic(response)
                                                         setVisible3(false)
+                                                        setVisible2(true)
                                                     }
                                                 },
                                             )
@@ -278,10 +289,12 @@ const Reports = ({ navigation }) => {
                                     }
                                 })
                                 .catch((error) => {
+                                    Alert.alert('Feature Unavailable', error)
                                     // …
                                 });
                             break;
                         case RESULTS.LIMITED:
+                            Alert.alert('Feature Unavailable', 'This feature is not available on this device')
                             //console.log('The permission is limited: some actions are possible');
                             break;
                         case RESULTS.GRANTED:
@@ -299,20 +312,24 @@ const Reports = ({ navigation }) => {
                                     } else if (response.error) {
                                         console.log('ImagePicker Error: ', response.error);
                                     } else {
+                                        Alert.alert(response?.errorCode)
                                         console.log(response)
                                         setPic(response)
                                         setVisible3(false)
+                                        setVisible2(true)
                                     }
                                 },
                             )
                             break;
                         case RESULTS.BLOCKED:
+                            Alert.alert('Feature Unavailable', 'This feature is not available on this device')
                             //console.log('The permission is denied and not requestable anymore');
                             break;
                     }
                 })
                 .catch((error) => {
                     // …
+                    Alert.alert('Error', error)
                 });
         }
 
@@ -450,155 +467,142 @@ const Reports = ({ navigation }) => {
         console.log(res)
         setDoc(res)
         setVisible3(false)
+        setVisible2(true)
     }
 
     const uploadDoc = async () => {
 
-        const userType = await getDataFromLocalStorage('user_type')
+        // const userType = await getDataFromLocalStorage('user_type')
+        // console.log("countDoc== ", countDoc)
+        // if (JSON.parse(userType) == "1") {
+        //     if (doc) {
+        //         if (countDoc == 0) {
+        //             setLoader(true)
+        //             const temp = await getDataFromLocalStorage('user_id')
+        //             var formdata = new FormData();
+        //             formdata.append("user_id", JSON.parse(temp));
+        //             formdata.append('reports[]', {
+        //                 name: doc?.name,
+        //                 type: doc?.type,
+        //                 uri: doc?.uri,
+        //             })
+        //             //formdata.append("links[]", text);
+        //             formdata.append("description", description)
+        //             const result = await PostApiData('userreport', formdata)
+        //             if (result.status == '200') {
+        //                 ShortToast(result.message, 'success', '')
+        //                 getAttachments()
+        //                 setText("")
+        //                 setDescription("")
+        //                 setVisible(false)
+        //             }
+        //             setLoader(false)
+        //             setVisible2(false)
+        //         }
+        //         else {
+        //             //   ShortToast("You can not upload more than 1 file for now.", "error", "")
+        //             ShortToast(strings.Youcannotuploadfiles1, "error", "")
+        //         }
 
-        console.log("countDoc== ", countDoc)
-
-
-        if (JSON.parse(userType) == "1") {
-            if (doc) {
-                if (countDoc == 0) {
-                    setLoader(true)
-                    const temp = await getDataFromLocalStorage('user_id')
-                    var formdata = new FormData();
-                    formdata.append("user_id", JSON.parse(temp));
-                    formdata.append('reports[]', {
-                        name: doc?.name,
-                        type: doc?.type,
-                        uri: doc?.uri,
-                    })
-                    //formdata.append("links[]", text);
-                    formdata.append("description", description)
-                    const result = await PostApiData('userreport', formdata)
-                    if (result.status == '200') {
-                        ShortToast(result.message, 'success', '')
-                        getAttachments()
-                        setText("")
-                        setDescription("")
-                        setVisible(false)
-                    }
-                    setLoader(false)
-                    setVisible2(false)
-                }
-                else {
-                    //   ShortToast("You can not upload more than 1 file for now.", "error", "")
-                    ShortToast(strings.Youcannotuploadfiles1, "error", "")
-                }
-
+        //     }
+        //     else if (pic) {
+        //         if (countDoc == 0) {
+        //             setLoader(true)
+        //             const temp = await getDataFromLocalStorage('user_id')
+        //             var formdata = new FormData();
+        //             formdata.append("user_id", JSON.parse(temp));
+        //             formdata.append('reports[]', {
+        //                 name: pic.assets?.[0]?.fileName,
+        //                 type: pic.assets?.[0]?.type,
+        //                 uri: pic.assets?.[0]?.uri,
+        //             })
+        //             //formdata.append("links[]", text);
+        //             formdata.append("description", description)
+        //             const result = await PostApiData('userreport', formdata)
+        //             if (result.status == '200') {
+        //                 ShortToast(result.message, 'success', '')
+        //                 getAttachments()
+        //                 setText("")
+        //                 setDescription("")
+        //                 setVisible(false)
+        //             }
+        //             setLoader(false)
+        //             setVisible2(false)
+        //         } else {
+        //             //ShortToast("You can not upload more than 1 file for now.", "error", "")
+        //             ShortToast(strings.Youcannotuploadfiles1, "error", "")
+        //         }
+        //     }
+        //     else {
+        //         ShortToast('Kindly choose a document first', 'warning', '')
+        //     }
+        //     setDoc(null)
+        //     setPic(null)
+        //     getAttachments()
+        // } else {
+        if (doc) {
+            setLoader(true)
+            const temp = await getDataFromLocalStorage('user_id')
+            var formdata = new FormData();
+            formdata.append("user_id", JSON.parse(temp));
+            formdata.append('reports[]', {
+                name: doc?.name,
+                type: doc?.type,
+                uri: doc?.uri,
+            })
+            //formdata.append("links[]", text);
+            formdata.append("description", description)
+            const result = await PostApiData('userreport', formdata)
+            if (result.status == '200') {
+                ShortToast(result.message, 'success', '')
+                getAttachments()
+                setText("")
+                setDescription("")
+                setVisible(false)
             }
-            else if (pic) {
-                if (countDoc == 0) {
-                    setLoader(true)
-                    const temp = await getDataFromLocalStorage('user_id')
-                    var formdata = new FormData();
-                    formdata.append("user_id", JSON.parse(temp));
-                    formdata.append('reports[]', {
-                        name: pic.assets?.[0]?.fileName,
-                        type: pic.assets?.[0]?.type,
-                        uri: pic.assets?.[0]?.uri,
+            setLoader(false)
+            setVisible2(false)
 
-                    })
-                    //formdata.append("links[]", text);
-                    formdata.append("description", description)
-                    const result = await PostApiData('userreport', formdata)
-                    if (result.status == '200') {
-                        ShortToast(result.message, 'success', '')
-                        getAttachments()
-                        setText("")
-                        setDescription("")
-                        setVisible(false)
-                    }
-                    setLoader(false)
-                    setVisible2(false)
-                } else {
-                    //ShortToast("You can not upload more than 1 file for now.", "error", "")
-                    ShortToast(strings.Youcannotuploadfiles1, "error", "")
-
-                }
-
-            }
-            else {
-                ShortToast('Kindly choose a document first', 'warning', '')
-            }
-            setDoc(null)
-            setPic(null)
-            getAttachments()
-
-        } else {
-
-
-
-            if (doc) {
-                setLoader(true)
-                const temp = await getDataFromLocalStorage('user_id')
-                var formdata = new FormData();
-                formdata.append("user_id", JSON.parse(temp));
-                formdata.append('reports[]', {
-                    name: doc?.name,
-                    type: doc?.type,
-                    uri: doc?.uri,
-                })
-                //formdata.append("links[]", text);
-                formdata.append("description", description)
-                const result = await PostApiData('userreport', formdata)
-                if (result.status == '200') {
-                    ShortToast(result.message, 'success', '')
-                    getAttachments()
-                    setText("")
-                    setDescription("")
-                    setVisible(false)
-                }
-                setLoader(false)
-                setVisible2(false)
-
-            }
-            else if (pic) {
-                setLoader(true)
-                const temp = await getDataFromLocalStorage('user_id')
-                var formdata = new FormData();
-                formdata.append("user_id", JSON.parse(temp));
-                formdata.append('reports[]', {
-                    name: pic.assets?.[0]?.fileName,
-                    type: pic.assets?.[0]?.type,
-                    uri: pic.assets?.[0]?.uri,
-
-                })
-                //formdata.append("links[]", text);
-                formdata.append("description", description)
-                const result = await PostApiData('userreport', formdata)
-                if (result.status == '200') {
-                    ShortToast(result.message, 'success', '')
-                    getAttachments()
-                    setText("")
-                    setDescription("")
-                    setVisible(false)
-                }
-                setLoader(false)
-                setVisible2(false)
-            }
-            else {
-                ShortToast('Kindly choose a document first', 'warning', '')
-            }
-            setDoc(null)
-            setPic(null)
-            getAttachments()
         }
+        else if (pic) {
+            setLoader(true)
+            const temp = await getDataFromLocalStorage('user_id')
+            var formdata = new FormData();
+            formdata.append("user_id", JSON.parse(temp));
+            formdata.append('reports[]', {
+                name: pic.assets?.[0]?.fileName,
+                type: pic.assets?.[0]?.type,
+                uri: pic.assets?.[0]?.uri,
+
+            })
+            //formdata.append("links[]", text);
+            formdata.append("description", description)
+            const result = await PostApiData('userreport', formdata)
+            if (result.status == '200') {
+                ShortToast(result.message, 'success', '')
+                getAttachments()
+                setText("")
+                setDescription("")
+                setVisible(false)
+            }
+            setLoader(false)
+            setVisible2(false)
+        }
+        else {
+            ShortToast('Kindly choose a document first', 'warning', '')
+        }
+        setDoc(null)
+        setPic(null)
+        getAttachments()
     }
+    //}
 
 
     return (
         loader ?
             <Loader />
             :
-            <View style={
-                {
-
-                }
-            }>
+            <View>
                 <HeaderForSubmissionScreens Title={strings.UploadReports} />
                 <View style={{}}>
                     <Modal
@@ -717,7 +721,6 @@ const Reports = ({ navigation }) => {
                             alignItems: "center",
                             flexDirection: "row",
                             backgroundColor: 'rgba(0, 0, 0, 0.5)'
-
                         }}>
                             <View style={{
                                 backgroundColor: colors.OFFWHITE,
@@ -871,12 +874,14 @@ const Reports = ({ navigation }) => {
                                             <Text style={{
                                                 ...fontFamily.bold,
                                                 fontSize: fontSizes.MED
-                                            }}>{strings.AddReportLinks}</Text>
+                                            }}>{strings.AddFiles}</Text>
                                         </View>
                                     </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity onPress={() => setVisible3(false)}
-                                >
+                                <TouchableOpacity onPress={() => {
+                                    setVisible3(false)
+                                    setVisible2(true)
+                                }}>
                                     <Text style={{
                                         textAlign: "right",
                                         ...fontFamily.bold,
@@ -923,7 +928,7 @@ const Reports = ({ navigation }) => {
                         }}>
                         <GreenButton Title={strings.AddFiles} />
                     </TouchableOpacity>
-                </View>
+                </View >
             </View >
     )
 }

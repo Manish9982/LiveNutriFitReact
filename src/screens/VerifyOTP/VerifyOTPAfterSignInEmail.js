@@ -104,7 +104,7 @@ const VerifyOTPAfterSignInEmail = ({ navigation, route }) => {
     };
 
     try {
-      const response = await fetch(`${Constants.BASE_URL}panel/Signup/verifyOTP`, requestOptions)
+      const response = await fetch(`${Constants.BASE_URL}panel/verifyOTP`, requestOptions)
       const result = await response.json()
       console.log("email response = ", result)
       if (result.status === 200) {
