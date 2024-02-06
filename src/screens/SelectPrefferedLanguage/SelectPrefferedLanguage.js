@@ -16,7 +16,7 @@ const SelectPrefferedLanguage = ({ navigation }) => {
     const isFocused = useIsFocused()
     useEffect(() => {
         if (isFocused) {
-            getData() 
+            getData()
         }
     }, [isFocused])
 
@@ -34,22 +34,17 @@ const SelectPrefferedLanguage = ({ navigation }) => {
         const result = await GetApiData('languagelist')
         setData(result)
         setShowLoader(false)
-        console.log(result)
+        console.log('languagelist', result)
     }
 
     const handleNext = async (n) => {
-
-
-
         if (n == '2') {
             // ShortToast("Hindi content will be available soon..", 'warning', '')
             setLanguage("hi")
             storeDataInLocalStorage('lang', "hi")
             navigation.replace("SliderIntro")  // modified to comment
-
         } else if (n == "1") {
             setLanguage("en")
-
             storeDataInLocalStorage('lang', "en")
             navigation.replace("SliderIntro")
         }
@@ -99,14 +94,10 @@ const SelectPrefferedLanguage = ({ navigation }) => {
                     <LinearGradient
                         style={{ height: H, width: W, }}
                         colors={[colors.GREEN, "white", "white",]}>
-
                     </LinearGradient>
                 </View>
                 <Text style={[styles.text2, { marginBottom: H * 0.04, fontSize: fontSizes.XXXL }]}>Welcome To</Text>
-
-
                 <Logo />
-
                 <Text style={styles.text2}>Please Select The Language That You Prefer </Text>
                 <View style={styles.buttonView}>
                     <FlatList
@@ -116,8 +107,6 @@ const SelectPrefferedLanguage = ({ navigation }) => {
                     //numColumns={2}
                     />
                 </View>
-
-
                 {/*  <TouchableOpacity onPress={() => { handleNext() }}
                     style={styles.nextButton}>
                     <Text style={{ color: "white", ...fontFamily.bold, fontSize: fontSizes.XL }}>

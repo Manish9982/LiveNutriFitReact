@@ -1,6 +1,10 @@
 
 export default english = {
     //profile: "Profile",
+    Home:"Home",
+    Plans:"Plans",
+    Message:"Message",
+    LNF_Shop:"LNF Shop",
     profile: "Profile",
     yourplan: "Your Plan",
     progress: "Progress",
@@ -326,7 +330,7 @@ export default english = {
     upgradeplanmsg: "Currently you are a free user, you need to upgrade plan to use this feature",
     yes: "YES",
     no: "NO",
-    replacemsg: "Are you sure , you want to replace",
+    replacemsg: "Are you sure, you want to replace",
     replacemeal: "Replace Meal",
     healthindexmsg: "Kindly Upgrade your Plan to get more Accurate Health Index",
     coachalertmsg: "Still not sure what plan to go with, get your first consultation free with us. Click OK to receive call from our specialist in next 2 business days.",

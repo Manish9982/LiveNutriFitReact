@@ -240,6 +240,23 @@ const More = ({ navigation }) => {
       console.log('Done.')
     }
   }
+  const changeLaguagee = (languageKey) => {
+    strings.setLanguage(languageKey)
+    // strings.setLanguage("en")
+    setLangText2(languageKey)
+
+
+    if (languageKey == "en") {
+      setLangText(strings.english)
+    } else {
+      setLangText(strings.hindi)
+      // convert to Hindi from english
+      //  setLangText("English")   // convert to Hindi from english
+
+    }
+
+  }
+
 
   const openURL = () => {
     navigation.navigate("BlogWebView")
@@ -255,6 +272,109 @@ const More = ({ navigation }) => {
 
       <View>
         <HeaderForSubmissionScreens Title="More" />
+        <Modal
+          visible={langModal}
+          transparent={true}>
+          <View style={{
+            backgroundColor: "rgba(0,0,0,0.3)",
+            height: H,
+            width: W,
+            justifyContent: "center",
+            alignItems: "center",
+
+          }}>
+
+
+            <View style={{
+              paddingVertical: H * 0.02,
+              //height: H * 0.4,
+              width: W * 0.9,
+              backgroundColor: "white",
+              borderRadius: 8,
+            }}>
+
+              <Text style={{
+                alignSelf: 'center', marginBottom: 10,
+                fontFamily: "Montserrat-SemiBold", fontSize: 15
+              }}>{strings.changelanguage}</Text>
+
+
+              <Divider
+                style={{ width: W, borderColor: 'black', borderWidth: 0.02 }} />
+
+
+              <TouchableOpacity
+                onPress={() => {
+                  changeLaguagee("en"), setLangModal(false), storeDataInLocalStorage('lang', "en"), changeLanguageAPI("1"), setLanguage("en"), toastuserType()
+                }}
+
+                style={{
+                  backgroundColor: langText2 == "en" ? "green" : "white",
+
+                  fontFamily: "Montserrat-SemiBold",
+                  width: W * 0.25,
+                  alignSelf: "center",
+                  color: colors.toobarcolor,
+                  borderColor: 'black',
+                  borderWidth: 1,
+                  padding: 5,
+                  borderRadius: 5,
+                  textAlign: 'center',
+                  marginVertical: H * 0.04,
+                }}>
+
+                <Text style={{
+                  color: langText2 == "en" ? "white" : "black",
+                  fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL,
+                }}>{strings.english}</Text>
+
+
+              </TouchableOpacity>
+
+
+              <TouchableOpacity
+                onPress={() => {
+                  changeLaguagee("hi"), setLangModal(false), storeDataInLocalStorage('lang', "hi"), changeLanguageAPI("2"), setLanguage("hi"), toastuserType()
+
+                }}
+
+                style={{
+                  backgroundColor: langText2 == "hi" ? "green" : "white",
+
+                  fontFamily: "Montserrat-SemiBold",
+                  width: W * 0.25,
+                  alignSelf: "center",
+                  color: colors.toobarcolor,
+                  borderColor: 'black',
+                  borderWidth: 1,
+                  padding: 5,
+                  borderRadius: 5,
+                  textAlign: 'center',
+                }}>
+
+                <Text style={{
+                  color: langText2 == "hi" ? "white" : "black",
+                  fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL
+                }}>{strings.hindi}</Text>
+              </TouchableOpacity>
+
+
+
+
+
+              <TouchableOpacity onPress={() => {
+                setLangModal(false)
+              }}>
+                <Text style={{
+                  marginTop: H * 0.05,
+                  marginRight: W * 0.05,
+                  alignSelf: "flex-end",
+                  fontFamily: "Montserrat-Medium"
+                }}>{strings.Cancel}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <View style={styles.mainContainer}>
           <View style={styles.containerForOptions}>
             <View>
@@ -366,9 +486,7 @@ const More = ({ navigation }) => {
               {/* <Divider style={styles.dividerStyle} /> */}
 
               <TouchableOpacity
-
-
-              //  onPress={() => { setLangModal(true) }}  // modified to commnet
+                onPress={() => { setLangModal(true) }}  // modified to commnet
               >
                 <View style={styles.displayBar}>
 
@@ -459,7 +577,7 @@ const More = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} /> */}
-              {/* <TouchableOpacity onPress={() => { navigation.navigate("Gratification") }}>
+              <TouchableOpacity onPress={() => { navigation.navigate("Gratification") }}>
                 <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/icons/charity.png')}
@@ -468,7 +586,7 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.gratitude}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} /> */}
+              <Divider style={styles.dividerStyle} />
               <TouchableOpacity onPress={() => { navigation.navigate("Coach") }}>
                 <View style={styles.displayBar}>
 

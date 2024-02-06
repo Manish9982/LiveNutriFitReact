@@ -13,6 +13,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import CreateAccount from '../CreateAccount/CreateAccount';
+import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 
 //lang chnge
 const strings = new LocalizedStrings({
@@ -239,7 +240,7 @@ const Signin = ({ navigation, route }) => {
                                                     borderColor: colors.GREEN,
                                                     borderWidth: 1
                                                 }}>
-                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India</Text>
+                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India <AntDesign name="check" color="white" size={16}/></Text>
                                             </TouchableOpacity>
 
                                             <TouchableOpacity
@@ -342,7 +343,7 @@ const Signin = ({ navigation, route }) => {
                                                     borderRadius: 8,
                                                     marginStart: 10
                                                 }}>
-                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S</Text>
+                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S <AntDesign name="check" color="white" size={16}/></Text>
                                             </TouchableOpacity>
                                         </View>
                                         <TextInput style={styles.textInput}

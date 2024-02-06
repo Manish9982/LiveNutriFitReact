@@ -68,7 +68,7 @@ const BottomTabs = ({ route }) => {
   }, []);
 
 
-  React.useEffect(() => { getLanguage() }, [])
+  React.useEffect(() => { getLanguage() }, [language])
 
 
   const getLanguage = async () => {
@@ -234,13 +234,13 @@ const BottomTabs = ({ route }) => {
         },
         initialRouteName: " "
       })} >
-      <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: (language || langTypeText) == "en" ? "Home" : "Home" }} />
+      <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: strings.Home }} />
       {/* <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: (language || langTypeText) == "en" ? "Upgrade" : "Upgrade" }} /> */}
-      <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: (language || langTypeText) == "en" ? "Plans" : "Plans" }} />
-      <Tab.Screen name="Coach" component={Coach} options={{ tabBarHideOnKeyboard: true, tabBarBadge: count, tabBarLabel: (language || langTypeText) == "en" ? "Message" : "Message" }} />
+      <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: strings.Plans }} />
+      <Tab.Screen name="Coach" component={Coach} options={{ tabBarHideOnKeyboard: true, tabBarBadge: count, tabBarLabel: strings.Message }} />
       {/* {hidetab == "India" ? <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (language || langTypeText) == "en" ? "LNF Shop" : "LNF शॉप" }} />
         : null} */}
-      <Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: (language || langTypeText) == "en" ? "LNF Shop" : "LNF Shop" }} />
+      < Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: strings.LNF_Shop }} />
     </Tab.Navigator>
     //   <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: language == "en" ? "Home" : "होम"}} />
     //   <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: language == "en" ? "Upgrade" : "अपग्रेड" }} />

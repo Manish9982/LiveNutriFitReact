@@ -61,13 +61,10 @@ const VerifyOTPAfterRegistrationPhone = ({ navigation, route }) => {
             storeDataInLocalStorage('user_id', JSON.stringify(result.user_id))  
             storeDataInLocalStorage('user_type', (result.user_type))                          //save usertype in local storage
             storeDataInLocalStorage('wrid', result.wrd_id)
-
             //save userId in local storage
             { storeDataInLocalStorage('stackValue', '4') && navigation.replace("WelcomeScreenAfterRegistration") }
-
         }
         else ShortToast("Incorrect OTP!", 'error', '')
-
     }
 
     return (

@@ -14,6 +14,7 @@ import { getDataFromLocalStorage } from '../../local storage/LocalStorage';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
+import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 
 //lang chnge
 const strings = new LocalizedStrings({
@@ -256,7 +257,7 @@ const SigninCorporate = ({ navigation, route }) => {
                                                 borderColor: colors.GREEN,
                                                 borderWidth: 1
                                             }}>
-                                            <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India</Text>
+                                            <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India <AntDesign name="check" color="white" size={16}/></Text>
                                         </TouchableOpacity>
 
                                         <TouchableOpacity

@@ -111,7 +111,6 @@ const App = () => {
         console.log('App has come to the Background!');
         backgroundApi();
       }
-
       // Update the current app state
       AppState.currentState = nextAppState;
     };

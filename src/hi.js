@@ -1,4 +1,8 @@
 export default hindi = {
+    Home: "होम",
+    Plans:"प्लान्स",
+    Message:"मैसेज",
+    LNF_Shop:"LNF शॉप",
     profile: "प्रोफ़ाइल",
     yourplan: "तुम्हारा प्लान",
     progress: "प्रोग्रेस",
@@ -221,7 +225,7 @@ export default hindi = {
     Gratification: "ग्रैटिफिकेशन",
     Gratefull: "यहां कुछ चीज़ें दी गई हैं जिनके लिए आप आभारी हैं:",
     PaymentGateway: "पेमेंट गेटवे",
-    BasicSubscription:  "बेसिक सब्सक्रिप्शन",
+    BasicSubscription: "बेसिक सब्सक्रिप्शन",
     SubscriptionAmount: "सब्सक्रिप्शन अमाउंट ",
     HaveACouponCode: "क्या आपके पास कूपन कोड है?",
     BuyWith: "बाइ विद ",
@@ -336,8 +340,8 @@ export default hindi = {
     healthindexmsg: "एक्यूरेट हेल्थ इंडेक्स प्राप्त करने के लिए कृपया अपने प्लान को अपग्रेड करें",
     coachalertmsg: "अभी भी निश्चित नहीं है कि किस प्लान के साथ जाना है, अपना पहला कंसल्टेशन हमसे निःशुल्क प्राप्त करें। अगले 2 व्यावसायिक दिनों में कॉल प्राप्त करने के लिए ओके पर क्लिक करें",
     whrnovalue: "आपने अभी तक WHR वैल्यू एंटर नहीं किया है. कृपया वैल्यू ऐड करें .",
-    Skipfornow:"स्किप करे",
-    changelanguage:"अपनी भाषा बदलें"
+    Skipfornow: "स्किप करे",
+    changelanguage: "अपनी भाषा बदलें"
 
 
 

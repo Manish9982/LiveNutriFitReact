@@ -269,7 +269,7 @@ const Stats = (props) => {
         ShortToast('Success', 'success', '')
         setEditWeights(false)
         setCurrentWeight('')
-        setTargetWeight('')
+        //setTargetWeight('')
       }
     }
   }
@@ -411,7 +411,7 @@ const Stats = (props) => {
     if (result?.status == "200") {
       setDataForPaidUser(result)
       // setCurrentWeight(result?.single[0]?.attribute_value[0])
-      // setTargetWeight(result?.single[0]?.attribute_value[1])
+      setTargetWeight(result?.single[0]?.attribute_value[1])
       // setFastingSugar(result?.single[1]?.attribute_value[0])
       // setNonFastingSugar(result?.single[1]?.attribute_value[1])
       // setSystolic(result?.single[2]?.attribute_value[0])
@@ -1064,7 +1064,7 @@ const Stats = (props) => {
                     onPress={() => {
                       setEditWeights(false)
                       setCurrentWeight('')
-                      setTargetWeight('')
+                      //setTargetWeight('')
                     }}
                     style={{
                       width: W * 0.18,

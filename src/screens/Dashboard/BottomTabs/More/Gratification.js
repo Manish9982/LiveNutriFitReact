@@ -123,11 +123,7 @@ const Gratification = ({ navigation }) => {
         <View style={{}}>
 
             <StatusBar backgroundColor={colors.GREEN} />
-            <Appbar.Header style={styles.appBar}>
-                <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
-                <Appbar.Content style={{ alignItems: "center", marginRight: W * 0.125 }}
-                    title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.Gratification}</Text>} />
-            </Appbar.Header>
+            <HeaderForSubmissionScreens Title={strings.Gratification}/>
 
             <View style={{
                 height: H,
