@@ -10,17 +10,14 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 const WHRsubmit = ({ navigation }) => {
 
   const isFocused = useIsFocused()
+  
+const strings = useLocales()
 
   const [loader, setLoader] = useState(false)
 
@@ -32,7 +29,7 @@ const WHRsubmit = ({ navigation }) => {
     
     const lang = await getDataFromLocalStorage("lang")
     console.log("WHR=============   = ", lang)
-    strings.setLanguage(lang)
+    
 
     setLoader(false)
 

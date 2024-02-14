@@ -12,18 +12,13 @@ import { useIsFocused } from '@react-navigation/native';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 export default function WelcomeScreenAfterRegistration({ navigation }) {
     const [langText, setLangText] = useState("")
     const isFocused = useIsFocused()
+    const strings = useLocales()
     
     useEffect(() => { getLanguage() }, [isFocused])
 
@@ -45,7 +40,7 @@ export default function WelcomeScreenAfterRegistration({ navigation }) {
 
 
   const changeLanguage = (languageKey) => {
-    strings.setLanguage(languageKey)
+    
   }
 
 

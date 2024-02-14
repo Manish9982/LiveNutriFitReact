@@ -16,10 +16,7 @@ const WIDTH = Dimensions.get('window').width
 import LocalizedStrings from 'react-native-localization';
     import hindi from '../../../../hi'
     import english from '../../../../en'
-    const strings = new LocalizedStrings({
-        en: english,
-        hi: hindi,
-    });
+import { useLocales } from '../../../../utils/LocalizationUtil';
 
 const ListForExercise = (props) => {
     useEffect(() => { console.log("props" ,props), setLikedExercise(props.Liked) }, [props.Liked])
@@ -31,6 +28,8 @@ const ListForExercise = (props) => {
     const [visibleMood, setVisibleMood] = useState(false)
     const [myExercise, setMyExercise] = NmyExercise
     const [loader, setLoader] = useState(false)
+
+    const strings = useLocales()
     
 
     useEffect(() => {
@@ -38,7 +37,7 @@ const ListForExercise = (props) => {
     }, [])
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        strings.setLanguage(lang)
+        
         console.log("currentLanguage", lang)
     }
 

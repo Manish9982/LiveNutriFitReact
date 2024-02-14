@@ -13,20 +13,16 @@ import hindi from '../../../../hi'
 import english from '../../../../en'
 import Loader from '../../../../assets/components/Loader'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
 const UpgradeStack = ({ navigation }) => {
     const isFocused = useIsFocused()
+
+
+    const strings = useLocales()
 
     useEffect(() => {
         getDataFromApi()
@@ -57,9 +53,9 @@ const UpgradeStack = ({ navigation }) => {
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            strings.setLanguage(lang)
+            
         } else {
-            strings.setLanguage(lang)
+            
         }
 
 
@@ -118,7 +114,7 @@ const UpgradeStack = ({ navigation }) => {
         console.log(result)
 
         if (result.status == '200') {
-            ShortToast(result.message,'success',"")
+            ShortToast(result.message, 'success', "")
         }
         else {
             ShortToast(result.message, "error", "")
@@ -158,9 +154,10 @@ const UpgradeStack = ({ navigation }) => {
                     width: W
                 }}>
                     {/* <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} /> */}
-                    <Appbar.Content style={{ alignItems: "center", 
-                    //marginRight: W * 0.125
-                     }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.UpgradePlan}</Text>} />
+                    <Appbar.Content style={{
+                        alignItems: "center",
+                        //marginRight: W * 0.125
+                    }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.UpgradePlan}</Text>} />
                 </Appbar.Header>
             </View>
             <Portal>

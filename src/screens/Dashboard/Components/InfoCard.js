@@ -14,12 +14,7 @@ import DataContext from '../../../context/DataContext';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../hi'
 import english from '../../../en'
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../utils/LocalizationUtil';
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -41,6 +36,7 @@ const theme = {
 
 const InfoCard = (props) => {
     const isFocused = useIsFocused()
+    const strings = useLocales()
     useEffect(() => {
         if (isFocused) {
             getLanguage()
@@ -57,7 +53,7 @@ const InfoCard = (props) => {
     }
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
     const navigation = useNavigation();
@@ -352,10 +348,10 @@ const InfoCard = (props) => {
                         <LinearGradient colors={['#9bdf61', '#7fc346']} style={styles.linearGradient}>
 
                             {props.Text == "Monitoring" ? <TouchableOpacity
-                                onPress={() => ArrowPressed(props.Text)}
+                                onPress={() => ArrowPressed(props.Text2)}
                                 style={styles.arrowButton}>{arrowIcon2}
                             </TouchableOpacity> : <TouchableOpacity
-                                onPress={() => ArrowPressed(props.Text)}
+                                onPress={() => ArrowPressed(props.Text2)}
                                 style={styles.arrowButton}>{arrowIcon}
                             </TouchableOpacity>}
 

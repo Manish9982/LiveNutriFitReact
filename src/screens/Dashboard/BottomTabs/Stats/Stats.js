@@ -19,12 +19,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import Sound from 'react-native-sound';
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil';
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -97,6 +92,9 @@ const Stats = (props) => {
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg']
   })
+
+  
+const strings = useLocales()
 
   useEffect(() => {
     if (isFocused) {
@@ -178,7 +176,7 @@ const Stats = (props) => {
     setShowLoader(false)
   }
   const changeLanguage = (languageKey) => {
-    strings.setLanguage(languageKey)
+    
   }
   const playSound = () => {
     if (sound) {
@@ -443,6 +441,7 @@ const Stats = (props) => {
         Key={i}
         key={i}
         Text={data?.data[i]?.heading}
+        Text2={data?.data[i]?.heading2}
         Attributes={data?.data[i]?.attribute}
         FollowNeeded={i === 0 ? true : false}
         Information={data?.data[i]?.information}
@@ -580,9 +579,9 @@ const Stats = (props) => {
               <TouchableOpacity
                 onPress={() => {
                   setIsInfoButtonVisible(false)
-                  item.heading == 'Weight' && props.navigation.navigate("OnDetailsSubmitScreenOne")
-                  item.heading == 'Sugar' && props.navigation.navigate("OnDetailsSubmitScreenTwo", { "flag": dataForPaidUser?.single[1]?.attribute_value })
-                  item.heading == 'Blood Pressure' && props.navigation.navigate("OnDetailsSubmitScreenThree")
+                  item.heading2 == 'Weight' && props.navigation.navigate("OnDetailsSubmitScreenOne")
+                  item.heading2 == 'Sugar' && props.navigation.navigate("OnDetailsSubmitScreenTwo", { "flag": dataForPaidUser?.single[1]?.attribute_value })
+                  item.heading2 == 'Blood Pressure' && props.navigation.navigate("OnDetailsSubmitScreenThree")
                   //item.heading == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
                   // if (data?.user_type == "3" || data?.user_type == "2") {
                   //   item.heading == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
@@ -648,13 +647,13 @@ const Stats = (props) => {
           style={styles.renderItemTwoContainer}
           onPress={() => {
             setIsInfoButtonVisible(false)
-            item.heading == "Calories" ? ShortToast('Calorie Budget is handled by Coach. Kindly contact your Coach', 'error', '') : null
-            item.heading == "Pain" && props.navigation.navigate("PainSubmit", { "flag": dataForPaidUser?.data[0]?.attribute_value })
-            item.heading == "Psychology" && props.navigation.navigate("PsychologyQuestions", { "flag": dataForPaidUser?.data[1]?.attribute_value })
-            item.heading == "BMI" && props.navigation.navigate("BMIsubmit", { "bmiValue": dataForPaidUser?.data[2]?.attribute_value[0] })
-            item.heading == "BMR" && ShortToast("Your BMR Value is calculated based on your provided details. Please contact your Coach if you wish to Change it.", "warning", "")
-            item.heading == "WHR" && props.navigation.navigate("WHRSubmitMedium")
-            item.heading == "Reports" && props.navigation.navigate("Reports")
+            item.heading2 == "Calories" ? ShortToast('Calorie Budget is handled by Coach. Kindly contact your Coach', 'error', '') : null
+            item.heading2 == "Pain" && props.navigation.navigate("PainSubmit", { "flag": dataForPaidUser?.data[0]?.attribute_value })
+            item.heading2 == "Psychology" && props.navigation.navigate("PsychologyQuestions", { "flag": dataForPaidUser?.data[1]?.attribute_value })
+            item.heading2 == "BMI" && props.navigation.navigate("BMIsubmit", { "bmiValue": dataForPaidUser?.data[2]?.attribute_value[0] })
+            item.heading2 == "BMR" && ShortToast("Your BMR Value is calculated based on your provided details. Please contact your Coach if you wish to Change it.", "warning", "")
+            item.heading2 == "WHR" && props.navigation.navigate("WHRSubmitMedium")
+            item.heading2 == "Reports" && props.navigation.navigate("Reports")
           }}
         >
           <View style={{
@@ -672,13 +671,13 @@ const Stats = (props) => {
               <TouchableOpacity style={styles.smallNextButton}
                 onPress={() => {
                   setIsInfoButtonVisible(false)
-                  item.heading == "Calories" ? ShortToast('Calorie Budget is handled by Coach. Kindly contact your Coach', 'error', '') : null
-                  item.heading == "Pain" && props.navigation.navigate("PainSubmit", { "flag": dataForPaidUser?.data[0]?.attribute_value })
-                  item.heading == "Psychology" && props.navigation.navigate("PsychologyQuestions", { "flag": dataForPaidUser?.data[1]?.attribute_value })
-                  item.heading == "BMI" && props.navigation.navigate("BMIsubmit", { "bmiValue": dataForPaidUser?.data[2]?.attribute_value[0] })
-                  item.heading == "BMR" && ShortToast("Your BMR Value is calculated based on your provided details. Please contact your Coach if you wish to Change it.", "warning", "")
-                  item.heading == "WHR" && props.navigation.navigate("WHRSubmitMedium")
-                  item.heading == "Reports" && props.navigation.navigate("Reports")
+                  item.heading2 == "Calories" ? ShortToast('Calorie Budget is handled by Coach. Kindly contact your Coach', 'error', '') : null
+                  item.heading2 == "Pain" && props.navigation.navigate("PainSubmit", { "flag": dataForPaidUser?.data[0]?.attribute_value })
+                  item.heading2 == "Psychology" && props.navigation.navigate("PsychologyQuestions", { "flag": dataForPaidUser?.data[1]?.attribute_value })
+                  item.heading2 == "BMI" && props.navigation.navigate("BMIsubmit", { "bmiValue": dataForPaidUser?.data[2]?.attribute_value[0] })
+                  item.heading2 == "BMR" && ShortToast("Your BMR Value is calculated based on your provided details. Please contact your Coach if you wish to Change it.", "warning", "")
+                  item.heading2 == "WHR" && props.navigation.navigate("WHRSubmitMedium")
+                  item.heading2 == "Reports" && props.navigation.navigate("Reports")
                 }}>
                 <LinearGradient colors={[colors.ORANGE, colors.ORANGE2, colors.ORANGE3]}
                   style={styles.smallNextButton}>
@@ -689,12 +688,12 @@ const Stats = (props) => {
           </View>
 
           <Text style={{
-            top: item.heading == "Reports" ? -H * 0.02 : 0,
-            marginLeft: item.heading == "Reports" ? W * 0.04 : 0,
-            marginBottom: item.heading == "Reports" ? H * 0 : 0,
+            top: item.heading2 == "Reports" ? -H * 0.02 : 0,
+            marginLeft: item.heading2 == "Reports" ? W * 0.04 : 0,
+            marginBottom: item.heading2 == "Reports" ? H * 0 : 0,
             ...fontFamily.bold,
-            fontSize: item.heading == "Reports" ? fontSizes.SM : fontSizes.XXL,
-            textAlign: item.heading == "Reports" ? 'left' : 'center',
+            fontSize: item.heading2 == "Reports" ? fontSizes.SM : fontSizes.XXL,
+            textAlign: item.heading2 == "Reports" ? 'left' : 'center',
           }}>{((item.attribute_value.length == 0) || (item.attribute_value[0] == "")) ? "--" : item.attribute_value[0]}</Text>
 
         </TouchableOpacity >

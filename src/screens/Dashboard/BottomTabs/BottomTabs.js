@@ -1,53 +1,29 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { StyleSheet, Dimensions, Image, Alert, Platform, AppState } from 'react-native';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import Upgrade from '../BottomTabs/Upgrade/Upgrade'
 import Plans from '../BottomTabs/Plans/Plans'
 import Coach from '../BottomTabs/Coach/Coach'
-import MoreNavigation from './More/MoreNavigation';
 import StatsNav from './Stats/StatsNav';
-
-
 import { colors, fontSizes, H, PostApiData } from '../../../colorSchemes/ColorSchemes';
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../local storage/LocalStorage';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import {  useNavigation } from '@react-navigation/native';
 import messaging from '@react-native-firebase/messaging';
 import DataContext from '../../../context/DataContext';
 import { displayNotification } from '../../../assets/components/NotificationServices';
-
-import LocalizedStrings from 'react-native-localization';
-import hindi from '../../../hi'
-import english from '../../../en'
 import LNFShopWebView from '../../LNFShopWebView/LNFShopWebView';
-
-
-import notifee, {
-  EventType
-} from '@notifee/react-native'
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
-
+import notifee, {EventType} from '@notifee/react-native'
+import { useLocales } from '../../../utils/LocalizationUtil';
 
 const Tab = createBottomTabNavigator();
-const HEIGHT = Dimensions.get('window').height
-
 
 const BottomTabs = ({ route }) => {
 
   const { Nlanguage } = useContext(DataContext)
   const [language, setLanguage] = Nlanguage
-
   const [langTypeText, setLangTypeText] = useState("")
   const [hidetab, sethHidetab] = useState("")
-
+  const strings = useLocales();
   const navigation = useNavigation()
   React.useEffect(() => { storeDataInLocalStorage('stackValue', '3') }, [])
   //React.useEffect(() => { setRegStatus() }, [])
@@ -61,26 +37,19 @@ const BottomTabs = ({ route }) => {
     const unsubscribe = messaging()?.onMessage(async remoteMessage => {
       displayNotification(remoteMessage?.notification?.title, remoteMessage?.notification?.body)
       getMessages()
-
     });
-
     return unsubscribe;
   }, []);
-
-
   React.useEffect(() => { getLanguage() }, [language])
-
 
   const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
     const countrySelected = await getDataFromLocalStorage("country")
-    strings.setLanguage(lang)
+    
     console.log("countrySelected============================     ", countrySelected)
     sethHidetab(countrySelected)
     setLangTypeText(lang)
   }
-
-
   React.useEffect(() => {
     messaging()
       ?.getInitialNotification()

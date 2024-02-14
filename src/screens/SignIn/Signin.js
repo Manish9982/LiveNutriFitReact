@@ -14,12 +14,7 @@ import hindi from '../../hi'
 import english from '../../en'
 import CreateAccount from '../CreateAccount/CreateAccount';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign'
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../utils/LocalizationUtil';
 
 const fontConfig = {
     fontFamily: 'Montserrat-Regular',
@@ -34,6 +29,8 @@ const theme = {
 
 const Signin = ({ navigation, route }) => {
     const isFocused = useIsFocused()
+
+    const strings = useLocales()
     useEffect(() => { getLanguage() }, [isFocused])
     const { Nmobile, Notp, Nlanguage } = useContext(DataContext)
     const [mobile, setMobile] = Nmobile
@@ -240,7 +237,7 @@ const Signin = ({ navigation, route }) => {
                                                     borderColor: colors.GREEN,
                                                     borderWidth: 1
                                                 }}>
-                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India <AntDesign name="check" color="white" size={16}/></Text>
+                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India <AntDesign name="check" color="white" size={16} /></Text>
                                             </TouchableOpacity>
 
                                             <TouchableOpacity
@@ -343,7 +340,7 @@ const Signin = ({ navigation, route }) => {
                                                     borderRadius: 8,
                                                     marginStart: 10
                                                 }}>
-                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S <AntDesign name="check" color="white" size={16}/></Text>
+                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S <AntDesign name="check" color="white" size={16} /></Text>
                                             </TouchableOpacity>
                                         </View>
                                         <TextInput style={styles.textInput}

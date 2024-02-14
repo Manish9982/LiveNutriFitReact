@@ -69,6 +69,7 @@ import ChatPdfViewer from './src/screens/ChatPdfViewer';
 import StripeFullPaymentWebView from './src/screens/StripeFullPaymentWebView/StripeFullPaymentWebView';
 import SubmitSteps from './src/screens/SubmitSteps';
 import NewProfiling from './src/screens/Questions/NewProfiling';
+import { LocalizationProvider, useChangeLanguage } from './src/utils/LocalizationUtil';
 
 //import PDFURLWebView from './src/screens/PDFURLWebView/PDFURLWebView';
 
@@ -92,13 +93,15 @@ const App = () => {
   //const appState = useRef(AppState.currentState);
   //const { Nmessages } = useContext(DataContext)
   //const [messages, setMessages] = Nmessages
-
+  
   useEffect(() => {
     console.log('Initial useEffect: checkNotificationPermission and requestUserPermissionAndGetToken');
     checkNotificationPermission();
     requestUserPermissionAndGetToken();
     // NotificationListener()
   }, []);
+  
+
 
   useEffect(() => {
     const handleAppStateChange = nextAppState => {
@@ -143,65 +146,67 @@ const App = () => {
   return (
 
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <PaperProvider theme={theme}>
-        <NavigationContainer>
-          <DataState>
-            <Stack.Navigator screenOptions={{
-              headerShown: false,
-            }}>
-              <Stack.Screen name="BootSplash" component={BootSplash} />
-              <Stack.Screen name="WelcomeScreenBeforeBottomTabs" component={WelcomeScreenBeforeBottomTabs} />
-              <Stack.Screen name="BottomTabs" component={BottomTabs} />
-              <Stack.Screen name="Splash" component={RegisterOrSignIn} />
-              <Stack.Screen name="Sign In" component={Signin} />
-              <Stack.Screen name="Create Account" component={CreateAccount} />
-              <Stack.Screen name="SignupPhone" component={SignupWithPhone} />
-              <Stack.Screen name="SignupEmail" component={SignupWithEmail} />
-              <Stack.Screen name="Questions" component={Questions} />
-              <Stack.Screen name="OnDetailsSubmitScreenOne" component={OnDetailsSubmitScreenOne} />
-              <Stack.Screen name="OnDetailsSubmitScreenTwo" component={OnDetailsSubmitScreenTwo} />
-              <Stack.Screen name="OnDetailsSubmitScreenThree" component={OnDetailsSubmitScreenThree} />
-              <Stack.Screen name="Total Points" component={TotalPoints} />
-              <Stack.Screen name="UserProfile" component={UserProfile} />
-              <Stack.Screen name="editProfile" component={EditProfile} />
-              <Stack.Screen name="VerifyOTPAfterRegistrationPhone" component={VerifyOTPAfterRegistrationPhone} />
-              <Stack.Screen name="VerifyOTPAfterRegistrationEmail" component={VerifyOTPAfterRegistrationEmail} />
-              <Stack.Screen name="VerifyOTPAfterSignInEmail" component={VerifyOTPAfterSignInEmail} />
-              <Stack.Screen name="VerifyOTPAfterSignInPhone" component={VerifyOTPAfterSignInPhone} />
-              <Stack.Screen name="WelcomeScreenAfterRegistration" component={WelcomeScreenAfterRegistration} />
-              <Stack.Screen name="PlanChoosePromptAtStartup" component={PlanChoosePromptAtStartup} />
-              <Stack.Screen name="SelectPrefferedLanguage" component={SelectPrefferedLanguage} />
-              <Stack.Screen name="SliderIntro" component={SliderIntro} />
-              <Stack.Screen name="ExploreNow" component={ExploreNow} />
-              <Stack.Screen name="Blank" component={Blank} />
-              <Stack.Screen name="QuestionsCustom" component={QuestionsCustom} />
-              <Stack.Screen name="Gratification" component={Gratification} />
-              <Stack.Screen name="ChatImageDisplay" component={ChatImageDisplay} />
-              <Stack.Screen name="ChatImageWebview" component={ChatImageWebview} />
-              <Stack.Screen name="SigninCorporate" component={SigninCorporate} />
-              <Stack.Screen name="PlanDetailScreen" component={PlanDetailScreen} />
-              <Stack.Screen name="PaymentWebview" component={PaymentWebview} />
-              <Stack.Screen name="LNFShopWebView" component={LNFShopWebView} />
-              <Stack.Screen name="PaidCustomQuestions" component={PaidCustomQuestions} />
-              <Stack.Screen name="CustomerSupport" component={CustomerSupport} />
-              {/* <Stack.Screen name="Stats" component={Stats} /> */}
-              <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
-              <Stack.Screen name="EditQuestionsCustom" component={EditQuestionsCustom} />
-              <Stack.Screen name="PDFURLWebView" component={PDFURLWebView} />
-              <Stack.Screen name="NotificationWebView" component={NotificationWebView} />
-              <Stack.Screen name="MoreNavigation" component={MoreNavigation} />
-              <Stack.Screen name="UpgradePlanOne" component={UpgradePlanOne} />
-              <Stack.Screen name="FAQWebView" component={FAQWebView} />
-              <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              <Stack.Screen name="StripePaymentWebview" component={StripePaymentWebview} />
-              <Stack.Screen name="StripeFullPaymentWebView" component={StripeFullPaymentWebView} />
-              <Stack.Screen name="ChatPdfViewer" component={ChatPdfViewer} />
-              <Stack.Screen name="SubmitSteps" component={SubmitSteps} />
-              <Stack.Screen name="NewProfiling" component={NewProfiling} />
-            </Stack.Navigator>
-          </DataState>
-        </NavigationContainer>
-      </PaperProvider>
+      <LocalizationProvider>
+        <PaperProvider theme={theme}>
+          <NavigationContainer>
+            <DataState>
+              <Stack.Navigator screenOptions={{
+                headerShown: false,
+              }}>
+                <Stack.Screen name="BootSplash" component={BootSplash} />
+                <Stack.Screen name="WelcomeScreenBeforeBottomTabs" component={WelcomeScreenBeforeBottomTabs} />
+                <Stack.Screen name="BottomTabs" component={BottomTabs} />
+                <Stack.Screen name="Splash" component={RegisterOrSignIn} />
+                <Stack.Screen name="Sign In" component={Signin} />
+                <Stack.Screen name="Create Account" component={CreateAccount} />
+                <Stack.Screen name="SignupPhone" component={SignupWithPhone} />
+                <Stack.Screen name="SignupEmail" component={SignupWithEmail} />
+                <Stack.Screen name="Questions" component={Questions} />
+                <Stack.Screen name="OnDetailsSubmitScreenOne" component={OnDetailsSubmitScreenOne} />
+                <Stack.Screen name="OnDetailsSubmitScreenTwo" component={OnDetailsSubmitScreenTwo} />
+                <Stack.Screen name="OnDetailsSubmitScreenThree" component={OnDetailsSubmitScreenThree} />
+                <Stack.Screen name="Total Points" component={TotalPoints} />
+                <Stack.Screen name="UserProfile" component={UserProfile} />
+                <Stack.Screen name="editProfile" component={EditProfile} />
+                <Stack.Screen name="VerifyOTPAfterRegistrationPhone" component={VerifyOTPAfterRegistrationPhone} />
+                <Stack.Screen name="VerifyOTPAfterRegistrationEmail" component={VerifyOTPAfterRegistrationEmail} />
+                <Stack.Screen name="VerifyOTPAfterSignInEmail" component={VerifyOTPAfterSignInEmail} />
+                <Stack.Screen name="VerifyOTPAfterSignInPhone" component={VerifyOTPAfterSignInPhone} />
+                <Stack.Screen name="WelcomeScreenAfterRegistration" component={WelcomeScreenAfterRegistration} />
+                <Stack.Screen name="PlanChoosePromptAtStartup" component={PlanChoosePromptAtStartup} />
+                <Stack.Screen name="SelectPrefferedLanguage" component={SelectPrefferedLanguage} />
+                <Stack.Screen name="SliderIntro" component={SliderIntro} />
+                <Stack.Screen name="ExploreNow" component={ExploreNow} />
+                <Stack.Screen name="Blank" component={Blank} />
+                <Stack.Screen name="QuestionsCustom" component={QuestionsCustom} />
+                <Stack.Screen name="Gratification" component={Gratification} />
+                <Stack.Screen name="ChatImageDisplay" component={ChatImageDisplay} />
+                <Stack.Screen name="ChatImageWebview" component={ChatImageWebview} />
+                <Stack.Screen name="SigninCorporate" component={SigninCorporate} />
+                <Stack.Screen name="PlanDetailScreen" component={PlanDetailScreen} />
+                <Stack.Screen name="PaymentWebview" component={PaymentWebview} />
+                <Stack.Screen name="LNFShopWebView" component={LNFShopWebView} />
+                <Stack.Screen name="PaidCustomQuestions" component={PaidCustomQuestions} />
+                <Stack.Screen name="CustomerSupport" component={CustomerSupport} />
+                {/* <Stack.Screen name="Stats" component={Stats} /> */}
+                <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+                <Stack.Screen name="EditQuestionsCustom" component={EditQuestionsCustom} />
+                <Stack.Screen name="PDFURLWebView" component={PDFURLWebView} />
+                <Stack.Screen name="NotificationWebView" component={NotificationWebView} />
+                <Stack.Screen name="MoreNavigation" component={MoreNavigation} />
+                <Stack.Screen name="UpgradePlanOne" component={UpgradePlanOne} />
+                <Stack.Screen name="FAQWebView" component={FAQWebView} />
+                <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                <Stack.Screen name="StripePaymentWebview" component={StripePaymentWebview} />
+                <Stack.Screen name="StripeFullPaymentWebView" component={StripeFullPaymentWebView} />
+                <Stack.Screen name="ChatPdfViewer" component={ChatPdfViewer} />
+                <Stack.Screen name="SubmitSteps" component={SubmitSteps} />
+                <Stack.Screen name="NewProfiling" component={NewProfiling} />
+              </Stack.Navigator>
+            </DataState>
+          </NavigationContainer>
+        </PaperProvider>
+      </LocalizationProvider>
     </GestureHandlerRootView>
   )
 }

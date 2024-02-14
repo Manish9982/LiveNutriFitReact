@@ -15,12 +15,8 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import AntDesign from 'react-native-vector-icons/dist/AntDesign'
+import { useLocales } from '../../utils/LocalizationUtil';
 
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
 
 const fontConfig = {
 
@@ -55,7 +51,7 @@ const SigninCorporate = ({ navigation, route }) => {
     const [email, setEmail] = useState("")
 
     const isFocused = useIsFocused()
-
+    const strings = useLocales()
 
     useEffect(() => { getLanguage() }, [isFocused])
 
@@ -76,7 +72,7 @@ const SigninCorporate = ({ navigation, route }) => {
 
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
 

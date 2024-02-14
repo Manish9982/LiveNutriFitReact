@@ -10,18 +10,15 @@ import hindi from '../../hi'
 import english from '../../en'
 import { useIsFocused } from '@react-navigation/native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 const PlanDetailScreen = ({ navigation, route }) => {
     console.log("Gaurav========== ", route.params.Price)
 
     const isFocused = useIsFocused()
+
+    const strings = useLocales()
 
     const [visible, setVisible] = useState(false)
     const [visible2, setVisible2] = useState(false)
@@ -60,9 +57,9 @@ const PlanDetailScreen = ({ navigation, route }) => {
         setLoader(true)
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            strings.setLanguage(lang)
+            
         } else {
-            strings.setLanguage(lang)
+            
         }
 
         setLoader(false)
@@ -653,9 +650,9 @@ const PlanDetailScreen = ({ navigation, route }) => {
 
 
                 {
-                    countryType == "India" 
-                    
-                    ?
+                    countryType == "India"
+
+                        ?
 
                         <>
                             <View style={{
@@ -794,7 +791,7 @@ const PlanDetailScreen = ({ navigation, route }) => {
                             <View style={{
                                 flexDirection: 'row',
                                 marginTop: H * 0.2,
-                                justifyContent: 'space-evenly', 
+                                justifyContent: 'space-evenly',
                             }}>
 
                                 <Text style={{

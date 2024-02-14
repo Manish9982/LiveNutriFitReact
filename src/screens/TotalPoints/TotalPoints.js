@@ -21,13 +21,7 @@ import { useIsFocused } from '@react-navigation/native'
 import { ColorProperties } from 'react-native-reanimated/lib/typescript/reanimated2/Colors'
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated'
 import LottieView from 'lottie-react-native'
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
-
+import { useLocales } from '../../utils/LocalizationUtil'
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -50,6 +44,7 @@ const TotalPoints = () => {
     const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
 
     const isFocused = useIsFocused()
+    const strings = useLocales()
     const rotation = useSharedValue(0);
 
     useEffect(() => {
@@ -64,7 +59,7 @@ const TotalPoints = () => {
     const getLanguage = async () => {
         setLoader(true)
         const lang = await getDataFromLocalStorage("lang")
-        strings.setLanguage(lang)
+        
         // setLoader(false)
 
     }

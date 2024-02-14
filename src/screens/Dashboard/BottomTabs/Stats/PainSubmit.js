@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, StyleSheet, ToastAndroid, Modal, ScrollView, Keyboard } from 'react-native'
-import React, { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { TextInput, Text, Divider } from 'react-native-paper'
 import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes'
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../../local storage/LocalStorage'
@@ -11,34 +11,30 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
-
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 const PainSubmit = ({ navigation, route }) => {
 
   const isFocused = useIsFocused()
+  const strings = useLocales()
+
   React.useEffect(() => {
     handleSliderValueChange(isNaN(route.params.flag) ? 0 : route.params.flag)
     getPainReason()
   }, [])
 
   useEffect(() => { getLanguage() }, [isFocused])
-  
+
   //lng
   const getLanguage = async () => {
-      const lang = await getDataFromLocalStorage("lang")  
-      if (lang == "en") {
-          strings.setLanguage(lang)
-      } else {
-          strings.setLanguage(lang)
+    const lang = await getDataFromLocalStorage("lang")
+    if (lang == "en") {
+      
+    } else {
+      
 
-      }
+    }
   }
 
   React.useEffect(() => {
@@ -916,7 +912,7 @@ export default PainSubmit
 //                         className="st0"
 //                       />
 //                       <Path
-//                         onPressIn={handlePressIn}             
+//                         onPressIn={handlePressIn}
 //                         onPressOut={handlePressOut}
 //                         fill={initialColor}
 //                         style={{

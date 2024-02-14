@@ -18,18 +18,15 @@ import { useIsFocused } from '@react-navigation/native'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
-
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
-
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 const EditQuestionsCustom = ({ navigation, route }) => {
     const [langText, setLangText] = useState('')
 
     const isFocused = useIsFocused()
+
+    const strings = useLocales()
     useEffect(() => { getLanguage() }, [isFocused])
 
 
@@ -40,7 +37,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         setLangText(lang)
-        strings.setLanguage(lang)
+        
 
         if (lang == "hi") {
             getQuestions("2")
@@ -53,7 +50,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
 
 
     useEffect(() => {
-       // getQuestions()
+        // getQuestions()
         retrieveAnswerFirst()
         //animate()
     }, [])
@@ -595,17 +592,17 @@ const EditQuestionsCustom = ({ navigation, route }) => {
         formdata.append("answer", item)
         formdata.append("user_type", usertype)
 
-        
-        if(langText =="hi"){
+
+        if (langText == "hi") {
             formdata.append("language", "2")
 
-        }else{
+        } else {
             formdata.append("language", "1")
 
         }
         // temp2 == "corporate" ? formdata.append("user_type", "2") : "1"
         const result = await PostApiData('first_answer_submit', formdata)
-        console.log("formdata========================================",formdata)
+        console.log("formdata========================================", formdata)
         setMyData((prev) => [...prev, ...result.data])
 
         setLoader(false)
@@ -1743,21 +1740,21 @@ const EditQuestionsCustom = ({ navigation, route }) => {
             formdata.append("question", myData[arrCounter]?.id);
             formdata.append("answer", customAnswer)
             formdata.append("user_type", usertype); // chnged from usertype
-           // formdata.append("language", "2")
+            // formdata.append("language", "2")
 
-            if(langText =="hi"){
+            if (langText == "hi") {
                 formdata.append("language", "2")
-    
-            }else{
+
+            } else {
                 formdata.append("language", "1")
-    
+
             }
             // temp2 == "corporate" ? formdata.append("user_type", "2") : "1"
 
 
             const result = await PostApiData('first_answer_submit', formdata)
 
-            console.log("formdataRequest========================================",formdata)
+            console.log("formdataRequest========================================", formdata)
 
             setMyData((prev) => [...prev, ...result.data])
             setQuestionNumber(prev => prev + 1)

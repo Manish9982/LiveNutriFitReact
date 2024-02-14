@@ -45,7 +45,8 @@ const VerifyOTPAfterRegistrationPhone = ({ navigation, route }) => {
         formdata.append("otp", otp)
         formdata.append("mobile", route.params.mob)
         formdata.append("login_time", Date.now())
-        
+        formdata.append("code", strings?.code)
+
         var requestOptions = {
             method: 'POST',
             body: formdata,
@@ -58,7 +59,7 @@ const VerifyOTPAfterRegistrationPhone = ({ navigation, route }) => {
             storeDataInLocalStorage('Token', result.token)                       //Store Token
             storeDataInLocalStorage('stackValue', '4')                          //change stack value for navigating to bottom tabs
             storeDataInLocalStorage('mobile', mobile)
-            storeDataInLocalStorage('user_id', JSON.stringify(result.user_id))  
+            storeDataInLocalStorage('user_id', JSON.stringify(result.user_id))
             storeDataInLocalStorage('user_type', (result.user_type))                          //save usertype in local storage
             storeDataInLocalStorage('wrid', result.wrd_id)
             //save userId in local storage

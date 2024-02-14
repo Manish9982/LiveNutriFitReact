@@ -14,13 +14,8 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useLocales } from '../../utils/LocalizationUtil'
 
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
 
 ///////////////////////////////////////for email only////////////////////////////////////////////////
 const HEIGHT = Dimensions.get('window').height
@@ -34,7 +29,7 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
     const [loader, setLoader] = useState(false)
 
     const isFocused = useIsFocused()
-
+    const strings = useLocales()
 
     useEffect(() => { getLanguage() }, [isFocused])
 
@@ -54,7 +49,7 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
 
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
     const otpRequestedAgain = async () => {
@@ -87,6 +82,7 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
         formdata.append("otp", otp)
         formdata.append("email", route.params.email)
         formdata.append("login_time", Date.now())
+        formdata.append("code", strings?.code)
         var requestOptions = {
             method: 'POST',
             body: formdata,

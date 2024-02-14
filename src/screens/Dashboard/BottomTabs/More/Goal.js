@@ -12,20 +12,14 @@ import hindi from '../../../../hi'
 import english from '../../../../en'
 
 import { useIsFocused } from '@react-navigation/native';
-
-
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
-
-
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 
 const Goal = () => {
 
   const isFocused = useIsFocused()
+  const strings = useLocales()
 
   useEffect(() => { getUserTasks() }, [])
  useEffect(() => { getLanguage() }, [isFocused])
@@ -34,7 +28,7 @@ const Goal = () => {
   const getLanguage = async () => {
     setLoader(true)
     const lang = await getDataFromLocalStorage("lang")
-    strings.setLanguage(lang)
+    
 
     // if (lang == "en") {
     //   changeLanguage('en')

@@ -12,15 +12,9 @@ import HeaderForSubmissionScreens from './Dashboard/BottomTabs/Stats/HeaderForSu
 
 import { LineChart } from 'react-native-chart-kit';
 import { Picker } from '@react-native-picker/picker';
+import { useLocales } from '../utils/LocalizationUtil';
 
 const screenWidth = Dimensions.get("window").width * 0.94;
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
 
 const data = ['Option 1', 'Option 2', 'Option 3', 'Option 4']; // Your array of values
 
@@ -63,6 +57,8 @@ const SubmitSteps = () => {
     const [myCalendar, setMyCalendar] = useState(null)
     const [selectedLanguage, setSelectedLanguage] = useState("java")
 
+    const strings = useLocales()
+
     useEffect(() => {
         getCalendar()
         getWeeklyOverview()
@@ -82,7 +78,7 @@ const SubmitSteps = () => {
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
 
-        strings.setLanguage(lang)
+        
 
     }
 

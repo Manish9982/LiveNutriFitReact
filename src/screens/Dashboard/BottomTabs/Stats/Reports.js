@@ -13,12 +13,7 @@ import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
 import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions'
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 const Reports = ({ navigation }) => {
     const isFocused = useIsFocused()
@@ -26,6 +21,7 @@ const Reports = ({ navigation }) => {
         getAttachments()
     }, [])
 
+    const strings = useLocales()
     useEffect(() => { getLanguage() }, [isFocused])
 
     //lng
@@ -38,7 +34,7 @@ const Reports = ({ navigation }) => {
         }
     }
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
     const [text, setText] = useState("")

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { colors, W, H } from '../../colorSchemes/ColorSchemes'
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../local storage/LocalStorage'
+import { useChangeLanguage } from '../../utils/LocalizationUtil'
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -10,6 +11,17 @@ const WIDTH = Dimensions.get('window').width
 
 
 const BootSplash = ({ navigation }) => {
+
+  const changeLanguage = useChangeLanguage();
+
+  useEffect(() => {
+    retrieveLanguage()
+  }, [])
+
+  const retrieveLanguage = async () => {
+    const language = await getDataFromLocalStorage('language_new')
+    await changeLanguage(language || 'en');
+  }
 
   useEffect(() => {
     getState()
@@ -73,7 +85,7 @@ const BootSplash = ({ navigation }) => {
         if (paidUserStatus == "PaymentDone") {
           Alert.alert('Alert', "As your Payment has been done , please answer some questions to become paid user!", [
             { text: 'OK', onPress: () => navigation.navigate("PaidCustomQuestions") }]);
-            
+
         } else if (paidUserStatus == "PaymentDoneWithQuestions") {
           redirectToBottomTabs()
 

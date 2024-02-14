@@ -8,13 +8,8 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
 
 
 const date = new Date()
@@ -27,6 +22,10 @@ const SubmitMonitoring = () => {
     const [loader, setLoader] = useState(true)
     const [data, setData] = useState(null)
     const [myCalendar, setMyCalendar] = useState(null)
+
+
+    const strings = useLocales()
+
     useEffect(() => {
         getCalendar()
         getWeeklyOverview()
@@ -50,7 +49,7 @@ const SubmitMonitoring = () => {
 
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
     const getCalendar = async () => {

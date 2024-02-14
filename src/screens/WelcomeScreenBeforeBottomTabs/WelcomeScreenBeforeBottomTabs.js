@@ -15,13 +15,7 @@ import hindi from '../../hi'
 import english from '../../en'
 import RNRestart from 'react-native-restart'
 import Loader from '../../assets/components/Loader'
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
@@ -43,6 +37,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
     useEffect(() => { getLanguage() }, [isFocused])
     const progres = useSharedValue(0)
     const isFocused = useIsFocused()
+    const strings = useLocales()
     const firstLogin = () => {
         storeDataInLocalStorage('firstTimeLogin', '1')
     }
@@ -62,7 +57,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
     }
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
     // const runProgressbarAndCheckbox = () => {

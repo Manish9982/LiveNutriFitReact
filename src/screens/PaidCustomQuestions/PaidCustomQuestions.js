@@ -20,18 +20,14 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLocales } from '../../utils/LocalizationUtil'
 
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
 
 
 const PaidCustomQuestions = ({ navigation, route }) => {
     const isFocused = useIsFocused()
 
+    const strings = useLocales()
     const [planduration, setPlanDuration] = useState('')
 
 
@@ -67,7 +63,7 @@ const PaidCustomQuestions = ({ navigation, route }) => {
     }
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
 

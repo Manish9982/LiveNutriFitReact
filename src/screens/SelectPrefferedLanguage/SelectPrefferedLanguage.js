@@ -1,4 +1,4 @@
-import { View, StyleSheet, SafeAreaView, TouchableOpacity, ImageBackground, FlatList, StatusBar, Image, ToastAndroid, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, ImageBackground, FlatList, StatusBar, Image, ToastAndroid, ActivityIndicator, Alert } from 'react-native'
 import React, { useEffect, useState, useContext } from 'react'
 import { colors, fontFamily, fontSizes, GetApiData, H, ShortToast, W } from '../../colorSchemes/ColorSchemes'
 import { Text } from 'react-native-paper'
@@ -10,10 +10,41 @@ import Loader from '../../assets/components/Loader'
 import Logo from '../Dashboard/Components/Logo'
 import DataContext from '../../context/DataContext'
 import { useIsFocused } from '@react-navigation/native'
+import { useChangeLanguage } from '../../utils/LocalizationUtil'
+
+const DATA = {
+    "data": [
+        {
+            "created_at": "2022-10-06 06:05:33",
+            "lang_name": "English",
+            "code": "en",
+            "active": true,
+            "msg_title": "Info",
+            "msg_body": "Coming Soon..",
+        },
+        {
+            "created_at": "2022-10-06 07:25:04",
+            "lang_name": "हिन्दी",
+            "code": "hi",
+            "active": true,
+            "msg_title": "Info",
+            "msg_body": "Coming Soon.."
+        },
+    ],
+    "message": "success",
+    "status": 200
+}
 
 
 const SelectPrefferedLanguage = ({ navigation }) => {
     const isFocused = useIsFocused()
+    const changeLanguage = useChangeLanguage();
+
+    const handleChangeLanguage = async (newLanguage) => {
+        await storeDataInLocalStorage('language_new', newLanguage)
+        await changeLanguage(newLanguage);
+    };
+
     useEffect(() => {
         if (isFocused) {
             getData()
@@ -22,65 +53,41 @@ const SelectPrefferedLanguage = ({ navigation }) => {
 
     const [data, setData] = useState(null)
     const [showLoader, setShowLoader] = useState(true)
-
-
     const { Nlanguage } = useContext(DataContext)
-
     const [language, setLanguage] = Nlanguage
 
-
-
     const getData = async () => {
-        const result = await GetApiData('languagelist')
-        setData(result)
+        // const result = await GetApiData('languagelist')
+        // setData(result)
+        // setShowLoader(false)
+        // console.log('languagelist', result)
+        setData(DATA)
         setShowLoader(false)
-        console.log('languagelist', result)
     }
 
-    const handleNext = async (n) => {
-        if (n == '2') {
-            // ShortToast("Hindi content will be available soon..", 'warning', '')
-            setLanguage("hi")
-            storeDataInLocalStorage('lang', "hi")
+    const handleNext = async (code, active, title, body) => {
+        if (active) {
+            setLanguage(code)
+            handleChangeLanguage(code)
             navigation.replace("SliderIntro")  // modified to comment
-        } else if (n == "1") {
-            setLanguage("en")
-            storeDataInLocalStorage('lang', "en")
-            navigation.replace("SliderIntro")
         }
         else {
-            setLanguage("en")
-            storeDataInLocalStorage('lang', "en")
-            navigation.replace("SliderIntro")
+            Alert.alert(title, body)
         }
     }
 
-    const renderItem = ({ item }) => {
+    const renderItem = (item, index) => {
         return (
             <TouchableOpacity
-                onPress={() => { handleNext(item.id) }}
-                style={{
-                    backgroundColor: colors.GREEN,
-                    borderRadius: 8,
-                    width: W * 0.4,
-                    alignItems: "center",
-                    marginTop: H * 0.028,
-                }}>
-                <View style={{
-                    alignItems: "center",
-                    marginHorizontal: W * 0.03
-                }}>
-                    {/*<RadioButton value={item.id}
-                  status={language == item.id ? "checked" : "unchecked"}
-                    color={colors.GREEN}
-         onPress={() => { setLanguage(item.id) }} />*/}
-                    <Text style={{
-                        color: "white",
-                        marginVertical: H * 0.03,
-                        ...fontFamily.bold,
-                        fontSize: fontSizes.XL
-                    }}>{item.lang_name}</Text>
-                </View>
+                key={index}
+                onPress={() => { handleNext(item?.code, item?.active, item?.msg_title, item?.msg_body) }}
+                style={[styles.languageButton, {
+                    backgroundColor: item?.active ? colors.GREEN : colors.DARK_GRAY
+                }]}>
+                <Text style={{
+                    color: "white",
+                    ...fontFamily.bold,
+                }}>{item.lang_name}</Text>
             </TouchableOpacity>
         )
     }
@@ -98,14 +105,9 @@ const SelectPrefferedLanguage = ({ navigation }) => {
                 </View>
                 <Text style={[styles.text2, { marginBottom: H * 0.04, fontSize: fontSizes.XXXL }]}>Welcome To</Text>
                 <Logo />
-                <Text style={styles.text2}>Please Select The Language That You Prefer </Text>
+                <Text style={styles.text2}>Please Select The Language That You Prefer</Text>
                 <View style={styles.buttonView}>
-                    <FlatList
-                        data={data?.data}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
-                    //numColumns={2}
-                    />
+                    {data?.data?.map((item, index) => renderItem(item, index))}
                 </View>
                 {/*  <TouchableOpacity onPress={() => { handleNext() }}
                     style={styles.nextButton}>
@@ -133,10 +135,10 @@ const styles = StyleSheet.create({
     },
     buttonView:
     {
-        alignItems: "center",
-        //backgroundColor: "red",
-        //height: H * 0.2,
-        zIndex: 50
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        zIndex: 50,
+        justifyContent: 'center'
     },
     button:
     {
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
         marginBottom: H * 0.027,
         marginTop: H * 0.12,
         ...fontFamily.bold,
-        fontSize: fontSizes.XXXL,
+        //fontSize: fontSizes.XXXL,
         width: W * 0.9,
         textAlign: "center"
     },
@@ -189,6 +191,15 @@ const styles = StyleSheet.create({
         ...fontFamily.bold,
         marginBottom: H * 0.04,
         lineHeight: H * 0.04
+    },
+    languageButton:
+    {
+        borderRadius: 8,
+        alignItems: "center",
+        marginTop: H * 0.028,
+        padding: 8,
+        margin: 8,
+        minWidth: 100
     }
 })
 

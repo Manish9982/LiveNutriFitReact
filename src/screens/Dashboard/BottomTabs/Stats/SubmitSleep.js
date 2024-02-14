@@ -10,15 +10,7 @@ import { useIsFocused } from '@react-navigation/native'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
-
-
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 const date = new Date()
@@ -27,6 +19,8 @@ const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
 const SubmitSleep = () => {
+
+    const strings = useLocales()
 
     const isFocused = useIsFocused()
 
@@ -46,7 +40,7 @@ const SubmitSleep = () => {
 
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
 
@@ -115,7 +109,7 @@ const SubmitSleep = () => {
     }
 
     const attributeShow = (n) => {
-        console.log("RECORDDDDDDDDDDDDDDDDDDDDDDDDDDD" , n)
+        console.log("RECORDDDDDDDDDDDDDDDDDDDDDDDDDDD", n)
         if (n?.status == 203)
             return "No records Found"
         else if (n?.data[0].selected_number == '1')

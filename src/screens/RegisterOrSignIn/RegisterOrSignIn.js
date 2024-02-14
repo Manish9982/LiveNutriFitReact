@@ -13,12 +13,8 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import { useIsFocused } from '@react-navigation/native';
+import { useLocales } from '../../utils/LocalizationUtil';
 
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
 
 
 const fontConfig = {
@@ -44,6 +40,7 @@ const RegisterOrSignIn = ({ navigation }) => {
     const isFocused = useIsFocused()
 
 
+    const strings = useLocales()
     useEffect(() => { getLanguage() }, [isFocused])
 
 
@@ -58,7 +55,7 @@ const RegisterOrSignIn = ({ navigation }) => {
     }
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
     const [loader, setLoader] = useState(true)
     const [data, setData] = useState(null)

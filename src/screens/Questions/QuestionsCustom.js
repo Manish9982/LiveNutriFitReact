@@ -1,6 +1,6 @@
 import { StyleSheet, View, TouchableOpacity, FlatList, StatusBar, BackHandler, Modal, Image } from 'react-native'
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import {  Text, TextInput, Checkbox, } from 'react-native-paper'
+import { Text, TextInput, Checkbox, } from 'react-native-paper'
 import { colors, fontFamily, fontSizes, GetApiData, H, PostApiData, ShortToast, W } from '../../colorSchemes/ColorSchemes'
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../local storage/LocalStorage'
 import DataContext from '../../context/DataContext'
@@ -15,22 +15,21 @@ import { useIsFocused } from '@react-navigation/native'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
+import { useLocales } from '../../utils/LocalizationUtil'
 
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
 
 const QuestionsCustom = ({ navigation, route }) => {
     const [langText, setLangText] = useState('')
 
     const isFocused = useIsFocused()
+
+    const strings = useLocales()
     useEffect(() => { getLanguage() }, [isFocused])
 
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         setLangText(lang)
-        strings.setLanguage(lang)
+        
 
         if (lang == "hi") {
             getQuestions("2")
@@ -110,7 +109,7 @@ const QuestionsCustom = ({ navigation, route }) => {
     const [ans8, setAns8] = useState(null)
     const [ans9, setAns9] = useState(null)
     const [ans10, setAns10] = useState(null)
-    
+
     const translation = useRef(new Animated.Value(-W / 2)).current;
 
     const animate = () => {
@@ -137,7 +136,7 @@ const QuestionsCustom = ({ navigation, route }) => {
             setArrCounter(prev => prev + nextQuestionOffset);
             setLoader(false);
         };
-    
+
         switch (id) {
             case "1":
                 setLoader(true);
@@ -146,7 +145,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                 setArrCounter(prev => prev + 1);
                 setCustomAnswer("");
                 break;
-    
+
             case "64":
             case "63":
             case "72":
@@ -181,7 +180,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                     handleSubmission(selectedOption);
                 }
                 break;
-    
+
             case "123": // Assuming this block doesn't have async operations, hence no 'await'
             case "125":
             case "127":
@@ -192,7 +191,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                 setArrCounter(prev => prev + 1);
                 setLoader(false);
                 break;
-    
+
             default:
                 setLoader(true);
                 submitAnswer(selectedOption);
@@ -203,12 +202,12 @@ const QuestionsCustom = ({ navigation, route }) => {
                 setFlag2(0);
                 break;
         }
-    
+
         setSelectedOption(null);
         setCustomAnswer("");
         retrieveAnswerCurrent(myData[arrCounter + 1]?.id);
     };
-    
+
 
     const submitFirstAnswerAndGetMoreQuestions = async (item) => {
         setLoader(true)
@@ -239,7 +238,7 @@ const QuestionsCustom = ({ navigation, route }) => {
         const temp = await getDataFromLocalStorage('user_id');
         formdata.append("user_id", JSON.parse(temp));
         formdata.append("question", myData[arrCounter]?.id);
-    
+
         if (myData[arrCounter]?.id === '71') {
             formdata.append("answer", trgt);
         } else {
@@ -249,7 +248,7 @@ const QuestionsCustom = ({ navigation, route }) => {
             storeDataInLocalStorage("diabetes", result?.diabetes);
             storeDataInLocalStorage("pregnant", result?.pregnant);
         }
-    
+
         const result = await PostApiData('Question-Answer', formdata);
     };
 

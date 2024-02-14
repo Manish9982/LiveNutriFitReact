@@ -15,12 +15,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil';
 
 const date = new Date()
 
@@ -34,6 +29,8 @@ const year = date.getFullYear().toString()
 const Plans = ({ navigation }) => {
 
   const isFocused = useIsFocused()
+
+  const strings = useLocales()
 
   useEffect(() => {
     isFocused
@@ -51,7 +48,7 @@ const Plans = ({ navigation }) => {
   }
 
   const changeLanguage = (languageKey) => {
-    strings.setLanguage(languageKey)
+    
   }
   useEffect(() => {
     removeValue()

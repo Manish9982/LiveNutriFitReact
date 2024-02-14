@@ -63,7 +63,7 @@ const CustomAccordion = ({ title, question, options, onSelectionChange, answers 
                         options?.map((item, index) => {
                             return (
                                 <TouchableOpacity 
-                                ke={index}
+                                key={index}
                                 onPress={() => toggleOption(item)}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
                                         <Icon

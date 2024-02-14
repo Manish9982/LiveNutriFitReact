@@ -15,19 +15,15 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import Loader from '../../assets/components/Loader'
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 
 
 export default function PlanChoosePromptAtStartup({ navigation }) {
     const isFocused = useIsFocused()
+
+    const strings = useLocales()
     // useEffect(() => { getLanguage() }, [isFocused])
 
     useEffect(() => {
@@ -53,12 +49,12 @@ export default function PlanChoosePromptAtStartup({ navigation }) {
         setShowLoader(true)
         const lang = await getDataFromLocalStorage("lang")
         const userType = await getDataFromLocalStorage("user_type")
-        strings.setLanguage(lang)
+        
 
-        if(JSON.parse(userType == "2")){
+        if (JSON.parse(userType == "2")) {
             storeDataInLocalStorage('stackValue', "3")
 
-        }else{
+        } else {
             storeDataInLocalStorage('stackValue', "6")
         }
 
@@ -236,58 +232,58 @@ export default function PlanChoosePromptAtStartup({ navigation }) {
     return (
 
         showLoader ?
-        <Loader />
-        
-        :
-        <View style={styles.mainContainer}>
-            <Text style={[styles.absoluteText, { top: H * 0.33, zIndex: 1, }]}>{strings.SmartDiet}</Text>
-            <Text style={[styles.absoluteText, {
-                top: H * 0.37, zIndex: 1,
-                fontSize: fontSizes.LAR
-            }]}>{strings.Starts}</Text>
-            <Text style={styles.text2}>{strings.RecommendedPlansforyou}</Text>
-            <Text style={styles.text3}>{strings.Basedonyourfitnessgoals}</Text>
-            <View style={styles.card}>
-                <TouchableOpacity onPress={() => {
-                    // storeDataInLocalStorage('stackValue', "3")
-                    // RNRestart.Restart()
-                    setVisible(true)
+            <Loader />
 
-                    getValuesExplore()
-                }}>
-                    <Image source={require('../../assets/icons/plans-bg.jpg')}
-                        style={styles.cardImage} />
-                    <Text style={[styles.textPerks, {
-                        marginVertical: H * 0.025,
-                        fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL
-                    }]}>{strings.OurAI}</Text>
-                    <View style={{ flexDirection: "row" }}>
-                        <Image source={require('../../assets/icons/list.png')}
-                            style={styles.iconStyle} />
-                        <Text style={styles.textPerks}>{strings.CustomizableDietPlan}</Text>
-                    </View>
-                    <View style={{ flexDirection: "row" }}>
-                        <Image source={require('../../assets/icons/coach2.png')}
-                            style={styles.iconStyle} />
-                        <Text style={styles.textPerks}>{strings.CustomizableReminders}</Text></View>
-                    <View style={{ flexDirection: "row" }}>
-                        <Image source={require('../../assets/icons/diet2.png')}
-                            style={styles.iconStyle} />
-                        <Text style={styles.textPerks}>{strings.YourCoachAssistantNutritionist}</Text></View>
-                    <LinearGradient end={{ x: 0, y: 0 }}
-                        start={{ x: 1, y: 0 }}
-                        colors={[colors.GREEN, colors.GREEN3]}
-                        style={styles.exploreButton}>
-                        <View style={{}}>
-                            <Text style={styles.textExplore}>{strings.ExploreSmart}</Text>
+            :
+            <View style={styles.mainContainer}>
+                <Text style={[styles.absoluteText, { top: H * 0.33, zIndex: 1, }]}>{strings.SmartDiet}</Text>
+                <Text style={[styles.absoluteText, {
+                    top: H * 0.37, zIndex: 1,
+                    fontSize: fontSizes.LAR
+                }]}>{strings.Starts}</Text>
+                <Text style={styles.text2}>{strings.RecommendedPlansforyou}</Text>
+                <Text style={styles.text3}>{strings.Basedonyourfitnessgoals}</Text>
+                <View style={styles.card}>
+                    <TouchableOpacity onPress={() => {
+                        // storeDataInLocalStorage('stackValue', "3")
+                        // RNRestart.Restart()
+                        setVisible(true)
+
+                        getValuesExplore()
+                    }}>
+                        <Image source={require('../../assets/icons/plans-bg.jpg')}
+                            style={styles.cardImage} />
+                        <Text style={[styles.textPerks, {
+                            marginVertical: H * 0.025,
+                            fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL
+                        }]}>{strings.OurAI}</Text>
+                        <View style={{ flexDirection: "row" }}>
+                            <Image source={require('../../assets/icons/list.png')}
+                                style={styles.iconStyle} />
+                            <Text style={styles.textPerks}>{strings.CustomizableDietPlan}</Text>
                         </View>
-                    </LinearGradient>
-                </TouchableOpacity>
-                <View>
-                </View>
-            </View >
-            <Portal>
-                {/* <Dialog visible={visible} onDismiss={hideDialog}>
+                        <View style={{ flexDirection: "row" }}>
+                            <Image source={require('../../assets/icons/coach2.png')}
+                                style={styles.iconStyle} />
+                            <Text style={styles.textPerks}>{strings.CustomizableReminders}</Text></View>
+                        <View style={{ flexDirection: "row" }}>
+                            <Image source={require('../../assets/icons/diet2.png')}
+                                style={styles.iconStyle} />
+                            <Text style={styles.textPerks}>{strings.YourCoachAssistantNutritionist}</Text></View>
+                        <LinearGradient end={{ x: 0, y: 0 }}
+                            start={{ x: 1, y: 0 }}
+                            colors={[colors.GREEN, colors.GREEN3]}
+                            style={styles.exploreButton}>
+                            <View style={{}}>
+                                <Text style={styles.textExplore}>{strings.ExploreSmart}</Text>
+                            </View>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                    <View>
+                    </View>
+                </View >
+                <Portal>
+                    {/* <Dialog visible={visible} onDismiss={hideDialog}>
                     <Text style={{
                         alignSelf: "center",
                         ...fontFamily.bold,
@@ -311,29 +307,29 @@ export default function PlanChoosePromptAtStartup({ navigation }) {
                         <Button onPress={() => submitUpgradeCode()}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog> */}
-            </Portal>
+                </Portal>
 
 
-            <TouchableOpacity
+                <TouchableOpacity
 
-                onPress={() => {
+                    onPress={() => {
 
-                    getValues()
+                        getValues()
 
-                    // storeDataInLocalStorage('stackValue', "3")
-                    // RNRestart.Restart()
-                }}>
+                        // storeDataInLocalStorage('stackValue', "3")
+                        // RNRestart.Restart()
+                    }}>
 
-                <Text style={{
-                    marginRight: W * 0.07,
-                    marginTop: H * 0.05,
-                    alignSelf: "flex-end",
-                    color: colors.FONT_BLACK,
-                    ...fontFamily.bold
-                }}>{strings.Skipfornow} {'>>'}</Text>
+                    <Text style={{
+                        marginRight: W * 0.07,
+                        marginTop: H * 0.05,
+                        alignSelf: "flex-end",
+                        color: colors.FONT_BLACK,
+                        ...fontFamily.bold
+                    }}>{strings.Skipfornow} {'>>'}</Text>
 
-            </TouchableOpacity>
-        </View >
+                </TouchableOpacity>
+            </View >
     )
 }
 

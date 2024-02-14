@@ -10,17 +10,12 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
-
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 export default function PsychologyQuestions({ navigation }) {
     // useEffect(() => { getAnswersForPsychology() }, [])
     const isFocused = useIsFocused()
+    const strings = useLocales()
     useEffect(() => {
         getPsychologyQuestions()
     }, [])
@@ -32,9 +27,9 @@ export default function PsychologyQuestions({ navigation }) {
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            strings.setLanguage(lang)
+            
         } else {
-            strings.setLanguage(lang)
+            
 
         }
     }
@@ -204,7 +199,7 @@ export default function PsychologyQuestions({ navigation }) {
             :
             <View style={{ flex: 1 }}>
                 <HeaderForSubmissionScreens Title={strings.Psychology} />
-                <ScrollView contentContainerStyle={{ alignItems: "center",  }}>
+                <ScrollView contentContainerStyle={{ alignItems: "center", }}>
                     <View
                         style={styles.bubble}>
                         <Text

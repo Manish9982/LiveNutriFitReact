@@ -15,14 +15,7 @@ import hindi from '../../hi'
 import english from '../../en'
 import { PERMISSIONS, RESULTS, check, request, requestMultiple } from 'react-native-permissions'
 import ImagePicker from 'react-native-image-crop-picker'
-
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../utils/LocalizationUtil'
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -44,6 +37,7 @@ const UserProfile = ({ navigation }) => {
     const [text, setText] = useState("")
 
     const isFocused = useIsFocused()
+    const strings = useLocales()
 
     useEffect(() => {
         getLanguage()
@@ -67,7 +61,7 @@ const UserProfile = ({ navigation }) => {
     }
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
     const navigationTOScreen = async () => {

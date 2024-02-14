@@ -8,28 +8,25 @@ import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useEffect } from 'react';
 import { getDataFromLocalStorage } from '../../../../local storage/LocalStorage'
-
-
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-  });
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 const TermsAndCondtitons = () => {
     useEffect(() => {
         getLanguage()
-      }, [])
+    }, [])
+    const strings = useLocales()
 
     const getLanguage = async () => {
         // setLoader(true)
-          const lang = await getDataFromLocalStorage("lang")
-          strings.setLanguage(lang)
-         //setLoader(false)
-      
-        }
-      
-      
+        const lang = await getDataFromLocalStorage("lang")
+        
+        //setLoader(false)
+
+    }
+
+
+
 
     return (
         <View style={{
@@ -42,8 +39,8 @@ const TermsAndCondtitons = () => {
                 flex: 1
             }}>
                 <WebView
-                  startInLoadingState={true}
-                source={{ uri: `${Constants.BASE_URL}terms-conditions-2/` }} />
+                    startInLoadingState={true}
+                    source={{ uri: `${Constants.BASE_URL}terms-conditions-2/` }} />
             </View>
         </View>
     )

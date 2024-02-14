@@ -15,15 +15,7 @@ import english from '../../../../en'
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../../local storage/LocalStorage'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ScrollView } from 'react-native-gesture-handler'
-
-
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 const HEIGHT = Dimensions.get('window').height
@@ -34,6 +26,8 @@ const UpgradePlanOne = ({ navigation, route }) => {
     const [countryType, setCountryType] = useState("")
 
     const isFocused = useIsFocused()
+
+    const strings = useLocales()
 
     useEffect(() => {
 
@@ -57,7 +51,7 @@ const UpgradePlanOne = ({ navigation, route }) => {
 
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
     useEffect(() => {
@@ -1866,11 +1860,11 @@ const UpgradePlanOne = ({ navigation, route }) => {
                                 // alignItems: "center",
                                 //marginRight: W * 0.125
                             }}
-                            title={<Text style={{
-                                color: "white",
-                                fontSize: fontSizes.XXL,
-                                ...fontFamily.bold
-                            }}>{strings.ElitePlan}</Text>}
+                                title={<Text style={{
+                                    color: "white",
+                                    fontSize: fontSizes.XXL,
+                                    ...fontFamily.bold
+                                }}>{strings.ElitePlan}</Text>}
                             >
                             </Appbar.Content>
                         </Appbar.Header>

@@ -15,13 +15,10 @@ import hindi from '../../hi'
 import english from '../../en'
 
 import { useIsFocused } from '@react-navigation/native';
-
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../utils/LocalizationUtil'
 
 const Card = ({ points, maxPoints, date, cardData }) => {
+    const strings = useLocales()
     const isFocused = useIsFocused()
     //useEffect(() => { openFirstCard() }, [])
     useEffect(() => { getLanguage() }, [isFocused])
@@ -29,9 +26,9 @@ const Card = ({ points, maxPoints, date, cardData }) => {
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            strings.setLanguage(lang)
+            
         } else {
-            strings.setLanguage(lang)
+            
         }
     }
     //  const [dataFromApi, setDataFromApi] = React.useState(null)

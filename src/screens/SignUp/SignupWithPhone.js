@@ -14,14 +14,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import AntDesign from 'react-native-vector-icons/dist/AntDesign'
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
-
+import { useLocales } from '../../utils/LocalizationUtil';
 
 const fontConfig = {
     fontFamily: "Montserrat-Regular",
@@ -55,7 +48,8 @@ const SignupWithPhone = ({ navigation }) => {
     const [secureTextEntry2, setSecureTextEntry2] = useState(true)
 
     const isFocused = useIsFocused()
-
+    const strings = useLocales()
+    
     useEffect(() => { getLanguage() }, [isFocused])
 
     const handleCheckBoxToggle = () => {
@@ -80,7 +74,7 @@ const SignupWithPhone = ({ navigation }) => {
     }
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
 

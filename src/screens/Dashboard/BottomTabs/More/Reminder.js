@@ -19,15 +19,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { getDataFromLocalStorage } from '../../../../local storage/LocalStorage'
 import { ShortToast } from '../../../../colorSchemes/ColorSchemes'
 import Loader from '../../../../assets/components/Loader'
-
-
-
-
-
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 const Reminder = ({ navigation }) => {
 
@@ -36,6 +28,7 @@ const Reminder = ({ navigation }) => {
 
     const [savedtime, setSavedtime] = useState("")
 
+    const strings = useLocales()
 
     const converter = (val) => {
         console.log("val", val)
@@ -64,9 +57,9 @@ const Reminder = ({ navigation }) => {
         const lang = await getDataFromLocalStorage("lang")
 
         if (lang == "en") {
-            strings.setLanguage(lang)
+            
         } else {
-            strings.setLanguage(lang)
+            
         }
         setLoader(false)
     }

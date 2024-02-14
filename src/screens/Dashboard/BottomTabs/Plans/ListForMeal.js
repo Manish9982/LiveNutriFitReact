@@ -14,10 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil';
+
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -36,6 +34,8 @@ const ListForMeal = (props) => {
 
     const [loader, setLoader] = useState(false)
 
+    const strings = useLocales()
+
     useEffect(() => {
         getLanguage()
     }, [])
@@ -45,7 +45,7 @@ const ListForMeal = (props) => {
 
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        strings.setLanguage(lang)
+        
 
     }
 

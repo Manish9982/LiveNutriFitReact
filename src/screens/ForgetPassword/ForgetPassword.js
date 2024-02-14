@@ -10,12 +10,8 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
+import { useLocales } from '../../utils/LocalizationUtil'
 
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
 
 const fontConfig = {
     fontFamily: 'Montserrat-Regular',
@@ -33,6 +29,8 @@ const ForgetPassword = ({ navigation, route }) => {
     const [confirmpassword, setConfirmPassword] = useState("")
     const [email, setEmail] = useState("")
     const [loader, setLoader] = useState("")
+
+    const strings = useLocales()
     useEffect(() => { getLanguage() }, [])
 
     const testEmail = (text) => {
@@ -46,7 +44,7 @@ const ForgetPassword = ({ navigation, route }) => {
         setEmail(route?.params?.email)
         const lang = await getDataFromLocalStorage("lang")
 
-        strings.setLanguage(lang)
+        
 
         setLoader(false)
 

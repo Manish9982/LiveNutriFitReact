@@ -16,18 +16,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
-
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
-
-
-
-
+import { useLocales } from '../../../../utils/LocalizationUtil';
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -37,6 +26,7 @@ const date = new Date()
 
 const OnDetailsSubmitScreenOne = ({ navigation }) => {
 
+  const strings = useLocales()
   const isFocused = useIsFocused()
 
   useEffect(() => {
@@ -65,7 +55,7 @@ const OnDetailsSubmitScreenOne = ({ navigation }) => {
 
 
   const changeLanguage = (languageKey) => {
-    strings.setLanguage(languageKey)
+    
   }
 
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0, visible: false, value: 0 })

@@ -21,15 +21,7 @@ import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DocumentPicker from 'react-native-document-picker'
 import { PERMISSIONS, RESULTS, requestMultiple } from 'react-native-permissions'
-
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
-
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 const Coach = ({ navigation }) => {
@@ -58,6 +50,8 @@ const Coach = ({ navigation }) => {
 
   const H = useWindowDimensions().height
   const W = useWindowDimensions().width
+
+  const strings = useLocales()
 
   const styles = makeStyles(H, W)
 
@@ -89,7 +83,7 @@ const Coach = ({ navigation }) => {
   //lng
   const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
-    strings.setLanguage(lang)
+    
   }
 
 

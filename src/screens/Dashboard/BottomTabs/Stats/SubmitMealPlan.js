@@ -9,14 +9,7 @@ import { useIsFocused } from '@react-navigation/native'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
-
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 const date = new Date()
@@ -25,6 +18,8 @@ const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
 const SubmitMealPlan = ({ navigation }) => {
+    
+const strings = useLocales()
 
     const isFocused = useIsFocused()
 
@@ -35,7 +30,7 @@ const SubmitMealPlan = ({ navigation }) => {
     //lng
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        strings.setLanguage(lang)
+        
 
     }
 
@@ -51,7 +46,7 @@ const SubmitMealPlan = ({ navigation }) => {
 
 
     // const changeLanguage = (languageKey) => {
-    //     strings.setLanguage(languageKey)
+    //     
     // }
 
 

@@ -15,15 +15,11 @@ import hindi from '../../../../hi'
 import english from '../../../../en'
 
 import { useIsFocused } from '@react-navigation/native';
-
-
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 const GroceryList = () => {
     const isFocused = useIsFocused()
+    const strings = useLocales()
 
     useEffect(() => { getUserTasks() }, [])
 
@@ -39,7 +35,7 @@ const GroceryList = () => {
         }
     }
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
 
 
     }

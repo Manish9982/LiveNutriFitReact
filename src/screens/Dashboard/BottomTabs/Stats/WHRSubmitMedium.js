@@ -22,17 +22,13 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil';
 
 
 
 const WHRSubmitMedium = ({ navigation }) => {
 
+    const strings = useLocales()
     const isFocused = useIsFocused()
 
     useEffect(() => {
@@ -44,7 +40,7 @@ const WHRSubmitMedium = ({ navigation }) => {
     //lng
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        strings.setLanguage(lang)
+        
 
     }
 
@@ -119,11 +115,15 @@ const WHRSubmitMedium = ({ navigation }) => {
                     <ScrollView contentContainerStyle={styles.mainContainer}>
 
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between',
-                         width: WIDTH * 0.9, alignItems: "center" }}>
+                        <View style={{
+                            flexDirection: 'row', justifyContent: 'space-between',
+                            width: WIDTH * 0.9, alignItems: "center"
+                        }}>
 
-                            <Text style={{ fontFamily: 'Montserrat-SemiBold', 
-                            fontSize: fontSizes.XL }}>{strings.WHR2}</Text>
+                            <Text style={{
+                                fontFamily: 'Montserrat-SemiBold',
+                                fontSize: fontSizes.XL
+                            }}>{strings.WHR2}</Text>
 
 
                         </View>

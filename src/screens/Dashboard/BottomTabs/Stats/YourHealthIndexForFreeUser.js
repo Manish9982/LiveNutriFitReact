@@ -14,19 +14,16 @@ import { useIsFocused } from '@react-navigation/native';
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 export default function YourHealthIndexForFreeUser({ navigation, route }) {
 
     const [loader, setLoader] = useState(true)
     const [userType, setUserType] = useState("")
+
+
+    const strings = useLocales()
 
     const config = {
         velocityThreshold: 0.3,
@@ -39,7 +36,7 @@ export default function YourHealthIndexForFreeUser({ navigation, route }) {
         }, 2200);
     }, [])
 
- 
+
     const isFocused = useIsFocused()
 
     const [visible, setVisible] = useState(false)
@@ -58,7 +55,7 @@ export default function YourHealthIndexForFreeUser({ navigation, route }) {
     //lng
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        strings.setLanguage(lang)
+        
         const userTypeValue = await getDataFromLocalStorage('user_type')
         setUserType(JSON.parse(userTypeValue))
 

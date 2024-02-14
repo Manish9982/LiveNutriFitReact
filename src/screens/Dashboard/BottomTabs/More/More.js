@@ -16,12 +16,8 @@ import { useIsFocused } from '@react-navigation/native';
 import DataContext from '../../../../context/DataContext';
 import Loader from '../../../../assets/components/Loader';
 import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens';
+import { useChangeLanguage, useLocales } from '../../../../utils/LocalizationUtil';
 
-
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -40,10 +36,21 @@ const More = ({ navigation }) => {
   const [langTypeText, setLangTypeText] = useState("")
   const [data, setData] = useState([])
   const [usertype, setUsertype] = useState("")
+  const [languageData, setLanguageData] = useState(null)
+
+  const strings = useLocales()
+  const changeLanguage = useChangeLanguage();
+
+  const handleChangeLanguage = async (newLanguage) => {
+    await storeDataInLocalStorage('language_new', newLanguage)
+    await changeLanguage(newLanguage);
+    setLoader(false)
+  };
+
 
   useEffect(() => {
     // changeLanguageAPI()
-    getLanguage()
+    //getLanguage()
   }, [])
 
   useEffect(() => {
@@ -64,22 +71,6 @@ const More = ({ navigation }) => {
     }
   }
 
-
-  const changeLanguage = (languageKey) => {
-    strings.setLanguage(languageKey)
-    // strings.setLanguage("en")
-    setLangText2(languageKey)
-
-
-    if (languageKey == "en") {
-      setLangText(strings.english)
-    } else {
-      setLangText(strings.hindi)
-      // convert to Hindi from english
-      //  setLangText("English")   // convert to Hindi from english
-    }
-  }
-
   useEffect(() => {
     removeValue()
   }, [])
@@ -97,6 +88,16 @@ const More = ({ navigation }) => {
     const userType = await getDataFromLocalStorage('user_type')
     console.log("USERTPEEEEEE+++++++++++", userType)
     setUsertype(JSON.parse(userType))
+  }
+
+  const handleLanguageOption = async () => {
+    setLoader(true)
+    const result = await GetApiData('languagelist')
+    if (result?.status == '200') {
+      setLanguageData(result)
+      setLangModal(true)
+      setLoader(false)
+    }
   }
 
   const toastuserType = async () => {
@@ -136,7 +137,7 @@ const More = ({ navigation }) => {
     formdata.append("country", "IN")
     const result = await PostApiData('update_user_language', formdata)
     if (result.status == 200) {
-      getLanguage()
+      //getLanguage()
     } else {
       ShortToast(result?.message, 'error', '')
     }
@@ -241,7 +242,7 @@ const More = ({ navigation }) => {
     }
   }
   const changeLaguagee = (languageKey) => {
-    strings.setLanguage(languageKey)
+
     // strings.setLanguage("en")
     setLangText2(languageKey)
 
@@ -255,6 +256,21 @@ const More = ({ navigation }) => {
 
     }
 
+  }
+
+  const onPressLanguageItem = async (code) => {
+    setLoader(true)
+    var formdata = new FormData()
+    const temp = await getDataFromLocalStorage('user_id')
+    formdata.append("userid", JSON.parse(temp))
+    formdata.append('code', code)
+    const result = await PostApiData('languageselection', formdata)
+    if (result?.status == '200') {
+      await storeDataInLocalStorage('language_new', code)
+      await handleChangeLanguage(code)
+    }
+    console.log('languageselection===>', result)
+    await setLangModal(false)
   }
 
 
@@ -271,7 +287,7 @@ const More = ({ navigation }) => {
       :
 
       <View>
-        <HeaderForSubmissionScreens Title="More" />
+        <HeaderForSubmissionScreens Title={strings.More} />
         <Modal
           visible={langModal}
           transparent={true}>
@@ -281,9 +297,7 @@ const More = ({ navigation }) => {
             width: W,
             justifyContent: "center",
             alignItems: "center",
-
           }}>
-
 
             <View style={{
               paddingVertical: H * 0.02,
@@ -302,65 +316,34 @@ const More = ({ navigation }) => {
               <Divider
                 style={{ width: W, borderColor: 'black', borderWidth: 0.02 }} />
 
+              {languageData?.data?.map?.((item, index) => {
+                return (
+                  <TouchableOpacity
+                    // onPress={() => {
+                    //   //changeLaguagee("hi"), setLangModal(false), storeDataInLocalStorage('lang', "hi"), changeLanguageAPI("2"), setLanguage("hi"), toastuserType()
+                    // }}
+                    onPress={() => onPressLanguageItem(item?.code)}
+                    style={{
+                      backgroundColor: strings?.code == item?.code ? "green" : "white",
+                      margin: 8,
+                      fontFamily: "Montserrat-SemiBold",
+                      width: W * 0.25,
+                      alignSelf: "center",
+                      color: colors.toobarcolor,
+                      borderColor: 'black',
+                      borderWidth: 1,
+                      padding: 5,
+                      borderRadius: 5,
+                      textAlign: 'center',
+                    }}>
 
-              <TouchableOpacity
-                onPress={() => {
-                  changeLaguagee("en"), setLangModal(false), storeDataInLocalStorage('lang', "en"), changeLanguageAPI("1"), setLanguage("en"), toastuserType()
-                }}
-
-                style={{
-                  backgroundColor: langText2 == "en" ? "green" : "white",
-
-                  fontFamily: "Montserrat-SemiBold",
-                  width: W * 0.25,
-                  alignSelf: "center",
-                  color: colors.toobarcolor,
-                  borderColor: 'black',
-                  borderWidth: 1,
-                  padding: 5,
-                  borderRadius: 5,
-                  textAlign: 'center',
-                  marginVertical: H * 0.04,
-                }}>
-
-                <Text style={{
-                  color: langText2 == "en" ? "white" : "black",
-                  fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL,
-                }}>{strings.english}</Text>
-
-
-              </TouchableOpacity>
-
-
-              <TouchableOpacity
-                onPress={() => {
-                  changeLaguagee("hi"), setLangModal(false), storeDataInLocalStorage('lang', "hi"), changeLanguageAPI("2"), setLanguage("hi"), toastuserType()
-
-                }}
-
-                style={{
-                  backgroundColor: langText2 == "hi" ? "green" : "white",
-
-                  fontFamily: "Montserrat-SemiBold",
-                  width: W * 0.25,
-                  alignSelf: "center",
-                  color: colors.toobarcolor,
-                  borderColor: 'black',
-                  borderWidth: 1,
-                  padding: 5,
-                  borderRadius: 5,
-                  textAlign: 'center',
-                }}>
-
-                <Text style={{
-                  color: langText2 == "hi" ? "white" : "black",
-                  fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL
-                }}>{strings.hindi}</Text>
-              </TouchableOpacity>
-
-
-
-
+                    <Text style={{
+                      color: strings?.code == item?.code ? "white" : "black",
+                      fontFamily: "Montserrat-SemiBold", textAlign: 'center', fontSize: fontSizes.XL
+                    }}>{item?.lang_name}</Text>
+                  </TouchableOpacity>
+                )
+              })}
 
               <TouchableOpacity onPress={() => {
                 setLangModal(false)
@@ -486,7 +469,7 @@ const More = ({ navigation }) => {
               {/* <Divider style={styles.dividerStyle} /> */}
 
               <TouchableOpacity
-                onPress={() => { setLangModal(true) }}  // modified to commnet
+                onPress={() => { handleLanguageOption() }}  // modified to commnet
               >
                 <View style={styles.displayBar}>
 
@@ -511,7 +494,7 @@ const More = ({ navigation }) => {
                       color: "white",
                       ...fontFamily.bold
                     }}>
-                      {langText}
+                      {strings.language}
                     </Text>
 
                   </View>
@@ -542,57 +525,40 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}> {strings.LowGIFruitsandVegatables}</Text>
                 </View>
               </TouchableOpacity>
-
-
-
-
               {/* <Divider style={styles.dividerStyle} />
 
               <TouchableOpacity onPress={() => {
-
-
                 navigation.navigate("LNFShopWebView")
-
                 // ShortToast('Coming Soon..', 'warning', '')
               }}>
                 <View style={styles.displayBar}>
                   <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3144/3144456.png' }}
                     style={[styles.imageContainer, { width: (HEIGHT * 0.033), height: (HEIGHT * 0.033) }]}
                     tintColor="silver" />
-
                   <Text style={styles.text1}> {strings.LNFshop}</Text>
                 </View>
               </TouchableOpacity> */}
-
-
               <Divider style={styles.dividerStyle} />
-
               {/* <TouchableOpacity onPress={() => { navigation.navigate("Goal") }}>
                 <View style={styles.displayBar}>
-
                   <Image source={require('../../../../assets/images/Goal.jpg')}
                     style={styles.imageContainer} />
-
                   <Text style={styles.text1}>{strings.goals}</Text>
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} /> */}
               <TouchableOpacity onPress={() => { navigation.navigate("Gratification") }}>
                 <View style={styles.displayBar}>
-
                   <Image source={require('../../../../assets/icons/charity.png')}
                     style={[styles.imageContainer, { tintColor: "silver" }]} />
-
                   <Text style={styles.text1}>{strings.gratitude}</Text>
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
               <TouchableOpacity onPress={() => { navigation.navigate("Coach") }}>
                 <View style={styles.displayBar}>
-
                   <Image source={require('../../../../assets/images/Chat.jpg')}
                     style={styles.imageContainer} />
-
                   <Text style={styles.text1}>{strings.chatwithcoach}</Text>
                 </View>
               </TouchableOpacity>
@@ -602,14 +568,11 @@ const More = ({ navigation }) => {
               {/*}
               <TouchableOpacity onPress={() => { navigation.navigate("CustomerSupport") }}>
                 <View style={styles.displayBar}>
-
                   <Image source={require('../../../../assets/images/Customer_support.jpg')}
                     style={styles.imageContainer} />
-
                   <Text style={styles.text1}>{strings.customersupport}</Text>
                 </View>
               </TouchableOpacity>
-
               <Divider style={styles.dividerStyle} />
 
               <TouchableOpacity onPress={() => { navigation.navigate("FAQWebView") }}>

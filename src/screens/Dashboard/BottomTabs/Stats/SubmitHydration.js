@@ -9,13 +9,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 const wait = (timeout) => {
@@ -28,6 +22,8 @@ const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
 const SubmitHydration = () => {
+    
+const strings = useLocales()
     const isFocused = useIsFocused()
     useEffect(() => {
         getCalendar()
@@ -40,7 +36,7 @@ const SubmitHydration = () => {
 
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        strings.setLanguage(lang)
+        
     }
 
 
@@ -56,7 +52,7 @@ const SubmitHydration = () => {
 
 
     // const changeLanguage = (languageKey) => {
-    //     strings.setLanguage(languageKey)
+    //     
     // }
 
 

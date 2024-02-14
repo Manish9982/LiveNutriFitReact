@@ -10,14 +10,7 @@ import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
-
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-    en: english,
-    hi: hindi,
-});
+import { useLocales } from '../../../../utils/LocalizationUtil'
 
 
 
@@ -27,8 +20,9 @@ const WIDTH = Dimensions.get('window').width
 const date = new Date()
 
 const LeadershipBoard = () => {
-
+    
     const isFocused = useIsFocused()
+    const strings = useLocales()
 
     useEffect(() => { getDataFromApi() }, [])
     useEffect(() => { getLanguage() }, [isFocused])
@@ -45,7 +39,7 @@ const LeadershipBoard = () => {
 
 
     const changeLanguage = (languageKey) => {
-        strings.setLanguage(languageKey)
+        
     }
 
     const [selectedId, setSelectedId] = useState(null)

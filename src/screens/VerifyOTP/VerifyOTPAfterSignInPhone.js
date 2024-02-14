@@ -13,13 +13,7 @@ import hindi from '../../hi'
 import english from '../../en'
 import { useIsFocused } from '@react-navigation/native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 const HEIGHT = Dimensions.get('window').height
@@ -32,7 +26,7 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
   const [loader, setLoader] = useState(false)
   const [otp, setOtp] = Notp
 
-
+  const strings = useLocales()
   const isFocused = useIsFocused()
 
 
@@ -57,7 +51,7 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
 
 
   const changeLanguage = (languageKey) => {
-    strings.setLanguage(languageKey)
+    
   }
 
   const otpRequestedAgain = async () => {
@@ -91,6 +85,7 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
     formdata.append("otp", otp);
     formdata.append("mobile", route.params.mob)
     formdata.append("login_time", Date.now())
+    formdata.append("code", strings?.code)
 
     var requestOptions = {
       method: 'POST',

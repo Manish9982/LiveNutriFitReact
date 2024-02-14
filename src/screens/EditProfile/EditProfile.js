@@ -14,6 +14,7 @@ import english from '../../en'
 import Customloader from '../../assets/components/Customloader'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CustomAccordion from '../../assets/components/CustomAccordion'
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 
@@ -28,22 +29,6 @@ function getTimestamp10YearsAgo() {
   // Return the timestamp in milliseconds
   return tenYearsAgo?.getTime();
 }
-
-const OPTION1 = [
-  "No restrictions here",
-  "No dairy",
-  "No Egg",
-  "No Meat",
-  "No Fish",
-  "No Nuts",
-  "No Gluten/Wheat"
-]
-
-//lang chnge
-const strings = new LocalizedStrings({
-  en: english,
-  hi: hindi,
-});
 
 const EditProfile = ({ navigation }) => {
   const [checked, setChecked] = useState('true');
@@ -77,6 +62,7 @@ const EditProfile = ({ navigation }) => {
 
 
   const isFocused = useIsFocused()
+  const strings = useLocales()
 
 
   useEffect(() => { getDataFromApi() }, [])
@@ -113,7 +99,7 @@ const EditProfile = ({ navigation }) => {
 
 
   const changeLanguage = (languageKey) => {
-    strings.setLanguage(languageKey)
+    
   }
 
 
@@ -136,7 +122,6 @@ const EditProfile = ({ navigation }) => {
 
 
   const updateDetails = async () => {
-
 
     if (feet == "" || inch == "") {
       ShortToast('Feet or Inch can not be empty', 'Error', '')
@@ -191,9 +176,6 @@ const EditProfile = ({ navigation }) => {
         }
       }
     }
-
-
-
   }
 
   const getNumberForWorkoutIntensity = (t) => {
@@ -209,14 +191,11 @@ const EditProfile = ({ navigation }) => {
   }
 
   const handleOptionPress = (item) => {
-
     //setAnswer(item)
-
   }
 
   const renderOptions = ({ item }) => {
     return (
-
       <TouchableOpacity
         style={[styles.optionlayout, {
           //backgroundColor: answer?.includes(item) ? colors.GREEN : "white"
@@ -225,7 +204,6 @@ const EditProfile = ({ navigation }) => {
           handleOptionPress(item)
         }}>
         <View style={{
-
           marginLeft: W * 0.1,
         }}>
           <Checkbox
@@ -286,7 +264,7 @@ const EditProfile = ({ navigation }) => {
       :
       <View>
         <HeaderForSubmissionScreens Title={strings.EditProfile} />
-        < ScrollView contentContainerStyle={{ paddingBottom : H * 0.15 }} >
+        < ScrollView contentContainerStyle={{ paddingBottom: H * 0.15 }} >
           {/* <Image source={{ uri: image == null ? myData?.data[0]?.profile_pic : image.assets[0]?.uri }}
             style={styles.profilePic} />
           <TouchableOpacity
@@ -312,7 +290,7 @@ const EditProfile = ({ navigation }) => {
                 mode="date"
                 display="default"
                 onChange={(a, t) => handleDateChange(a, t)}
-                //maximumDate={getTimestamp10YearsAgo()}
+              //maximumDate={getTimestamp10YearsAgo()}
               //onTouchCancel={() =>setShowCalendar(prev => !prev)}
 
               />
