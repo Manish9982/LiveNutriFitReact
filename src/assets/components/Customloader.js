@@ -2,8 +2,10 @@ import { View, Text ,ActivityIndicator} from 'react-native'
 import React from 'react'
 import LottieView from 'lottie-react-native';
 import { H, W, fontFamily, fontSizes } from '../../colorSchemes/ColorSchemes';
+import { useLocales } from '../../utils/LocalizationUtil';
 
 const Customloader = () => {
+    const strings = useLocales()
     return (
         <View
             style={{
@@ -46,7 +48,7 @@ const Customloader = () => {
                     marginRight:10
                 }}
             >
-                Backend processing is ongoing, it won't take too long. Thanks for your patience!
+                {strings.BackendProcessingMessage}
             </Text>
         </View>
 

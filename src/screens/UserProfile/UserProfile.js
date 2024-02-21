@@ -61,7 +61,7 @@ const UserProfile = ({ navigation }) => {
     }
 
     const changeLanguage = (languageKey) => {
-        
+
     }
 
     const navigationTOScreen = async () => {
@@ -121,76 +121,75 @@ const UserProfile = ({ navigation }) => {
 
     const redirectToSettings = () => {
         if (Platform.OS === 'ios') {
-          Linking.openSettings();
+            Linking.openSettings();
         } else {
-          openSettings();
+            openSettings();
         }
-      };
+    };
 
     const requestCameraPermission = async () => {
         try {
             const permissionStatus = await check(
-              Platform.select({
-                android: 'android.permission.CAMERA',
-                ios: 'camera',
-              })
+                Platform.select({
+                    android: 'android.permission.CAMERA',
+                    ios: 'camera',
+                })
             );
             if (permissionStatus === 'granted') {
-              // Permission already granted
-              // Proceed with using the camera
+                // Permission already granted
+                // Proceed with using the camera
             } else {
-              // Permission hasn't been granted yet
-              await request(
-                Platform.select({
-                  android: 'android.permission.CAMERA',
-                  ios: 'camera',
-                })
-              );
+                // Permission hasn't been granted yet
+                await request(
+                    Platform.select({
+                        android: 'android.permission.CAMERA',
+                        ios: 'camera',
+                    })
+                );
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error checking camera permission: ', error);
-          }
+        }
     };
 
     const launchCam = async () => {
         try {
             const statuses = await requestMultiple([
-              PERMISSIONS.IOS.CAMERA,
-              PERMISSIONS.IOS.PHOTO_LIBRARY,
+                PERMISSIONS.IOS.CAMERA,
+                PERMISSIONS.IOS.PHOTO_LIBRARY,
             ]);
             console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
             console.log('FaceID', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
-    
+
             if (
-              statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
-              statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
-            ) 
-            {
-              try {
-                const pic = await ImagePicker.openCamera({
-                  width: 300,
-                  height: 400,
-                  cropping: true,
-                });
-                console.log("CAmPic======>", pic);
-                uploadPhoto(pic)
-              } 
-              catch (err) {
-                ShortToast(`${err}`, 'error', '');
-              }
+                statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
+                statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
+            ) {
+                try {
+                    const pic = await ImagePicker.openCamera({
+                        width: 300,
+                        height: 400,
+                        cropping: true,
+                    });
+                    console.log("CAmPic======>", pic);
+                    uploadPhoto(pic)
+                }
+                catch (err) {
+                    ShortToast(`${err}`, 'error', '');
+                }
             } else {
-              if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
-                Alert.alert("Camera is not accessible");
-                return false;
-              } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
-                Alert.alert("Photo Library is not accessible");
-                return false;
-              }
+                if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
+                    Alert.alert("Camera is not accessible");
+                    return false;
+                } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
+                    Alert.alert("Photo Library is not accessible");
+                    return false;
+                }
             }
-          } catch (err) {
+        } catch (err) {
             ShortToast(`${err}`, 'error', '');
-          }
         }
+    }
 
     const uploadPhoto = async (pic) => {
         const temp = await getDataFromLocalStorage('user_id')
@@ -257,7 +256,7 @@ const UserProfile = ({ navigation }) => {
     return (
         <View>
             <StatusBar backgroundColor={colors.GREEN} />
-            <HeaderForSubmissionScreens Title="My Profile" />
+            <HeaderForSubmissionScreens Title={strings.My_Profile} />
             {
                 loader
                     ?
@@ -409,7 +408,7 @@ const UserProfile = ({ navigation }) => {
 
                                 <Text style={{
 
-                                    width: W * 0.57,
+                                    width: '90%',
                                     ...fontFamily.bold,
                                     alignSelf: 'center',
                                     textAlign: 'center',
@@ -541,7 +540,7 @@ const UserProfile = ({ navigation }) => {
                                     <Text style={styles.text2}>{strings.goals}</Text>
                                     <Text
 
-                                        style={styles.text1}>{dataFromApi?.data?.[0]?.goal?.answer.join(",")}</Text>
+                                        style={[styles.text1, { width: '30%' }]}>{dataFromApi?.data?.[0]?.goal?.answer.join(",")}</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -609,7 +608,6 @@ const styles = StyleSheet.create({
     {
         color: 'black',
         fontSize: fontSizes.MED,
-        //width: W * 0.9
     },
     button:
     {

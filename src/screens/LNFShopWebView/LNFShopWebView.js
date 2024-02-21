@@ -9,11 +9,13 @@ import Loader from '../../assets/components/Loader'
 import base64 from 'react-native-base64'
 import { useIsFocused } from '@react-navigation/native'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 const LNFShopWebView = ({ navigation }) => {
     const [loader, setLoader] = useState(false)
     const [userId, setUserId] = useState("")
+    const strings = useLocales()
     useEffect(() => {
         getWRID()
     }, [])
@@ -60,7 +62,7 @@ const LNFShopWebView = ({ navigation }) => {
                         //     style.innerHTML = "div#new-shop { display: block !important; }";
                         //     document.head.appendChild(style);
                         //   `}
-                        source={{ uri: `${Constants.BASE_URL}shop/?uid=${base64.encode(userId)}&type=mob&lang=hi` }}
+                        source={{ uri: `${Constants.BASE_URL}${strings.code == 'en' ? '' : `${strings.code}/`}shop/?uid=${base64.encode(userId)}&type=mob` }}
                         style={{
                             flex: 1
                         }}

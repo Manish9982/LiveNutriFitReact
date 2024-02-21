@@ -171,7 +171,7 @@ const RegisterOrSignIn = ({ navigation }) => {
 
                             <View>
 
-                                <Text style={styles.textRegister}>{data?.data[0]?.text1}</Text>
+                                <Text style={styles.textRegister}>{strings.Register}</Text>
 
                             </View>
 
@@ -187,7 +187,7 @@ const RegisterOrSignIn = ({ navigation }) => {
 
                             <View>
 
-                                <Text style={styles.textSignIn}>{data?.data[0]?.text2}</Text>
+                                <Text style={styles.textSignIn}>{strings.Login}</Text>
 
                             </View>
 

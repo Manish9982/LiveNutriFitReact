@@ -338,7 +338,7 @@ const TotalPoints = () => {
                             <View style={styles.pointsInfoContainer}>
                                 {/* Points Info + Animation */}
                                 <View style={styles.pointsInfoAndAnimation}>
-                                    <Text>Reward Points</Text>
+                                    <Text>{strings.TotalPoints}</Text>
                                     <View style={styles.horizontalContainer}>
                                         <LottieView
                                             style={{
@@ -378,13 +378,13 @@ const TotalPoints = () => {
                                 <View>
                                     <Text>
                                         <Text style={styles.rewardsFonts}>{dataFromApi?.reward_offer}%</Text>
-                                        <Text style={[styles.rewardsFonts, { fontSize: fontSizes.SM }]}>ffer</Text>
+                                        <Text style={[styles.rewardsFonts, { fontSize: fontSizes.SM }]}>{strings.Offer}</Text>
                                     </Text>
-                                    <Text>Rewards</Text>
+                                    <Text>{strings.Rewards}</Text>
                                 </View>
                                 <View style={styles.numberOfDays}>
                                     <Text style={styles.numberOfDaysText}>{Number.parseInt(dataFromApi?.reward_days, 10)}</Text>
-                                    <Text style={styles.daysText}>Days</Text>
+                                    <Text style={styles.daysText}>{strings.Days}</Text>
                                 </View>
                             </View>
                         </View>

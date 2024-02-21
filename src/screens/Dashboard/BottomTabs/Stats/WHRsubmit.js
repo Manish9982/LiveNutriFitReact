@@ -82,17 +82,16 @@ const strings = useLocales()
       <Appbar.Header style={styles.appBar}>
         <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
         <Appbar.Content style={{ alignItems: "center", }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.WaisttoHipRatio}</Text>} />
-        {/* <Appbar.Action icon="information" onPress={() => { setVisible(true) }} color={"white"} size={30} /> */}
+        <Appbar.Action icon="information" onPress={() => { setVisible(true) }} color={"white"} size={30} />
       </Appbar.Header>
 
 
       <ScrollView contentContainerStyle={styles.mainContainer}>
         <Portal>
           <Dialog visible={visible} onDismiss={hideDialog} style={{ zIndex: 10 }}>
-            <Dialog.Title>Waist Hip Ratio</Dialog.Title>
+            <Dialog.Title>{strings.WaistHipRatio}</Dialog.Title>
             <Dialog.Content style={{ zIndex: 10 }}>
-              <Paragraph style={{ zIndex: 10, lineHeight: H * 0.04 }}>The Waist Hip Ratio is calculated by dividing your waist measurement by your hip measurement.
-                In both men and women, a WHR of 1.0 or higher increases the risk of heart disease and other conditions that are linked to having overweight.</Paragraph>
+              <Paragraph style={{ zIndex: 10, lineHeight: H * 0.04 }}>{strings.WHRInfo}</Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
 
@@ -103,8 +102,9 @@ const strings = useLocales()
           style={styles.sil} />}
         <Text style={{ alignSelf: "center", marginTop: H * 0.03 }}>{strings.AWaistCircumference}</Text>
         <Text style={{ alignSelf: "center", marginTop: H * 0.03 }}>{strings.BHipCircumference}</Text>
-        <Text style={styles.text}>WHR</Text>
-        <TextInput style={styles.textInput}
+        <Text style={styles.text}>{strings.WHR}</Text>
+        <TextInput 
+        style={styles.textInput}
           //  label="Enter Your Waist Circumference (Inches)"
           label={strings.EnterYourWaistValueininch}
 
@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
   {
     height: H * 1.3,
     width: W,
-    backgroundColor: 'white'
   },
   text2:
   {

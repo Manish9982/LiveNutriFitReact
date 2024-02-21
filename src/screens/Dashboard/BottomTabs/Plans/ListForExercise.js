@@ -358,7 +358,7 @@ const ListForExercise = (props) => {
                                                 marginLeft: W * 0.038,
                                                 ...fontFamily.bold,
                                                 textDecorationLine: "underline"
-                                            }}>Description: </Text><Text style={{
+                                            }}>{strings.DescriptionExercise}: </Text><Text style={{
                                                 fontSize: fontSizes.LAR,
                                                 textDecorationLine: "none",
                                                 marginLeft: W * 0.038,
@@ -369,7 +369,7 @@ const ListForExercise = (props) => {
                                                 marginLeft: W * 0.038,
                                                 ...fontFamily.bold,
                                                 textDecorationLine: "underline"
-                                            }}>Intensity: </Text><Text style={{
+                                            }}>{strings.Intensity}: </Text><Text style={{
                                                 fontSize: fontSizes.LAR,
                                                 textDecorationLine: "none",
                                                 marginLeft: W * 0.038,

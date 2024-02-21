@@ -505,7 +505,7 @@ const strings = useLocales()
           >
             <TouchableOpacity
               onPress={() => {
-                handleTextPress(item.attribute[i])
+                handleTextPress(item.attribute2[i])
               }}>
               {<Text style={{
                 ...fontFamily.bold,
@@ -538,7 +538,7 @@ const strings = useLocales()
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
           <Text style={{ ...fontFamily.bold, marginLeft: WIDTH * 0.02 }}>{item.heading}</Text>
           <View style={{
-            backgroundColor: getColorForBg(item?.attribute[item?.attribute?.length - 1]),
+            backgroundColor: getColorForBg(item?.attribute2[item?.attribute2?.length - 1]),
             borderRadius: 12,
             // marginRight: WIDTH * 0.006,
             alignItems: "center",
@@ -549,7 +549,7 @@ const strings = useLocales()
           }}>
             <Text style={{
               fontSize: fontSizes.SM,
-              color: getColorForText(item?.attribute[item?.attribute?.length - 1]),
+              color: getColorForText(item?.attribute2[item?.attribute2?.length - 1]),
               textAlign: 'center',
               margin: WIDTH * 0.01,
               //marginHorizontal: WIDTH * 0.018,
@@ -641,7 +641,7 @@ const strings = useLocales()
       }
     }
     return (
-      item.heading !== "Calories" ?
+      item.heading2 !== "Calories" ?
         <TouchableOpacity
           key={index}
           style={styles.renderItemTwoContainer}
@@ -663,7 +663,7 @@ const strings = useLocales()
             <View style={{ width: WIDTH * 0.275 }}>
               <Text style={{ ...fontFamily.bold }}>{item.heading}</Text>
               <Text style={{
-                color: getColor(item.heading, item.sub_heading),
+                color: getColor(item.heading2, item.sub_heading2),
                 fontSize: fontSizes.SM
               }}>{item.sub_heading}</Text>
             </View>
@@ -1633,14 +1633,14 @@ const strings = useLocales()
                   paddingBottom: H * 0.02,
                   color: colors.GREEN
                 }}>
-                  Congratulations!    <FontAwesome5 name="coins" size={20} color={colors.MEDAL_GOLD} />
+                  {strings.Congratulations}!    <FontAwesome5 name="coins" size={20} color={colors.MEDAL_GOLD} />
                 </Text>
                 <Text style={{
                   ...fontFamily.bold,
                   paddingHorizontal: W * 0.025,
                   lineHeight: H * 0.03
                 }}>
-                  You have won 1000 rewards on successful signup. You can check your total rewards from above.
+                  {strings.YouHaveWon}
                 </Text>
                 <TouchableOpacity onPress={() => {
                   setFirstTimeLogin(false)
@@ -1652,7 +1652,7 @@ const strings = useLocales()
                     fontSize: fontSizes.XL,
                     paddingTop: H * 0.028,
                   }}>
-                    OKAY
+                    {strings.Ok}
                   </Text>
                 </TouchableOpacity>
               </View>

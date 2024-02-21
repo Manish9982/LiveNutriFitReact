@@ -6,6 +6,7 @@ import { GetApiData, H, W, colors } from '../../colorSchemes/ColorSchemes'
 import HeaderForSubmissionScreens from '../Dashboard/BottomTabs/Stats/HeaderForSubmissionScreens'
 import Pdf from 'react-native-pdf'
 import { useIsFocused } from '@react-navigation/native';
+import { useLocales } from '../../utils/LocalizationUtil';
 
 
 
@@ -13,7 +14,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 const PDFURLWebView = ({ route }) => {
     const isFocused = useIsFocused()
-
+    const strings = useLocales()
     const [loader, setLoader] = useState(false)
     const [pdfURL, setPdfURL] = useState("")
     const [data, setData] = useState("")
@@ -37,12 +38,9 @@ const PDFURLWebView = ({ route }) => {
         setLoader(false)
     }
 
-
-
-
     return (
-        loader ?
-
+        loader
+            ?
             <View style={{
                 height: H,
                 width: W,
@@ -54,21 +52,18 @@ const PDFURLWebView = ({ route }) => {
 
             </View>
             :
-
-
             <View style={{
                 flex: 1,
                 //alignItems: 'center',
                 //justifyContent: 'space-between',
             }}>
-                <HeaderForSubmissionScreens Title="Low GI Fruits and Vegatables" />
+                <HeaderForSubmissionScreens Title={strings.LowGIFruitsandVegatables} />
                 <WebView
                     startInLoadingState={true}
                     scalesPageToFit={false}
                     setBuiltInZoomControls={false}
-
                     source={{ uri: `http://docs.google.com/gview?embedded=true&url=${data.pdf_url}` }}
-                    style={{ height: H, width: W, }} />
+                    style={{ flex: 1 }} />
             </View>
     )
 }

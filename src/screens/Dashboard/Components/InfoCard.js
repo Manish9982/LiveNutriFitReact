@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, TouchableOpacity, Dimensions } from 'react-native'
+import { StyleSheet, View, Image, TouchableOpacity, Dimensions, Alert } from 'react-native'
 import React, { useState, useContext, useEffect } from 'react'
 import { Text, configureFonts, DefaultTheme, Provider as PaperProvider, Portal, Dialog, Paragraph, Button, Snackbar } from 'react-native-paper';
 import { colors, fontSizes, H, PostApiData, ShortToast, W, ShadowsiOS } from '../../../colorSchemes/ColorSchemes';
@@ -229,7 +229,7 @@ const InfoCard = (props) => {
     const firstChoiceTrigger = async (heading) => {
         await sendFirstChoiceToApi()
         await props.onPressButton()
-        if (props?.Text == 'Monitoring' && !props?.SelectedOption?.includes(1)) {
+        if (props?.Text2 == 'Monitoring' && !props?.SelectedOption?.includes(1)) {
             props?.onPressWeight()
         }
     }
@@ -237,34 +237,34 @@ const InfoCard = (props) => {
     const secondChoiceTrigger = async (heading) => {
         await sendSecondChoiceToApi()
         await props.onPressButton()
-        if (props?.Text == 'Monitoring' && !props?.SelectedOption?.includes(2)) {
+        if (props?.Text2 == 'Monitoring' && !props?.SelectedOption?.includes(2)) {
             props?.onPressSugar()
         }
     }
     const thirdChoiceTrigger = async (heading) => {
         await sendThirdChoiceToApi()
         await props.onPressButton()
-        if (props?.Text == 'Monitoring' && !props?.SelectedOption?.includes(3)) {
+        if (props?.Text2 == 'Monitoring' && !props?.SelectedOption?.includes(3)) {
             props?.onPressBP()
         }
     }
     const throwColor = (n) => {
         if (props?.SelectedOption?.includes(1) && n == '1') {
-            if (props?.Text == 'Monitoring') {
+            if (props?.Text2 == 'Monitoring') {
                 //props?.onPressWeight()
                 return colors.BEST_COLOR
             }
             return colors.BAD_COLOR
         }
         else if (props?.SelectedOption?.includes(2) && n == '2') {
-            if (props?.Text == 'Monitoring') {
+            if (props?.Text2 == 'Monitoring') {
                 //props?.onPressSugar()
                 return colors.BEST_COLOR
             }
             return colors.GOOD_COLOR
         }
         else if (props?.SelectedOption?.includes(3) && n == '3') {
-            if (props?.Text == 'Monitoring') {
+            if (props?.Text2 == 'Monitoring') {
                 //props?.onPressBP()
                 return colors.BEST_COLOR
             }
@@ -277,6 +277,7 @@ const InfoCard = (props) => {
 
     const openInformationofindex = (num) => {
         console.log("i button is pressed")
+        Alert.alert('Info', `${props?.Information}` )
     }
     console.log('props?.SelectedOption', (props?.SelectedOption))
     return (
@@ -313,7 +314,7 @@ const InfoCard = (props) => {
                                 style={{ height: 20, width: 20, alignSelf: 'center' }} />
                                 :
                                 <Text style={styles.userChoiceText}>{props.Attributes[0]}</Text>}
-                            {props.FollowNeeded ? <Text style={{ fontSize: fontSizes.SM, textAlign: 'center' }}>Follow</Text> : null}
+                            {props.FollowNeeded ? <Text style={{ fontSize: fontSizes.SM, textAlign: 'center' }}>{strings.follow}</Text> : null}
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => {
@@ -330,7 +331,7 @@ const InfoCard = (props) => {
                                 style={{ height: 20, width: 20, alignSelf: 'center' }} />
                                 :
                                 <Text style={styles.userChoiceText}>{props.Attributes[1]}</Text>}
-                            {props.FollowNeeded ? <Text style={{ fontSize: fontSizes.SM, textAlign: 'center' }}>Follow</Text> : null}
+                            {props.FollowNeeded ? <Text style={{ fontSize: fontSizes.SM, textAlign: 'center' }}>{strings.follow}</Text> : null}
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             if (props.Attributes[2] !== "BP") {
@@ -343,11 +344,11 @@ const InfoCard = (props) => {
                                 style={{ height: 20, width: 20, alignSelf: 'center', }} />
                                 :
                                 <Text style={styles.userChoiceText}>{props.Attributes[2]}</Text>}
-                            {props.FollowNeeded ? <Text style={{ fontSize: fontSizes.SM, textAlign: 'center' }}>Follow</Text> : null}
+                            {props.FollowNeeded ? <Text style={{ fontSize: fontSizes.SM, textAlign: 'center' }}>{strings.follow}</Text> : null}
                         </TouchableOpacity>
                         <LinearGradient colors={['#9bdf61', '#7fc346']} style={styles.linearGradient}>
 
-                            {props.Text == "Monitoring" ? <TouchableOpacity
+                            {props.Text2 == "Monitoring" ? <TouchableOpacity
                                 onPress={() => ArrowPressed(props.Text2)}
                                 style={styles.arrowButton}>{arrowIcon2}
                             </TouchableOpacity> : <TouchableOpacity

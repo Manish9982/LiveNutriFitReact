@@ -10,8 +10,6 @@ import notifee, {
 } from '@notifee/react-native'
 import { AndroidColor } from '@notifee/react-native';
 import { Alert } from 'react-native';
-import { ShortToast } from '../../colorSchemes/ColorSchemes';
-
 
 export async function checkNotificationPermission() {
     const settings = await notifee.getNotificationSettings();

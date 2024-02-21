@@ -9,20 +9,13 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming, wit
 import LottieView from 'lottie-react-native';
 import Logo from '../Dashboard/Components/Logo';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
-
-
-
-
 import { useIsFocused } from '@react-navigation/native';
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage';
-
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
 import Loader from '../../assets/components/Loader';
 import { useLocales } from '../../utils/LocalizationUtil';
-
-
 
 const SliderIntro = ({ navigation }) => {
     const [loader, setLoader] = useState(false)
@@ -47,11 +40,8 @@ const SliderIntro = ({ navigation }) => {
             changeLanguage('en')
         } else {
             changeLanguage('hi')
-
         }
-
         setLoader(false)
-
     }
 
 

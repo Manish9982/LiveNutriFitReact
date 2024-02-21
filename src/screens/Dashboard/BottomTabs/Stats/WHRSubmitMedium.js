@@ -1,4 +1,4 @@
-import { StyleSheet, View, Dimensions, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, View, Dimensions, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Divider, Text } from 'react-native-paper'
 import { colors, fontFamily, fontSizes, GetApiData, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes'
@@ -40,7 +40,7 @@ const WHRSubmitMedium = ({ navigation }) => {
     //lng
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        
+
 
     }
 
@@ -68,7 +68,7 @@ const WHRSubmitMedium = ({ navigation }) => {
     }
 
     const getGraphForSystolic = async (dat) => {
-        setLoader(true)
+        //setLoader(true)
         const temp = await getDataFromLocalStorage('user_id')
         var formdata = new FormData();
         formdata.append("user_id", JSON.parse(temp));
@@ -86,18 +86,7 @@ const WHRSubmitMedium = ({ navigation }) => {
 
         }
         else {
-            SweetAlert.showAlertWithOptions({
-                title: strings.whrnovalue,
-                subTitle: '',
-                confirmButtonTitle: 'OK',
-                confirmButtonColor: colors.GREEN,
-                otherButtonTitle: 'Cancel',
-                otherButtonColor: '#dedede',
-                style: 'warning',
-                cancellable: true,
-            },
-                callback => navigation.navigate("WHRsubmit")
-            )
+            Alert.alert(strings.whrnovalue)
             setSystolicData([0, 0, 0, 0, 0])
         }
         setLoader(false)
@@ -332,10 +321,11 @@ const styles = StyleSheet.create({
         height: H * 0.1,
         backgroundColor: "white",
         width: W * 0.9,
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         alignItems: "center",
         borderRadius: 10,
-        flexDirection: "row"
+        flexDirection: "row",
+        padding:10,
 
     },
     textSet:

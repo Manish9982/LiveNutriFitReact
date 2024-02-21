@@ -237,7 +237,7 @@ const Signin = ({ navigation, route }) => {
                                                     borderColor: colors.GREEN,
                                                     borderWidth: 1
                                                 }}>
-                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India <AntDesign name="check" color="white" size={16} /></Text>
+                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) {strings.India}<AntDesign name="check" color="white" size={16} /></Text>
                                             </TouchableOpacity>
 
                                             <TouchableOpacity
@@ -254,7 +254,7 @@ const Signin = ({ navigation, route }) => {
                                                     borderRadius: 8,
                                                     marginStart: 10
                                                 }}>
-                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S</Text>
+                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) {strings.US}</Text>
                                             </TouchableOpacity>
 
                                         </View>
@@ -325,7 +325,7 @@ const Signin = ({ navigation, route }) => {
                                                     borderColor: colors.GREEN,
                                                     borderWidth: 1
                                                 }}>
-                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) India</Text>
+                                                <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) {strings.India}</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity
                                                 onPress={() => { setCountryType("other") }}
@@ -340,7 +340,7 @@ const Signin = ({ navigation, route }) => {
                                                     borderRadius: 8,
                                                     marginStart: 10
                                                 }}>
-                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) U.S <AntDesign name="check" color="white" size={16} /></Text>
+                                                <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) {strings.US} <AntDesign name="check" color="white" size={16} /></Text>
                                             </TouchableOpacity>
                                         </View>
                                         <TextInput style={styles.textInput}

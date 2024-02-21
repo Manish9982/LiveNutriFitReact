@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import Localization from 'react-native-localization';
 
 const LocalizationContext = createContext();

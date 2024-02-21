@@ -20,6 +20,7 @@ import { useLocales } from '../../utils/LocalizationUtil'
 
 export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
 
+    const strings = useLocales()
     const [colorOfCheckBox1, setColorOfCheckBox1] = useState("grey")
     const [colorOfCheckBox2, setColorOfCheckBox2] = useState("grey")
     const [colorOfCheckBox3, setColorOfCheckBox3] = useState("grey")
@@ -37,7 +38,6 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
     useEffect(() => { getLanguage() }, [isFocused])
     const progres = useSharedValue(0)
     const isFocused = useIsFocused()
-    const strings = useLocales()
     const firstLogin = () => {
         storeDataInLocalStorage('firstTimeLogin', '1')
     }
@@ -280,8 +280,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                                         fontSize: fontSizes.XL,
                                         marginBottom: H * 0.05,
                                         width: W * 0.8
-                                    }}>We thank you for choosing LiveNutriFit. A health and wellness platform which will start you on a "Healthy You" journey.{"\n\n"}
-                                    At LNF our focus is on "Lifestyle Modification", changing your relationship with Nutrition to help identify what works for you, and creating a personalized fitness regime. We believe in the power of habits for a fitter and energized you.</Text>
+                                    }}>{strings.weThankYouForChoosingLNF}</Text>
 
 
                             </>

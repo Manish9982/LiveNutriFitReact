@@ -168,9 +168,9 @@ const SubmitSleep = () => {
                     <View style={styles.graphView}>
                         <View style={{ flexDirection: "row" }}>
                             <View style={styles.yaxisContainer}>
-                                <Text style={styles.textYaxis}>Good</Text>
-                                <Text style={styles.textYaxis}>OK</Text>
-                                <Text style={styles.textYaxis}>Bad</Text>
+                                <Text style={styles.textYaxis}>{strings.Good}</Text>
+                                <Text style={styles.textYaxis}>{strings.Ok}</Text>
+                                <Text style={styles.textYaxis}>{strings.Bad}</Text>
                             </View>
                             <Divider style={styles.yaxis} />
                             {/*///////////////////////////////////////////BarGraph///////////////////////////////////////// */}
@@ -219,7 +219,7 @@ const SubmitSleep = () => {
                         {/* <View style={styles.xaxisContainer}>
 
                             <View style={styles.fillerTwo}>
-                                <Text style={styles.textXaxis}>Mon</Text>
+                                <Text style={styles.textXaxis}>{strings.Mon}</Text>
                             </View>
                             <View style={styles.fillerTwo}>
                                 <Text style={styles.textXaxis}>Tue</Text>
@@ -259,7 +259,7 @@ const SubmitSleep = () => {
 
                             </View>
                             <View style={styles.fillerTwo}>
-                                {/* <Text style={styles.textXaxis}>Mon</Text> */}
+                                {/* <Text style={styles.textXaxis}>{strings.Mon}</Text> */}
                                 <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[3] || date.getDate() < myCalendar?.date[3] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[3]}</Text>
 
                             </View>
@@ -342,7 +342,6 @@ const styles = StyleSheet.create({
         width: 1,
         height: HEIGHT * 0.3,
         borderColor: 'silver',
-
     },
     xaxisContainer:
     {
@@ -353,7 +352,7 @@ const styles = StyleSheet.create({
     },
     yaxisContainer:
     {
-
+        alignItems: 'center',
         justifyContent: 'space-between'
     },
     graphView:

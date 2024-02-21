@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, ScrollView, Image, StyleSheet, ToastAndroid, FlatList } from 'react-native'
+import { View, TouchableOpacity, ScrollView, Image, StyleSheet, ToastAndroid, FlatList, Platform } from 'react-native'
 import React, { useEffect, useState, useContext, useCallback } from 'react'
 import { ActivityIndicator, Checkbox, RadioButton, Text, TextInput } from 'react-native-paper'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
@@ -97,9 +97,28 @@ const EditProfile = ({ navigation }) => {
 
   }
 
+  function convertDateFormat(dateString) {
+    // Create a Date object from the input date string
+    const date = new Date(dateString);
+
+    // Extract year, month, day, hours, minutes, seconds, and milliseconds
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0, so add 1
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+
+    // Construct the ISO format string
+    const isoString = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+//console.log('isoString',isoString)
+    return isoString;
+}
+
 
   const changeLanguage = (languageKey) => {
-    
+
   }
 
 
@@ -236,6 +255,7 @@ const EditProfile = ({ navigation }) => {
     setage(result?.data?.[0]?.age == null ? "" : result?.data[0]?.age)
     setChecked(result?.data[0].food_type == true ? "true" : "false")
     setExerciseLevel(getNumberForWorkoutIntensity(result?.data[0].workout_intensity))
+    setSelectedDate(result?.data[0]?.age)
     setLoader(false)
   }
 
@@ -250,7 +270,7 @@ const EditProfile = ({ navigation }) => {
   }
 
   console.log("goal", goal)
-  console.log("food type from API ======>", myData?.data[0]?.food_type?.answer)
+  console.log("food type from API ======>", new Date())
 
   return (
     loader ?
@@ -283,18 +303,7 @@ const EditProfile = ({ navigation }) => {
               }}
             />
 
-            {
-              showCalendar &&
-              <DateTimePicker
-                value={selectedDate}
-                mode="date"
-                display="default"
-                onChange={(a, t) => handleDateChange(a, t)}
-              //maximumDate={getTimestamp10YearsAgo()}
-              //onTouchCancel={() =>setShowCalendar(prev => !prev)}
 
-              />
-            }
             <View>
               <Text style={styles.text}>{strings.Name}</Text>
               <TextInput
@@ -337,7 +346,7 @@ const EditProfile = ({ navigation }) => {
               }}
             />
             <View>
-              <Text style={styles.text}>Goal </Text>
+              <Text style={styles.text}>{strings.Goals}</Text>
               <View style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -629,14 +638,43 @@ const EditProfile = ({ navigation }) => {
               }}
             />
             <View>
-              <Text style={styles.text}>DOB</Text>
-              < TouchableOpacity
-                onPress={handleDOB}
-                style={styles.textdatestyle} >
+              <Text style={styles.text}>{strings.DOB}</Text>
+              {
+                Platform.OS == "android"
+                  ?
+                  (
+                    showCalendar &&
+                    <DateTimePicker
+                      value={selectedDate}
+                      mode="date"
+                      display="default"
+                      onChange={(a, t) => handleDateChange(a, t)}
+                    //maximumDate={getTimestamp10YearsAgo()}
+                    //onTouchCancel={() =>setShowCalendar(prev => !prev)}
+                    />
+                  )
+                  :
+                  (
+                    <DateTimePicker
+                      value={(new Date(convertDateFormat(selectedDate))) || new Date()}
+                      mode="date"
+                      display="default"
+                      onChange={(a, t) => handleDateChange(a, t)}
+                    //maximumDate={getTimestamp10YearsAgo()}
+                    //onTouchCancel={() =>setShowCalendar(prev => !prev)}
+                    />
+                  )
+              }
+              {
+                showCalendar &&
+                < TouchableOpacity
+                  onPress={handleDOB}
+                  style={styles.textdatestyle} >
 
-                <Text style={styles.texttyle}>{formatDate(age) || "Enter DOB"}</Text>
+                  <Text style={styles.texttyle}>{formatDate(age) || "Enter DOB"}</Text>
 
-              </TouchableOpacity >
+                </TouchableOpacity >
+              }
               {/* <TextInput
                 onChangeText={(tex) => { setage(tex) }}
                 value={age}
@@ -650,7 +688,7 @@ const EditProfile = ({ navigation }) => {
 
           <TouchableOpacity style={styles.updateButton}
             onPress={() => { updateDetails() }}>
-            <Text style={{ color: 'white' }}>Update</Text>
+            <Text style={{ color: 'white' }}>{strings.Update}</Text>
           </TouchableOpacity>
         </ScrollView >
       </View>

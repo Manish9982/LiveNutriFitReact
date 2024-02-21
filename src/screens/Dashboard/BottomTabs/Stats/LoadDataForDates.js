@@ -208,7 +208,7 @@ const LoadDataForDates = ({ navigation, route }) => {
                         <View style={styles.xaxisContainer}>
 
                             <View style={styles.fillerTwo}>
-                                <Text style={styles.textXaxis}>Mon</Text>
+                                <Text style={styles.textXaxis}>{strings.Mon}</Text>
                             </View>
                             <View style={styles.fillerTwo}>
                                 <Text style={styles.textXaxis}>Tue</Text>
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     },
     yaxisContainer:
     {
-
+        alignItems: 'center',
         justifyContent: 'space-between'
     },
     graphView:

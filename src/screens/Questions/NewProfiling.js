@@ -6,6 +6,7 @@ import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
 import Loader from '../../assets/components/Loader'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import InputModalBox from '../../assets/components/InputModalBox'
+import { useLocales } from '../../utils/LocalizationUtil'
 
 
 function getTimestamp10YearsAgo() {
@@ -33,6 +34,8 @@ const NewProfiling = ({ navigation }) => {
     const [otherOptionText, setOtherOptionText] = useState("")
     const [selectedDate, setSelectedDate] = useState(new Date(new Date().getFullYear() - 10, new Date().getMonth(), new Date().getDate()));
     const [selectItem, setSelectItem] = useState([])
+
+    const strings = useLocales()
 
     useEffect(() => {
         getQuestions()
@@ -237,7 +240,7 @@ const NewProfiling = ({ navigation }) => {
             switch (myData?.data?.question_id) {
                 case "70":
                     return (
-                        <View>
+                        <View style={{}}>
                             <View style={
                                 styles.targetweightlayout
                             }>
@@ -287,7 +290,7 @@ const NewProfiling = ({ navigation }) => {
                                 <Text style={{
                                     ...fontFamily.bold,
                                     marginRight: W * 0.03,
-                                }}>Ft</Text>
+                                }}>{strings.Feet}</Text>
                                 {/* <TextInput
                                     activeOutlineColor='white'
                                     activeUnderlineColor={colors.GREEN}
@@ -338,7 +341,7 @@ const NewProfiling = ({ navigation }) => {
                                 <Text style={{
                                     ...fontFamily.bold,
 
-                                }}>In</Text>
+                                }}>{strings.Inch}</Text>
                             </View>
                         </View>
                     );
@@ -400,14 +403,14 @@ const NewProfiling = ({ navigation }) => {
 
             <TouchableOpacity
                 style={[styles.optionlayout, {
-                    backgroundColor: answer == item ? colors.GREEN : "white"
+                    backgroundColor: answer == item?.default ? colors.GREEN : "white"
                 }]}
                 onPress={() => {
-                    handleOptionPress(item)
+                    handleOptionPress(item?.default)
                 }}>
 
                 <Text style={[styles.optionText,
-                { color: answer == item ? "white" : "black" }]}>{item}</Text>
+                { color: answer == item?.default ? "white" : "black" }]}>{item?.text}</Text>
             </TouchableOpacity>
         )
     }
@@ -416,20 +419,20 @@ const NewProfiling = ({ navigation }) => {
         return (
 
             <TouchableOpacity
-                style={[styles.optionlayout, { backgroundColor: answer?.includes(item) ? colors.GREEN : "white" }]}
+                style={[styles.optionlayout, { backgroundColor: answer?.includes(item?.default) ? colors.GREEN : "white" }]}
                 onPress={() => {
-                    handleOptionPress2(item)
+                    handleOptionPress2(item?.default)
                 }}>
                 <View style={{
 
                     marginLeft: W * 0.1,
                 }}>
                     <Checkbox.Android
-                        status={answer?.includes(item) ? 'checked' : 'unchecked'}
+                        status={answer?.includes(item?.default) ? 'checked' : 'unchecked'}
                         color={"white"} />
                 </View>
                 <Text style={[styles.optionText2,
-                { color: answer?.includes(item) ? "white" : "black" }]}>{item}</Text>
+                { color: answer?.includes(item?.default) ? "white" : "black" }]}>{item?.text}</Text>
             </TouchableOpacity>
         )
     }
@@ -449,7 +452,7 @@ const NewProfiling = ({ navigation }) => {
                                 onPress={() => backHandle()
                                 } />
                             <Appbar.Content style={styles.headerBar} title={
-                                <Text style={styles.headerText}>Profiling</Text>} />
+                                <Text style={styles.headerText}>{strings.Profiling}</Text>} />
                         </Appbar.Header>
 
                         <Text style={styles.title}>{myData?.data?.title}</Text>
@@ -507,7 +510,7 @@ const NewProfiling = ({ navigation }) => {
                                 nextButtonClicked()
                             }}
                             style={styles.nextbutton}>
-                            <Text style={styles.nextText}>Next</Text>
+                            <Text style={styles.nextText}>{strings.Next}</Text>
                         </TouchableOpacity>
                     </>
             }
@@ -681,7 +684,14 @@ const styles = StyleSheet.create(({
     {
         color: "white",
         fontSize: fontSizes.XXL,
-        ...fontFamily.bold
+        ...fontFamily.bold,
+        alignSelf: 'center',
+        ...Platform.select({
+            ios: {
+                left: '10%'
+            }
+        })
+
     },
     headerBar:
     {

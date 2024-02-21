@@ -2,11 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
 import { colors } from '../../colorSchemes/ColorSchemes';
+import { useLocales } from '../../utils/LocalizationUtil';
 
 const InputModalBox = ({ initialValue = '', value, onSubmit, onChangeText, keyboardType = null, maxLength = null, width = null, ...props }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputValue, setInputValue] = useState(initialValue);
   const inputRef = useRef(null);
+  const strings = useLocales()
 
   useEffect(() => {
     if (modalVisible && inputRef.current) {
@@ -62,7 +64,7 @@ const InputModalBox = ({ initialValue = '', value, onSubmit, onChangeText, keybo
               {...props}
             />
             <TouchableOpacity style={styles.submitButton} onPress={handleInputSubmit}>
-              <Text style={{ color: 'white' }}>OK</Text>
+              <Text style={{ color: 'white' }}>{strings.Ok}</Text>
             </TouchableOpacity>
           </View>
         </View>

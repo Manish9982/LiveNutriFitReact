@@ -24,7 +24,7 @@ const linedata = {
     datasets: [
         {
             data: [500, 1500, 1000, 800, 1500, 700, 2000],
-           // color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+            // color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
             color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`, // Change the color to red
 
             strokeWidth: 3 // optional
@@ -36,7 +36,7 @@ const linedata = {
 
 
 // const linedata = {
-//     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+//     labels: ["{strings.Mon}", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
 //     data: [100, 50, 40, 75, 100, 150, 50],
 //     color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
 //     strokeWidth: 2,
@@ -78,7 +78,7 @@ const SubmitSteps = () => {
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
 
-        
+
 
     }
 
@@ -233,13 +233,13 @@ const chartConfig = {
     backgroundGradientFromOpacity: 0,
     width: W * 0.94,
     //   backgroundGradientTo: "#08130D",
-   backgroundGradientTo: "silver",
+    backgroundGradientTo: "silver",
     backgroundGradientToOpacity: 0.5,
     //color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
     color: (opacity = 0.5) => `rgba(0, 128, 0, ${opacity})`,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
-    useShadowColorFromDataset: false ,// optional
+    useShadowColorFromDataset: false,// optional
     decimalPlaces: 0, // Set decimal places to 0
 
 };
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     },
     yaxisContainer:
     {
-
+        alignItems: 'center',
         justifyContent: 'space-between'
     },
     graphView:

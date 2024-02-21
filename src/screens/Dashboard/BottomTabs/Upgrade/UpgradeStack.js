@@ -182,7 +182,7 @@ const UpgradeStack = ({ navigation }) => {
                             setCode("")
                             setVisible(false)
                         }}>Cancel</Button>
-                        <Button onPress={() => submitUpgradeCode()}>Ok</Button>
+                        <Button onPress={() => submitUpgradeCode()}>{strings.Ok}</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

@@ -531,7 +531,7 @@ const ListForMeal = (props) => {
                                                 marginLeft: W * 0.038,
                                                 ...fontFamily.bold,
                                                 textDecorationLine: "underline"
-                                            }}>Meal Name: </Text>
+                                            }}>{strings.MealName}: </Text>
 
                                             <Text style={{
                                                 fontSize: fontSizes.LAR,
@@ -545,13 +545,13 @@ const ListForMeal = (props) => {
                                                 marginLeft: W * 0.038,
                                                 ...fontFamily.bold,
                                                 textDecorationLine: "underline"
-                                            }}>Serving: </Text>
+                                            }}>{strings.Serving}: </Text>
 
                                             <Text style={{
                                                 fontSize: fontSizes.LAR,
                                                 textDecorationLine: "none",
                                                 marginLeft: W * 0.038,
-                                            }}>{props.Serving}</Text>
+                                            }}>{strings.Serving}</Text>
                                         </View>
                                     </>
                                     :
