@@ -104,16 +104,6 @@ export default function PsychologyQuestions({ navigation }) {
     }
 
     const handleOptionPress = async (option, id) => {
-        // setLoader(true)
-        // const temp = await getDataFromLocalStorage("user_id")
-        // var formdata = new FormData();
-        // formdata.append("user_id", JSON.parse(temp));
-        // formdata.append("question_id", id);
-        // formdata.append("selected_option", option);
-        // const result = await PostApiData('postphyschology', formdata)
-        // if (result.status == '200') {
-        //ƒ     getPsychologyQuestions()
-        // }
         const newArr = [...arr];
         newArr[id - 1] = option;
         newArr.length = 9,
