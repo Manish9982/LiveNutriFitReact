@@ -12,30 +12,6 @@ import DataContext from '../../context/DataContext'
 import { useIsFocused } from '@react-navigation/native'
 import { useChangeLanguage } from '../../utils/LocalizationUtil'
 
-const DATA = {
-    "data": [
-        {
-            "created_at": "2022-10-06 06:05:33",
-            "lang_name": "English",
-            "code": "en",
-            "active": true,
-            "msg_title": "Info",
-            "msg_body": "Coming Soon..",
-        },
-        {
-            "created_at": "2022-10-06 07:25:04",
-            "lang_name": "हिन्दी",
-            "code": "hi",
-            "active": true,
-            "msg_title": "Info",
-            "msg_body": "Coming Soon.."
-        },
-    ],
-    "message": "success",
-    "status": 200
-}
-
-
 const SelectPrefferedLanguage = ({ navigation }) => {
     const isFocused = useIsFocused()
     const changeLanguage = useChangeLanguage();
@@ -57,11 +33,10 @@ const SelectPrefferedLanguage = ({ navigation }) => {
     const [language, setLanguage] = Nlanguage
 
     const getData = async () => {
-        // const result = await GetApiData('languagelist')
-        // setData(result)
-        // setShowLoader(false)
-        // console.log('languagelist', result)
-        setData(DATA)
+        const result = await GetApiData('languagelist')
+        setData(result)
+        console.log('languagelist', result)
+        setData(result)
         setShowLoader(false)
     }
 
@@ -158,7 +133,7 @@ const styles = StyleSheet.create({
         marginBottom: H * 0.027,
         marginTop: H * 0.12,
         ...fontFamily.bold,
-        //fontSize: fontSizes.XXXL,
+        fontSize: fontSizes.XXXL,
         width: W * 0.9,
         textAlign: "center"
     },
@@ -197,7 +172,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: "center",
         marginTop: H * 0.028,
-        padding: 8,
+        padding: 15,
         margin: 8,
         minWidth: 100
     }

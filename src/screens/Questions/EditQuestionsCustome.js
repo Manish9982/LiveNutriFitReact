@@ -1249,7 +1249,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                     // navigation.navigate("QuestionsHealthAndBehavior", { "answer": route.params.answer })
                     setLoader(false)
                 }
-                else ShortToast("Required Field is missing", 'error', '')
+                else ShortToast(strings.requiredField, 'error', '')
 
             }
 
@@ -1416,7 +1416,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                         setShowSecondModal(true)
                         setLoader(false)
                     }
-                    else ShortToast("Required Field is missing", 'error', '')
+                    else ShortToast(strings.requiredField, 'error', '')
                 }
             }
 
@@ -1435,7 +1435,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
 
                     setLoader(false)
                 }
-                else ShortToast("Required Field is missing", 'error', '')
+                else ShortToast(strings.requiredField, 'error', '')
 
             }
 
@@ -1497,7 +1497,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
         //         // navigation.navigate("QuestionsHealthAndBehavior", { "answer": route.params.answer })
         //         setLoader(false)
         //     }
-        //     else ShortToast("Required Field is missing", 'error', '')
+        //     else ShortToast(strings.requiredField, 'error', '')
 
         // }
 
@@ -1661,7 +1661,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                 setArrCounter(prev => prev + 1)
                 setLoader(false)
             }
-            else ShortToast("Required Field is missing", 'error', '')
+            else ShortToast(strings.requiredField, 'error', '')
 
         }
 
@@ -1680,7 +1680,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                 setArrCounter(prev => prev + 1)
                 setLoader(false)
             }
-            else ShortToast("Required Field is missing", 'error', '')
+            else ShortToast(strings.requiredField, 'error', '')
 
         }
 
@@ -1699,7 +1699,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
                 setArrCounter(prev => prev + 1)
                 setLoader(false)
             }
-            else ShortToast("Required Field is missing", 'error', '')
+            else ShortToast(strings.requiredField, 'error', '')
 
         }
 
@@ -1721,7 +1721,7 @@ const EditQuestionsCustom = ({ navigation, route }) => {
 
         //         setLoader(false)
         //     }
-        //     else ShortToast("Required Field is missing", 'error', '')
+        //     else ShortToast(strings.requiredField, 'error', '')
 
         // }
 

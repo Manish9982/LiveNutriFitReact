@@ -2,7 +2,7 @@ import { FlatList, View, Image, Keyboard, Modal, TouchableOpacity, StyleSheet, P
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Appbar, Divider, Portal, ProgressBar, Text, TextInput } from 'react-native-paper'
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../../local storage/LocalStorage'
-import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes'
+import { colors, convertTimestampToYYYYMMDD, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes'
 import { color, spring } from 'react-native-reanimated'
 import DataContext from '../../../../context/DataContext'
 import { useIsFocused } from '@react-navigation/native'
@@ -80,10 +80,25 @@ const Coach = ({ navigation }) => {
     removeValue()
   }, [])
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', handleKeyboardDidShow);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      keyboardDidShowListener && keyboardDidShowListener.remove();
+    };
+  }, []); // Empty dependency array to run the effect only once (on mount)
+
+  const handleKeyboardDidShow = (event) => {
+    const height = event.endCoordinates.height;
+    setKeyboardHeight(height);
+  };
+
+
+
   //lng
   const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
-    
   }
 
 
@@ -800,13 +815,11 @@ const Coach = ({ navigation }) => {
 
   return (
     loader ?
-      <>
         <Loader />
-      </>
       :
-      <KeyboardAvoidingView
-        behavior="padding"
-        style={{ flex: 1 }}
+      <View
+        //behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={{ flex: 1, paddingBottom: Platform.OS == "ios" ? keyboardHeight : null }}
       >
 
         <View>
@@ -826,19 +839,6 @@ const Coach = ({ navigation }) => {
               }}>LiveNutriFit {strings.Coach}</Text>} />
           </Appbar.Header>
         </View>
-
-        <>
-        </>
-        <View style={styles.ButtonDisplayContainer}>
-          {/* <TouchableOpacity onPress={() => { handleOnPress1() }} style={[styles.mealButton, { backgroundColor: buttonBgColor }]}>
-            <Text style={[styles.textStyle, { color: textColor }]}>{strings.Coach}</Text>
-          </TouchableOpacity> */}
-          {/* <TouchableOpacity onPress={() => { handleOnPress2() }} style={[styles.ExerciseButton, { backgroundColor: buttonBgColor2 }]}>
-            <Text style={[styles.textStyle, { color: textColor2 }]}>{strings.Doctor}</Text>
-          </TouchableOpacity> */}
-
-        </View>
-
 
         <View style={{
           flexDirection: 'row',
@@ -1258,7 +1258,7 @@ const Coach = ({ navigation }) => {
 
         </View>
 
-      </KeyboardAvoidingView>
+      </View>
 
 
 

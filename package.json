@@ -58,6 +58,7 @@
     "react-native-share": "^10.0.2",
     "react-native-sound": "^0.11.2",
     "react-native-svg": "^14.1.0",
+    "react-native-swal": "^0.1.2",
     "react-native-sweet-alert": "^3.5.0",
     "react-native-swipe-detect": "^1.0.10",
     "react-native-vector-icons": "^10.0.2",

@@ -53,7 +53,9 @@ const SubmitMonitoring = () => {
     }
 
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+         var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
         const temp = await getDataFromLocalStorage('user_id')
         var formdata = new FormData();
@@ -154,7 +156,7 @@ const SubmitMonitoring = () => {
                     </View>
                     <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL }}>{strings.TodaysMonitor}</Text>
                     <View style={styles.ApiDataText}>
-                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{attributeShow(data)}</Text>
+                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{data?.data[0].selected_text}</Text>
                     </View>
                     <Text>{strings.WeeklyOverview}</Text>
                     {/*///////////////////////////////////////////graph view/////////////////////////// */}

@@ -45,7 +45,7 @@ const strings = useLocales()
 
   const saveValueForPain = async () => {
     if (waist == null || hip == null || waist == "" || hip == "") {
-      ShortToast("Required Field is missing", 'error', '')
+      ShortToast(strings.requiredField, 'error', '')
     }
     else {
       const temp = await getDataFromLocalStorage("user_id")

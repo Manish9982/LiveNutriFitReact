@@ -83,7 +83,9 @@ const SubmitSteps = () => {
     }
 
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
     }
 
@@ -170,7 +172,7 @@ const SubmitSteps = () => {
                         fontSize: fontSizes.XXL
                     }}>Today's Steps</Text>
                     <View style={styles.ApiDataText}>
-                        {/* {attributeShow(data)} */}
+                        {/* {data?.data[0].selected_text} */}
                         <Text style={{
                             textAlign: "center", ...fontFamily.bold,
                             fontSize: fontSizes.XL

@@ -93,8 +93,8 @@ const Stats = (props) => {
     outputRange: ['0deg', '360deg']
   })
 
-  
-const strings = useLocales()
+
+  const strings = useLocales()
 
   useEffect(() => {
     if (isFocused) {
@@ -176,7 +176,7 @@ const strings = useLocales()
     setShowLoader(false)
   }
   const changeLanguage = (languageKey) => {
-    
+
   }
   const playSound = () => {
     if (sound) {
@@ -251,7 +251,7 @@ const strings = useLocales()
 
   const updateWeightValues = async () => {
     if (currentWeight == "" || currentWeight.length == 0 || targetWeight == "" || targetWeight.length == 0) {
-      ShortToast('Required Field is missing', 'error', '')
+      ShortToast(strings.requiredField, 'error', '')
     }
     else {
       var formdata = new FormData();
@@ -647,11 +647,11 @@ const strings = useLocales()
           style={styles.renderItemTwoContainer}
           onPress={() => {
             setIsInfoButtonVisible(false)
-            item.heading2 == "Calories" ? ShortToast('Calorie Budget is handled by Coach. Kindly contact your Coach', 'error', '') : null
+            item.heading2 == "Calories" ? ShortToast(strings.calorieBudgetIsHandledByCoach, 'error', '') : null
             item.heading2 == "Pain" && props.navigation.navigate("PainSubmit", { "flag": dataForPaidUser?.data[0]?.attribute_value })
             item.heading2 == "Psychology" && props.navigation.navigate("PsychologyQuestions", { "flag": dataForPaidUser?.data[1]?.attribute_value })
             item.heading2 == "BMI" && props.navigation.navigate("BMIsubmit", { "bmiValue": dataForPaidUser?.data[2]?.attribute_value[0] })
-            item.heading2 == "BMR" && ShortToast("Your BMR Value is calculated based on your provided details. Please contact your Coach if you wish to Change it.", "warning", "")
+            item.heading2 == "BMR" && ShortToast(strings.yourBMRIsCalculatedBased, "warning", "")
             item.heading2 == "WHR" && props.navigation.navigate("WHRSubmitMedium")
             item.heading2 == "Reports" && props.navigation.navigate("Reports")
           }}
@@ -671,11 +671,11 @@ const strings = useLocales()
               <TouchableOpacity style={styles.smallNextButton}
                 onPress={() => {
                   setIsInfoButtonVisible(false)
-                  item.heading2 == "Calories" ? ShortToast('Calorie Budget is handled by Coach. Kindly contact your Coach', 'error', '') : null
+                  item.heading2 == "Calories" ? ShortToast(strings?.calorieBudgetIsHandledByCoach, 'error', '') : null
                   item.heading2 == "Pain" && props.navigation.navigate("PainSubmit", { "flag": dataForPaidUser?.data[0]?.attribute_value })
                   item.heading2 == "Psychology" && props.navigation.navigate("PsychologyQuestions", { "flag": dataForPaidUser?.data[1]?.attribute_value })
                   item.heading2 == "BMI" && props.navigation.navigate("BMIsubmit", { "bmiValue": dataForPaidUser?.data[2]?.attribute_value[0] })
-                  item.heading2 == "BMR" && ShortToast("Your BMR Value is calculated based on your provided details. Please contact your Coach if you wish to Change it.", "warning", "")
+                  item.heading2 == "BMR" && ShortToast(strings?.yourBMRIsCalculatedBased, "warning", "")
                   item.heading2 == "WHR" && props.navigation.navigate("WHRSubmitMedium")
                   item.heading2 == "Reports" && props.navigation.navigate("Reports")
                 }}>

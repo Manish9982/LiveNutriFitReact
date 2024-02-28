@@ -98,7 +98,9 @@ const SubmitHydration = () => {
     }
 
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
 
     }

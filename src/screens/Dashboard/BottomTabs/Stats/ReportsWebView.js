@@ -8,7 +8,6 @@ import HeaderForSubmissionScreens from './HeaderForSubmissionScreens'
 
 const ReportsWebView = ({ navigation, route }) => {
     console.log(route.params.link)
-    console.log(route.params.isLink)
     return (
         <View style={{
             flex: 1,
@@ -16,7 +15,7 @@ const ReportsWebView = ({ navigation, route }) => {
             //justifyContent: 'space-between',
         }}>
             <HeaderForSubmissionScreens Title="View Reports" />
-            <WebView source={{ uri: route.params.isLink ? `${route.params.link}` : `${Constants.BASE_URL}user_reports/${route.params.link}` }}
+            <WebView source={{ uri: route.params.isLink ? `${route.params.link}` : `${Constants.BASE_URL}panel/user_reports/${route.params.link}` }}
                 style={{ height: H, width: W, }} />
 
         </View>

@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, TouchableOpacity, View, Modal, Image, PermissionsAndroid, Alert, Platform } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View, Modal, Image, Alert, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import HeaderForSubmissionScreens from './HeaderForSubmissionScreens'
 import { Text, TextInput } from 'react-native-paper'

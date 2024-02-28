@@ -48,7 +48,9 @@ const OnDetailsSubmitScreenThree = ({ navigation }) => {
     const [xaxis3, setXaxis3] = useState([0, 1, 2, 3, 4])
     const getCalendarData = async () => {
 
-        const result = await GetApiData('calendar')
+         var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setData(result)
         setLoader(false)
     }

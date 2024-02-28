@@ -40,7 +40,7 @@ const SubmitSleep = () => {
 
 
     const changeLanguage = (languageKey) => {
-        
+
     }
 
 
@@ -56,7 +56,9 @@ const SubmitSleep = () => {
 
 
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
         const temp = await getDataFromLocalStorage('user_id')
         var formdata = new FormData();
@@ -76,7 +78,6 @@ const SubmitSleep = () => {
         const result = await PostApiData('DashboardApi/new_weekly_overview', formdata)
         setGraphData(result)
         //getLanguage()
-        setLoaderGraph(false)
     }
     const dontDisplay = () => {
         return (
@@ -161,7 +162,7 @@ const SubmitSleep = () => {
                     </View>
                     <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL }}>{strings.TodaysSleep} </Text>
                     <View style={styles.ApiDataText}>
-                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{attributeShow(data)}</Text>
+                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{data?.data[0].selected_text}</Text>
                     </View>
                     <Text>{strings.WeeklyOverview}</Text>
                     {/*///////////////////////////////////////////graph view/////////////////////////// */}

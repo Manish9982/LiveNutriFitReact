@@ -15,6 +15,7 @@ import Customloader from '../../assets/components/Customloader'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CustomAccordion from '../../assets/components/CustomAccordion'
 import { useLocales } from '../../utils/LocalizationUtil'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 
 
@@ -64,27 +65,22 @@ const EditProfile = ({ navigation }) => {
   const isFocused = useIsFocused()
   const strings = useLocales()
 
-
   useEffect(() => { getDataFromApi() }, [])
   useEffect(() => { setChecked() }, [])
-
   useEffect(() => { getLanguage() }, [isFocused])
-
 
   const handleDateChange = useCallback((event, newDate) => {
     setShowCalendar(false)
     setage(convertTimestampToYYYYMMDD(newDate))
-    setSelectedDate(newDate)
+    setSelectedDate(JSON.stringify(newDate))
   }, [])
 
   const toggleAccordion = () => {
     setShowOptionsForFoodType(prev => !prev);
   };
-
   const handleDOB = () => {
     setShowCalendar(prev => !prev)
   }
-
   //lng
   const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
@@ -92,16 +88,13 @@ const EditProfile = ({ navigation }) => {
       changeLanguage('en')
     } else {
       changeLanguage('hi')
-
     }
-
   }
 
   function convertDateFormat(dateString) {
-    // Create a Date object from the input date string
+    //Create a Date object from the input date string
     const date = new Date(dateString);
-
-    // Extract year, month, day, hours, minutes, seconds, and milliseconds
+    //Extract year, month, day, hours, minutes, seconds, and milliseconds
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0, so add 1
     const day = String(date.getDate()).padStart(2, '0');
@@ -109,12 +102,11 @@ const EditProfile = ({ navigation }) => {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
     const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
-
-    // Construct the ISO format string
+    //Construct the ISO format string
     const isoString = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
-//console.log('isoString',isoString)
+    //console.log('isoString',isoString)
     return isoString;
-}
+  }
 
 
   const changeLanguage = (languageKey) => {
@@ -155,9 +147,9 @@ const EditProfile = ({ navigation }) => {
         formdata.append("age", age);
         formdata.append("height", ((Number.parseInt(feet, 10)) * 30.48) + (Number.parseInt(inch, 10) * 2.54));
         formdata.append("address", address);
-        formdata.append("goal", goal?.join(","))
+        formdata.append("goal", goal.map(item => item.default).join(","))
         // formdata.append("intensity", exerciseLevel)
-        formdata.append("food_type", foodType?.join(","));
+        formdata.append("food_type", foodType.map(item => item.default).join(","));
         formdata.append("intensity", "")
         const result = await PostApiData('userprofileupdate', formdata)
         console.log(result)
@@ -267,6 +259,10 @@ const EditProfile = ({ navigation }) => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleDobPress = () => {
+    setShowCalendar(prev => !prev)
   }
 
   console.log("goal", goal)
@@ -643,15 +639,26 @@ const EditProfile = ({ navigation }) => {
                 Platform.OS == "android"
                   ?
                   (
-                    showCalendar &&
-                    <DateTimePicker
-                      value={selectedDate}
-                      mode="date"
-                      display="default"
-                      onChange={(a, t) => handleDateChange(a, t)}
-                    //maximumDate={getTimestamp10YearsAgo()}
-                    //onTouchCancel={() =>setShowCalendar(prev => !prev)}
-                    />
+                    <View>
+                      {
+                        showCalendar
+                        &&
+                        <DateTimePicker
+                          value={(new Date(convertDateFormat(selectedDate))) || new Date()}
+                          mode="date"
+                          display="default"
+                          onChange={(a, t) => handleDateChange(a, t)}
+                        //maximumDate={getTimestamp10YearsAgo()}
+                        //onTouchCancel={() =>setShowCalendar(prev => !prev)}
+                        />
+                      }
+                      <TouchableOpacity
+                        onPress={handleDobPress}
+                        style={styles.dobContainer}>
+                        <Text>{selectedDate}</Text>
+                      </TouchableOpacity>
+
+                    </View>
                   )
                   :
                   (
@@ -793,6 +800,14 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
     fontSize: fontSizes.XL, marginLeft: 10
   },
+  dobContainer:
+  {
+    backgroundColor: colors.DARK_GRAY,
+    justifyContent: 'center',
+    alignItems: "center",
+    padding: 8,
+    borderRadius: 8,
+  }
 })
 
 export default EditProfile

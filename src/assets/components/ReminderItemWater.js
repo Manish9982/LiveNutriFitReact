@@ -63,10 +63,7 @@ const ReminderItemWater = ({ date, reminder, remindersection, time, checked, onC
         console.log(t)
         setValue(t)
         setVisible(false)
-
         onCheckAPI("",t)
-
-
         // API hit here 
     }
 

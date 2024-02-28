@@ -20,8 +20,8 @@ const WIDTH = Dimensions.get('window').width
 
 const SubmitExercise = () => {
     const isFocused = useIsFocused()
-    
-const strings = useLocales()
+
+    const strings = useLocales()
 
     useEffect(() => { getLanguage() }, [isFocused])
     //lng
@@ -41,7 +41,7 @@ const strings = useLocales()
 
 
     const changeLanguage = (languageKey) => {
-        
+
     }
 
 
@@ -59,7 +59,7 @@ const strings = useLocales()
 
 
     // const getCalendar = async () => {
-    //     const result = await GetApiData('calendar')
+    //      var formdata = new FormData()
     //     setMyCalendar(result)
     //     const temp = await getDataFromLocalStorage('user_id')
     //     var formdata = new FormData();
@@ -84,7 +84,9 @@ const strings = useLocales()
 
 
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
         console.log("TASKKKKKKKKKK result result result ++++++++++++", result)
     }
@@ -199,7 +201,7 @@ const strings = useLocales()
                     </View>
                     <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL }}>{strings.TodaysExercise}</Text>
                     <View style={styles.ApiDataText}>
-                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{attributeShow(data)}</Text>
+                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{data?.data[0].selected_text}</Text>
                     </View>
                     <Text>{strings.WeeklyOverview}</Text>
                     {/*///////////////////////////////////////////graph view/////////////////////////// */}
@@ -212,9 +214,11 @@ const strings = useLocales()
                             </View>
                             <Divider style={styles.yaxis} />
                             {/*///////////////////////////////////////////BarGraph///////////////////////////////////////// */}
-                            <View style={{ flexDirection: 'row',
-                             justifyContent: 'space-evenly',
-                              width: WIDTH * 0.82, }}>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-evenly',
+                                width: WIDTH * 0.82,
+                            }}>
 
 
                                 {graphData?.data[0].selected_number == '0' ? dontDisplay() : null}
@@ -281,44 +285,44 @@ const strings = useLocales()
                             </View>
                         </View> */}
 
-<View style={styles.xaxisContainer}>
+                        <View style={styles.xaxisContainer}>
 
-<View style={styles.fillerTwo}>
-    {/* <Text style={styles.textXaxis}>Fri</Text> */}
-    <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[0] || date.getDate() < myCalendar?.date[0] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[0]}</Text>
+                            <View style={styles.fillerTwo}>
+                                {/* <Text style={styles.textXaxis}>Fri</Text> */}
+                                <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[0] || date.getDate() < myCalendar?.date[0] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[0]}</Text>
 
-</View>
-<View style={styles.fillerTwo}>
-    {/* <Text style={styles.textXaxis}>Sat</Text> */}
-    <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[1] || date.getDate() < myCalendar?.date[1] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[1]}</Text>
+                            </View>
+                            <View style={styles.fillerTwo}>
+                                {/* <Text style={styles.textXaxis}>Sat</Text> */}
+                                <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[1] || date.getDate() < myCalendar?.date[1] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[1]}</Text>
 
-</View>
-<View style={styles.fillerTwo}>
-    {/* <Text style={styles.textXaxis}>Sun</Text> */}
-    <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[2] || date.getDate() < myCalendar?.date[2] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[2]}</Text>
+                            </View>
+                            <View style={styles.fillerTwo}>
+                                {/* <Text style={styles.textXaxis}>Sun</Text> */}
+                                <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[2] || date.getDate() < myCalendar?.date[2] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[2]}</Text>
 
-</View>
-<View style={styles.fillerTwo}>
-    {/* <Text style={styles.textXaxis}>{strings.Mon}</Text> */}
-    <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[3] || date.getDate() < myCalendar?.date[3] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[3]}</Text>
+                            </View>
+                            <View style={styles.fillerTwo}>
+                                {/* <Text style={styles.textXaxis}>{strings.Mon}</Text> */}
+                                <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[3] || date.getDate() < myCalendar?.date[3] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[3]}</Text>
 
-</View>
-<View style={styles.fillerTwo}>
-    {/* <Text style={styles.textXaxis}>Tue</Text> */}
-    <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[4] || date.getDate() < myCalendar?.date[4] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[4]}</Text>
+                            </View>
+                            <View style={styles.fillerTwo}>
+                                {/* <Text style={styles.textXaxis}>Tue</Text> */}
+                                <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[4] || date.getDate() < myCalendar?.date[4] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[4]}</Text>
 
-</View>
-<View style={styles.fillerTwo}>
-    {/* <Text style={styles.textXaxis}>Wed</Text> */}
-    <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[5] || date.getDate() < myCalendar?.date[5] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[5]}</Text>
+                            </View>
+                            <View style={styles.fillerTwo}>
+                                {/* <Text style={styles.textXaxis}>Wed</Text> */}
+                                <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[5] || date.getDate() < myCalendar?.date[5] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[5]}</Text>
 
-</View>
-<View style={styles.fillerTwo}>
-    {/* <Text style={styles.textXaxis}>Thu</Text> */}
-    <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[6] || date.getDate() < myCalendar?.date[6] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[6]}</Text>
+                            </View>
+                            <View style={styles.fillerTwo}>
+                                {/* <Text style={styles.textXaxis}>Thu</Text> */}
+                                <Text style={[styles.textXaxis, { color: date.getDate() > myCalendar?.date[6] || date.getDate() < myCalendar?.date[6] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[6]}</Text>
 
-</View>
-</View>
+                            </View>
+                        </View>
 
                     </View>
                     {/*///////////////////////////////////////////graph view/////////////////////////// */}

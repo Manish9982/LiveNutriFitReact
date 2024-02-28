@@ -1,4 +1,4 @@
-import { StyleSheet, View, Dimensions, Image, TouchableOpacity, ScrollView, RefreshControl, StatusBar, Modal, Alert, PermissionsAndroid, Platform } from 'react-native'
+import { StyleSheet, View, Dimensions, Image, TouchableOpacity, ScrollView, RefreshControl, StatusBar, Modal, Alert, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Text, Appbar, TextInput, ActivityIndicator } from 'react-native-paper'
 import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../colorSchemes/ColorSchemes'
@@ -95,29 +95,7 @@ const UserProfile = ({ navigation }) => {
         setLastRefresh(`${(date.getHours()).toString().padStart(2, 0)}:${(date.getMinutes()).toString().padStart(2, 0)}`)
         wait(2000).then(() => setRefreshing(false))
     }, []);
-    // const requestCameraPermission = async () => {
-    //     try {
-    //         const granted = await PermissionsAndroid.request(
-    //             PermissionsAndroid.PERMISSIONS.CAMERA,
-    //             {
-    //                 title: "LiveNutriFit App Camera Permission",
-    //                 message:
-    //                     "LiveNutriFit App needs access to your camera " +
-    //                     "so you can take awesome pictures.",
-    //                 buttonNeutral: "Ask Me Later",
-    //                 buttonNegative: "Cancel",
-    //                 buttonPositive: "OK"
-    //             }
-    //         );
-    //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    //             console.log("You can use the camera");
-    //         } else {
-    //             console.log("Camera permission denied");
-    //         }
-    //     } catch (err) {
-    //         ShortToast(err, "error", "");
-    //     }
-    // };
+    
 
     const redirectToSettings = () => {
         if (Platform.OS === 'ios') {
@@ -154,44 +132,83 @@ const UserProfile = ({ navigation }) => {
 
     const launchCam = async () => {
         try {
-            const statuses = await requestMultiple([
-                PERMISSIONS.IOS.CAMERA,
-                PERMISSIONS.IOS.PHOTO_LIBRARY,
-            ]);
-            console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
-            console.log('FaceID', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
+            if (Platform.OS == "ios") {
+                const statuses = await requestMultiple([
+                    PERMISSIONS.IOS.CAMERA,
+                    PERMISSIONS.IOS.PHOTO_LIBRARY,
+                ]);
+                console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
+                console.log('FaceID', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
 
-            if (
-                statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
-                statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
-            ) {
-                try {
-                    const pic = await ImagePicker.openCamera({
-                        width: 300,
-                        height: 400,
-                        cropping: true,
-                    });
-                    console.log("CAmPic======>", pic);
-                    uploadPhoto(pic)
+                if (
+                    statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
+                    statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
+                ) {
+                    try {
+                        const pic = await ImagePicker.openCamera({
+                            width: 300,
+                            height: 400,
+                            cropping: true,
+                        });
+                        console.log("CAmPic======>", pic);
+                        uploadPhotoCamera(pic)
+                    }
+                    catch (err) {
+                        ShortToast(`${err}`, 'error', '');
+                    }
+                } else {
+                    if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
+                        Alert.alert("Camera is not accessible");
+                        return false;
+                    } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
+                        Alert.alert("Photo Library is not accessible");
+                        return false;
+                    }
                 }
-                catch (err) {
-                    ShortToast(`${err}`, 'error', '');
+
+            }
+            else {
+                const statuses = await requestMultiple([
+                    PERMISSIONS.ANDROID.CAMERA,
+                    PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+                ]);
+                console.log('Camera', statuses[PERMISSIONS.ANDROID.CAMERA]);
+                console.log('FaceID', statuses[PERMISSIONS.ANDROID.PHOTO_LIBRARY]);
+
+                if (
+                    statuses[PERMISSIONS.ANDROID.CAMERA] === RESULTS.GRANTED
+                ) {
+                    try {
+                        const pic = await ImagePicker.openCamera({
+                            width: 300,
+                            height: 400,
+                            cropping: true,
+                            compressImageQuality: 0.4
+                        });
+                        console.log("CAmPic======>", pic);
+                        uploadPhotoCamera(pic)
+                    }
+                    catch (err) {
+                        ShortToast(`${err}`, 'error', '');
+                    }
+                } else {
+                    if (statuses[PERMISSIONS.ANDROID.CAMERA] !== RESULTS.GRANTED) {
+                        Alert.alert("Camera is not accessible");
+                        return false;
+                    } else if (statuses[PERMISSIONS.ANDROID.READ_MEDIA_IMAGES] !== RESULTS.GRANTED) {
+                        Alert.alert("Photo Library is not accessible");
+                        return false;
+                    }
                 }
-            } else {
-                if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
-                    Alert.alert("Camera is not accessible");
-                    return false;
-                } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
-                    Alert.alert("Photo Library is not accessible");
-                    return false;
-                }
+
             }
         } catch (err) {
             ShortToast(`${err}`, 'error', '');
         }
     }
 
-    const uploadPhoto = async (pic) => {
+    const uploadPhotoGallery = async (pic) => {
+        console.log('PIC=====>', pic)
         const temp = await getDataFromLocalStorage('user_id')
         var formdata = new FormData();
         formdata.append("user_id", JSON.parse(temp));
@@ -199,6 +216,22 @@ const UserProfile = ({ navigation }) => {
             uri: pic?.assets?.[0]?.uri,
             type: pic?.assets?.[0]?.type,
             name: pic?.assets?.[0]?.fileName,
+        });
+        const result = await PostApiData('update_profile_image', formdata)
+        console.log("result======>", result)
+        ShortToast(result.message, "success", "")
+        getDataForUserProfile()
+        setCamVisible(false)
+    }
+    const uploadPhotoCamera = async (pic) => {
+        console.log('PIC=====>', pic)
+        const temp = await getDataFromLocalStorage('user_id')
+        var formdata = new FormData();
+        formdata.append("user_id", JSON.parse(temp));
+        formdata.append("profile", {
+            uri: pic?.path,
+            type: pic?.mime,
+            name: pic?.modificationDate,
         });
         const result = await PostApiData('update_profile_image', formdata)
         console.log("result======>", result)
@@ -220,7 +253,7 @@ const UserProfile = ({ navigation }) => {
                 } else if (response.error) {
                     console.log('ImagePicker Error: ', response.error);
                 } else {
-                    await uploadPhoto(response)
+                    await uploadPhotoGallery(response)
                 }
             },
         )
@@ -536,11 +569,18 @@ const UserProfile = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
                                 <Image source={require('../../assets/icons/report.png')}
                                     style={styles.userIconContainer} />
-                                <View>
+                                <View style={{ width: W }}>
                                     <Text style={styles.text2}>{strings.goals}</Text>
-                                    <Text
-
-                                        style={[styles.text1, { width: '30%' }]}>{dataFromApi?.data?.[0]?.goal?.answer.join(",")}</Text>
+                                    <View style={{ flexDirection: 'row', width: '80%', flexWrap: 'wrap' }}>
+                                        {
+                                            dataFromApi?.data?.[0]?.goal?.answer?.map((item, index) => {
+                                                return (
+                                                    <Text
+                                                        key={index}
+                                                        style={[styles.text1, {}]}>{item?.text}, </Text>)
+                                            })
+                                        }
+                                    </View>
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -580,10 +620,7 @@ const styles = StyleSheet.create({
     },
     mainContainer:
     {
-        height: HEIGHT,
-        width: WIDTH,
-        paddingBottom: HEIGHT * 0.1,
-
+        paddingBottom: H * 0.2
     },
     userImageContainer:
     {

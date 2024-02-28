@@ -38,7 +38,7 @@ const SubmitMood = () => {
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
 
-        
+
 
     }
 
@@ -46,7 +46,7 @@ const SubmitMood = () => {
 
 
     // const getCalendar = async () => {
-    //     const result = await GetApiData('calendar')
+    //      var formdata = new FormData()
     //     setMyCalendar(result)
     //     const temp = await getDataFromLocalStorage('user_id')
     //     var formdata = new FormData();
@@ -71,7 +71,9 @@ const SubmitMood = () => {
 
 
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
     }
 
@@ -137,9 +139,7 @@ const SubmitMood = () => {
     }
 
     const attributeShow = (n) => {
-        if (n?.status == 203)
-            return <Text>No records Found</Text>
-        else if (n?.data[0].selected_number == '1')
+        if (n == '1')
             return <>
                 <Image source={require('../../../../assets/icons/sad.png')}
                     style={{
@@ -149,7 +149,7 @@ const SubmitMood = () => {
                         zIndex: 1
                     }} />
             </>
-        else if (n?.data[0].selected_number == '2')
+        else if (n == '2')
             return <>
                 <Image source={require('../../../../assets/icons/confused.png')}
                     style={{
@@ -159,7 +159,7 @@ const SubmitMood = () => {
                         zIndex: 1
                     }} />
             </>
-        else if (n?.data[0].selected_number == '3')
+        else if (n == '3')
             return <>
                 <Image source={require('../../../../assets/icons/happy.png')}
                     style={{
@@ -211,7 +211,7 @@ const SubmitMood = () => {
                     </View>
                     <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL }}>{strings.TodaysMood}</Text>
                     <View style={styles.ApiDataText}>
-                        {attributeShow(data)}
+                        {attributeShow(data?.data[0].selected_text)}
                     </View>
                     <Text>{strings.WeeklyOverview}</Text>
                     {/*///////////////////////////////////////////graph view/////////////////////////// */}

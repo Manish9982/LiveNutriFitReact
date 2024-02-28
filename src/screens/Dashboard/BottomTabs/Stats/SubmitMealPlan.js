@@ -18,8 +18,8 @@ const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
 const SubmitMealPlan = ({ navigation }) => {
-    
-const strings = useLocales()
+
+    const strings = useLocales()
 
     const isFocused = useIsFocused()
 
@@ -30,7 +30,7 @@ const strings = useLocales()
     //lng
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        
+
 
     }
 
@@ -61,10 +61,10 @@ const strings = useLocales()
     }, [])
 
 
-  
+
 
     // const getCalendar = async () => {
-    //     const result = await GetApiData('calendar')
+    //      var formdata = new FormData()
     //     setMyCalendar(result)
     //     const temp = await getDataFromLocalStorage('user_id')
     //     var formdata = new FormData();
@@ -87,7 +87,9 @@ const strings = useLocales()
     // }
 
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
         console.log("TASKKKKKKKKKK result result result ++++++++++++", result)
     }
@@ -180,48 +182,48 @@ const strings = useLocales()
             </View >
             :
             <View>
-                <HeaderForSubmissionScreens Title={strings.MealPlan}/>
+                <HeaderForSubmissionScreens Title={strings.MealPlan} />
                 <View style={styles.mainContainer}>
                     <View style={styles.Calendar}>
                         <View style={styles.displayDataContainer}>
-                            <TouchableOpacity onPress={() => {}}>
+                            <TouchableOpacity onPress={() => { }}>
                                 <View>
 
                                     <Text style={[styles.textWeekDays, { color: date.getDate() > myCalendar?.date[0] || date.getDate() < myCalendar?.date[0] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[0]}</Text>
                                     <Text style={[styles.textWeekDates, { color: date.getDate() > myCalendar?.date[0] || date.getDate() < myCalendar?.date[0] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.date[0]}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {}}>
+                            <TouchableOpacity onPress={() => { }}>
                                 <View>
                                     <Text style={[styles.textWeekDays, { color: date.getDate() > myCalendar?.date[1] || date.getDate() < myCalendar?.date[1] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[1]}</Text>
                                     <Text style={[styles.textWeekDates, { color: date.getDate() > myCalendar?.date[1] || date.getDate() < myCalendar?.date[1] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.date[1]}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {}}>
+                            <TouchableOpacity onPress={() => { }}>
                                 <View>
                                     <Text style={[styles.textWeekDays, { color: date.getDate() > myCalendar?.date[2] || date.getDate() < myCalendar?.date[2] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[2]}</Text>
                                     <Text style={[styles.textWeekDates, { color: date.getDate() > myCalendar?.date[2] || date.getDate() < myCalendar?.date[2] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.date[2]}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {}}>
+                            <TouchableOpacity onPress={() => { }}>
                                 <View>
                                     <Text style={[styles.textWeekDays, { color: date.getDate() > myCalendar?.date[3] || date.getDate() < myCalendar?.date[3] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[3]}</Text>
                                     <Text style={[styles.textWeekDates, { color: date.getDate() > myCalendar?.date[3] || date.getDate() < myCalendar?.date[3] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.date[3]}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {}}>
+                            <TouchableOpacity onPress={() => { }}>
                                 <View>
                                     <Text style={[styles.textWeekDays, { color: date.getDate() > myCalendar?.date[4] || date.getDate() < myCalendar?.date[4] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[4]}</Text>
                                     <Text style={[styles.textWeekDates, { color: date.getDate() > myCalendar?.date[4] || date.getDate() < myCalendar?.date[4] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.date[4]}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {}}>
+                            <TouchableOpacity onPress={() => { }}>
                                 <View>
                                     <Text style={[styles.textWeekDays, { color: date.getDate() > myCalendar?.date[5] || date.getDate() < myCalendar?.date[5] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[5]}</Text>
                                     <Text style={[styles.textWeekDates, { color: date.getDate() > myCalendar?.date[5] || date.getDate() < myCalendar?.date[5] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.date[5]}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {}}>
+                            <TouchableOpacity onPress={() => { }}>
                                 <View>
                                     <Text style={[styles.textWeekDays, { color: date.getDate() > myCalendar?.date[6] || date.getDate() < myCalendar?.date[6] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.days[6]}</Text>
                                     <Text style={[styles.textWeekDates, { color: date.getDate() > myCalendar?.date[6] || date.getDate() < myCalendar?.date[6] ? colors.FONT_BLACK : colors.GREEN }]}>{myCalendar?.date[6]}</Text>
@@ -233,7 +235,7 @@ const strings = useLocales()
                     </View>
                     <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL }}>{strings.TodaysMeal}</Text>
                     <View style={styles.ApiDataText}>
-                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{attributeShow(data)}</Text>
+                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{data?.data[0].selected_text}</Text>
                     </View>
                     <Text>{strings.WeeklyOverview}</Text>
                     {/*///////////////////////////////////////////graph view/////////////////////////// */}

@@ -58,7 +58,9 @@ const SubmitFasting = () => {
 
 
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
         console.log("TASKKKKKKKKKK result result result ++++++++++++", result)
     }
@@ -177,7 +179,7 @@ const SubmitFasting = () => {
                             fontFamily: 'Montserrat-SemiBold',
                             fontSize: fontSizes.LAR,
                             textDecorationLine: 'underline'
-                        }}>{attributeShow(data)}</Text>
+                        }}>{data?.data[0].selected_text}</Text>
                     </View>
                     <Text>{strings.WeeklyOverview}</Text>
                     {/*///////////////////////////////////////////graph view/////////////////////////// */}

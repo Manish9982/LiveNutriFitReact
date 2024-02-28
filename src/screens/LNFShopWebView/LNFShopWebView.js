@@ -62,7 +62,8 @@ const LNFShopWebView = ({ navigation }) => {
                         //     style.innerHTML = "div#new-shop { display: block !important; }";
                         //     document.head.appendChild(style);
                         //   `}
-                        source={{ uri: `${Constants.BASE_URL}${strings.code == 'en' ? '' : `${strings.code}/`}shop/?uid=${base64.encode(userId)}&type=mob` }}
+                        //source={{ uri: `${Constants.BASE_URL}${strings.code == 'en' ? '' : `${strings.code}/`}shop/?uid=${base64.encode(userId)}&type=mob` }}
+                        source={{ uri: `${Constants.BASE_URL}shop/?uid=${base64.encode(userId)}&type=mob` }}
                         style={{
                             flex: 1
                         }}

@@ -16,15 +16,35 @@ const CustomAccordion = ({ title, question, options, onSelectionChange, answers 
         setExpanded(!expanded);
     };
 
-    const toggleOption = (option) => {
-        const isSelected = selectedOptions.includes(option);
-        if (isSelected) {
-            setSelectedOptions(selectedOptions.filter((item) => item !== option));
-        } else {
-            setSelectedOptions([...selectedOptions, option]);
+    const throwColor = (arr) => {
+        if (selectedOptions?.some(item => item.default == arr.default)) {
+            return colors.GREEN
         }
+        else {
+            return colors.BLACK
+        }
+    }
+    const throwIcon = (arr) => {
+        if (selectedOptions?.some(item => item.default == arr.default)) {
+            return 'check-square-o'
+        }
+        else {
+            return 'square-o'
+        }
+    }
+
+    const toggleOption = (option) => {
+        setSelectedOptions(prevOptions => {
+            const isSelected = prevOptions.some(item => item.default === option.default);
+            if (isSelected) {
+                return prevOptions.filter(item => item.default !== option.default);
+            } else {
+                return [...prevOptions, option];
+            }
+        });
     };
 
+    console.log('SelectedOption ==>>>>', selectedOptions)
     return (
         <View>
             <TouchableOpacity style={[styles.accordionBg, {
@@ -42,36 +62,19 @@ const CustomAccordion = ({ title, question, options, onSelectionChange, answers 
             </TouchableOpacity>
             {expanded && (
                 <View style={[styles.optionContainer,]}>
-                    {/* <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{question}</Text> */}
-                    {/* <FlatList
-                        data={options}
-                        keyExtractor={(item, index) => `${index}`}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => toggleOption(item)}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
-                                    <Icon
-                                        color={selectedOptions.includes(item) ? colors.GREEN : colors.BLACK}
-                                        name={selectedOptions.includes(item) ? 'check-square-o' : 'square-o'}
-                                        size={20}
-                                    />
-                                    <Text style={{ marginLeft: 10 }}>{item}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                    /> */}
                     {
                         options?.map((item, index) => {
                             return (
-                                <TouchableOpacity 
-                                key={index}
-                                onPress={() => toggleOption(item)}>
+                                <TouchableOpacity
+                                    key={index}
+                                    onPress={() => toggleOption(item)}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
                                         <Icon
-                                            color={selectedOptions.includes(item) ? colors.GREEN : colors.BLACK}
-                                            name={selectedOptions.includes(item) ? 'check-square-o' : 'square-o'}
+                                            color={throwColor(item)}
+                                            name={throwIcon(item)}
                                             size={20}
                                         />
-                                        <Text style={{ marginLeft: 10 }}>{item}</Text>
+                                        <Text style={{ marginLeft: 10 }}>{item?.text}</Text>
                                     </View>
                                 </TouchableOpacity>
                             )

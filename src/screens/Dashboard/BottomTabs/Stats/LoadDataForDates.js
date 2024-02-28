@@ -20,7 +20,9 @@ const LoadDataForDates = ({ navigation, route }) => {
         getWeeklyOverview()
     }, [])
     const getCalendar = async () => {
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setMyCalendar(result)
         const temp = await getDataFromLocalStorage('user_id')
         var formdata = new FormData();
@@ -45,7 +47,6 @@ const LoadDataForDates = ({ navigation, route }) => {
         const result = await PostApiData('DashboardApi/new_weekly_overview', formdata)
         console.log(result)
         setGraphData(result)
-        setLoaderGraph(false)
     }
     const dontDisplay = () => {
         return (
@@ -150,7 +151,7 @@ const LoadDataForDates = ({ navigation, route }) => {
                     </View>
                     <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.XXL }}>Today's Meal</Text>
                     <View style={styles.ApiDataText}>
-                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{attributeShow(data)}</Text>
+                        <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: fontSizes.LAR, textDecorationLine: 'underline' }}>{data?.data[0].selected_text}</Text>
                     </View>
                     <Text>Weekly Overview</Text>
                     {/*///////////////////////////////////////////graph view/////////////////////////// */}

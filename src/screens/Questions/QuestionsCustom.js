@@ -794,7 +794,7 @@ const QuestionsCustom = ({ navigation, route }) => {
 
                     setLoader(false)
                 }
-                else ShortToast("Required Field is missing", 'error', '')
+                else ShortToast(strings.requiredField, 'error', '')
 
             }
 
@@ -953,7 +953,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                         setShowSecondModal(true)
                         setLoader(false)
                     }
-                    else ShortToast("Required Field is missing", 'error', '')
+                    else ShortToast(strings.requiredField, 'error', '')
                 }
             }
 
@@ -970,7 +970,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                     setArrCounter(prev => prev + 1)
                     setLoader(false)
                 }
-                else ShortToast("Required Field is missing", 'error', '')
+                else ShortToast(strings.requiredField, 'error', '')
 
             }
 
@@ -1023,7 +1023,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                 setArrCounter(prev => prev + 1)
                 setLoader(false)
             }
-            else ShortToast("Required Field is missing", 'error', '')
+            else ShortToast(strings.requiredField, 'error', '')
 
         }
 
@@ -1042,7 +1042,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                 setArrCounter(prev => prev + 1)
                 setLoader(false)
             }
-            else ShortToast("Required Field is missing", 'error', '')
+            else ShortToast(strings.requiredField, 'error', '')
 
         }
 
@@ -1061,7 +1061,7 @@ const QuestionsCustom = ({ navigation, route }) => {
                 setArrCounter(prev => prev + 1)
                 setLoader(false)
             }
-            else ShortToast("Required Field is missing", 'error', '')
+            else ShortToast(strings.requiredField, 'error', '')
 
         }
 

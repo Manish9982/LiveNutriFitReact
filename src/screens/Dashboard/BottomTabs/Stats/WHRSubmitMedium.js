@@ -61,8 +61,9 @@ const WHRSubmitMedium = ({ navigation }) => {
     const [bpmData, setBpmData] = useState([0, 0, 0, 0, 0])
     const [xaxis, setXaxis] = useState([0, 0, 0, 0, 0])
     const getCalendarData = async () => {
-
-        const result = await GetApiData('calendar')
+        var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setData(result)
         setLoader(false)
     }
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 10,
         flexDirection: "row",
-        padding:10,
+        padding: 10,
 
     },
     textSet:

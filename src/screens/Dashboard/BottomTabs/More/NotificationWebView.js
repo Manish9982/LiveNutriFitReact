@@ -9,30 +9,29 @@ import { getDataFromLocalStorage } from '../../../../local storage/LocalStorage'
 
 const NotificationWebView = ({ navigation, route }) => {
 
-useEffect(() => {
-   getUserId()
-    }, [])
-    
+  useEffect(() => {
+    getUserId()
+  }, [])
 
-    const getUserId = async () => {
-        const temp = JSON.stringify( await getDataFromLocalStorage('user_id'))
 
-      // console.log("getUserId", `https://lnf.bizhawkztest.com/public/notification_list/${temp}` )
-        return temp
-    }
-    return (
-        <View style={{
-            flex: 1,
-        }}>
-            <HeaderForSubmissionScreens Title="Announcements" />
-            <WebView
-              startInLoadingState={true}
-                source={{ uri: `${Constants.BASE_URL}notification_list/${ JSON.parse( route.params.UserID)}` }}
-             //   "https://lnf.bizhawkztest.com/public/notification_list/\(userID)"
-                style={{ height: H, width: W, }} />
+  const getUserId = async () => {
+    const temp = JSON.stringify(await getDataFromLocalStorage('user_id'))
+    // console.log("getUserId", `https://lnf.bizhawkztest.com/public/notification_list/${temp}` )
+    return temp
+  }
+  return (
+    <View style={{
+      flex: 1,
+    }}>
+      <HeaderForSubmissionScreens Title="Announcements" />
+      <WebView
+        startInLoadingState={true}
+        source={{ uri: `${Constants.BASE_URL}panel/usnotification_list/${JSON.parse(route.params.UserID)}` }}
+        //"https://lnf.bizhawkztest.com/public/notification_list/\(userID)"
+        style={{ height: H, width: W, }} />
 
-        </View>
-    )
+    </View>
+  )
 }
 
 export default NotificationWebView

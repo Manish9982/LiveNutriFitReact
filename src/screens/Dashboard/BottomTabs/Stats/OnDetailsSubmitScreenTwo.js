@@ -42,9 +42,11 @@ const OnDetailsSubmitScreenTwo = ({ navigation }) => {
     const [diastolicData, setDiastolicData] = useState([0, 0, 0, 0, 0])
     const [bpmData, setBpmData] = useState([0, 0, 0, 0, 0])
     const [xaxis, setXaxis] = useState([0, 0, 0, 0, 0])
-    const getCalendarData = async () => {
 
-        const result = await GetApiData('calendar')
+    const getCalendarData = async () => {
+         var formdata = new FormData()
+        formdata.append('lang', strings.code)
+        const result = await PostApiData('calendar', formdata)
         setData(result)
         setLoader(false)
     }

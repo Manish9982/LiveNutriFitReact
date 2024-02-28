@@ -296,8 +296,9 @@ const OnDetailsSubmitScreenOne = ({ navigation }) => {
                   <View style={[styles.circularDisplayContainer, { backgroundColor: '#1c8203' }]}>
                     <Text style={styles.textNumber}>1</Text>
                   </View>
-                  <Text style={styles.textGoal}>1 kg/Month</Text>
-                  <Text style={styles.textDifficulty}>Very Easy</Text>
+                  {/* <Text style={styles.textGoal}>1 kg/Month</Text> */}
+                  <Text style={styles.textGoal}>{strings?.oneKgMonth}</Text>
+                  <Text style={styles.textDifficulty}>{strings?.VeryEasy}</Text>
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
@@ -310,7 +311,7 @@ const OnDetailsSubmitScreenOne = ({ navigation }) => {
                     <Text style={styles.textNumber}>2</Text>
                   </View>
                   <Text style={styles.textGoal}>2 kg/Month</Text>
-                  <Text style={styles.textDifficulty}>Easy</Text>
+                  <Text style={styles.textDifficulty}>{strings?.Easy}</Text>
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
@@ -322,7 +323,7 @@ const OnDetailsSubmitScreenOne = ({ navigation }) => {
                     <Text style={styles.textNumber}>3</Text>
                   </View>
                   <Text style={styles.textGoal}>3 kg/Month</Text>
-                  <Text style={styles.textDifficulty}>Moderate</Text>
+                  <Text style={styles.textDifficulty}>{strings?.Moderate}</Text>
                 </View>
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
@@ -334,7 +335,7 @@ const OnDetailsSubmitScreenOne = ({ navigation }) => {
                     <Text style={styles.textNumber}>4</Text>
                   </View>
                   <Text style={styles.textGoal}>4 kg/Month</Text>
-                  <Text style={styles.textDifficulty}>Hard</Text>
+                  <Text style={styles.textDifficulty}>{strings?.Hard}</Text>
                 </View>
               </TouchableOpacity>
               { /* <Divider style={styles.dividerStyle} />
