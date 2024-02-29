@@ -12,10 +12,12 @@ const WeekViewMeals = (props) => {
             <View>
                 <CollapsibleMenuForMeal
                     meal={item.meal_name}
+                    mealDefault={item?.meal_name_default}
                     dataOfMeal={item?.data_of_meal}
                     FoodType={item?.food_type}
                     Icon="2"
                     Date ={props.date}
+                    DateDefault={props.dateDefault}
                 />
             </View>
         )

@@ -51,7 +51,7 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
 
 
   const changeLanguage = (languageKey) => {
-    
+
   }
 
   const otpRequestedAgain = async () => {
@@ -103,6 +103,7 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
         storeDataInLocalStorage('user_type', (result.user_type))
         storeDataInLocalStorage('registerStatus', result.register_status)
         storeDataInLocalStorage('wrid', result.wrd_id)
+        console.log('wrid', result.wrd_id)
 
         //save usertype in local storage
 

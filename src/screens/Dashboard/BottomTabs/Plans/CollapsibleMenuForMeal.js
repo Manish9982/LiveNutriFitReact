@@ -27,10 +27,12 @@ const CollapsibleMenuForMeal = (props) => {
                 Description={item.description}
                 Liked={item.liked}
                 Category={props.meal}
+                CategoryDefault={props.mealDefault}
                 Id={item.id}
                 OnRepeat={item.repeat}
                 Image={item.images}
                 Date = {props.Date}
+                DateDefault={props.DateDefault}
             />
         )
 

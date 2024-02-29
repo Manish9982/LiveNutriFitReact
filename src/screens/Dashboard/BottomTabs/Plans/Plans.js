@@ -26,6 +26,228 @@ const datee = (date.getDate()).toString().padStart(2, '0')
 const month = (date.getMonth() + 1).toString().padStart(2, '0')
 const year = date.getFullYear().toString()
 
+const DATA = {
+  "status": 200,
+  "message": "success",
+  "baseurl": "https://uat.livenutrifit.com/panel/csvfile/",
+  "visible": true,
+  "data": [
+    {
+      "date": "February,28",
+      "date_default": "February,28",
+      "day": "Wed",
+      "day_default": "Wed",
+      "follow": false,
+      "food_prefrence": [
+        "No Egg",
+        "No Meat"
+      ],
+      "meals": [
+        {
+          "meal_name": "Breakfast",
+          "meal_name_default": "Breakfast",
+          "food_type": "Non-Vegetarian",
+          "meal_count": 1,
+          "data_of_meal": [
+            {
+              "id": "455",
+              "food_name": "Quinoa oats dosa with mint chutney ",
+              "liked": false,
+              "repeat": false,
+              "description": "",
+              "ingredients": "quinoa + rolled oats  + urad dal + chana dal + methi seeds + mint chutney ",
+              "serving": "2 DVD size quninoa oats dosa ( 1 cup quinoa + 1/2 cup rolled oats + 2 tbsp of urad dal and chana dal) + 2 tbspn mint chutney ",
+              "images": "pexels-photo-5560763.jpeg",
+              "created_at": null
+            }
+          ],
+          "total_calories": 498
+        }
+      ]
+    },
+    {
+      "date": "February,29",
+      "day": "Thu",
+      "follow": false,
+      "food_prefrence": [
+        "No Egg",
+        "No Meat"
+      ],
+      "meals": [
+        {
+          "meal_name": "Breakfast",
+          "food_type": "Non-Vegetarian",
+          "meal_count": 1,
+          "data_of_meal": [
+            {
+              "id": "455",
+              "food_name": "Quinoa oats dosa with mint chutney ",
+              "liked": false,
+              "repeat": false,
+              "description": "",
+              "ingredients": "quinoa + rolled oats  + urad dal + chana dal + methi seeds + mint chutney ",
+              "serving": "2 DVD size quninoa oats dosa ( 1 cup quinoa + 1/2 cup rolled oats + 2 tbsp of urad dal and chana dal) + 2 tbspn mint chutney ",
+              "images": "pexels-photo-5560763.jpeg",
+              "created_at": null
+            }
+          ],
+          "total_calories": 498
+        }
+      ]
+    },
+    {
+      "date": "March,01",
+      "day": "Fri",
+      "follow": false,
+      "food_prefrence": [
+        "No Egg",
+        "No Meat"
+      ],
+      "meals": [
+        {
+          "meal_name": "Breakfast",
+          "food_type": "Non-Vegetarian",
+          "meal_count": 1,
+          "data_of_meal": [
+            {
+              "id": "455",
+              "food_name": "Quinoa oats dosa with mint chutney ",
+              "liked": false,
+              "repeat": false,
+              "description": "",
+              "ingredients": "quinoa + rolled oats  + urad dal + chana dal + methi seeds + mint chutney ",
+              "serving": "2 DVD size quninoa oats dosa ( 1 cup quinoa + 1/2 cup rolled oats + 2 tbsp of urad dal and chana dal) + 2 tbspn mint chutney ",
+              "images": "pexels-photo-5560763.jpeg",
+              "created_at": null
+            }
+          ],
+          "total_calories": 498
+        }
+      ]
+    },
+    {
+      "date": "March,02",
+      "day": "Sat",
+      "follow": false,
+      "food_prefrence": [
+        "No Egg",
+        "No Meat"
+      ],
+      "meals": [
+        {
+          "meal_name": "Breakfast",
+          "food_type": "Non-Vegetarian",
+          "meal_count": 1,
+          "data_of_meal": [
+            {
+              "id": "455",
+              "food_name": "Quinoa oats dosa with mint chutney ",
+              "liked": false,
+              "repeat": false,
+              "description": "",
+              "ingredients": "quinoa + rolled oats  + urad dal + chana dal + methi seeds + mint chutney ",
+              "serving": "2 DVD size quninoa oats dosa ( 1 cup quinoa + 1/2 cup rolled oats + 2 tbsp of urad dal and chana dal) + 2 tbspn mint chutney ",
+              "images": "pexels-photo-5560763.jpeg",
+              "created_at": null
+            }
+          ],
+          "total_calories": 498
+        }
+      ]
+    },
+    {
+      "date": "March,03",
+      "day": "Sun",
+      "follow": false,
+      "food_prefrence": [
+        "No Egg",
+        "No Meat"
+      ],
+      "meals": [
+        {
+          "meal_name": "Breakfast",
+          "food_type": "Non-Vegetarian",
+          "meal_count": 1,
+          "data_of_meal": [
+            {
+              "id": "455",
+              "food_name": "Quinoa oats dosa with mint chutney ",
+              "liked": false,
+              "repeat": false,
+              "description": "",
+              "ingredients": "quinoa + rolled oats  + urad dal + chana dal + methi seeds + mint chutney ",
+              "serving": "2 DVD size quninoa oats dosa ( 1 cup quinoa + 1/2 cup rolled oats + 2 tbsp of urad dal and chana dal) + 2 tbspn mint chutney ",
+              "images": "pexels-photo-5560763.jpeg",
+              "created_at": null
+            }
+          ],
+          "total_calories": 498
+        }
+      ]
+    },
+    {
+      "date": "March,04",
+      "day": "Mon",
+      "follow": false,
+      "food_prefrence": [
+        "No Egg",
+        "No Meat"
+      ],
+      "meals": [
+        {
+          "meal_name": "Breakfast",
+          "food_type": "Non-Vegetarian",
+          "meal_count": 1,
+          "data_of_meal": [
+            {
+              "id": "455",
+              "food_name": "Quinoa oats dosa with mint chutney ",
+              "liked": false,
+              "repeat": false,
+              "description": "",
+              "ingredients": "quinoa + rolled oats  + urad dal + chana dal + methi seeds + mint chutney ",
+              "serving": "2 DVD size quninoa oats dosa ( 1 cup quinoa + 1/2 cup rolled oats + 2 tbsp of urad dal and chana dal) + 2 tbspn mint chutney ",
+              "images": "pexels-photo-5560763.jpeg",
+              "created_at": null
+            }
+          ],
+          "total_calories": 498
+        }
+      ]
+    },
+    {
+      "date": "March,05",
+      "day": "Tue",
+      "follow": false,
+      "food_prefrence": [
+        "No Egg",
+        "No Meat"
+      ],
+      "meals": [
+        {
+          "meal_name": "Breakfast",
+          "food_type": "Non-Vegetarian",
+          "meal_count": 1,
+          "data_of_meal": [
+            {
+              "id": "455",
+              "food_name": "Quinoa oats dosa with mint chutney ",
+              "liked": false,
+              "repeat": false,
+              "description": "",
+              "ingredients": "quinoa + rolled oats  + urad dal + chana dal + methi seeds + mint chutney ",
+              "serving": "2 DVD size quninoa oats dosa ( 1 cup quinoa + 1/2 cup rolled oats + 2 tbsp of urad dal and chana dal) + 2 tbspn mint chutney ",
+              "images": "pexels-photo-5560763.jpeg",
+              "created_at": null
+            }
+          ],
+          "total_calories": 498
+        }
+      ]
+    }
+  ]
+}
+
 const Plans = ({ navigation }) => {
 
   const isFocused = useIsFocused()
@@ -48,7 +270,7 @@ const Plans = ({ navigation }) => {
   }
 
   const changeLanguage = (languageKey) => {
-    
+
   }
   useEffect(() => {
     removeValue()
@@ -179,6 +401,7 @@ const Plans = ({ navigation }) => {
 
     if (result?.status == '200') {
       getExercise(datee)
+      //setMyMeals(result)
       setMyMeals(result)
       setLoader(false)
     }
@@ -192,7 +415,8 @@ const Plans = ({ navigation }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <CollapsibleMenuForExercise Exercise={item.heading}
+      <CollapsibleMenuForExercise
+        Exercise={item.heading}
         List={item.exercise}
         Flag={mealMenuIsVisible}
         Icon='2'
@@ -204,8 +428,10 @@ const Plans = ({ navigation }) => {
   const renderItem2 = ({ item, index }) => {
     return (
       <WeekViewMeals
+        dateDefault={item?.date_default}
         date={item?.date}
         day={item?.day}
+        dayDefault={item?.day_default}
         meals={item?.meals}
       />
     )

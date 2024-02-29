@@ -50,4 +50,8 @@ function HeadlessCheck({ isHeadless }) {
 
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.returnKeyType = 'done';
+TextInput.defaultProps.blurOnSubmit = true;
+
 AppRegistry.registerComponent(appName, () => App);

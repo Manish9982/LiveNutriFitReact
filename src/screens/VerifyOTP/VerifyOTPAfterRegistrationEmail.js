@@ -99,6 +99,7 @@ const VerifyOTPAfterRegistration = ({ navigation, route }) => {
             storeDataInLocalStorage('user_id', JSON.stringify(result.user_id))
             storeDataInLocalStorage('user_type', (result.user_type))
             storeDataInLocalStorage('wrid', result.wrd_id)
+            console.log('wrid', result.wrd_id)
             //save usertype in local storage
             //save userId in local storage
             { storeDataInLocalStorage('stackValue', '4') && navigation.replace("WelcomeScreenAfterRegistration") }                        //change stack value for navigating to bottom tabs

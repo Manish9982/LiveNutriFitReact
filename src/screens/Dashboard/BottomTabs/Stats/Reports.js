@@ -205,7 +205,6 @@ const Reports = ({ navigation }) => {
                                     } else if (response.error) {
                                         console.log('ImagePicker Error: ', response.error);
                                     } else {
-                                        Alert.alert('hi')
                                         console.log(response)
                                         setPic(response)
                                         setVisible3(false)
@@ -608,9 +607,7 @@ const Reports = ({ navigation }) => {
                         <View style={{
                             height: H,
                             width: W,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "row",
+                            alignItems:'center',
                             backgroundColor: 'rgba(0, 0, 0, 0.5)'
                         }}>
                             <View style={{
@@ -620,7 +617,8 @@ const Reports = ({ navigation }) => {
                                 // height: H * 0.32,
                                 width: W * 0.9,
                                 justifyContent: "center",
-                                elevation: 8
+                                elevation: 8,
+                                marginTop:15,
                             }}>
                                 <Text style={{
                                     ...fontFamily.bold,
@@ -656,6 +654,8 @@ const Reports = ({ navigation }) => {
                                         alignSelf: "center"
                                     }} />
                                 <TextInput
+                                returnKeyType='done'
+                                blurOnSubmit
                                     multiline
                                     numberOfLines={4}
                                     //textBreakStrategy="balanced"

@@ -227,6 +227,7 @@ const More = ({ navigation }) => {
     var formdata = new FormData()
     formdata.append("user_id", JSON.parse(temp));
     formdata.append("logout_time", Date.now())
+    formdata.append('clearToken', '1')
     console.log("3P")
     const result = await PostApiData('user_session_out', formdata)
     console.log("4P")
@@ -239,6 +240,10 @@ const More = ({ navigation }) => {
       } catch (e) {
       }
       console.log('Done.')
+    }
+    else {
+      Alert.alert(result?.message)
+      setLoader(false)
     }
   }
   const changeLaguagee = (languageKey) => {

@@ -10,12 +10,14 @@ import base64 from 'react-native-base64'
 import { useIsFocused } from '@react-navigation/native'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
 import { useLocales } from '../../utils/LocalizationUtil'
+import { useNetInfo } from '@react-native-community/netinfo'
 
 
 const LNFShopWebView = ({ navigation }) => {
-    const [loader, setLoader] = useState(false)
+    const [loader, setLoader] = useState(true)
     const [userId, setUserId] = useState("")
     const strings = useLocales()
+    const netinfo = useNetInfo()
     useEffect(() => {
         getWRID()
     }, [])
@@ -30,59 +32,67 @@ const LNFShopWebView = ({ navigation }) => {
     const getWRID = async () => {
         const userd = await getDataFromLocalStorage("wrid")
         setUserId(userd)
-        encodeBase64((userd))
+        setLoader(false)
+        //encodeBase64((userd))
     }
 
     const encodeBase64 = (input) => {
         base64.encode(input);
     }
-
+console.log('netinfo=======>', netinfo)
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <StatusBar barStyle={"dark-content"}
                 backgroundColor={colors.GREEN} />
             {
-                <View
-                    style={{ flex: 1 }}>
-                    <WebView
-                        geolocationEnabled
-                        pullToRefreshEnabled
-                        startInLoadingState={true}
-                        originWhitelist={['*']}
-                        javaScriptEnabled={true}
-                        renderLoading={renderLoading}
-                        thirdPartyCookiesEnabled={true}
-                        sharedCookiesEnabled={true}
-                        cacheEnabled={true}
-                        domStorageEnabled={true}
-                        webviewDebuggingEnabled
-                        textInteractionEnabled
-                        //     injectedJavaScript={`
-                        //     var style = document.createElement('style');
-                        //     style.innerHTML = "div#new-shop { display: block !important; }";
-                        //     document.head.appendChild(style);
-                        //   `}
-                        //source={{ uri: `${Constants.BASE_URL}${strings.code == 'en' ? '' : `${strings.code}/`}shop/?uid=${base64.encode(userId)}&type=mob` }}
-                        source={{ uri: `${Constants.BASE_URL}shop/?uid=${base64.encode(userId)}&type=mob` }}
-                        style={{
-                            flex: 1
-                        }}
-                        onNavigationStateChange={(info) => {
-                            if (info.url == `${Constants.BASE_URL}failure/`) {
-                                // navigation.navigate("BottomTabs")
-                            } else if (info.url == `${Constants.BASE_URL}success/`) {
-                                navigation.navigate("Stats")
-                                // Alert.alert("Alert", info.url)
-                                // Alert.alert('Payment successful', 'Your payment has been done sucessfully , press OKAY to go to dashboard!', [
-                                // {text: 'OKAY', onPress: () => { navigation.navigate("BottomTabs")  }},]);
-                            } else {
+                loader
+                    ?
+                    <Text>Please Wait...</Text>
+                    :
+                    <View
+                        style={{ flex: 1 }}>
+                        <WebView
+                            geolocationEnabled
+                            pullToRefreshEnabled
+                            startInLoadingState={true}
+                            originWhitelist={['*']}
+                            javaScriptEnabled={true}
+                            renderLoading={renderLoading}
+                            thirdPartyCookiesEnabled={true}
+                            sharedCookiesEnabled={true}
+                            cacheEnabled={true}
+                            domStorageEnabled={true}
+                            webviewDebuggingEnabled
+                            textInteractionEnabled
+                            //     injectedJavaScript={`
+                            //     var style = document.createElement('style');
+                            //     style.innerHTML = "div#new-shop { display: block !important; }";
+                            //     document.head.appendChild(style);
+                            //   `}
+                            //source={{ uri: `${Constants.BASE_URL}${strings.code == 'en' ? '' : `${strings.code}/`}shop/?uid=${base64.encode(userId)}&type=mob` }}
+                            //source={{ uri: `${Constants.BASE_URL}shop/?uid=${base64.encode(userId)}&type=mob` }}
+                            source={{ uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob&ip=${netinfo?.details?.ipAddress}` }}
+                            style={{
+                                flex: 1
+                            }}
+                            onNavigationStateChange={(info) => {
+                                if (info.url == `${Constants.BASE_URL}failure/`) {
+                                    // navigation.navigate("BottomTabs")
+                                } else if (info.url == `${Constants.BASE_URL}success/`) {
+                                    navigation.navigate("Stats")
+                                    // Alert.alert("Alert", info.url)
+                                    // Alert.alert('Payment successful', 'Your payment has been done sucessfully , press OKAY to go to dashboard!', [
+                                    // {text: 'OKAY', onPress: () => { navigation.navigate("BottomTabs")  }},]);
+                                } else {
 
-                            }
-                            console.log("URL == ", info.url)
-                        }}
-                    />
-                </View>
+                                }
+                                console.log("URL == ", info.url)
+                            }}
+                        />
+                    </View>
             }
+
+
         </SafeAreaView>
     )
 }

@@ -45,7 +45,7 @@ const ListForMeal = (props) => {
 
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
-        
+
 
     }
 
@@ -54,7 +54,7 @@ const ListForMeal = (props) => {
         var formdata = new FormData();
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("user_id", JSON.parse(temp));
-        formdata.append("category", props.Category);
+        formdata.append("category", props.CategoryDefault);
         formdata.append("id", props.Id);
         formdata.append("status", "1")
         formdata.append("repeat", "0")
@@ -71,7 +71,7 @@ const ListForMeal = (props) => {
         var formdata = new FormData();
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("user_id", JSON.parse(temp));
-        formdata.append("category", props.Category);
+        formdata.append("category", props.CategoryDefault);
         formdata.append("id", props.Id);
         formdata.append("status", "0")
         formdata.append("repeat", "0")
@@ -122,9 +122,9 @@ const ListForMeal = (props) => {
 
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("user_id", JSON.parse(temp));
-        formdata.append("category", props.Category);
+        formdata.append("category", props.CategoryDefault);
         formdata.append("id", props.Id);
-        formdata.append("mdate", props.Date);
+        formdata.append("mdate", props.DateDefault);
 
 
         const resultreplace = await PostApiData('DashboardApi/replacemeal', formdata)
@@ -155,7 +155,7 @@ const ListForMeal = (props) => {
         var formdata = new FormData();
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("user_id", JSON.parse(temp));
-        formdata.append("category", props.Category);
+        formdata.append("category", props.CategoryDefault);
         formdata.append("id", props.Id);
         formdata.append("status", "1")
         formdata.append("repeat", "1")
@@ -170,10 +170,8 @@ const ListForMeal = (props) => {
             if (result.status == '200') {
                 setMyMeals(result)
                 ShortToast(result1.message, 'success', '')
-
             }
             else {
-
                 ShortToast(result.message, 'error', '')
             }
         }
@@ -200,8 +198,6 @@ const ListForMeal = (props) => {
                             color={"green"} />
                     </View>
                     :
-
-
 
                     <Collapsible collapsed={false}>
                         <View style={[
@@ -256,7 +252,7 @@ const ListForMeal = (props) => {
                                                 paddingHorizontal: W * 0.025,
                                                 lineHeight: H * 0.03,
                                             }}>
-                                                {"We noticed that you like this meal, Want to repeat it for next 7 days?\n"} </Text>
+                                                {strings.repeatMealsText} </Text>
                                             <>
                                                 <View style={{
                                                     flexDirection: "row",
@@ -274,12 +270,11 @@ const ListForMeal = (props) => {
                                                             fontSize: fontSizes.XL,
                                                             paddingTop: H * 0.028,
                                                         }}>
-                                                            YES
+                                                            {strings.yes}
                                                         </Text>
                                                     </TouchableOpacity>
                                                     <TouchableOpacity onPress={() => {
                                                         setVisibleModalForRepeat(false)
-
                                                     }}>
                                                         <Text style={{
                                                             ...fontFamily.bold,
@@ -287,7 +282,7 @@ const ListForMeal = (props) => {
                                                             fontSize: fontSizes.XL,
                                                             paddingTop: H * 0.028,
                                                         }}>
-                                                            NO
+                                                            {strings.no}
                                                         </Text>
                                                     </TouchableOpacity>
                                                 </View>

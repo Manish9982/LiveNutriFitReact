@@ -108,6 +108,7 @@ const VerifyOTPAfterSignInEmail = ({ navigation, route }) => {
         storeDataInLocalStorage('user_type', (result.user_type))                          //save usertype in local storage
         storeDataInLocalStorage('registerStatus', result.register_status)
         storeDataInLocalStorage('wrid', result.wrd_id)
+        console.log('wrid', result.wrd_id)
 
         navigate()
 

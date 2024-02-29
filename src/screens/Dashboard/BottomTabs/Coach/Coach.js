@@ -88,10 +88,21 @@ const Coach = ({ navigation }) => {
       keyboardDidShowListener && keyboardDidShowListener.remove();
     };
   }, []); // Empty dependency array to run the effect only once (on mount)
+  useEffect(() => {
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', handleKeyboardDidHide);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      keyboardDidHideListener && keyboardDidHideListener.remove();
+    };
+  }, []); // Empty dependency array to run the effect only once (on mount)
 
   const handleKeyboardDidShow = (event) => {
     const height = event.endCoordinates.height;
     setKeyboardHeight(height);
+  };
+  const handleKeyboardDidHide = (event) => {
+    setKeyboardHeight(0);
   };
 
 

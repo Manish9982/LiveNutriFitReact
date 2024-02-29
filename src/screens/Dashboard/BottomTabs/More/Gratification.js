@@ -26,7 +26,7 @@ const Gratification = ({ navigation }) => {
     const getLanguage = async () => {
         setLoader(true)
         const lang = await getDataFromLocalStorage("lang")
-        
+
         setLoader(false)
 
     }
@@ -119,7 +119,7 @@ const Gratification = ({ navigation }) => {
         <View style={{}}>
 
             <StatusBar backgroundColor={colors.GREEN} />
-            <HeaderForSubmissionScreens Title={strings.Gratification}/>
+            <HeaderForSubmissionScreens Title={strings.Gratification} />
 
             <View style={{
                 height: H,
@@ -170,13 +170,13 @@ const Gratification = ({ navigation }) => {
                         backgroundColor: "rgba(0,0,0,0.2)"
                     }}>
                         <View style={{
-                            height: H * 0.5,
+                            paddingVertical: 20,
                             backgroundColor: "white",
                             width: W * 0.9,
                             justifyContent: "center",
                             alignItems: "center",
                             alignSelf: "center",
-                            marginTop: H * 0.25,
+                            marginTop: H * 0.1,
                             borderRadius: 10,
                         }}>
 
@@ -210,7 +210,10 @@ const Gratification = ({ navigation }) => {
                                     <Text style={{ color: "white" }}>{strings.Submit}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[styles.button, { backgroundColor: colors.OFFWHITE }]}
-                                    onPress={() => { setVisible(false) }}>
+                                    onPress={() => {
+                                        setVisible(false)
+                                        setText('')
+                                    }}>
                                     <Text>{strings.Cancel}</Text>
                                 </TouchableOpacity>
                             </View>
