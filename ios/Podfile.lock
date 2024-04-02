@@ -267,6 +267,20 @@ PODS:
     - React-utils
     - SocketRocket (= 0.6.1)
     - Yoga
+  - React-Core/RCTPushNotificationHeaders (0.72.7):
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core/Default
+    - React-cxxreact
+    - React-hermes
+    - React-jsi
+    - React-jsiexecutor
+    - React-perflogger
+    - React-runtimeexecutor
+    - React-utils
+    - SocketRocket (= 0.6.1)
+    - Yoga
   - React-Core/RCTSettingsHeaders (0.72.7):
     - glog
     - hermes-engine
@@ -384,12 +398,17 @@ PODS:
     - React-Core
   - react-native-netinfo (11.1.1):
     - React-Core
+  - react-native-notifications (5.1.0):
+    - React-Core
   - react-native-pdf (6.7.3):
     - React-Core
   - react-native-restart (0.0.27):
     - React-Core
   - react-native-safe-area-context (4.7.4):
     - React-Core
+  - react-native-simple-toast (3.3.1):
+    - React-Core
+    - Toast (~> 4)
   - react-native-view-shot (3.8.0):
     - React-Core
   - react-native-webview (13.6.3):
@@ -452,6 +471,12 @@ PODS:
     - RCTTypeSafety (= 0.72.7)
     - React-Codegen (= 0.72.7)
     - React-Core/RCTNetworkHeaders (= 0.72.7)
+    - React-jsi (= 0.72.7)
+    - ReactCommon/turbomodule/core (= 0.72.7)
+  - React-RCTPushNotification (0.72.7):
+    - RCTTypeSafety (= 0.72.7)
+    - React-Codegen (= 0.72.7)
+    - React-Core/RCTPushNotificationHeaders (= 0.72.7)
     - React-jsi (= 0.72.7)
     - ReactCommon/turbomodule/core (= 0.72.7)
   - React-RCTSettings (0.72.7):
@@ -559,6 +584,7 @@ PODS:
     - React-Core
   - RNSweetAlert (3.1.0)
   - SocketRocket (0.6.1)
+  - Toast (4.1.0)
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
 
@@ -592,9 +618,11 @@ DEPENDENCIES:
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -606,6 +634,7 @@ DEPENDENCIES:
   - React-RCTImage (from `../node_modules/react-native/Libraries/Image`)
   - React-RCTLinking (from `../node_modules/react-native/Libraries/LinkingIOS`)
   - React-RCTNetwork (from `../node_modules/react-native/Libraries/Network`)
+  - React-RCTPushNotification (from `../node_modules/react-native/Libraries/PushNotificationIOS`)
   - React-RCTSettings (from `../node_modules/react-native/Libraries/Settings`)
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
@@ -649,6 +678,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - SocketRocket
+    - Toast
     - TOCropViewController
 
 EXTERNAL SOURCES:
@@ -707,12 +737,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-notifications:
+    :path: "../node_modules/react-native-notifications"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-simple-toast:
+    :path: "../node_modules/react-native-simple-toast"
   react-native-view-shot:
     :path: "../node_modules/react-native-view-shot"
   react-native-webview:
@@ -735,6 +769,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/LinkingIOS"
   React-RCTNetwork:
     :path: "../node_modules/react-native/Libraries/Network"
+  React-RCTPushNotification:
+    :path: "../node_modules/react-native/Libraries/PushNotificationIOS"
   React-RCTSettings:
     :path: "../node_modules/react-native/Libraries/Settings"
   React-RCTText:
@@ -829,9 +865,11 @@ SPEC CHECKSUMS:
   react-native-document-picker: 2b8f18667caee73a96708a82b284a4f40b30a156
   react-native-image-picker: be000cd54f1b1bd71dba9677b36847827f9cc012
   react-native-netinfo: b0ae7d0f76302eaf249de7b2b7add297e155b1d0
+  react-native-notifications: 4601a5a8db4ced6ae7cfc43b44d35fe437ac50c4
   react-native-pdf: b4ca3d37a9a86d9165287741c8b2ef4d8940c00e
   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
   react-native-safe-area-context: 2cd91d532de12acdb0a9cbc8d43ac72a8e4c897c
+  react-native-simple-toast: 1f1cc551d419bc0ab05dcb0136554006c274789d
   react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   react-native-webview: 88293a0f23eca8465c0433c023ec632930e644d0
   React-NativeModulesApple: ac9cea059dfe97cf3a4f00aa2774293bf5a99463
@@ -843,6 +881,7 @@ SPEC CHECKSUMS:
   React-RCTImage: 6ad7a367f40ac7e9af4e15b60e4c3e6dbda87817
   React-RCTLinking: 82db248ade50d92184a9feca46528139f1590a63
   React-RCTNetwork: 93db4b433026b3137e6063f0a66336662d473e55
+  React-RCTPushNotification: 32b82f7bbe1ed1a964adc107e26f50547c21aff5
   React-RCTSettings: e6b44c8b24bc07936e68b8f20d923f69a32488ba
   React-RCTText: 3c71ecaad8ee010b79632ea2590f86c02f5cce17
   React-RCTVibration: a756370068de4becdf432dbd42b76f42fbc1dc66
@@ -869,9 +908,10 @@ SPEC CHECKSUMS:
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   RNSweetAlert: 1aa4e70d8f8540aa6b9c18c019f62a25e36720b6
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  Toast: ec33c32b8688982cecc6348adeae667c1b9938da
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
-PODFILE CHECKSUM: e3b2b08d0d75f541ea10fd0adec53ef4de11cd82
+PODFILE CHECKSUM: 834c57ba2e55c90ac90bf71b75e243289c904957
 
 COCOAPODS: 1.14.2

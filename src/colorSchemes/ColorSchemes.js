@@ -6,6 +6,7 @@ import NetInfo, { useNetInfo } from "@react-native-community/netinfo"
 import { useNavigation } from "@react-navigation/native";
 import { Text } from "react-native-paper";
 import RNRestart from 'react-native-restart'
+import Toast from 'react-native-simple-toast'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -177,7 +178,58 @@ export const PostApiData = async (ApiName, formdata) => {
          const temp = await getDataFromLocalStorage('user_id')
          //ToastAndroid.show(`${error}`, ToastAndroid.SHORT)
          //ShortToast(`Message for Developer: Api That Failed: ${ApiName} for User ID:${temp}`, "error", "")
-         ShortToast(`Something went wrong`, "error", "")
+         //ShortToast(`Something went wrong!`, "error", "")
+      }
+   }
+   else {
+      ShortToast("Internet Connection Required.\n\n Make sure you are connected to internet and try again", "error", "")
+   }
+
+}
+
+//for user_session_activity api (giving 500 sometimes)
+export const PostApiData2 = async (ApiName, formdata) => {
+   const netinfo = await NetInfo.fetch()
+   // console.log(netinfo)
+   console.log("API URL ==>", `${Constants.BASE_URL}panel/${ApiName}`)
+   if (netinfo.isConnected) {
+      //const URL = "https://lnf.bizhawkztest.com/public/"
+      const URL = Constants.BASE_URL
+      const token = await getDataFromLocalStorage('Token')
+      console.log("TOKEN == ", token)
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+      var requestOptions = {
+         method: 'POST',
+         redirect: 'follow',
+         body: formdata,
+         headers: myHeaders,
+      };
+      try {
+         console.log(`formdata of ${ApiName} ====> `, formdata)
+         const response = await fetch(`${Constants.BASE_URL}panel/${ApiName}`, requestOptions)
+         const result = await response.json()
+         if (result.status == '403') {
+            try {
+               //ShortToast("Your session has expired. Logging you out now..", "error", "")
+               await AsyncStorage.clear()
+               RNRestart.Restart()
+            } catch (e) {
+               // ShortToast(`${e}`, "error", "")
+               // ShortToast(`${ApiName}`, "error", "")
+            }
+         }
+         else {
+            // console.log(`result of ${ApiName} ====> `, result)
+            return result
+         }
+
+
+      } catch (error) {
+         const temp = await getDataFromLocalStorage('user_id')
+         //ToastAndroid.show(`${error}`, ToastAndroid.SHORT)
+         //ShortToast(`Message for Developer: Api That Failed: ${ApiName} for User ID:${temp}`, "error", "")
+         //ShortToast(`Something went wrong`, "error", "") --->>> Modified to comment due to something went wrong error when comes from background state by gaurav on 20 march 
       }
    }
    else {
@@ -188,24 +240,25 @@ export const PostApiData = async (ApiName, formdata) => {
 
 export const ShortToast = (msg, style, title) => {
    if (Platform.OS == "android") {
-      SweetAlert.showAlertWithOptions({
-         title: msg,
-         subTitle: '',
-         confirmButtonTitle: 'OK',
-         confirmButtonColor: colors.GREEN,
-         otherButtonTitle: 'Cancel',
-         otherButtonColor: '#dedede',
-         style: style,
-         cancellable: true,
-      },
-         callback => console.log('callback'))
+      // SweetAlert.showAlertWithOptions({
+      //    title: msg,
+      //    subTitle: '',
+      //    confirmButtonTitle: 'OK',
+      //    confirmButtonColor: colors.GREEN,
+      //    otherButtonTitle: 'Cancel',
+      //    otherButtonColor: '#dedede',
+      //    style: style,
+      //    cancellable: true,
+      // },
+      //    callback => console.log('callback'))
+      Toast.show(`${msg}`)
    }
    else {
       if (style == 'error') {
-         Alert.alert('Error', `${msg}`)
+         Toast.show(`${msg}`)
       }
       else {
-         Alert.alert('Info', msg)
+         Toast.show(`${msg}`)
       }
    }
 }

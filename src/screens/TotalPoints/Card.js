@@ -26,9 +26,9 @@ const Card = ({ points, maxPoints, date, cardData }) => {
     const getLanguage = async () => {
         const lang = await getDataFromLocalStorage("lang")
         if (lang == "en") {
-            
+
         } else {
-            
+
         }
     }
     //  const [dataFromApi, setDataFromApi] = React.useState(null)
@@ -58,7 +58,8 @@ const Card = ({ points, maxPoints, date, cardData }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     {myIcon}
                     <Text style={{ fontFamily: 'Montserrat-Regular', paddingLeft: W * 0.03, color: 'black' }}>{points}</Text>
-                    <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, paddingTop: W * 0.014, color: "silver" }}>/{maxPoints}</Text>
+                    {/* modified by gaurav 12/03 remove slash after coin on 62 line*/}
+                    <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: fontSizes.LAR, paddingTop: W * 0.014, color: "silver" }}> {maxPoints}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ fontFamily: 'Montserrat-Regular', color: 'black', fontSize: fontSizes.LAR, paddingRight: 5 }}>{date}</Text>
@@ -87,6 +88,7 @@ const Card = ({ points, maxPoints, date, cardData }) => {
                                     {IconThrow(item?.activity_completed)}
                                     <Text style={styles.textActivity}>{item?.activity_name}</Text>
                                     <Text style={styles.textStyleForPoints}>{item?.selected_option}</Text>
+                                    {/* <Text style={styles.textStyleForPoints}>{12345678901234567}</Text> */}
                                 </View>
                             )
                         })
@@ -108,20 +110,13 @@ const styles = StyleSheet.create({
     },
     displayActivity:
     {
-        width: W * 0.9,
+        width: W * 0.98,
         backgroundColor: colors.OFFWHITE,
         flexDirection: 'row',
-        paddingHorizontal: W * 0.05,
+        paddingHorizontal: W * 0.02,
         paddingVertical: W * 0.01,
         alignSelf: 'center',
         backgroundColor: '#fff',
-    },
-    textActivity:
-    {
-        fontFamily: 'Montserrat-Regular',
-        marginHorizontal: W * 0.04,
-        fontSize: fontSizes.LAR,
-        color: colors.FONT_BLACK
     },
     detailsContainer:
     {
@@ -147,6 +142,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 8,
     },
+
     totalPoints:
     {
         flexDirection: 'row',
@@ -154,18 +150,27 @@ const styles = StyleSheet.create({
         // marginHorizontal:W*0.03,
         backgroundColor: '#fff',
         padding: H * 0.018,
-        width: W * 0.9,
+        width: W * 0.98,
         marginTop: H * 0.02,
         alignItems: "center",
         alignSelf: "center",
         borderRadius: 8,
     },
-    textStyleForPoints:
-    {
+    textStyleForPoints: {
         ...fontFamily.bold,
         position: "absolute",
-        left: W * 0.8
-    }
+        right: 5, // Aligning the text to the right edge
+        width: W * 0.42,
+        textAlign: 'right' // Right-aligning the text
+    },
+
+    textActivity:
+    {
+        fontFamily: 'Montserrat-Regular',
+        marginHorizontal: W * 0.01,
+        fontSize: fontSizes.LAR,
+        color: colors.FONT_BLACK
+    },
 })
 
 export default Card

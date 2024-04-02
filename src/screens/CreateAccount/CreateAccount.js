@@ -85,7 +85,8 @@ const CreateAccount = ({ navigation }) => {
             </>
             :
             <>
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView
+                >
                     <PaperProvider theme={theme}>
 
 
@@ -98,25 +99,19 @@ const CreateAccount = ({ navigation }) => {
                                         <Text style={styles.text1}>{data?.data[0]?.text3}</Text>
                                     </TouchableOpacity>
                                     <Text style={styles.text2}>Let's Start!</Text>
-
-
                                 </View>
 
                             </LinearGradient>
 
                             <View style={styles.lowerContainer}>
                                 <StatusBar
-
                                     backgroundColor={colors.GREEN}
                                 />
 
                                 <Text style={styles.text4}>{data?.data[0]?.text6}</Text>
-
                                 <View style={{ marginVertical: HEIGHT * 0.045 }}>
 
                                     <Text style={styles.text5}>{data?.data[0]?.text7}</Text>
-
-
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.text5}>LiveNutriFit</Text>
                                         <TouchableOpacity
@@ -125,27 +120,18 @@ const CreateAccount = ({ navigation }) => {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-
-
                                 {/* <TouchableOpacity style={styles.socialBar}>
-
                             <View style={styles.iconMargin}>
                                 {googleIcon}
                             </View>
-
                             <View>
                                 <Text style={styles.signupText}>Sign Up with Google</Text>
                             </View>
-
                         </TouchableOpacity>
-
                         <TouchableOpacity style={styles.socialBar}>
-
-
                             <View style={styles.iconMargin}>
                                 {facebookIcon}
                             </View>
-
                             <View>
                                 <Text style={styles.signupText}>Sign Up with Facebook</Text>
                             </View>

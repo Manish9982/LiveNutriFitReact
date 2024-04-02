@@ -204,7 +204,8 @@ const TotalPoints = () => {
 
     const showChildren = () => {
         return (
-            <TouchableOpacity onPress={() => { setCamVisible(true) }}>
+            // <TouchableOpacity onPress={() => { setCamVisible(true) }}>
+            <TouchableOpacity >
                 <View style={{ padding: 0 }}>
                     <Image source={{ uri: dataFromApi?.profile }}
                         style={{ height: 75, width: 75, borderRadius: 80 / 2, borderWidth: 0.5, borderColor: colors.GREEN_DARK_TRANSPARENT }} />

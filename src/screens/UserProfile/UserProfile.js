@@ -8,6 +8,7 @@ import HeaderForSubmissionScreens from '../Dashboard/BottomTabs/Stats/HeaderForS
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import { useIsFocused } from '@react-navigation/native'
+import { Linking } from 'react-native';
 
 
 import LocalizedStrings from 'react-native-localization';
@@ -38,6 +39,11 @@ const UserProfile = ({ navigation }) => {
 
     const isFocused = useIsFocused()
     const strings = useLocales()
+
+    const openAppSettings = () => {
+        Linking.openSettings();
+    };
+    
 
     useEffect(() => {
         getLanguage()
@@ -95,7 +101,7 @@ const UserProfile = ({ navigation }) => {
         setLastRefresh(`${(date.getHours()).toString().padStart(2, 0)}:${(date.getMinutes()).toString().padStart(2, 0)}`)
         wait(2000).then(() => setRefreshing(false))
     }, []);
-    
+
 
     const redirectToSettings = () => {
         if (Platform.OS === 'ios') {
@@ -132,14 +138,49 @@ const UserProfile = ({ navigation }) => {
 
     const launchCam = async () => {
         try {
-            if (Platform.OS == "ios") {
+            // if (Platform.OS == "ios") {
+            //     const statuses = await requestMultiple([
+            //         PERMISSIONS.IOS.CAMERA,
+            //         PERMISSIONS.IOS.PHOTO_LIBRARY,
+            //     ]);
+            //     console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
+            //     console.log('FaceID', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
+
+            //     if (
+            //         statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
+            //         statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
+            //     ) {
+            //         try {
+            //             const pic = await ImagePicker.openCamera({
+            //                 width: 300,
+            //                 height: 400,
+            //                 cropping: true,
+            //             });
+            //             console.log("CAmPic======>", pic);
+            //             uploadPhotoCamera(pic)
+            //         }
+            //         catch (err) {
+            //             ShortToast(`${err}`, 'error', '');
+            //         }
+            //     } else {
+            //         if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
+            //             Alert.alert("Camera is not accessible");
+            //             return false;
+            //         } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
+            //             Alert.alert("Photo Library is not accessible");
+            //             return false;
+            //         }
+            //     }
+
+            // }
+            if (Platform.OS === "ios") {
                 const statuses = await requestMultiple([
                     PERMISSIONS.IOS.CAMERA,
                     PERMISSIONS.IOS.PHOTO_LIBRARY,
                 ]);
                 console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
                 console.log('FaceID', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
-
+    
                 if (
                     statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
                     statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
@@ -151,22 +192,38 @@ const UserProfile = ({ navigation }) => {
                             cropping: true,
                         });
                         console.log("CAmPic======>", pic);
-                        uploadPhotoCamera(pic)
+                        uploadPhotoCamera(pic);
                     }
                     catch (err) {
                         ShortToast(`${err}`, 'error', '');
                     }
                 } else {
                     if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
-                        Alert.alert("Camera is not accessible");
+                        Alert.alert(
+                            "Camera is not accessible",
+                            "Please enable camera access in settings",
+                            [
+                                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                                { text: 'OK', onPress: openAppSettings },
+                            ],
+                            { cancelable: false }
+                        );
                         return false;
                     } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
-                        Alert.alert("Photo Library is not accessible");
+                        Alert.alert(
+                            "Photo Library is not accessible",
+                            "Please enable photo library access in settings",
+                            [
+                                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                                { text: 'OK', onPress: openAppSettings },
+                            ],
+                            { cancelable: false }
+                        );
                         return false;
                     }
                 }
-
             }
+
             else {
                 const statuses = await requestMultiple([
                     PERMISSIONS.ANDROID.CAMERA,
@@ -207,6 +264,9 @@ const UserProfile = ({ navigation }) => {
         }
     }
 
+  
+  
+  
     const uploadPhotoGallery = async (pic) => {
         console.log('PIC=====>', pic)
         const temp = await getDataFromLocalStorage('user_id')
@@ -215,7 +275,7 @@ const UserProfile = ({ navigation }) => {
         formdata.append("profile", {
             uri: pic?.assets?.[0]?.uri,
             type: pic?.assets?.[0]?.type,
-            name: pic?.assets?.[0]?.fileName,
+            name: pic?.assets?.[0]?.fileName, 
         });
         const result = await PostApiData('update_profile_image', formdata)
         console.log("result======>", result)
@@ -229,9 +289,12 @@ const UserProfile = ({ navigation }) => {
         var formdata = new FormData();
         formdata.append("user_id", JSON.parse(temp));
         formdata.append("profile", {
-            uri: pic?.path,
+            // uri: pic?.path,
+            // type: pic?.mime,
+            // name: pic?.modificationDate,
+            name: pic?.path,
             type: pic?.mime,
-            name: pic?.modificationDate,
+            uri: pic?.path
         });
         const result = await PostApiData('update_profile_image', formdata)
         console.log("result======>", result)
@@ -284,7 +347,6 @@ const UserProfile = ({ navigation }) => {
         setLastRefresh(`${(date.getHours()).toString().padStart(2, 0)}:${(date.getMinutes()).toString().padStart(2, 0)}`)
     }
 
-    console.log("dataFromApi?.data?.[0]?.goal?.answer====>", dataFromApi?.data?.[0]?.goal)
 
     return (
         <View>

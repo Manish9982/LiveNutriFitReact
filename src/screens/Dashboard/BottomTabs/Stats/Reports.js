@@ -169,7 +169,7 @@ const Reports = ({ navigation }) => {
                                                         console.log('ImagePicker Error: ', response.error);
                                                     } else {
                                                         Alert.alert(response?.errorCode)
-                                                        console.log(response)
+                                                        console.log("Gaurav")
                                                         setPic(response)
                                                         setVisible3(false)
                                                         setVisible2(true)
@@ -307,8 +307,8 @@ const Reports = ({ navigation }) => {
                                     } else if (response.error) {
                                         console.log('ImagePicker Error: ', response.error);
                                     } else {
-                                        Alert.alert(response?.errorCode)
-                                        console.log(response)
+                                       // Alert.alert("Upload sucessfully!")
+                                       //Alert.alert(response?.errorCode)
                                         setPic(response)
                                         setVisible3(false)
                                         setVisible2(true)
@@ -459,7 +459,7 @@ const Reports = ({ navigation }) => {
     const pickDocument = async () => {
         console.log("document picker here")
         const res = await DocumentPicker.pickSingle()
-        console.log(res)
+        console.log("Gauravvvvvvvvvvvvvvvvvvvvvvvvvvvv",res)
         setDoc(res)
         setVisible3(false)
         setVisible2(true)
@@ -692,7 +692,16 @@ const Reports = ({ navigation }) => {
                                             // left: -W * 0.06
                                         }}>{strings.Submit}</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setVisible(false)}>
+                                    <TouchableOpacity 
+
+                                    onPress={()=>{
+                                        setDescription("")
+                                        setText("")
+                                        setVisible(false)
+                                    }}
+                                    // onPress={() => setVisible(false)
+                                    // }
+ >
 
                                         <Text style={{
                                             textAlign: "right",
@@ -788,6 +797,7 @@ const Reports = ({ navigation }) => {
                                         }}>{strings.Submit}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => {
+                                        setDescription("")
                                         setPic(null)
                                         setDoc(null)
                                         setVisible2(false)

@@ -9,6 +9,7 @@ export default hindi = {
     grocerylist: "ग्रोसरी लिस्ट",
     LNFshop: "LNF शॉप",
     lang: "भाषा",
+    lang2: "भाषा",
     goals: "गोल्स ",
     gratitude: "ग्रैटिट्यूड",
     chatwithcoach: "चैट विद कोच!",
@@ -65,8 +66,8 @@ export default hindi = {
     Submit: "सबमिट ",
     Skip: "स्किप",
     Ok: "ओके",
-    HavingabadDay: "दिन बड़ा खराब गुज़र रहा है?",
-    Pleaseentergratitude: "कृपया ग्रैटिट्यूड एंटर करें",
+    HavingabadDay: "आज आपका मन कैसा है?",
+    Pleaseentergratitude: "कृपया ग्रैटिट्यूड एंटर करें..",
     DontworryThefuturebelongstothosewhobelieveinthebeautyoftheirdreams: "डोंट वरी! भविष्य उनका है जो अपने सपनों की सुंदरता पर विश्वास करते हैं।",
     RelaxThinkoftomorrow: "रिलैक्स ! कल के बारे में सोचो, अतीत को सुधारा नहीं जा सकता।",
     NoworriesYesterday: "नो वरीज ! बीता हुआ कल हमारे पास रिकवर के लिए नहीं है, लेकिन कल हमारे जीतने या हारने के लिए है।",
@@ -166,8 +167,9 @@ export default hindi = {
     EnterMobileNumber: "मोबाइल नंबर एंटर करें",
     EnterEmailAddress: "ईमेल एड्रेस एंटर करें",
     ConfirmMobileNumber: "मोबाइल नंबर कन्फर्म करें",
-    // ConfirmEnterEmailAddress: "ईमेल एड्रेस  कन्फर्म करें",
-    ConfirmEnterEmailAddress: "ईमेल एड्रेस कन्फर्म करें",
+     ConfirmEnterEmailAddress: "घोषणाएं",
+     
+    //ConfirmEnterEmailAddress: "ईमेल एड्रेस कन्फर्म करें",
     Getnotificationsonyourphoneforanyalertsoractivities: "किसी भी अलर्ट या एक्टिविटीज के लिए अपने फ़ोन पर नोटिफिकेशन्स  प्राप्त करें",
     NameError: "नाम ब्लैंक नहीं हो सकता या उसमें स्पेशल करैक्टर और नंबर नहीं हो सकते!",
     MobileError: "इनवैलिड मोबाइल नंबर!",
@@ -341,7 +343,8 @@ export default hindi = {
     coachalertmsg: "अभी भी निश्चित नहीं है कि किस प्लान के साथ जाना है, अपना पहला कंसल्टेशन हमसे निःशुल्क प्राप्त करें। अगले 2 व्यावसायिक दिनों में कॉल प्राप्त करने के लिए ओके पर क्लिक करें",
     whrnovalue: "आपने अभी तक डब्ल्यूएचआर वैल्यू एंटर नहीं किया है. कृपया वैल्यू ऐड करें .",
     Skipfornow: "स्किप करे",
-    changelanguage: "अपनी भाषा बदलें"
+    changelanguage: "अपनी भाषा बदलें",
+    announcement: "घोषणाएं",
 
 
 

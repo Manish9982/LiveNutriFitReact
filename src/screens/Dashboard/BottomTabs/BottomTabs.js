@@ -78,6 +78,23 @@ const BottomTabs = ({ route }) => {
     };
   }, [])
 
+
+  React.useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (nextAppState === 'active' || nextAppState === 'inactive' || nextAppState === 'background') {
+        // Refresh message count when app transitions to different states
+        getMessageCount();
+      }
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+
   const { Nmessages, Ncount } = useContext(DataContext)
   const [messages, setMessages] = Nmessages
   const [count, setCount] = Ncount
@@ -88,7 +105,7 @@ const BottomTabs = ({ route }) => {
     formdata.append("id", JSON.parse(temp));
     const result = await PostApiData('message_count', formdata)
 
-    //console.log(result)
+    console.log("AANCHAL=====>" , result?.count)
     if (result.status == '200') {
       if (result.count == "0") {
         setCount(null)

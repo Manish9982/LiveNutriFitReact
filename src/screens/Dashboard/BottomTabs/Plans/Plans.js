@@ -446,7 +446,6 @@ const Plans = ({ navigation }) => {
     getExercise(date)
   }
 
-
   const handleOnPress1 = () => {
     setButtonBgColor(colors.BUTTON_ORANGE)
     setButtonBgColor2('white')

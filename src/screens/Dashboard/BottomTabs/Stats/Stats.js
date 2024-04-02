@@ -1,8 +1,8 @@
 
-import { Dimensions, StyleSheet, View, StatusBar, Text as TextRN, TouchableOpacity, Image, Animated, Easing, ScrollView, Alert, RefreshControl, Linking, Modal, Platform } from 'react-native'
+import { Dimensions, StyleSheet, View, StatusBar, AppState, Text as TextRN, TouchableOpacity, Image, Animated, Easing, ScrollView, Alert, RefreshControl, Linking, Modal, Platform } from 'react-native'
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import InfoCard from '../../Components/InfoCard'
-import { Appbar, Divider, Text, FAB, Portal, Dialog, Paragraph, Button, Snackbar, TextInput, configureFonts, DefaultTheme } from 'react-native-paper';
+import { Appbar, Divider, Text, FAB, Portal, Dialog, Paragraph, Button, Snackbar, TextInput, configureFonts, DefaultTheme, ActivityIndicator } from 'react-native-paper';
 import HeaderForStats from './HeaderForStats';
 import { FlatList } from 'react-native-gesture-handler';
 import { colors, fontFamily, fontSizes, GetApiData, H, PostApiData, ShortToast, W, ShadowsiOS } from '../../../../colorSchemes/ColorSchemes';
@@ -20,6 +20,7 @@ import hindi from '../../../../hi'
 import english from '../../../../en'
 import Sound from 'react-native-sound';
 import { useLocales } from '../../../../utils/LocalizationUtil';
+import Toast from 'react-native-simple-toast'
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -74,6 +75,9 @@ const Stats = (props) => {
     Nfeet,
     Ninch,
     NvisibleMood,
+    NvisibleMoodGood,
+    NvisibleMood2,
+    NsecondaryLoader,
   } = useContext(DataContext)
   const [visible, setVisible] = Nvisible
   const [heading, setHeading] = Nheading
@@ -82,7 +86,10 @@ const Stats = (props) => {
   const [crrnt, setCrrnt] = Ncrrnt
   const [trgt, setTrgt] = Ntrgt
   const [visibleMood, setVisibleMood] = NvisibleMood
+  const [visibleMoodGood, setVisibleMoodGood] = NvisibleMoodGood
+  const [visibleMood2, setVisibleMood2] = NvisibleMood2
   const [language, setLanguage] = Nlanguage
+  const [secondaryLoader, setSecondaryLoader] = NsecondaryLoader
 
   const isFocused = useIsFocused();
   ////////////////////////////////////////////
@@ -99,11 +106,31 @@ const Stats = (props) => {
   useEffect(() => {
     if (isFocused) {
       getDataForFreeUser()
-      getDataForPaidUser()
       getName()
       getNotificationCount()
     }
   }, [isFocused]);
+
+  React.useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (nextAppState === 'active' || nextAppState === 'inactive' || nextAppState === 'background') {
+        //Alert.alert("Gaurav")
+        getDataForFreeUser()
+        getNotificationCount()
+        scrollRef.current.scrollTo({
+          y: 0,
+          animated: true,
+        });
+      }
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
 
   useEffect(() => {
     // Load the sound when the component mounts
@@ -219,7 +246,6 @@ const Stats = (props) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true)
     getDataForFreeUser()
-    getDataForPaidUser()
     getName()
     wait(2000).then(() => setRefreshing(false));
   }, []);
@@ -236,17 +262,38 @@ const Stats = (props) => {
   }
 
   const addGoal = async () => {
+    setVisibleMoodGood(false)
+    setVisibleMood2(false)
     const temp = await getDataFromLocalStorage('user_id')
     var formdata = new FormData();
     formdata.append("user_id", JSON.parse(temp))
     formdata.append("text", text)
     const result = await PostApiData('add_user_mood', formdata)
+    console.log("MOOD RESULT == >> ", result)
+    setVisibleMood(false)
     if (result.status == 200) {
       setShowInputForGratification(false)
-      ShortToast(result.message, 'success', '')
+      Toast.show(result.message)
+      //ShortToast(result.message, 'success', '')
+      setText("")
       setVisibleMood(false)
-      props.navigation.navigate('Gratification')
+      // props.navigation.navigate('Gratification')
     }
+    // if (text == "") {
+    //   ShortToast("Required field", 'Alert', '')
+    // } else {
+    //   const temp = await getDataFromLocalStorage('user_id')
+    //   var formdata = new FormData();
+    //   formdata.append("user_id", JSON.parse(temp))
+    //   formdata.append("text", text)
+    //   const result = await PostApiData('add_user_mood', formdata)
+    //   if (result.status == 200) {
+    //     setShowInputForGratification(false)
+    //     ShortToast(result.message, 'success', '')
+    //     setVisibleMood(false)
+    //     props.navigation.navigate('Gratification')
+    //   }
+    // }
   }
 
   const updateWeightValues = async () => {
@@ -263,11 +310,13 @@ const Stats = (props) => {
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result?.status == "200") {
         getDataForFreeUser()
-        getDataForPaidUser()
         ShortToast('Success', 'success', '')
         setEditWeights(false)
         setCurrentWeight('')
         //setTargetWeight('')
+      } else {
+        ShortToast(JSON.stringify(result?.message), 'error', '')
+
       }
     }
   }
@@ -277,55 +326,59 @@ const Stats = (props) => {
     //   ShortToast('Invalid Input', 'error', '')
     // }
     // else 
-    if (fastingSugar < 55 || nonFastingSugar < 70) {
-      ShortToast("Your sugar seems to be critically low! Kindly consult a Doctor", 'error', '')
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData();
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("type", "Sugar");
-      formdata.append("fasting", fastingSugar);
-      formdata.append("nonfasting", nonFastingSugar);
-      const result = await PostApiData('updateuserhealthplan', formdata)
-      if (result.status == 200) {
-        getDataForFreeUser()
-        getDataForPaidUser()
-        setEditSugar(false)
-        setFastingSugar('')
-        setNonFastingSugar('')
-      }
-    }
-    else {
-      // if (route.params.flag[0] == "" && route.params.flag[1] == "") {
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData();
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("type", "Sugar");
-      formdata.append("fasting", fastingSugar);
-      formdata.append("nonfasting", nonFastingSugar);
-      const result = await PostApiData('updateuserhealthplan', formdata)
-      if (result.status == 200) {
-        getDataForFreeUser()
-        getDataForPaidUser()
-        setEditSugar(false)
-        setFastingSugar('')
-        setNonFastingSugar('')
-        ShortToast(JSON.stringify(result?.message), 'success', '')
-      }
-      //  }
-      {/*  else {
-          const temp = await getDataFromLocalStorage('user_id')
-          var formdata = new FormData();
-          formdata.append("user_id", JSON.parse(temp));
-          formdata.append("type", "Pain");
-          formdata.append("value", (Math.round(fastingSugar * 100) / 100).toFixed(2));
 
-          const result = await PostApiData('updateuserpaidhealthplan', formdata)
-          if (result.status == 200) {
-              ShortToast('Success','','')
-              updateOtherValue()
-          }
-      }*/}
+    const temp = await getDataFromLocalStorage('user_id')
+    var formdata = new FormData();
+    formdata.append("user_id", JSON.parse(temp));
+    formdata.append("type", "Sugar");
+    formdata.append("fasting", fastingSugar);
+    formdata.append("nonfasting", nonFastingSugar);
+    const result = await PostApiData('updateuserhealthplan', formdata)
+    if (result.status == 200) {
+      getDataForFreeUser()
+      setEditSugar(false)
+      setFastingSugar('')
+      setNonFastingSugar('')
+    } else {
+      ShortToast(JSON.stringify(result?.message), 'error', '')
+
     }
+
+    // if (fastingSugar < 55 || nonFastingSugar < 70) {
+    //   ShortToast("Your sugar seems to be critically low! Kindly consult a Doctor", 'error', '')
+    //   const temp = await getDataFromLocalStorage('user_id')
+    //   var formdata = new FormData();
+    //   formdata.append("user_id", JSON.parse(temp));
+    //   formdata.append("type", "Sugar");
+    //   formdata.append("fasting", fastingSugar);
+    //   formdata.append("nonfasting", nonFastingSugar);
+    //   const result = await PostApiData('updateuserhealthplan', formdata)
+    //   if (result.status == 200) {
+    //     getDataForFreeUser()
+    //     getDataForPaidUser()
+    //     setEditSugar(false)
+    //     setFastingSugar('')
+    //     setNonFastingSugar('')
+    //   }
+    // }
+    // else {
+    //   // if (route.params.flag[0] == "" && route.params.flag[1] == "") {
+    //   const temp = await getDataFromLocalStorage('user_id')
+    //   var formdata = new FormData();
+    //   formdata.append("user_id", JSON.parse(temp));
+    //   formdata.append("type", "Sugar");
+    //   formdata.append("fasting", fastingSugar);
+    //   formdata.append("nonfasting", nonFastingSugar);
+    //   const result = await PostApiData('updateuserhealthplan', formdata)
+    //   if (result.status == 200) {
+    //     getDataForFreeUser()
+    //     getDataForPaidUser()
+    //     setEditSugar(false)
+    //     setFastingSugar('')
+    //     setNonFastingSugar('')
+    //     ShortToast(JSON.stringify(result?.message), 'success', '')
+    //   }
+    //  }
   }
 
   const updateBpValues = async () => {
@@ -343,13 +396,15 @@ const Stats = (props) => {
       formdata.append("bpm", bpm);
       const result = await PostApiData('updateuserhealthplan', formdata)
       if (result.status == 200) {
+        ShortToast(result.message, 'success', '')
         getDataForFreeUser()
-        getDataForPaidUser()
         //{ flagg2 > 2 ? null : ShortToast('Success', 'success', '') }
         setEditBp(false)
         setSystolic('')
         setDiastolic('')
         setBpm('')
+      } else {
+        ShortToast(JSON.stringify(result?.message), 'error', '')
       }
     }
   }
@@ -385,6 +440,8 @@ const Stats = (props) => {
     formdata.append("user_id", JSON.parse(temp))
     const result = await PostApiData('freeuser', formdata)
     setData(result)
+    getDataForPaidUser()
+    setSecondaryLoader(false)
     storeDataInLocalStorage("stackValue", "3")
     storeDataInLocalStorage("user_type", JSON.stringify(result?.user_type))
     //console.log("tempPaid", temp)
@@ -490,7 +547,7 @@ const Stats = (props) => {
         return "#ff6761"
       }
     }
-    const myLoopTwo = []                                                //values of weigth, Sugar, BP/////////////////////////////////////////
+    const myLoopTwo = []     //values of weigth, Sugar, BP/////////////////////////////////////////
     for (let i = 0; i < item?.attribute?.length - 1; i++) {
       myLoopTwo.push(
         <View
@@ -582,12 +639,7 @@ const Stats = (props) => {
                   item.heading2 == 'Weight' && props.navigation.navigate("OnDetailsSubmitScreenOne")
                   item.heading2 == 'Sugar' && props.navigation.navigate("OnDetailsSubmitScreenTwo", { "flag": dataForPaidUser?.single[1]?.attribute_value })
                   item.heading2 == 'Blood Pressure' && props.navigation.navigate("OnDetailsSubmitScreenThree")
-                  //item.heading == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
-                  // if (data?.user_type == "3" || data?.user_type == "2") {
-                  //   item.heading == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
-                  // } else {
-                  //   item.heading == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
-                  // }
+                  item.heading2 == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
                 }}
                 style={styles.nextButton}>
                 <LinearGradient colors={[colors.ORANGE, colors.ORANGE2, colors.ORANGE3]}
@@ -710,7 +762,7 @@ const Stats = (props) => {
     var formdata = new FormData();
     formdata.append("id", JSON.parse(temp))
     const result = await PostApiData('group_message_count', formdata)
-    console.log("Gaurav== =================================", result)
+    console.log("notification gaurav1 ==========>>>>> ", result)
     if (result.status == 200) {
       setNotificationCount(result.count)
     } else {
@@ -734,6 +786,7 @@ const Stats = (props) => {
     const result = await PostApiData('group_read_message', formdata)
     if (result.status == 200) {
       console.log("GauravNotificationCount  == ", result)
+      //Alert.alert("Gaurav")
     } else {
       ShortToast(result?.message, 'error', '')
     }
@@ -867,51 +920,52 @@ const Stats = (props) => {
                     }}>{data?.totalpoint}</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    openNotification()
-                  }}
-                  style={{
-                    height: 27,
-                    width: 27,
-                    // left: W * 0.88,
-                    // top: H * 0.021,
-                    // position: 'absolute'
-                    // marginTop:H*0.004,
-                  }}>
-                  <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/891/891012.png" }}
-                    style={{
-                      height: H * 0.035,
-                      width: H * 0.035,
-                      // position: "absolute",
-                      zIndex: 5,
-                      alignSelf: "center",
-                      tintColor: colors.GREEN
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      openNotification()
                     }}
-                  />
-                </TouchableOpacity>
-                {notificationCount == "0" ? null : <TouchableOpacity
-                  onPress={() => {
-                    openNotification()
-                  }}
-                  style={{
-                    height: H * 0.027,
-                    width: H * 0.027,
-                    borderRadius: H * 0.03 / 2,
-                    //backgroundColor: "red",
-                    //position: 'absolute',
-                    //left: W * 0.92,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    //top: H * 0.012,
-                  }}>
-                  <Text style={{
-                    color: 'white',
-                    fontSize: fontSizes.SM,
-                    ...fontFamily.bold,
-                  }}>{notificationCount}</Text>
-                </TouchableOpacity>}
+                    style={{
+                      height: 27,
+                      width: 27,
+                      marginRight: 5 // Adjust this value as needed for spacing
+                    }}>
+                    <Image
+                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/891/891012.png" }}
+                      style={{
+                        height: H * 0.035,
+                        width: H * 0.035,
+                        tintColor: colors.GREEN
+                      }}
+                    />
+                  </TouchableOpacity>
+
+                  {/* Notification count text */}
+                  {notificationCount !== "0" && (
+                    <View style={{
+                      position: 'absolute',
+                      top: -5, // Adjust this value as needed for vertical positioning
+                      right: -1, // Adjust this value as needed for horizontal positioning
+                      backgroundColor: 'white',
+                      borderRadius: 10,
+                      minWidth: 20,
+                      padding: 2,
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}>
+                      {/* <Text style={{
+                        color: 'white',
+                        fontStyle: fontFamily.bold,
+                        fontSize: fontSizes.LAR, // Adjust this value as needed for font size
+                      }}>{notificationCount}</Text> */}
+                    </View>
+                  )}
+                </View>
+
+
               </View>
+
+
             </Appbar.Header>
             <Divider style={{
               color: 'silver',
@@ -936,7 +990,9 @@ const Stats = (props) => {
             animationType="slide"
             //presentationStyle='fullScreen'
             transparent={true}
-            visible={editWeights}>
+            visible={editWeights}
+          //visible={true}
+          >
             {/* Input Weights Pop Up */}
             <View style={{
               backgroundColor: 'rgba(0,0,0,0.4)',
@@ -1719,6 +1775,7 @@ const Stats = (props) => {
               </View>
             </View>
           </Modal>
+
           <Modal visible={visibleMood}
             transparent={true}>
             <View
@@ -1743,7 +1800,11 @@ const Stats = (props) => {
                 elevation: 8,
               }}
               >
-                <View style={{ flexDirection: "row", alignItems: "center", paddingBottom: H * 0.02, }}>
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingBottom: H * 0.02,
+                }}>
                   <Text style={{
                     ...fontFamily.bold,
                     fontSize: fontSizes.XXL,
@@ -1784,7 +1845,7 @@ const Stats = (props) => {
                     flexDirection: "row",
                     marginTop: H * 0.02,
                     justifyContent: "space-between",
-                    width: W * 0.5
+                    // width: W * 0.5
                   }}>
                     <TouchableOpacity
                       onPress={() => addGoal()}
@@ -1801,7 +1862,7 @@ const Stats = (props) => {
                         {strings.Submit}
                       </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                       style={{
                         backgroundColor: "white",
                         paddingVertical: H * 0.01,
@@ -1809,17 +1870,149 @@ const Stats = (props) => {
                         borderRadius: 8,
                       }}
                       onPress={() => {
+                        setText("")
                         setVisibleMood(false)
                       }}>
                       <Text>
                         {strings.Skip}
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                 </>
 
 
 
+              </View>
+            </View>
+          </Modal>
+
+          <Modal visible={visibleMoodGood}
+            transparent={true}>
+            <View
+              style={{
+                height: H,
+                width: W,
+                //justifyContent: "center",
+                //alignItems: "center",
+                backgroundColor: "rgba(0,0,0,0.3)"
+              }}
+            >
+              <View style={{
+                padding: 10,
+                top: H * 0.07,
+                backgroundColor: colors.OFFWHITE,
+                // backgroundColor: "red",
+                width: W * 0.85,
+                alignSelf: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 8,
+                elevation: 8,
+              }}
+              >
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingBottom: H * 0.02,
+                }}>
+                  <Text style={{
+                    ...fontFamily.bold,
+                    fontSize: fontSizes.XXL,
+                    color: colors.GREEN,
+                    paddingRight: W * 0.02
+                  }}>
+                    {strings.HavingabadDay}
+                  </Text>
+                  <LottieView style={{ height: H * 0.03, width: H * 0.03 }}
+                    source={require('../../../../assets/animations/happy.json')}
+                    autoPlay loop />
+                </View>
+                <Text style={{
+                  ...fontFamily.bold,
+                  paddingHorizontal: W * 0.025,
+                  lineHeight: H * 0.03
+                }}>
+                  {strings.Pleaseentergratitude}
+                </Text>
+
+
+
+                <>
+                  <TextInput
+                    maxLength={160}
+                    returnKeyType='done'
+                    blurOnSubmit={true}
+                    multiline
+                    value={text}
+                    onChangeText={(t) => setText(t)}
+                    style={{
+                      //height: H * 0.07,
+                      width: W * 0.65,
+                      backgroundColor: "white",
+                      marginTop: H * 0.04,
+                    }} />
+                  <View style={{
+                    flexDirection: "row",
+                    marginTop: H * 0.02,
+                    justifyContent: "space-between",
+                    // width: W * 0.5
+                  }}>
+                    <TouchableOpacity
+                      onPress={() => addGoal()}
+                      style={{
+                        backgroundColor: colors.GREEN,
+                        borderRadius: 8,
+                        paddingVertical: H * 0.01,
+                        paddingHorizontal: W * 0.02,
+                      }}
+                    >
+                      <Text style={{
+                        color: "white"
+                      }}>
+                        {strings.Submit}
+                      </Text>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity
+                      style={{
+                        backgroundColor: "white",
+                        paddingVertical: H * 0.01,
+                        paddingHorizontal: W * 0.02,
+                        borderRadius: 8,
+                      }}
+                      onPress={() => {
+                        setText("")
+                        setVisibleMood(false)
+                      }}>
+                      <Text>
+                        {strings.Skip}
+                      </Text>
+                    </TouchableOpacity> */}
+                  </View>
+                </>
+
+
+
+              </View>
+            </View>
+          </Modal>
+
+          <Modal visible={secondaryLoader}
+            transparent={true}>
+            <View
+              style={{
+                height: H,
+                width: W,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "rgba(0,0,0,0.3)"
+              }}
+            >
+              <View style={{
+                backgroundColor: 'white',
+                padding: 10,
+                borderRadius: 8,
+              }}>
+                <ActivityIndicator color={colors.GREEN} />
               </View>
             </View>
           </Modal>

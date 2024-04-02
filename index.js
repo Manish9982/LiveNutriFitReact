@@ -8,11 +8,15 @@ import messaging, { firebase } from '@react-native-firebase/messaging';
 import { name as appName } from './app.json';
 import notifee, { EventType } from '@notifee/react-native';
 import { Text, TextInput } from 'react-native-paper';
+//import PushNotificationIOS from '@react-native-community/push-notification-ios';
+
+// PushNotificationIOS.addEventListener('notification', (notification) => {
+//     // Handle notification click event here
+//     console.log('Notification clicked: ', notification);
+//   });
 
 if (Platform.OS == "ios") {
     //firebase.initializeApp()
-
-
     notifee.onBackgroundEvent(async ({ type, detail }) => {
         const { notification, pressAction } = detail;
 
@@ -28,10 +32,10 @@ if (Platform.OS == "ios") {
         notifee.onBackgroundEvent(async ({ type, detail }) => {
             const { notification, pressAction } = detail;
 
-            // Check if the user pressed the "Mark as read" action
+            //Check if the user pressed the "Mark as read" action
             if (type === EventType.ACTION_PRESS && pressAction.id === 'mark-as-read') {
                 console.log("I'm Listening")
-                // Remove the notification
+                //Remove the notification
                 await notifee.cancelNotification(notification.id);
             }
         });

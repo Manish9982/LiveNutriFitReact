@@ -194,7 +194,7 @@ const More = ({ navigation }) => {
   }
 
   const openNotification = async () => {
-    readNotificationCount()
+    //readNotificationCount()
     const userID = await getDataFromLocalStorage('user_id')
     navigation.navigate("NotificationWebView", { "UserID": `${userID}` })
     console.log("userID== ", userID)

@@ -47,7 +47,6 @@ export const displayNotification = async (title, body) => {
         importance: AndroidImportance.HIGH,
         sound: 'hollow',
     });
-
     await notifee.displayNotification({
         title: title,
         body: body,
@@ -61,10 +60,7 @@ export const displayNotification = async (title, body) => {
             sound: 'hollow',
         },
     });
-
 }
-
-
 
 export async function onCreateTriggerNotification(timestamp, title, body, id) {
     const settings = await notifee.getNotificationSettings();
@@ -75,7 +71,6 @@ export async function onCreateTriggerNotification(timestamp, title, body, id) {
             type: TriggerType.TIMESTAMP,
             timestamp: timestamp,
             sound: 'hollow',
-
         };
         const channelId = await notifee.createChannel({
             id: 'trump',
@@ -83,7 +78,6 @@ export async function onCreateTriggerNotification(timestamp, title, body, id) {
             importance: AndroidImportance.HIGH,
             alarmManager: true,
             sound: 'hollow',
-
         });
         await notifee.createTriggerNotification(
             {
@@ -299,6 +293,11 @@ export async function onCreateTriggerNotificationHourly(timestamp, title, body, 
 
     }
     console.log(settings)
+
+
+
+
+    
 }
 
 

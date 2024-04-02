@@ -58,7 +58,7 @@ target 'LiveNutriFit' do
   $RNFirebaseAsStaticFramework = true
   # Flags change depending on the env values.
   flags = get_default_flags()
-
+   pod 'React-RCTPushNotification', :path => '../node_modules/react-native/Libraries/PushNotificationIOS'
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.

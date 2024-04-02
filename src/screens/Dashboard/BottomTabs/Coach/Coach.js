@@ -55,6 +55,10 @@ const Coach = ({ navigation }) => {
 
   const styles = makeStyles(H, W)
 
+  const openAppSettings = () => {
+    Linking.openSettings();
+};
+
   useEffect(() => {
     if (isFocused) {
       //showCallAlertMessage()
@@ -70,7 +74,7 @@ const Coach = ({ navigation }) => {
       getMessages(),
         getLanguage(),
         setIsInfoButtonVisible(false)
-      markMessageAsRead()
+        markMessageAsRead()
     }
   }, [isFocused])
 
@@ -105,13 +109,10 @@ const Coach = ({ navigation }) => {
     setKeyboardHeight(0);
   };
 
-
-
   //lng
   const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
   }
-
 
   const removeValue = async () => {
     try {
@@ -122,7 +123,6 @@ const Coach = ({ navigation }) => {
 
     console.log('Done.')
   }
-
 
   const markMessageAsRead = async () => {
     var formdata = new FormData();
@@ -145,7 +145,6 @@ const Coach = ({ navigation }) => {
     }
   }
 
-
   const callRequestToCoach = async () => {
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
@@ -157,7 +156,6 @@ const Coach = ({ navigation }) => {
       navigation.navigate("Stats")
     }
   }
-
 
   const toastMobileEmail = async () => {
     const userTypee = await getDataFromLocalStorage('user_type')
@@ -458,10 +456,28 @@ const Coach = ({ navigation }) => {
           }
         } else {
           if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
-            Alert.alert("Camera is not accessible");
+           // Alert.alert("Camera is not accessible");
+           Alert.alert(
+            "Photo Library is not accessible",
+            "Please enable photo library access in settings",
+            [
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: 'OK', onPress: openAppSettings },
+            ],
+            { cancelable: false }
+        );
             return false;
           } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
-            Alert.alert("Photo Library is not accessible");
+            //Alert.alert("Photo Library is not accessible");
+            Alert.alert(
+              "Photo Library is not accessible",
+              "Please enable photo library access in settings",
+              [
+                  { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                  { text: 'OK', onPress: openAppSettings },
+              ],
+              { cancelable: false }
+          );
             return false;
           }
         }

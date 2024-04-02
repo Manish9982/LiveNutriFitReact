@@ -6,10 +6,8 @@ import React, { useState, useEffect } from 'react'
 import { storeDataInLocalStorage } from '../../local storage/LocalStorage';
 import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../../assets/components/Loader';
-
 import { useIsFocused } from '@react-navigation/native';
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage';
-
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../hi'
 import english from '../../en'
@@ -68,9 +66,7 @@ const SignupWithPhone = ({ navigation }) => {
             setTangText("2")
             changeLanguage('hi')
         }
-
         setLoaderNeeded(false)
-
     }
 
     const changeLanguage = (languageKey) => {
@@ -103,7 +99,6 @@ const SignupWithPhone = ({ navigation }) => {
     }
 
     const signUpPressed = async () => {
-
 
         storeDataInLocalStorage('country', countryType)
 
@@ -147,7 +142,6 @@ const SignupWithPhone = ({ navigation }) => {
                 formdata.append("confirm_password", confirmpassword);
                 formdata.append("language", langText);
 
-
                 var requestOptions = {
                     method: 'POST',
                     body: formdata,
@@ -179,14 +173,7 @@ const SignupWithPhone = ({ navigation }) => {
         } else {
             ShortToast("Please accept terms and condtions !", "error")
         }
-
-
-
-
         setLoaderNeeded(false)
-
-
-
     }
 
     console.log('name and number---->', testName(userName), testNumber(mobile))
@@ -367,7 +354,6 @@ const SignupWithPhone = ({ navigation }) => {
 
                             </View>
                         </View>
-
 
                     </PaperProvider>
                 </ScrollView>

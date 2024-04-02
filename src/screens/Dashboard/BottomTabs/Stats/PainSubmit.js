@@ -1,5 +1,5 @@
-import { View, TouchableOpacity, StyleSheet, ToastAndroid, Modal, ScrollView, Keyboard } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { View, TouchableOpacity, StyleSheet, ToastAndroid, Modal, ScrollView, Keyboard, Platform } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
 import { TextInput, Text, Divider } from 'react-native-paper'
 import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes'
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../../local storage/LocalStorage'
@@ -12,12 +12,14 @@ import hindi from '../../../../hi'
 import english from '../../../../en'
 import { useIsFocused } from '@react-navigation/native'
 import { useLocales } from '../../../../utils/LocalizationUtil'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 const PainSubmit = ({ navigation, route }) => {
 
   const isFocused = useIsFocused()
   const strings = useLocales()
+  const scrollRef = useRef()
 
   React.useEffect(() => {
     handleSliderValueChange(isNaN(route.params.flag) ? 0 : route.params.flag)
@@ -30,9 +32,9 @@ const PainSubmit = ({ navigation, route }) => {
   const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
     if (lang == "en") {
-      
+
     } else {
-      
+
 
     }
   }
@@ -64,7 +66,7 @@ const PainSubmit = ({ navigation, route }) => {
     formdata.append("user_id", JSON.parse(temp));
     formdata.append("reason", t);
     const result = await PostApiData('painreason', formdata)
-    console.log(result)
+    console.log("PAIN--------------------" + result)
     navigation.navigate("BootSplash")
   }
 
@@ -74,8 +76,10 @@ const PainSubmit = ({ navigation, route }) => {
     var formdata = new FormData();
     formdata.append("user_id", JSON.parse(temp))
     const result = await PostApiData('getpainreason', formdata)
+    console.log("PAIN2-------------------" + result)
+
     if (result.status == '200') {
-      setReason(result?.pain_reason)
+      //setReason(result?.pain_reason)
     }
     else {
       setReason("")
@@ -91,6 +95,7 @@ const PainSubmit = ({ navigation, route }) => {
       formdata.append("value", (Math.round(painValue * 100) / 100).toFixed(2));
 
       const result = await PostApiData('userpaidhealthplan', formdata)
+      console.log("Pain ====================>>>>>>", result)
       if (result.status == 200) {
         ShortToast(result.message, 'success', '')
         navigation.navigate("BootSplash")
@@ -104,6 +109,8 @@ const PainSubmit = ({ navigation, route }) => {
       formdata.append("value", (Math.round(painValue * 100) / 100).toFixed(2));
 
       const result = await PostApiData('updateuserpaidhealthplan', formdata)
+      console.log("Pain value====================>>>>>>", result)
+
       if (result.status == 200) {
         ShortToast(result.message, 'success', '')
         storePainReason(reason)
@@ -117,6 +124,7 @@ const PainSubmit = ({ navigation, route }) => {
       formdata.append("value", (Math.round(painValue * 100) / 100).toFixed(2));
 
       const result = await PostApiData('updateuserpaidhealthplan', formdata)
+      console.log("Pain value====================>>>>>>", result)
       if (result.status == 200) {
         ShortToast(result.message, 'success', '')
         navigation.navigate("BootSplash")
@@ -141,10 +149,6 @@ const PainSubmit = ({ navigation, route }) => {
       setPainColor("red")
     }
   }
-
-
-
-  console.log(keyboardStatus)
   return (
     <View style={styles.mainContainer}>
 
@@ -223,7 +227,15 @@ const PainSubmit = ({ navigation, route }) => {
      */}
 
       <HeaderForSubmissionScreens Title={strings.Pain} />
-      <ScrollView contentContainerStyle={{ height: keyboardStatus ? H * 1.4 : H }}>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: Platform.OS == 'android' ? '20%' : '80%'
+        }}
+        ref={scrollRef}
+        keyboardShouldPersistTaps={'always'}
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={{
           textAlign: 'center',
           ...fontFamily.bold,
@@ -278,7 +290,11 @@ const PainSubmit = ({ navigation, route }) => {
                 </Text>
                 <TextInput
                   value={reason}
-                  onChangeText={(t) => { setReason(t) }}
+                  onFocus={() => scrollRef.current.scrollToEnd()}
+                  onChangeText={(t) => {
+                    scrollRef.current.scrollToEnd()
+                    setReason(t)
+                  }}
                   style={{
                     marginTop: H * 0.05,
                     height: H * 0.075,
@@ -312,8 +328,7 @@ const PainSubmit = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   mainContainer:
   {
-    height: H,
-    width: W,
+    flex: 1,
     backgroundColor: 'white'
   },
   text2:

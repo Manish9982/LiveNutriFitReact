@@ -19,7 +19,7 @@ import TotalPoints from './src/screens/TotalPoints/TotalPoints';
 import BootSplash from './src/screens/BootSplash/BootSplash';
 import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import Questions from './src/screens/Questions/Questions';
-import { colors, fontSizes, PostApiData } from './src/colorSchemes/ColorSchemes';
+import { colors, fontSizes, PostApiData, PostApiData2 } from './src/colorSchemes/ColorSchemes';
 import { Alert, AppState, LogBox } from "react-native";
 import UserProfile from './src/screens/UserProfile/UserProfile';
 import EditProfile from './src/screens/EditProfile/EditProfile';
@@ -42,7 +42,7 @@ import Gratification from './src/screens/Dashboard/BottomTabs/More/Gratification
 import { getFcmToken, NotificationListener, requestUserPermissionAndGetToken } from './src/assets/components/PushNotificationsServices';
 import { checkNotificationPermission, createChannel, displayNotification } from './src/assets/components/NotificationServices';
 import ChatImageDisplay from './src/screens/Dashboard/BottomTabs/Coach/ChatImageDisplay';
-import messaging from '@react-native-firebase/messaging'
+import messaging, { firebase } from '@react-native-firebase/messaging'
 import { getDataFromLocalStorage } from './src/local storage/LocalStorage';
 import DataContext from './src/context/DataContext';
 import ChatImageWebview from './src/screens/Dashboard/BottomTabs/Coach/ChatImageWebview'
@@ -70,8 +70,11 @@ import StripeFullPaymentWebView from './src/screens/StripeFullPaymentWebView/Str
 import SubmitSteps from './src/screens/SubmitSteps';
 import NewProfiling from './src/screens/Questions/NewProfiling';
 import { LocalizationProvider, useChangeLanguage } from './src/utils/LocalizationUtil';
+import { NativeModules } from 'react-native';
+const BadgeManager = NativeModules.BadgeManager;
+import { Platform } from 'react-native';
 
-//import PDFURLWebView from './src/screens/PDFURLWebView/PDFURLWebView';
+
 
 const fontConfig = {
   fontFamily: 'Montserrat-Regular',
@@ -93,23 +96,46 @@ const App = () => {
   //const appState = useRef(AppState.currentState);
   //const { Nmessages } = useContext(DataContext)
   //const [messages, setMessages] = Nmessages
-  
+  //added
+  // Function to handle notification click event
+
   useEffect(() => {
     console.log('Initial useEffect: checkNotificationPermission and requestUserPermissionAndGetToken');
     checkNotificationPermission();
     requestUserPermissionAndGetToken();
     // NotificationListener()
+    //Working
+    getMessageCount()
   }, []);
-  
 
+  const updateBadgeCount = (count) => {
+    BadgeManager.updateBadgeCount(count);
+  };
+
+  const getMessageCount = async () => {
+    const temp = await getDataFromLocalStorage('user_id')
+    var formdata = new FormData();
+    formdata.append("id", JSON.parse(temp));
+    const result = await PostApiData('get_all_type_notification_count', formdata)
+    console.log("GLOBAL COUNT API ==== >>>", result)
+    updateBadgeCount(parseInt(result.count))
+
+    if (result.status == '200') {
+      console.log("GLOBAL COUNT API  COUNT==== >>> ==== >>>", parseInt(result.count))
+      updateBadgeCount(parseInt(result.count))
+
+    }
+  }
 
   useEffect(() => {
     const handleAppStateChange = nextAppState => {
       console.log('AppState Change:', nextAppState);
-
       if (nextAppState === 'active') {
         console.log('App has come to the foreground!');
         foregroundApi();
+      }else if(nextAppState === 'inactive'){
+        console.log('App has come to the Inactive!');
+        backgroundApi();
       } else if (nextAppState === 'background') {
         console.log('App has come to the Background!');
         backgroundApi();
@@ -132,14 +158,18 @@ const App = () => {
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("user_id", JSON.parse(temp))
     formdata.append('login_time', Date.now())
-    const result = await PostApiData('user_session_activity', formdata)
+    const result = await PostApiData2('user_session_activity', formdata)
+    console.log("RESULTFORE ", result)
+    getMessageCount();
   }
   const backgroundApi = async () => {
     var formdata = new FormData()
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("user_id", JSON.parse(temp))
     formdata.append('logout_time', Date.now())
-    const result = await PostApiData('user_session_activity', formdata)
+    const result = await PostApiData2('user_session_activity', formdata)
+    console.log("RESULT BACKGROUND Seesiison", result)
+    getMessageCount();
   }
 
 

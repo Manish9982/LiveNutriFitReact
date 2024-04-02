@@ -10,7 +10,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { getDataFromLocalStorage } from '../../../local storage/LocalStorage';
 import DataState from '../../../context/DataState';
 import DataContext from '../../../context/DataContext';
-
+import Toast from 'react-native-simple-toast'
 import LocalizedStrings from 'react-native-localization';
 import hindi from '../../../hi'
 import english from '../../../en'
@@ -53,17 +53,20 @@ const InfoCard = (props) => {
     }
 
     const changeLanguage = (languageKey) => {
-        
+
     }
 
     const navigation = useNavigation();
 
     const [activity_id, setActivity_id] = useState('')
-    const { NvisibleSnackOne, NvisibleSnackTwo, NvisibleSnackThree, NvisibleMood } = useContext(DataContext)
+    const { NvisibleSnackOne, NvisibleSnackTwo, NvisibleSnackThree, NvisibleMood, NvisibleMoodGood, NvisibleMood2, NsecondaryLoader } = useContext(DataContext)
     const [visibleSnackOne, setVisibleSnackOne] = NvisibleSnackOne
     const [visibleSnackTwo, setVisibleSnackTwo] = NvisibleSnackTwo
     const [visibleSnackThree, setVisibleSnackThree] = NvisibleSnackThree
     const [visibleMood, setVisibleMood] = NvisibleMood
+    const [visibleMoodGood, setVisibleMoodGood] = NvisibleMoodGood
+    const [visibleMood2, setVisibleMood2] = NvisibleMood2
+    const [secondaryLoader, setSecondaryLoader] = NsecondaryLoader
     const arrowIcon = <Icon name="right" size={20} color='white' />
     const arrowIcon2 = <Icon name="down" size={20} color='white' />
     const medalIcon = <Image source={require('../../../assets/icons/goldcoin.png')}
@@ -198,7 +201,7 @@ const InfoCard = (props) => {
     }
 
     const sendFirstChoiceToApi = async () => {
-
+        setSecondaryLoader(true)
         var formdata = new FormData();
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("user_id", JSON.parse(temp));
@@ -208,7 +211,7 @@ const InfoCard = (props) => {
         //console.log(result)
     }
     const sendSecondChoiceToApi = async () => {
-
+        setSecondaryLoader(true)
         var formdata = new FormData();
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("user_id", JSON.parse(temp));
@@ -218,6 +221,7 @@ const InfoCard = (props) => {
         // console.log(result)
     }
     const sendThirdChoiceToApi = async () => {
+        setSecondaryLoader(true)
         var formdata = new FormData();
         const temp = await getDataFromLocalStorage('user_id')
         formdata.append("user_id", JSON.parse(temp));
@@ -230,6 +234,7 @@ const InfoCard = (props) => {
         await sendFirstChoiceToApi()
         await props.onPressButton()
         if (props?.Text2 == 'Monitoring' && !props?.SelectedOption?.includes(1)) {
+            setSecondaryLoader(false)
             props?.onPressWeight()
         }
     }
@@ -238,6 +243,7 @@ const InfoCard = (props) => {
         await sendSecondChoiceToApi()
         await props.onPressButton()
         if (props?.Text2 == 'Monitoring' && !props?.SelectedOption?.includes(2)) {
+            setSecondaryLoader(false)
             props?.onPressSugar()
         }
     }
@@ -245,6 +251,7 @@ const InfoCard = (props) => {
         await sendThirdChoiceToApi()
         await props.onPressButton()
         if (props?.Text2 == 'Monitoring' && !props?.SelectedOption?.includes(3)) {
+            setSecondaryLoader(false)
             props?.onPressBP()
         }
     }
@@ -277,9 +284,9 @@ const InfoCard = (props) => {
 
     const openInformationofindex = (num) => {
         console.log("i button is pressed")
-        Alert.alert('Info', `${props?.Information}` )
+        Toast.show(`${props?.Information}`)
     }
-    console.log('props?.SelectedOption', (props?.SelectedOption))
+    //console.log('props?.SelectedOption', (props?.SelectedOption))
     return (
         <DataState>
             <PaperProvider theme={theme}>
@@ -333,9 +340,16 @@ const InfoCard = (props) => {
                                 <Text style={styles.userChoiceText}>{props.Attributes[1]}</Text>}
                             {props.FollowNeeded ? <Text style={{ fontSize: fontSizes.SM, textAlign: 'center' }}>{strings.follow}</Text> : null}
                         </TouchableOpacity>
+
                         <TouchableOpacity onPress={() => {
                             if (props.Attributes[2] !== "BP") {
+
                                 //  ShortToast(getBestMessage(), 'success', '')
+                            }
+
+                            // setVisibleMood(true)
+                            if (props.Attributes[0] == "1") {
+                                setVisibleMoodGood(true)
                             }
                             thirdChoiceTrigger(props.Text)
                         }}

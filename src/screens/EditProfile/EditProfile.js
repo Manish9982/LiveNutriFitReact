@@ -169,8 +169,9 @@ const EditProfile = ({ navigation }) => {
         formdata.append("height", height);
         formdata.append("mobile", mobile);
         formdata.append("address", address);
-        formdata.append("goal", goal?.join(","))
-        formdata.append("food_type", foodType?.join(","));
+        formdata.append("goal", goal.map(item => item.default).join(","))
+        // formdata.append("intensity", exerciseLevel)
+        formdata.append("food_type", foodType.map(item => item.default).join(","));
         formdata.append("intensity", "")
         {/*
       formdata.append("profile_pic", {
@@ -668,7 +669,7 @@ const EditProfile = ({ navigation }) => {
                       display="default"
                       onChange={(a, t) => handleDateChange(a, t)}
                     //maximumDate={getTimestamp10YearsAgo()}
-                    //onTouchCancel={() =>setShowCalendar(prev => !prev)}
+                    //onTouchCancel={() => setShowCalendar(prev => !prev)}
                     />
                   )
               }

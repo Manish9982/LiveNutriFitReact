@@ -34,6 +34,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		89394FF42B3549C7000421C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89394FF32B3549C6000421C6 /* GoogleService-Info.plist */; };
 		89B137B42B5E4CDD0010B13E /* coin_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 89B137B32B5E4CDD0010B13E /* coin_sound.mp3 */; };
+		89CEC2D92BA960A900DAACFA /* BadgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CEC2D82BA960A900DAACFA /* BadgeManager.m */; };
 		8C0F1CA7120444078530B4CE /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64455373A5EC436C868D269B /* Montserrat-ExtraBold.ttf */; };
 		9091936DDC4E44E48A8BC9D3 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F518CE5D791040C39B25B159 /* FontAwesome5_Brands.ttf */; };
 		9528D018B6324945AB162705 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9243B072B1F745ABA2FCA8C1 /* Montserrat-Medium.ttf */; };
@@ -106,6 +107,8 @@
 		89492C582B2197B8009E5798 /* LiveNutriFit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LiveNutriFit.entitlements; path = LiveNutriFit/LiveNutriFit.entitlements; sourceTree = "<group>"; };
 		89B137B32B5E4CDD0010B13E /* coin_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = coin_sound.mp3; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig"; path = "Target Support Files/Pods-LiveNutriFit-LiveNutriFitTests/Pods-LiveNutriFit-LiveNutriFitTests.release.xcconfig"; sourceTree = "<group>"; };
+		89CEC2D72BA9608100DAACFA /* BadgeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BadgeManager.h; sourceTree = "<group>"; };
+		89CEC2D82BA960A900DAACFA /* BadgeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BadgeManager.m; sourceTree = "<group>"; };
 		8A2D021D9EE2891926EF714B /* Pods_LiveNutriFit_LiveNutriFitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiveNutriFit_LiveNutriFitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CE6507921EF47F3BAFB9BBD /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat/static/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		8F7DB4EA595346BDAEA136A9 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = ../src/assets/fonts/Montserrat/static/Ionicons.ttf; sourceTree = "<group>"; };
@@ -172,6 +175,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				89CEC2D72BA9608100DAACFA /* BadgeManager.h */,
+				89CEC2D82BA960A900DAACFA /* BadgeManager.m */,
 			);
 			name = LiveNutriFit;
 			sourceTree = "<group>";
@@ -593,6 +598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89CEC2D92BA960A900DAACFA /* BadgeManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -677,7 +683,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.5;
+				MARKETING_VERSION = 10.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -685,8 +691,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.live.nutrifit;
 				PRODUCT_NAME = LiveNutriFit;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -705,7 +715,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.5;
+				MARKETING_VERSION = 10.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -713,7 +723,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.live.nutrifit;
 				PRODUCT_NAME = LiveNutriFit;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
