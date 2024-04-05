@@ -43,6 +43,7 @@ const Stats = (props) => {
   /////////////////////////////////////////////////
   const [currentWeight, setCurrentWeight] = useState("")
   const [targetWeight, setTargetWeight] = useState("")
+  const [weightOkButttonDisabled, setWeightOkButttonDisabled] = useState(false)
   const [fastingSugar, setFastingSugar] = useState("")
   const [nonFastingSugar, setNonFastingSugar] = useState("")
   const [systolic, setSystolic] = useState("")
@@ -187,6 +188,20 @@ const Stats = (props) => {
     )
   ).start();
 
+  function validateWeight(input) {
+    const regex = /^\d{1,3}(\.\d)?$/;
+    // if (regex.test(input)) {
+    //   setCurrentWeight(input)
+    //   setCrrnt(input)
+    //   setWeightOkButttonDisabled(false)
+    // }
+    // else {
+    //   ShortToast('We can only accept numbers with up to one decimal place.')
+    //   setCurrentWeight('')
+    //   setCrrnt('')
+    // }
+    return regex.test(input)
+  }
 
 
   const onPressScroll = () => {
@@ -1019,20 +1034,18 @@ const Stats = (props) => {
                   alignItems: "center"
                 }}>
                   <Text numberOfLines={1}
-                    
+
                     style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
                   <TextInput
                     value={currentWeight}
                     onChangeText={(t) => {
-                      if (t.length == 1 && (t == "-" || t == "." || t == "," || t == "0")) {
-                        ShortToast("Invalid Input", "error", "")
-                      }
-                      else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
-                        ShortToast("Invalid Input", "error", "")
+                      setCrrnt(t)
+                      setCurrentWeight(t)
+                      if (validateWeight(t)) {
+                        setWeightOkButttonDisabled(false)
                       }
                       else {
-                        setCrrnt(t)
-                        setCurrentWeight(t)
+                        setWeightOkButttonDisabled(true)
                       }
                     }}
                     underlineColor={colors.GREEN}
@@ -1044,8 +1057,9 @@ const Stats = (props) => {
                       backgroundColor: "white",
                       margin: 5,
                     }}
-                    maxLength={3}
-                    keyboardType="number-pad" />
+                    maxLength={5}
+                    keyboardType="numeric"
+                  />
                   <Text style={{
                     color: colors.FONT_BLACK,
                     marginLeft: W * 0.01
@@ -1058,24 +1072,18 @@ const Stats = (props) => {
                   marginTop: 10
                 }}>
                   <Text numberOfLines={1}
-                    
+
                     style={styles.attributeHeading}>{strings.Targetweight} </Text>
                   <TextInput
                     underlineColor={colors.GREEN}
                     onChangeText={(t) => {
-                      if (t.length == 1 && (t == "-" || t == "." || t == "," || t == "0")) {
-                        ShortToast("Invalid Input", "error", "")
+                      setTrgt(t)
+                      setTargetWeight(t)
+                      if (validateWeight(t)) {
+                        setWeightOkButttonDisabled(false)
                       }
-                      else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
-                        ShortToast("Invalid Input", "error", "")
-                      }
-                      // else if ((t.length == 2 || t.length == 3) && (((t > (data?.height * data?.height * 24.9))) || ((t < (data?.height * data?.height * 18.5))))) {
-                      //   ShortToast(`Please choose a Target Weight between ${(Math.round(((data?.height * data?.height * 18.5)) * 100) / 100).toFixed(0)} to ${(Math.round(((data?.height * data?.height * 24.9)) * 100) / 100).toFixed(0)} According to your BMI.`, "error", "")
-                      //   setTargetWeight("")
-                      // }
                       else {
-                        setTrgt(t)
-                        setTargetWeight(t)
+                        setWeightOkButttonDisabled(true)
                       }
                     }}
                     value={targetWeight}
@@ -1087,14 +1095,14 @@ const Stats = (props) => {
                       backgroundColor: "white",
                       margin: 5,
                     }}
-                    keyboardType="number-pad" />
-                  <Text style={{
-                    color: colors.FONT_BLACK,
-                    marginLeft: W * 0.01
-                  }}></Text>
+                    keyboardType="numeric" 
+                    maxLength={5}
+                    />
+
                 </View>
                 <View style={{ flexDirection: "row", width: W * 0.5, justifyContent: "space-evenly" }}>
                   <TouchableOpacity
+                    disabled={weightOkButttonDisabled}
                     onPress={() => {
                       updateWeightValues()
 
@@ -1102,7 +1110,7 @@ const Stats = (props) => {
                     style={{
                       width: W * 0.18,
                       height: H * 0.04,
-                      backgroundColor: colors.GREEN,
+                      backgroundColor: weightOkButttonDisabled ? 'gray' : colors.GREEN,
                       borderRadius: 5,
                       justifyContent: "center",
                       alignItems: "center",
@@ -1173,7 +1181,7 @@ const Stats = (props) => {
                   alignItems: "center"
                 }}>
                   <Text numberOfLines={1}
-                    
+
                     style={styles.attributeHeading}>{strings.fasting} </Text>
                   <TextInput
                     onChangeText={(t) => {
@@ -1227,7 +1235,7 @@ const Stats = (props) => {
                   marginTop: 10,
                 }}>
                   <Text numberOfLines={1}
-                    
+
                     style={styles.attributeHeading}>{strings.nonfating} </Text>
                   <TextInput
                     onChangeText={(t) => {
@@ -1483,7 +1491,7 @@ const Stats = (props) => {
                   alignItems: "center"
                 }}>
                   <Text numberOfLines={1}
-                    
+
                     style={styles.attributeHeading}>{strings.systolicBP}</Text>
                   <TextInput
                     onChangeText={(t) => {
@@ -1515,7 +1523,7 @@ const Stats = (props) => {
                   marginTop: 10,
                 }}>
                   <Text numberOfLines={1}
-                    
+
                     style={styles.attributeHeading}>{strings.diastolicBP}</Text>
                   <TextInput
                     value={diastolic}
@@ -1548,7 +1556,7 @@ const Stats = (props) => {
                   marginTop: 10,
                 }}>
                   <Text numberOfLines={1}
-                    
+
                     style={styles.attributeHeading}>{strings.BPM}</Text>
                   <TextInput
                     onChangeText={(t) => {
