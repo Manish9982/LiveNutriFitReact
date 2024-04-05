@@ -71,8 +71,11 @@ import SubmitSteps from './src/screens/SubmitSteps';
 import NewProfiling from './src/screens/Questions/NewProfiling';
 import { LocalizationProvider, useChangeLanguage } from './src/utils/LocalizationUtil';
 import { NativeModules } from 'react-native';
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+
+
 const BadgeManager = NativeModules.BadgeManager;
-import { Platform } from 'react-native';
 
 
 
@@ -106,6 +109,7 @@ const App = () => {
     // NotificationListener()
     //Working
     getMessageCount()
+    PushNotification.removeAllDeliveredNotifications();
   }, []);
 
   const updateBadgeCount = (count) => {

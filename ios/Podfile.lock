@@ -267,20 +267,6 @@ PODS:
     - React-utils
     - SocketRocket (= 0.6.1)
     - Yoga
-  - React-Core/RCTPushNotificationHeaders (0.72.7):
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2021.07.22.00)
-    - React-Core/Default
-    - React-cxxreact
-    - React-hermes
-    - React-jsi
-    - React-jsiexecutor
-    - React-perflogger
-    - React-runtimeexecutor
-    - React-utils
-    - SocketRocket (= 0.6.1)
-    - Yoga
   - React-Core/RCTSettingsHeaders (0.72.7):
     - glog
     - hermes-engine
@@ -473,12 +459,6 @@ PODS:
     - React-Core/RCTNetworkHeaders (= 0.72.7)
     - React-jsi (= 0.72.7)
     - ReactCommon/turbomodule/core (= 0.72.7)
-  - React-RCTPushNotification (0.72.7):
-    - RCTTypeSafety (= 0.72.7)
-    - React-Codegen (= 0.72.7)
-    - React-Core/RCTPushNotificationHeaders (= 0.72.7)
-    - React-jsi (= 0.72.7)
-    - ReactCommon/turbomodule/core (= 0.72.7)
   - React-RCTSettings (0.72.7):
     - RCT-Folly (= 2021.07.22.00)
     - RCTTypeSafety (= 0.72.7)
@@ -536,6 +516,8 @@ PODS:
   - RNCAsyncStorage (1.21.0):
     - React-Core
   - RNCPicker (2.6.1):
+    - React-Core
+  - RNCPushNotificationIOS (1.11.0):
     - React-Core
   - RNDateTimePicker (7.6.2):
     - React-Core
@@ -634,7 +616,6 @@ DEPENDENCIES:
   - React-RCTImage (from `../node_modules/react-native/Libraries/Image`)
   - React-RCTLinking (from `../node_modules/react-native/Libraries/LinkingIOS`)
   - React-RCTNetwork (from `../node_modules/react-native/Libraries/Network`)
-  - React-RCTPushNotification (from `../node_modules/react-native/Libraries/PushNotificationIOS`)
   - React-RCTSettings (from `../node_modules/react-native/Libraries/Settings`)
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
@@ -647,6 +628,7 @@ DEPENDENCIES:
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
@@ -769,8 +751,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/LinkingIOS"
   React-RCTNetwork:
     :path: "../node_modules/react-native/Libraries/Network"
-  React-RCTPushNotification:
-    :path: "../node_modules/react-native/Libraries/PushNotificationIOS"
   React-RCTSettings:
     :path: "../node_modules/react-native/Libraries/Settings"
   React-RCTText:
@@ -795,6 +775,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNFBApp:
@@ -881,7 +863,6 @@ SPEC CHECKSUMS:
   React-RCTImage: 6ad7a367f40ac7e9af4e15b60e4c3e6dbda87817
   React-RCTLinking: 82db248ade50d92184a9feca46528139f1590a63
   React-RCTNetwork: 93db4b433026b3137e6063f0a66336662d473e55
-  React-RCTPushNotification: 32b82f7bbe1ed1a964adc107e26f50547c21aff5
   React-RCTSettings: e6b44c8b24bc07936e68b8f20d923f69a32488ba
   React-RCTText: 3c71ecaad8ee010b79632ea2590f86c02f5cce17
   React-RCTVibration: a756370068de4becdf432dbd42b76f42fbc1dc66
@@ -894,6 +875,7 @@ SPEC CHECKSUMS:
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
   RNCPicker: b18aaf30df596e9b1738e7c1f9ee55402a229dca
+  RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
   RNFBApp: 3d518e0ea7f945ae546facc0e6034806d9ddfde7
   RNFBMessaging: 5c909e97a0c81c4a03c56ca17f0fe79256941ec9
@@ -912,6 +894,6 @@ SPEC CHECKSUMS:
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
-PODFILE CHECKSUM: 834c57ba2e55c90ac90bf71b75e243289c904957
+PODFILE CHECKSUM: 552e38dfbc77a1ebe1c6408f5fb8ba813c13829c
 
 COCOAPODS: 1.14.2

@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, StyleSheet, Image, ScrollView, StatusBar, ActivityIndicator} from 'react-native'
+import { View, TouchableOpacity, StyleSheet, Image, ScrollView, StatusBar, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { TextInput, Text, Appbar, Dialog, Paragraph, Portal } from 'react-native-paper'
 import { colors, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes'
@@ -16,8 +16,8 @@ import { useLocales } from '../../../../utils/LocalizationUtil'
 const WHRsubmit = ({ navigation }) => {
 
   const isFocused = useIsFocused()
-  
-const strings = useLocales()
+
+  const strings = useLocales()
 
   const [loader, setLoader] = useState(false)
 
@@ -26,13 +26,9 @@ const strings = useLocales()
   //lng
   const getLanguage = async () => {
     setLoader(true)
-    
     const lang = await getDataFromLocalStorage("lang")
     console.log("WHR=============   = ", lang)
-    
-
     setLoader(false)
-
   }
 
 
@@ -59,108 +55,109 @@ const strings = useLocales()
     }
   }
 
-
   return (
 
-    loader ? <View style={{
-      height: H,
-      width: W,
-      alignItems: "center",
-      justifyContent: "center"
-  }}>
-      <ActivityIndicator size="large"
+    loader
+      ?
+      <View style={{
+        height: H,
+        width: W,
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <ActivityIndicator size="large"
           color={colors.GREEN} />
-  </View>
-  :
+      </View>
+      :
+      <View>
+        <StatusBar backgroundColor={colors.GREEN} />
+
+        <Appbar.Header style={styles.appBar}>
+          <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
+          <Appbar.Content style={{ alignItems: "center", }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.WaisttoHipRatio}</Text>} />
+          <Appbar.Action icon="information" onPress={() => { setVisible(true) }} color={"white"} size={30} />
+        </Appbar.Header>
 
 
+        <ScrollView contentContainerStyle={styles.mainContainer}>
+          <Portal>
+            <Dialog visible={visible} onDismiss={hideDialog} style={{ zIndex: 10 }}>
+              <Dialog.Title>{strings.WaistHipRatio}</Dialog.Title>
+              <Dialog.Content style={{ zIndex: 10 }}>
+                <Paragraph style={{ zIndex: 10, lineHeight: H * 0.04 }}>{strings.WHRInfo}</Paragraph>
+              </Dialog.Content>
+              <Dialog.Actions>
 
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+          {<Image source={require('../../../../assets/icons/whrsil.png')}
+            style={styles.sil} />}
+          <Text style={{ alignSelf: "center", marginTop: H * 0.03 }}>{strings.AWaistCircumference}</Text>
+          <Text style={{ alignSelf: "center", marginTop: H * 0.03 }}>{strings.BHipCircumference}</Text>
+          <Text style={styles.text}>{strings.WHR}</Text>
+          <View style={{ flexDirection: 'row', alignItems:'center', padding:10 }}>
+            <Text>{strings.EnterYourWaistValueininch}:  </Text>
+            <TextInput
+              style={styles.textInput}
+              //label="Enter Your Waist Circumference (Inches)"
+              //label={strings.EnterYourWaistValueininch}
 
-    <View>
-      <StatusBar backgroundColor={colors.GREEN} />
+              underlineColor="transparent"
+              onChangeText={(t) => {
+                if (t == '0') {
+                  ShortToast("Value Can Not Be Zero!", 'error', '')
+                }
+                else {
+                  setWaist(t)
+                  setFinalVal(t / hip)
+                }
+              }}
+              value={waist}
+              activeOutlineColor={colors.GREEN}
+              activeUnderlineColor={colors.GREEN}
+              keyboardType="number-pad"
+              maxLength={4}
+              onEndEditing={() => { setFinalVal(waist / hip) }} />
+          </View>
+          <View style={{ flexDirection: 'row', alignItems:'center', padding:10 }}>
+            <Text>{strings.EnterYourHipValueininch}:  </Text>
+            <TextInput style={styles.textInput}
+              // label="Enter Your Hip Circumference (Inches)"
+              //label={strings.EnterYourHipValueininch}
+              underlineColor="transparent"
+              onChangeText={(t) => {
+                if (t == '0') {
+                  ShortToast("Value Can Not Be Zero!", 'error', '')
+                }
+                else {
+                  setHip(t)
+                  setFinalVal(waist / t)
+                }
+              }}
+              value={hip}
+              activeOutlineColor={colors.GREEN}
+              activeUnderlineColor={colors.GREEN}
+              keyboardType="number-pad"
+              maxLength={4}
+              onEndEditing={() => { setFinalVal(waist / hip) }} />
+          </View>
 
-      <Appbar.Header style={styles.appBar}>
-        <Appbar.BackAction color={colors.GREEN} style={{ backgroundColor: "white" }} onPress={() => { navigation.goBack() }} />
-        <Appbar.Content style={{ alignItems: "center", }} title={<Text style={{ color: "white", fontSize: fontSizes.XL, ...fontFamily.bold }}>{strings.WaisttoHipRatio}</Text>} />
-        <Appbar.Action icon="information" onPress={() => { setVisible(true) }} color={"white"} size={30} />
-      </Appbar.Header>
-
-
-      <ScrollView contentContainerStyle={styles.mainContainer}>
-        <Portal>
-          <Dialog visible={visible} onDismiss={hideDialog} style={{ zIndex: 10 }}>
-            <Dialog.Title>{strings.WaistHipRatio}</Dialog.Title>
-            <Dialog.Content style={{ zIndex: 10 }}>
-              <Paragraph style={{ zIndex: 10, lineHeight: H * 0.04 }}>{strings.WHRInfo}</Paragraph>
-            </Dialog.Content>
-            <Dialog.Actions>
-
-            </Dialog.Actions>
-          </Dialog>
-        </Portal>
-        {<Image source={require('../../../../assets/icons/whrsil.png')}
-          style={styles.sil} />}
-        <Text style={{ alignSelf: "center", marginTop: H * 0.03 }}>{strings.AWaistCircumference}</Text>
-        <Text style={{ alignSelf: "center", marginTop: H * 0.03 }}>{strings.BHipCircumference}</Text>
-        <Text style={styles.text}>{strings.WHR}</Text>
-        <TextInput 
-        style={styles.textInput}
-          //  label="Enter Your Waist Circumference (Inches)"
-          label={strings.EnterYourWaistValueininch}
-
-          underlineColor="transparent"
-          onChangeText={(t) => {
-            if (t == '0') {
-              ShortToast("Value Can Not Be Zero!", 'error', '')
-            }
-            else {
-
-              setWaist(t)
-              setFinalVal(t / hip)
-            }
-          }}
-          value={waist}
-          activeOutlineColor={colors.GREEN}
-          activeUnderlineColor={colors.GREEN}
-          keyboardType="number-pad"
-          maxLength={4}
-          onEndEditing={() => { setFinalVal(waist / hip) }} />
-        <TextInput style={styles.textInput}
-          // label="Enter Your Hip Circumference (Inches)"
-          label={strings.EnterYourHipValueininch}
-          underlineColor="transparent"
-          onChangeText={(t) => {
-            if (t == '0') {
-              ShortToast("Value Can Not Be Zero!", 'error', '')
-            }
-            else {
-              setHip(t)
-              setFinalVal(waist / t)
-            }
-          }}
-          value={hip}
-          activeOutlineColor={colors.GREEN}
-          activeUnderlineColor={colors.GREEN}
-          keyboardType="number-pad"
-          maxLength={4}
-          onEndEditing={() => { setFinalVal(waist / hip) }} />
-        <Text style={[styles.newText, { marginBottom: 0 }]}>{strings.YourWaisttoHipRatiois}:</Text>
-        <Text style={[styles.newText, { color: finalVal >= 1 ? "red" : colors.GREEN, marginBottom: 0, marginTop: H * 0.02 }]}>{(finalVal == null) || (finalVal == Infinity) || isNaN(finalVal) ? "--" : (Math.round(finalVal * 100) / 100).toFixed(2)}</Text>
-        {finalVal >= 1 ? <Text style={[styles.newText, { color: finalVal >= 1 ? "red" : colors.GREEN }]}>({strings.hignRisk})</Text> : <Text style={[styles.newText, {
-          color: finalVal >= 1 ? "red"
-            :
-            colors.GREEN
-        }]}>({strings.lowRisk})</Text>}
-
-
-        <View style={styles.buttonDisplay}>
-          <TouchableOpacity style={styles.buttonStyle}
-            onPress={() => { saveValueForPain() }}>
-            <Text style={{ color: 'white', fontFamily: 'Montserrat-SemiBold' }}>{strings.Save}</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView >
-    </View >
+          <Text style={[styles.newText, { marginBottom: 0 }]}>{strings.YourWaisttoHipRatiois}:</Text>
+          <Text style={[styles.newText, { color: finalVal >= 1 ? "red" : colors.GREEN, marginBottom: 0, marginTop: H * 0.02 }]}>{(finalVal == null) || (finalVal == Infinity) || isNaN(finalVal) ? "--" : (Math.round(finalVal * 100) / 100).toFixed(2)}</Text>
+          {finalVal >= 1 ? <Text style={[styles.newText, { color: finalVal >= 1 ? "red" : colors.GREEN }]}>({strings.hignRisk})</Text> : <Text style={[styles.newText, {
+            color: finalVal >= 1 ? "red"
+              :
+              colors.GREEN
+          }]}>({strings.lowRisk})</Text>}
+          <View style={styles.buttonDisplay}>
+            <TouchableOpacity style={styles.buttonStyle}
+              onPress={() => { saveValueForPain() }}>
+              <Text style={{ color: 'white', fontFamily: 'Montserrat-SemiBold' }}>{strings.Save}</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView >
+      </View >
   )
 }
 
@@ -206,10 +203,7 @@ const styles = StyleSheet.create({
   },
   textInput:
   {
-    height: H * 0.08,
-    width: W * 0.85,
     alignSelf: 'center',
-    marginBottom: H * 0.05,
     elevation: 6,
     backgroundColor: 'white',
     fontSize: fontSizes.MED,

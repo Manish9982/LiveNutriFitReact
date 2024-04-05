@@ -4,8 +4,8 @@ import { Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Change to your desired icon library
 import { colors } from '../../colorSchemes/ColorSchemes';
 
-const CustomAccordion = ({ title, question, options, onSelectionChange, answers }) => {
-    const [expanded, setExpanded] = useState(false);
+const CustomAccordion = ({ title, question, options, onSelectionChange, answers, defaultExpand = false }) => {
+    const [expanded, setExpanded] = useState(defaultExpand);
     const [selectedOptions, setSelectedOptions] = useState(answers);
 
     useEffect(() => {
@@ -35,16 +35,16 @@ const CustomAccordion = ({ title, question, options, onSelectionChange, answers 
 
     const toggleOption = (option) => {
         setSelectedOptions(prevOptions => {
-            const isSelected = prevOptions.some(item => item.default === option.default);
+            const isSelected = prevOptions?.some(item => item.default === option.default);
             if (isSelected) {
-                return prevOptions.filter(item => item.default !== option.default);
+                return prevOptions?.filter(item => item.default !== option.default);
             } else {
                 return [...prevOptions, option];
             }
         });
     };
 
-    console.log('SelectedOption ==>>>>', selectedOptions)
+    console.log('SelectedOption ==>>>>', options)
     return (
         <View>
             <TouchableOpacity style={[styles.accordionBg, {

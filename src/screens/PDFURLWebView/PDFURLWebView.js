@@ -2,7 +2,7 @@ import { View, ActivityIndicator, Alert } from 'react-native'
 import { useState, useEffect } from 'react';
 import { Text } from 'react-native-paper'
 import WebView from 'react-native-webview'
-import { GetApiData, H, PostApiData, W, colors } from '../../colorSchemes/ColorSchemes'
+import { Constants, GetApiData, H, PostApiData, W, colors } from '../../colorSchemes/ColorSchemes'
 import HeaderForSubmissionScreens from '../Dashboard/BottomTabs/Stats/HeaderForSubmissionScreens'
 import Pdf from 'react-native-pdf'
 import { useIsFocused } from '@react-navigation/native';
@@ -15,35 +15,7 @@ import { getDataFromLocalStorage } from '../../local storage/LocalStorage';
 
 const PDFURLWebView = ({ route }) => {
     const strings = useLocales()
-    const isFocused = useIsFocused()
-  
-    const [loader, setLoader] = useState(false)
-    const [pdfURL, setPdfURL] = useState("")
-    const [data, setData] = useState("")
 
-
-
-    useEffect(() => {
-        hideunHide()
-    }, [isFocused])
-
-
-
-    const hideunHide = async () => {
-        const UserId = await getDataFromLocalStorage('user_id')
-        var formdata = new FormData()
-        formdata.append('user_id', JSON.parse(UserId))
-        const result = await PostApiData('hideunhide', formdata)
-        console.log("RESULT URL = " , result)
-        if (result.status == 200) {
-            setData(result)
-        } else {
-            ShortToast(result.message, 'error', '')
-
-        }
-        setLoader(false)
-    }
-  
     // const hideunHide = async () => {
     //   // const UserId = await getDataFromLocalStorage('user_id')
     //     //console.log("UserId == ", UserId)
@@ -58,10 +30,9 @@ const PDFURLWebView = ({ route }) => {
     //     }
     //     setLoader(false)
     // }
-    console.log("AANCHAL ", `URI: http://docs.google.com/gview?embedded=true&url=${data.pdf_url}`);
 
     return (
-        loader
+        false
             ?
             <View style={{
                 height: H,
@@ -84,7 +55,7 @@ const PDFURLWebView = ({ route }) => {
                     startInLoadingState={true}
                     scalesPageToFit={false}
                     setBuiltInZoomControls={false}
-                    source={{ uri: `http://docs.google.com/gview?embedded=true&url=${data.pdf_url}` }}
+                    source={{ uri: `http://docs.google.com/gview?embedded=true&url=${Constants.BASE_URL}${strings.LowGiFruits}` }}
                     style={{ flex: 1 }} />
             </View>
     )

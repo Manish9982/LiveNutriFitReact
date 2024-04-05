@@ -92,7 +92,7 @@ const PainSubmit = ({ navigation, route }) => {
       var formdata = new FormData();
       formdata.append("user_id", JSON.parse(temp));
       formdata.append("type", "Pain");
-      formdata.append("value", (Math.round(painValue * 100) / 100).toFixed(2));
+      formdata.append("value", (Math.round(painValue * 100) / 100).toFixed(0));
 
       const result = await PostApiData('userpaidhealthplan', formdata)
       console.log("Pain ====================>>>>>>", result)
@@ -106,7 +106,7 @@ const PainSubmit = ({ navigation, route }) => {
       var formdata = new FormData();
       formdata.append("user_id", JSON.parse(temp));
       formdata.append("type", "Pain");
-      formdata.append("value", (Math.round(painValue * 100) / 100).toFixed(2));
+      formdata.append("value", (Math.round(painValue * 100) / 100).toFixed(0));
 
       const result = await PostApiData('updateuserpaidhealthplan', formdata)
       console.log("Pain value====================>>>>>>", result)
@@ -242,7 +242,7 @@ const PainSubmit = ({ navigation, route }) => {
           color: painColor,
           fontSize: fontSizes.greeting,
           marginVertical: H * 0.04
-        }}>{(Math.round(painValue * 100) / 100).toFixed(2)}</Text>
+        }}>{(Math.round(painValue * 100) / 100).toFixed(0)}</Text>
         {/*<TextInput style={styles.textInput}
         onChangeText={(t) => { t > 10 ? (ToastAndroid.show("Max Value of Pain can be 10", ToastAndroid.SHORT)) : setPainValue(t) }}
         value={painValue}

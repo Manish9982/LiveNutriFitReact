@@ -43,7 +43,7 @@ const UserProfile = ({ navigation }) => {
     const openAppSettings = () => {
         Linking.openSettings();
     };
-    
+
 
     useEffect(() => {
         getLanguage()
@@ -180,7 +180,7 @@ const UserProfile = ({ navigation }) => {
                 ]);
                 console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
                 console.log('FaceID', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
-    
+
                 if (
                     statuses[PERMISSIONS.IOS.CAMERA] === RESULTS.GRANTED &&
                     statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] === RESULTS.GRANTED
@@ -264,9 +264,9 @@ const UserProfile = ({ navigation }) => {
         }
     }
 
-  
-  
-  
+
+
+
     const uploadPhotoGallery = async (pic) => {
         console.log('PIC=====>', pic)
         const temp = await getDataFromLocalStorage('user_id')
@@ -275,7 +275,7 @@ const UserProfile = ({ navigation }) => {
         formdata.append("profile", {
             uri: pic?.assets?.[0]?.uri,
             type: pic?.assets?.[0]?.type,
-            name: pic?.assets?.[0]?.fileName, 
+            name: pic?.assets?.[0]?.fileName,
         });
         const result = await PostApiData('update_profile_image', formdata)
         console.log("result======>", result)
@@ -627,7 +627,9 @@ const UserProfile = ({ navigation }) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => { navigation.navigate("editProfile", { flag: '1' }) }}
+                        >
                             <View style={{ flexDirection: 'row', marginTop: H * 0.05 }}>
                                 <Image source={require('../../assets/icons/report.png')}
                                     style={styles.userIconContainer} />
@@ -636,10 +638,19 @@ const UserProfile = ({ navigation }) => {
                                     <View style={{ flexDirection: 'row', width: '80%', flexWrap: 'wrap' }}>
                                         {
                                             dataFromApi?.data?.[0]?.goal?.answer?.map((item, index) => {
-                                                return (
-                                                    <Text
-                                                        key={index}
-                                                        style={[styles.text1, {}]}>{item?.text}, </Text>)
+                                                if (index == dataFromApi?.data?.[0]?.goal?.answer?.length - 1) {
+                                                    return (
+                                                        <Text
+                                                            key={index}
+                                                            style={[styles.text1, {}]}>{item?.text} </Text>)
+                                                }
+                                                else {
+                                                    return (
+                                                        <Text
+                                                            key={index}
+                                                            style={[styles.text1, {}]}>{item?.text}, </Text>)
+                                                }
+
                                             })
                                         }
                                     </View>
@@ -701,12 +712,16 @@ const styles = StyleSheet.create({
     },
     text2:
     {
-        fontFamily: 'Montserrat-SemiBold'
+        fontFamily: 'Montserrat-SemiBold',
+        fontWeight: '700',
+        color: 'black',
+        fontSize: fontSizes.XXL,
     },
     text1:
     {
         color: 'black',
         fontSize: fontSizes.MED,
+        fontWeight: '700'
     },
     button:
     {

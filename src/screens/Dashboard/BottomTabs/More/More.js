@@ -17,7 +17,7 @@ import DataContext from '../../../../context/DataContext';
 import Loader from '../../../../assets/components/Loader';
 import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens';
 import { useChangeLanguage, useLocales } from '../../../../utils/LocalizationUtil';
-
+import moment from 'moment-timezone';
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -40,6 +40,7 @@ const More = ({ navigation }) => {
 
   const strings = useLocales()
   const changeLanguage = useChangeLanguage();
+  const currentTimezone = moment.tz.guess();
 
   const handleChangeLanguage = async (newLanguage) => {
     await storeDataInLocalStorage('language_new', newLanguage)
@@ -220,26 +221,26 @@ const More = ({ navigation }) => {
   }
 
   const killApp = async () => {
-    console.log("1P")
+
     setLoader(true)
-    console.log("2P")
+
     const temp = await getDataFromLocalStorage('user_id')
     var formdata = new FormData()
     formdata.append("user_id", JSON.parse(temp));
     formdata.append("logout_time", Date.now())
     formdata.append('clearToken', '1')
-    console.log("3P")
+
     const result = await PostApiData('user_session_out', formdata)
-    console.log("4P")
+
     if (result?.status == "200") {
-      console.log("5P")
+
       try {
         await AsyncStorage.clear()
         RNRestart.Restart()
-        console.log("6P")
+
       } catch (e) {
       }
-      console.log('Done.')
+
     }
     else {
       Alert.alert(result?.message)
@@ -276,6 +277,7 @@ const More = ({ navigation }) => {
     }
     console.log('languageselection===>', result)
     await setLangModal(false)
+    await RNRestart.Restart()
   }
 
 
@@ -283,14 +285,14 @@ const More = ({ navigation }) => {
     navigation.navigate("BlogWebView")
     // Alert.alert("Coming Soon", "Feature Comming Soon!")
   }
+
+  console.log("currentTimezone", currentTimezone);
+
   return (
-
-
-    loader ?
-
+    loader
+      ?
       <Loader />
       :
-
       <View>
         <HeaderForSubmissionScreens Title={strings.More} />
         <Modal
@@ -712,8 +714,8 @@ const More = ({ navigation }) => {
               <Divider style={styles.dividerStyle} />
 
             </View>
-
           </View>
+          <Text style={styles.timezoneText}>Current Timezone: {currentTimezone}</Text>
         </View >
       </View >
   )
@@ -774,6 +776,11 @@ const styles = StyleSheet.create({
     marginBottom: HEIGHT * 0.1,
     backgroundColor: 'white',
 
+  },
+  timezoneText:{
+    alignSelf:'center',
+    marginTop:'10%',
+    color:'grey'
   }
 })
 export default More

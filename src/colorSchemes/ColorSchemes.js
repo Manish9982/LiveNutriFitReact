@@ -139,7 +139,7 @@ export const GetApiData = async (ApiName) => {
 
 export const PostApiData = async (ApiName, formdata) => {
    const netinfo = await NetInfo.fetch()
-   // console.log(netinfo)
+    //Stconsole.log('netinfo', netinfo)
    console.log("API URL ==>", `${Constants.BASE_URL}panel/${ApiName}`)
    if (netinfo.isConnected) {
       //const URL = "https://lnf.bizhawkztest.com/public/"

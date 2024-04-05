@@ -22,6 +22,7 @@ import Sound from 'react-native-sound';
 import { useLocales } from '../../../../utils/LocalizationUtil';
 import Toast from 'react-native-simple-toast'
 
+
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
@@ -92,6 +93,7 @@ const Stats = (props) => {
   const [secondaryLoader, setSecondaryLoader] = NsecondaryLoader
 
   const isFocused = useIsFocused();
+
   ////////////////////////////////////////////
   const spinValue = new Animated.Value(0);
   // Next, interpolate beginning and end values (in this case 0 and 1)
@@ -557,7 +559,6 @@ const Stats = (props) => {
           key={i}>
           <View
             style={{
-
             }}
           >
             <TouchableOpacity
@@ -567,13 +568,12 @@ const Stats = (props) => {
               {<Text style={{
                 ...fontFamily.bold,
                 fontSize: fontSizes.XXL,
-                marginBottom: HEIGHT * 0.013,
+                margin: 5,
                 textAlign: 'center'
               }}>{(item.attribute_value[i] == "") ? "--" : item.attribute_value[i]}</Text>}
             </TouchableOpacity>
             <Text style={{
               fontSize: fontSizes.MED,
-              textAlign: 'center'
             }}>{item.attribute[i]}</Text>
           </View>
           <Divider
@@ -582,7 +582,7 @@ const Stats = (props) => {
               borderColor: "silver",
               height: HEIGHT * 0.09,
               width: 0.5,
-              marginLeft: W * 0.05
+              marginHorizontal: 3,
             }} />
         </View>
       )
@@ -794,8 +794,6 @@ const Stats = (props) => {
   }
 
   return (
-
-
     showLoader ?
       <>
         <View style={styles.loadingContainer}>
@@ -1021,7 +1019,7 @@ const Stats = (props) => {
                   alignItems: "center"
                 }}>
                   <Text numberOfLines={1}
-                    adjustsFontSizeToFit
+                    
                     style={styles.attributeHeading}> {strings.CurrentWeight} </Text>
                   <TextInput
                     value={currentWeight}
@@ -1060,7 +1058,7 @@ const Stats = (props) => {
                   marginTop: 10
                 }}>
                   <Text numberOfLines={1}
-                    adjustsFontSizeToFit
+                    
                     style={styles.attributeHeading}>{strings.Targetweight} </Text>
                   <TextInput
                     underlineColor={colors.GREEN}
@@ -1175,7 +1173,7 @@ const Stats = (props) => {
                   alignItems: "center"
                 }}>
                   <Text numberOfLines={1}
-                    adjustsFontSizeToFit
+                    
                     style={styles.attributeHeading}>{strings.fasting} </Text>
                   <TextInput
                     onChangeText={(t) => {
@@ -1229,7 +1227,7 @@ const Stats = (props) => {
                   marginTop: 10,
                 }}>
                   <Text numberOfLines={1}
-                    adjustsFontSizeToFit
+                    
                     style={styles.attributeHeading}>{strings.nonfating} </Text>
                   <TextInput
                     onChangeText={(t) => {
@@ -1485,7 +1483,7 @@ const Stats = (props) => {
                   alignItems: "center"
                 }}>
                   <Text numberOfLines={1}
-                    adjustsFontSizeToFit
+                    
                     style={styles.attributeHeading}>{strings.systolicBP}</Text>
                   <TextInput
                     onChangeText={(t) => {
@@ -1517,7 +1515,7 @@ const Stats = (props) => {
                   marginTop: 10,
                 }}>
                   <Text numberOfLines={1}
-                    adjustsFontSizeToFit
+                    
                     style={styles.attributeHeading}>{strings.diastolicBP}</Text>
                   <TextInput
                     value={diastolic}
@@ -1550,7 +1548,7 @@ const Stats = (props) => {
                   marginTop: 10,
                 }}>
                   <Text numberOfLines={1}
-                    adjustsFontSizeToFit
+                    
                     style={styles.attributeHeading}>{strings.BPM}</Text>
                   <TextInput
                     onChangeText={(t) => {

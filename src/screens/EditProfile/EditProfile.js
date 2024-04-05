@@ -16,6 +16,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import CustomAccordion from '../../assets/components/CustomAccordion'
 import { useLocales } from '../../utils/LocalizationUtil'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 
@@ -31,7 +32,7 @@ function getTimestamp10YearsAgo() {
   return tenYearsAgo?.getTime();
 }
 
-const EditProfile = ({ navigation }) => {
+const EditProfile = ({ navigation, route }) => {
   const [checked, setChecked] = useState('true');
   const [myData, setMyData] = useState(null)
   const [loader, setLoader] = useState(true)
@@ -64,6 +65,7 @@ const EditProfile = ({ navigation }) => {
 
   const isFocused = useIsFocused()
   const strings = useLocales()
+  const openGoals = route?.params?.flag
 
   useEffect(() => { getDataFromApi() }, [])
   useEffect(() => { setChecked() }, [])
@@ -72,7 +74,8 @@ const EditProfile = ({ navigation }) => {
   const handleDateChange = useCallback((event, newDate) => {
     setShowCalendar(false)
     setage(convertTimestampToYYYYMMDD(newDate))
-    setSelectedDate(JSON.stringify(newDate))
+    //setSelectedDate(JSON.stringify(newDate))
+    //setSelectedDate(newDate)
   }, [])
 
   const toggleAccordion = () => {
@@ -104,8 +107,7 @@ const EditProfile = ({ navigation }) => {
     const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
     //Construct the ISO format string
     const isoString = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
-    //console.log('isoString',isoString)
-    return isoString;
+    return JSON.parse(isoString);
   }
 
 
@@ -119,7 +121,6 @@ const EditProfile = ({ navigation }) => {
     var realFeet = ((n * 0.393700) / 12);
     var feet = Math.floor(realFeet);
     var inches = Math.round((realFeet - feet) * 12);
-    console.log("Feet=====>", feet)
     return `${feet}`;
   }
 
@@ -127,7 +128,6 @@ const EditProfile = ({ navigation }) => {
     var realFeet = ((n * 0.393700) / 12);
     var feet = Math.floor(realFeet);
     var inches = Math.round((realFeet - feet) * 12);
-    console.log("Inches====>", inches)
     return `${inches}`;
   }
 
@@ -152,7 +152,6 @@ const EditProfile = ({ navigation }) => {
         formdata.append("food_type", foodType.map(item => item.default).join(","));
         formdata.append("intensity", "")
         const result = await PostApiData('userprofileupdate', formdata)
-        console.log(result)
         if (result.status == 200) {
           ShortToast('Success!', 'success', '')
           setTimeout(() => { navigation.goBack() }, 1000)
@@ -160,7 +159,6 @@ const EditProfile = ({ navigation }) => {
       }
       else {
         const temp = await getDataFromLocalStorage('user_id')
-        console.log('temp---->', JSON.parse(temp))
         var formdata = new FormData();
         formdata.append("id", JSON.parse(temp));
         formdata.append("user_name", user_name);
@@ -181,7 +179,6 @@ const EditProfile = ({ navigation }) => {
       })*/}
 
         const result = await PostApiData('userprofileupdate', formdata)
-        console.log(result)
         if (result.status == 200) {
           ShortToast('Success!', 'success', '')
           setTimeout(() => { navigation.goBack() }, 1000)
@@ -237,38 +234,35 @@ const EditProfile = ({ navigation }) => {
     formdata.append("id", JSON.parse(temp));
 
     const result = await PostApiData('userprofile', formdata)
-    console.log(result)
-    setMyData(result)
-    setFeet(toFeet(result?.data[0]?.height))
-    setInch(toInches(result?.data[0]?.height))
-    setheight(result?.data[0]?.height == null ? "" : result?.data[0]?.height)
-    setaddress(result?.data[0]?.address == null ? "" : result?.data[0]?.address)
-    setuser_name(result?.data?.[0] == null ? "" : result?.data[0]?.name)
-    setweight(result?.data[0]?.weight == null ? "" : result?.data[0]?.weight)
-    setage(result?.data?.[0]?.age == null ? "" : result?.data[0]?.age)
-    setChecked(result?.data[0].food_type == true ? "true" : "false")
-    setExerciseLevel(getNumberForWorkoutIntensity(result?.data[0].workout_intensity))
-    setSelectedDate(result?.data[0]?.age)
+    if (result?.status == '200') {
+      setMyData(result)
+      setFeet(toFeet(result?.data[0]?.height))
+      setInch(toInches(result?.data[0]?.height))
+      setheight(result?.data[0]?.height == null ? "" : result?.data[0]?.height)
+      setaddress(result?.data[0]?.address == null ? "" : result?.data[0]?.address)
+      setuser_name(result?.data?.[0] == null ? "" : result?.data[0]?.name)
+      setweight(result?.data[0]?.weight == null ? "" : result?.data[0]?.weight)
+      setage(result?.data?.[0]?.age == null ? "" : result?.data[0]?.age)
+      setChecked(result?.data[0].food_type == true ? "true" : "false")
+      setExerciseLevel(getNumberForWorkoutIntensity(result?.data[0].workout_intensity))
+      //setSelectedDate(convertDateFormat(result?.data[0]?.age))
+    }
     setLoader(false)
   }
 
   const handleChangePhoto = async () => {
     try {
       const result = await launchImageLibrary()
-      console.log('img---->', result?.assets[0]?.uri)
       setImage(result)
     } catch (error) {
-      console.log(error)
+      ShortToast(error)
     }
   }
 
   const handleDobPress = () => {
     setShowCalendar(prev => !prev)
   }
-
-  console.log("goal", goal)
-  console.log("food type from API ======>", new Date())
-
+  console.log('openGoals', openGoals)
   return (
     loader ?
       <View style={styles.activityIndicator}>
@@ -281,7 +275,7 @@ const EditProfile = ({ navigation }) => {
       :
       <View>
         <HeaderForSubmissionScreens Title={strings.EditProfile} />
-        < ScrollView contentContainerStyle={{ paddingBottom: H * 0.15 }} >
+        < KeyboardAwareScrollView contentContainerStyle={{ paddingBottom: H * 0.15 }} >
           {/* <Image source={{ uri: image == null ? myData?.data[0]?.profile_pic : image.assets[0]?.uri }}
             style={styles.profilePic} />
           <TouchableOpacity
@@ -396,6 +390,7 @@ const EditProfile = ({ navigation }) => {
     </View> */}
                 <View>
                   <CustomAccordion
+                    defaultExpand={openGoals === '1'}
                     onSelectionChange={setGoal}
                     title={myData?.data[0]?.goal?.question}
                     options={myData?.data[0]?.goal?.option}
@@ -664,7 +659,8 @@ const EditProfile = ({ navigation }) => {
                   :
                   (
                     <DateTimePicker
-                      value={(new Date(convertDateFormat(selectedDate))) || new Date()}
+                      //value={(new Date(convertDateFormat(selectedDate))) || new Date()}
+                      value={selectedDate}
                       mode="date"
                       display="default"
                       onChange={(a, t) => handleDateChange(a, t)}
@@ -698,7 +694,7 @@ const EditProfile = ({ navigation }) => {
             onPress={() => { updateDetails() }}>
             <Text style={{ color: 'white' }}>{strings.Update}</Text>
           </TouchableOpacity>
-        </ScrollView >
+        </KeyboardAwareScrollView >
       </View>
   )
 }
