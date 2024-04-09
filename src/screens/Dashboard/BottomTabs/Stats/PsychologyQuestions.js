@@ -99,7 +99,8 @@ export default function PsychologyQuestions({ navigation }) {
         formdata.append("value", throwScore());
         const result = await PostApiData('updateuserpaidhealthplan', formdata)
         if (result?.status == '200') {
-            navigation.navigate("BootSplash")
+            //navigation.navigate("BootSplash")
+            navigation.goBack()
         }
     }
 

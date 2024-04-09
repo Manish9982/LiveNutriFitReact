@@ -67,7 +67,8 @@ const PainSubmit = ({ navigation, route }) => {
     formdata.append("reason", t);
     const result = await PostApiData('painreason', formdata)
     console.log("PAIN--------------------" + result)
-    navigation.navigate("BootSplash")
+    //navigation.navigate("BootSplash")
+    navigation.goBack()
   }
 
 
@@ -98,7 +99,8 @@ const PainSubmit = ({ navigation, route }) => {
       console.log("Pain ====================>>>>>>", result)
       if (result.status == 200) {
         ShortToast(result.message, 'success', '')
-        navigation.navigate("BootSplash")
+        // navigation.navigate("BootSplash")
+        navigation.goBack()
       }
     }
     else if (painValue > 1) {
@@ -127,7 +129,8 @@ const PainSubmit = ({ navigation, route }) => {
       console.log("Pain value====================>>>>>>", result)
       if (result.status == 200) {
         ShortToast(result.message, 'success', '')
-        navigation.navigate("BootSplash")
+        // navigation.navigate("BootSplash")
+        navigation.goBack()
       }
     }
   }

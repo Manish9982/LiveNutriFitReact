@@ -21,6 +21,7 @@ import english from '../../../../en'
 import Sound from 'react-native-sound';
 import { useLocales } from '../../../../utils/LocalizationUtil';
 import Toast from 'react-native-simple-toast'
+import moment from 'moment-timezone';
 
 
 const wait = (timeout) => {
@@ -32,7 +33,7 @@ const WIDTH = Dimensions.get('window').width
 
 const Stats = (props) => {
   const [data, setData] = useState(null)
-  const [showLoader, setShowLoader] = useState(true)
+  const [showLoader, setShowLoader] = useState(false)
   const [dataForPaidUser, setDataForPaidUser] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
   const [name, setName] = useState("")
@@ -210,14 +211,14 @@ const Stats = (props) => {
   }
   //lng
   const getLanguage = async () => {
-    setShowLoader(true)
+    setSecondaryLoader(true)
     const lang = await getDataFromLocalStorage("lang")
     if (lang == "en") {
       changeLanguage('en')
     } else {
       changeLanguage('hi')
     }
-    setShowLoader(false)
+    setSecondaryLoader(false)
   }
   const changeLanguage = (languageKey) => {
 
@@ -458,7 +459,6 @@ const Stats = (props) => {
     const result = await PostApiData('freeuser', formdata)
     setData(result)
     getDataForPaidUser()
-    setSecondaryLoader(false)
     storeDataInLocalStorage("stackValue", "3")
     storeDataInLocalStorage("user_type", JSON.stringify(result?.user_type))
     //console.log("tempPaid", temp)
@@ -475,6 +475,7 @@ const Stats = (props) => {
 
 
   const getDataForPaidUser = async () => {
+    setSecondaryLoader(true)
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("user_id", JSON.parse(temp))
@@ -490,6 +491,7 @@ const Stats = (props) => {
       // setDiastolic(result?.single[2]?.attribute_value[1])
       // setBpm(result?.single[2]?.attribute_value[2])
     }
+    setSecondaryLoader(false)
   }
   const getName = async () => {
     var formdata = new FormData();
@@ -502,7 +504,7 @@ const Stats = (props) => {
     else {
       ShortToast(result?.message, 'error', '')
     }
-    setShowLoader(false)
+    setSecondaryLoader(false)
   }
 
   var myloop = []
@@ -1095,9 +1097,9 @@ const Stats = (props) => {
                       backgroundColor: "white",
                       margin: 5,
                     }}
-                    keyboardType="numeric" 
+                    keyboardType="numeric"
                     maxLength={5}
-                    />
+                  />
 
                 </View>
                 <View style={{ flexDirection: "row", width: W * 0.5, justifyContent: "space-evenly" }}>
@@ -2002,7 +2004,8 @@ const Stats = (props) => {
             </View>
           </Modal>
 
-          <Modal visible={secondaryLoader}
+          <Modal
+            visible={secondaryLoader}
             transparent={true}>
             <View
               style={{
@@ -2013,13 +2016,13 @@ const Stats = (props) => {
                 backgroundColor: "rgba(0,0,0,0.3)"
               }}
             >
-              <View style={{
-                backgroundColor: 'white',
-                padding: 10,
-                borderRadius: 8,
-              }}>
-                <ActivityIndicator color={colors.GREEN} />
-              </View>
+              <LottieView
+                style={{
+                  height: 200,
+                  width: 200,
+                }}
+                source={require('../../../../assets/animations/lf30_editor_xibt7sue.json')}
+                autoPlay loop />
             </View>
           </Modal>
           {/**Edit bpm///////////////////////////////////////////////// */}

@@ -713,7 +713,7 @@ const styles = StyleSheet.create({
     text2:
     {
         fontFamily: 'Montserrat-SemiBold',
-        fontWeight: '700',
+        fontWeight: '600',
         color: 'black',
         fontSize: fontSizes.XXL,
     },
@@ -721,7 +721,7 @@ const styles = StyleSheet.create({
     {
         color: 'black',
         fontSize: fontSizes.MED,
-        fontWeight: '700'
+        fontWeight: '600',
     },
     button:
     {

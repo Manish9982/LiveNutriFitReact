@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, ScrollView, Image, StyleSheet, ToastAndroid, FlatList, Platform } from 'react-native'
+import { View, TouchableOpacity, ScrollView, Image, StyleSheet, ToastAndroid, FlatList, Platform, Alert } from 'react-native'
 import React, { useEffect, useState, useContext, useCallback } from 'react'
 import { ActivityIndicator, Checkbox, RadioButton, Text, TextInput } from 'react-native-paper'
 import { getDataFromLocalStorage } from '../../local storage/LocalStorage'
@@ -29,7 +29,7 @@ function getTimestamp10YearsAgo() {
   tenYearsAgo.setFullYear(currentDate.getFullYear() - 10);
 
   // Return the timestamp in milliseconds
-  return tenYearsAgo?.getTime();
+  return tenYearsAgo
 }
 
 const EditProfile = ({ navigation, route }) => {
@@ -73,9 +73,12 @@ const EditProfile = ({ navigation, route }) => {
 
   const handleDateChange = useCallback((event, newDate) => {
     setShowCalendar(false)
-    setage(convertTimestampToYYYYMMDD(newDate))
-    //setSelectedDate(JSON.stringify(newDate))
-    //setSelectedDate(newDate)
+    setSelectedDate(newDate)
+    const updatedDate = new Date(newDate)
+    const year = updatedDate.getFullYear();
+    const month = (updatedDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = updatedDate.getDate().toString().padStart(2, '0');
+    setage(`${year}-${month}-${day}`)
   }, [])
 
   const toggleAccordion = () => {
@@ -94,20 +97,14 @@ const EditProfile = ({ navigation, route }) => {
     }
   }
 
+  const formatDateForDisplaying = (date) => {
+    const options = { day: '2-digit', month: 'long', year: 'numeric' };
+    return date.toLocaleDateString('en-GB', options);
+  };
+
   function convertDateFormat(dateString) {
-    //Create a Date object from the input date string
     const date = new Date(dateString);
-    //Extract year, month, day, hours, minutes, seconds, and milliseconds
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0, so add 1
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
-    //Construct the ISO format string
-    const isoString = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
-    return JSON.parse(isoString);
+    return date
   }
 
 
@@ -115,20 +112,13 @@ const EditProfile = ({ navigation, route }) => {
 
   }
 
-
-
-  function toFeet(n) {
-    var realFeet = ((n * 0.393700) / 12);
-    var feet = Math.floor(realFeet);
-    var inches = Math.round((realFeet - feet) * 12);
-    return `${feet}`;
-  }
-
-  function toInches(n) {
-    var realFeet = ((n * 0.393700) / 12);
-    var feet = Math.floor(realFeet);
-    var inches = Math.round((realFeet - feet) * 12);
-    return `${inches}`;
+  function cmToFeetAndInches(cm) {
+    // 1 inch = 2.54 cm
+    // 1 foot = 12 inches
+    const inches = cm / 2.54;
+    const feet = Math.floor(inches / 12);
+    const remainingInches = inches % 12;
+    return [feet, remainingInches?.toFixed(0)];
   }
 
 
@@ -232,22 +222,29 @@ const EditProfile = ({ navigation, route }) => {
     const temp = await getDataFromLocalStorage('user_id')
     var formdata = new FormData();
     formdata.append("id", JSON.parse(temp));
-
-    const result = await PostApiData('userprofile', formdata)
-    if (result?.status == '200') {
-      setMyData(result)
-      setFeet(toFeet(result?.data[0]?.height))
-      setInch(toInches(result?.data[0]?.height))
-      setheight(result?.data[0]?.height == null ? "" : result?.data[0]?.height)
-      setaddress(result?.data[0]?.address == null ? "" : result?.data[0]?.address)
-      setuser_name(result?.data?.[0] == null ? "" : result?.data[0]?.name)
-      setweight(result?.data[0]?.weight == null ? "" : result?.data[0]?.weight)
-      setage(result?.data?.[0]?.age == null ? "" : result?.data[0]?.age)
-      setChecked(result?.data[0].food_type == true ? "true" : "false")
-      setExerciseLevel(getNumberForWorkoutIntensity(result?.data[0].workout_intensity))
-      //setSelectedDate(convertDateFormat(result?.data[0]?.age))
+    try {
+      const result = await PostApiData('userprofile', formdata)
+      if (result?.status == '200') {
+        var height = cmToFeetAndInches(result?.data[0]?.height)
+        console.log('height', height)
+        setMyData(result)
+        setFeet(height[0]?.toString())
+        setInch(height[1]?.toString())
+        setheight(result?.data[0]?.height == null ? "" : result?.data[0]?.height)
+        setaddress(result?.data[0]?.address == null ? "" : result?.data[0]?.address)
+        setuser_name(result?.data?.[0] == null ? "" : result?.data[0]?.name)
+        setweight(result?.data[0]?.weight == null ? "" : result?.data[0]?.weight)
+        setage(result?.data?.[0]?.age == null ? "" : result?.data[0]?.age)
+        setChecked(result?.data[0].food_type == true ? "true" : "false")
+        setExerciseLevel(getNumberForWorkoutIntensity(result?.data[0].workout_intensity))
+        setSelectedDate(convertDateFormat(result?.data[0]?.age))
+      }
+    } catch (error) {
+      Alert.alert(error?.message)
     }
-    setLoader(false)
+    finally {
+      setLoader(false)
+    }
   }
 
   const handleChangePhoto = async () => {
@@ -269,7 +266,7 @@ const EditProfile = ({ navigation, route }) => {
         {/* <ActivityIndicator size={"large"}
           color={colors.GREEN} /> */}
 
-        <Customloader></Customloader>
+        <Customloader />
 
       </View>
       :
@@ -640,18 +637,18 @@ const EditProfile = ({ navigation, route }) => {
                         showCalendar
                         &&
                         <DateTimePicker
-                          value={(new Date(convertDateFormat(selectedDate))) || new Date()}
+                          value={selectedDate}
                           mode="date"
                           display="default"
                           onChange={(a, t) => handleDateChange(a, t)}
-                        //maximumDate={getTimestamp10YearsAgo()}
+                          maximumDate={getTimestamp10YearsAgo()}
                         //onTouchCancel={() =>setShowCalendar(prev => !prev)}
                         />
                       }
                       <TouchableOpacity
                         onPress={handleDobPress}
                         style={styles.dobContainer}>
-                        <Text>{selectedDate}</Text>
+                        <Text>{formatDateForDisplaying(selectedDate)}</Text>
                       </TouchableOpacity>
 
                     </View>
@@ -664,7 +661,7 @@ const EditProfile = ({ navigation, route }) => {
                       mode="date"
                       display="default"
                       onChange={(a, t) => handleDateChange(a, t)}
-                    //maximumDate={getTimestamp10YearsAgo()}
+                      maximumDate={getTimestamp10YearsAgo()}
                     //onTouchCancel={() => setShowCalendar(prev => !prev)}
                     />
                   )
