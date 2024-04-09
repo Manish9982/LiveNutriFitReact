@@ -95,7 +95,7 @@ const Stats = (props) => {
   const [secondaryLoader, setSecondaryLoader] = NsecondaryLoader
 
   const isFocused = useIsFocused();
-
+  const currentTimezone = moment.tz.guess();
   ////////////////////////////////////////////
   const spinValue = new Animated.Value(0);
   // Next, interpolate beginning and end values (in this case 0 and 1)
@@ -456,6 +456,7 @@ const Stats = (props) => {
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("user_id", JSON.parse(temp))
+    formdata.append("timezone", currentTimezone)
     const result = await PostApiData('freeuser', formdata)
     setData(result)
     getDataForPaidUser()
