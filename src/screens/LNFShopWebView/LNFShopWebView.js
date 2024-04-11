@@ -20,8 +20,6 @@ const LNFShopWebView = ({ navigation }) => {
     const [loader, setLoader] = useState(true)
     const [userId, setUserId] = useState("")
     const [country, setCountry] = useState("")
-    const [showFirstWebView, setShowFirstWebView] = useState(true);
-    const [showSecondWebView, setShowSecondWebView] = useState(false);
     const { Nlanguage } = useContext(DataContext)
 
     const [language, setLanguage] = Nlanguage
@@ -31,22 +29,14 @@ const LNFShopWebView = ({ navigation }) => {
 
     useEffect(() => {
         getWRID()
-        //retrieveLanguage()
     }, [])
 
 
     useEffect(() => {
         if (isFocused) {
-            //Alert.alert("Gaurav")
         }
 
     }, [isFocused])
-
-
-    const retrieveLanguage = async () => {
-
-    }
-
 
     const renderLoading = () => {
         return (
@@ -57,11 +47,9 @@ const LNFShopWebView = ({ navigation }) => {
     const getWRID = async () => {
         const userd = await getDataFromLocalStorage("wrid")
         const countrySelected = await getDataFromLocalStorage("country")
-        const lang = await getDataFromLocalStorage("lang")
         setCountry(countrySelected)
         setUserId(userd)
         setLoader(false)
-        //encodeBase64((userd))
     }
 
     const encodeBase64 = (input) => {
@@ -69,8 +57,6 @@ const LNFShopWebView = ({ navigation }) => {
     }
 
     return (
-
-
         <SafeAreaView style={{ flex: 1 }}>
             <StatusBar barStyle={"dark-content"}
                 backgroundColor={colors.GREEN} />
@@ -79,143 +65,36 @@ const LNFShopWebView = ({ navigation }) => {
                     ?
                     <Text>Please Wait...</Text>
                     :
-                    // <View
-                    //     style={{ flex: 1 }}>
-                    //     <WebView
-                    //         geolocationEnabled
-                    //         pullToRefreshEnabled
-                    //         startInLoadingState={true}
-                    //         originWhitelist={['*']}
-                    //         javaScriptEnabled={true}
-                    //         renderLoading={renderLoading}
-                    //         thirdPartyCookiesEnabled={true}
-                    //         sharedCookiesEnabled={true}
-                    //         cacheEnabled={true}
-                    //         domStorageEnabled={true}
-                    //         webviewDebuggingEnabled
-                    //         textInteractionEnabled
-                    //         //     injectedJavaScript={`
-                    //         //     var style = document.createElement('style');
-                    //         //     style.innerHTML = "div#new-shop { display: block !important; }";
-                    //         //     document.head.appendChild(style);
-                    //         //   `}
-                    //         //source={{ uri: `${Constants.BASE_URL}${strings.code == 'en' ? '' : `${strings.code}/`}shop/?uid=${base64.encode(userId)}&type=mob` }}
-                    //         //source={{ uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob`}}
-
-                    //         source={
-                    //             country == "India" ?
-                    //                 { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
-                    //                 :
-                    //                 { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob&ip=${netinfo?.details?.ipAddress}` }
-
-                    //         }
-
-                    //         //source={{ uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob&ip=${netinfo?.details?.ipAddress}` }}
-                    //         style={{
-                    //             flex: 1
-                    //         }}
-                    //         onNavigationStateChange={(info) => {
-                    //             if (info.url == `${Constants.BASE_URL}failure/`) {
-                    //                 // navigation.navigate("BottomTabs")
-                    //             } else if (info.url == `${Constants.BASE_URL}success/`) {
-                    //                 navigation.navigate("Stats")
-                    //                 // Alert.alert("Alert", info.url)
-                    //                 // Alert.alert('Payment successful', 'Your payment has been done sucessfully , press OKAY to go to dashboard!', [
-                    //                 // {text: 'OKAY', onPress: () => { navigation.navigate("BottomTabs")  }},]);
-                    //             } else {
-
-                    //             }
-                    //         }}
-                    //     />
-                    // </View>
-
                     <View style={{ flex: 1 }}>
-                        {showFirstWebView && (
-                            <WebView
-                                geolocationEnabled
-                                pullToRefreshEnabled
-                                startInLoadingState={true}
-                                originWhitelist={['*']}
-                                javaScriptEnabled={true}
-                                renderLoading={renderLoading}
-                                thirdPartyCookiesEnabled={true}
-                                sharedCookiesEnabled={true}
-                                cacheEnabled={true}
-                                domStorageEnabled={true}
-                                webviewDebuggingEnabled
-                                textInteractionEnabled
-                                source={
-                                    { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
+                        <WebView
+                            geolocationEnabled
+                            pullToRefreshEnabled
+                            startInLoadingState={true}
+                            originWhitelist={['*']}
+                            javaScriptEnabled={true}
+                            renderLoading={renderLoading}
+                            thirdPartyCookiesEnabled={true}
+                            sharedCookiesEnabled={true}
+                            cacheEnabled={true}
+                            domStorageEnabled={true}
+                            webviewDebuggingEnabled
+                            textInteractionEnabled
+                            source={{
+                                uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob`
+                            }}
+                            style={{ flex: 1, }}
+                            onNavigationStateChange={(info) => {
+                                console.log('URL=>', info?.url)
+                                if (info.url == `${Constants.BASE_URL}failure/`) {
+                                } else if (info.url == `${Constants.BASE_URL}success/`) {
+                                    navigation.navigate("Stats")
+                                } else {
 
-                                    // country == 'India'
-                                    //     ? { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
-                                    //    // : { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob&ip=${netinfo?.details?.ipAddress}` }
-                                    //     : { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob`}
                                 }
-                                onLoad={() => {
-                                    setShowFirstWebView(false);
-                                    setShowSecondWebView(true);
-                                }}
-                                style={{ flex: 1, display: showFirstWebView ? 'flex' : 'none' }}
-                                onNavigationStateChange={(info) => {
-                                    console.log('URL=>', info?.url)
-                                    if (info.url == `${Constants.BASE_URL}failure/`) {
-                                    } else if (info.url == `${Constants.BASE_URL}success/`) {
-                                        navigation.navigate("Stats")
-
-                                    } else {
-
-                                    }
-                                }}
-                            />
-                        )}
-                        {showSecondWebView && (
-                            <WebView
-                                geolocationEnabled
-                                pullToRefreshEnabled
-                                startInLoadingState={true}
-                                originWhitelist={['*']}
-                                javaScriptEnabled={true}
-                                renderLoading={renderLoading}
-                                thirdPartyCookiesEnabled={true}
-                                sharedCookiesEnabled={true}
-                                cacheEnabled={true}
-                                domStorageEnabled={true}
-                                webviewDebuggingEnabled
-                                textInteractionEnabled source={
-
-                                    { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
-
-                                    // country == 'India'
-                                    //     ? { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
-                                    //     : { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob&ip=${netinfo?.details?.ipAddress}` }
-                                }
-
-                                onLoad={() => {
-                                    // Second WebView has loaded, you can navigate or perform other actions here
-                                }}
-
-
-                                style={{ flex: 1 }}
-                                onNavigationStateChange={(info) => {
-                                    console.log('URL=>', info?.url)
-                                    if (info.url == `${Constants.BASE_URL}failure/`) {
-                                        // navigation.navigate("BottomTabs")
-                                    } else if (info.url == `${Constants.BASE_URL}success/`) {
-                                        navigation.navigate("Stats")
-                                        // Alert.alert("Alert", info.url)
-                                        // Alert.alert('Payment successful', 'Your payment has been done sucessfully , press OKAY to go to dashboard!', [
-                                        // {text: 'OKAY', onPress: () => { navigation.navigate("BottomTabs")  }},]);
-                                    } else {
-
-                                    }
-                                }}
-                            />
-                        )}
+                            }}
+                        />
                     </View>
             }
-
-
         </SafeAreaView>
 
     )
