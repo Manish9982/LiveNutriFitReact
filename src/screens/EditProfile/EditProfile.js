@@ -52,6 +52,7 @@ const EditProfile = ({ navigation, route }) => {
   const [showOptionsForFoodType, setShowOptionsForFoodType] = useState(false)
   const [foodType, setFoodType] = useState([])
   const [goal, setGoal] = useState([])
+  const [updateButtonDisabled, setUpdateButtonDisabled] = useState(false)
 
   const { NglobalBmi, Ncrrnt, Ntrgt, Nht, Nfeet, Ninch } = useContext(DataContext)
   const [globalBmi, setGlobalBmi] = NglobalBmi
@@ -97,6 +98,21 @@ const EditProfile = ({ navigation, route }) => {
     }
   }
 
+  function validateWeight(input) {
+    const regex = /^\d{1,3}(\.\d)?$/;
+    // if (regex.test(input)) {
+    //   setCurrentWeight(input)
+    //   setCrrnt(input)
+    //   setWeightOkButttonDisabled(false)
+    // }
+    // else {
+    //   ShortToast('We can only accept numbers with up to one decimal place.')
+    //   setCurrentWeight('')
+    //   setCrrnt('')
+    // }
+    return regex.test(input)
+  }
+
   const formatDateForDisplaying = (date) => {
     const options = { day: '2-digit', month: 'long', year: 'numeric' };
     return date.toLocaleDateString('en-GB', options);
@@ -117,8 +133,8 @@ const EditProfile = ({ navigation, route }) => {
     // 1 foot = 12 inches
     const inches = cm / 2.54;
     const feet = Math.floor(inches / 12);
-    const remainingInches = inches % 12;
-    return [feet, remainingInches?.toFixed(0)];
+    const remainingInches = Math.floor(inches % 12);
+    return [feet, remainingInches];
   }
 
 
@@ -499,6 +515,7 @@ const EditProfile = ({ navigation, route }) => {
                 {textOfUnit == "Feet/In" ?
                   <>
                     <TextInput
+                      keyboardType={"numeric"}
                       // onChangeText={(t) => { setFeet(t) }}
                       onChangeText={(t) => {
                         if (t == " ")
@@ -517,7 +534,6 @@ const EditProfile = ({ navigation, route }) => {
                       }}
                       value={feet}
                       maxLength={1}
-                      keyboardType={"number-pad"}
                       style={{
                         width: W * 0.12,
                         backgroundColor: "white",
@@ -533,7 +549,7 @@ const EditProfile = ({ navigation, route }) => {
                     <TextInput
                       onChangeText={(t) => { setInch(t) }}
                       maxLength={2}
-                      keyboardType={"number-pad"}
+                      keyboardType={"numeric"}
                       value={inch}
                       style={{
                         width: W * 0.12,
@@ -554,7 +570,7 @@ const EditProfile = ({ navigation, route }) => {
                   <>
                     <TextInput
                       value={height}
-                      keyboardType={"number-pad"}
+                      keyboardType={"numeric"}
                       onChangeText={(t) => { setheight(t) }}
                       style={{
                         width: W * 0.3,
@@ -608,7 +624,13 @@ const EditProfile = ({ navigation, route }) => {
             <View>
               <Text style={styles.text}>{strings.Weight}</Text>
               <TextInput
-                onChangeText={(tex) => { setweight(tex) }}
+                onChangeText={(text) => {
+                  setweight(text)
+                  setUpdateButtonDisabled(true)
+                  if (validateWeight(text)) {
+                    setUpdateButtonDisabled(false)
+                  }
+                }}
                 value={weight}
                 underlineColor={"transparent"}
                 activeUnderlineColor={colors.GREEN}
@@ -687,7 +709,9 @@ const EditProfile = ({ navigation, route }) => {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.updateButton}
+          <TouchableOpacity
+            disabled={updateButtonDisabled}
+            style={[styles.updateButton, { backgroundColor: updateButtonDisabled ? 'gray' : colors.GREEN }]}
             onPress={() => { updateDetails() }}>
             <Text style={{ color: 'white' }}>{strings.Update}</Text>
           </TouchableOpacity>

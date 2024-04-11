@@ -168,7 +168,7 @@ const Reports = ({ navigation }) => {
                                                     } else if (response.error) {
                                                         console.log('ImagePicker Error: ', response.error);
                                                     } else {
-                                                        Alert.alert(response?.errorCode)
+                                                        //Alert.alert(response?.errorCode)
                                                         console.log("Gaurav")
                                                         setPic(response)
                                                         setVisible3(false)

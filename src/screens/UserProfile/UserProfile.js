@@ -719,6 +719,7 @@ const styles = StyleSheet.create({
     },
     text1:
     {
+        fontFamily: 'Montserrat-SemiBold',
         color: 'black',
         fontSize: fontSizes.MED,
         fontWeight: '600',

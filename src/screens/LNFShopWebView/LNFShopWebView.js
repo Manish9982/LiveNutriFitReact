@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { ActivityIndicator, Appbar, Text } from 'react-native-paper'
 import WebView from 'react-native-webview'
 import HeaderForSubmissionScreens from '../Dashboard/BottomTabs/Stats/HeaderForSubmissionScreens'
-import { Constants, H, PostApiData, W, colors, fontSizes } from '../../colorSchemes/ColorSchemes'
+import { Constants, H, PostApiData, ShortToast, W, colors, fontSizes } from '../../colorSchemes/ColorSchemes'
 import { useState } from 'react'
 import Loader from '../../assets/components/Loader'
 import base64 from 'react-native-base64'
@@ -23,7 +23,6 @@ const LNFShopWebView = ({ navigation }) => {
     const [showFirstWebView, setShowFirstWebView] = useState(true);
     const [showSecondWebView, setShowSecondWebView] = useState(false);
     const { Nlanguage } = useContext(DataContext)
-    const [data, setData] = useState("")
 
     const [language, setLanguage] = Nlanguage
 
@@ -33,22 +32,20 @@ const LNFShopWebView = ({ navigation }) => {
     useEffect(() => {
         getWRID()
         //retrieveLanguage()
-        //hideunHide()
     }, [])
 
 
     useEffect(() => {
-       if(isFocused){
-        hideunHide()
-       //Alert.alert("Gaurav")
-       }
-     
+        if (isFocused) {
+            //Alert.alert("Gaurav")
+        }
+
     }, [isFocused])
 
 
     const retrieveLanguage = async () => {
-       
-      }
+
+    }
 
 
     const renderLoading = () => {
@@ -57,45 +54,19 @@ const LNFShopWebView = ({ navigation }) => {
         )
     }
 
-
-    const hideunHide = async () => {
-       // setLoader(true)
-        const UserId = await getDataFromLocalStorage('user_id')
-        var formdata = new FormData()
-        formdata.append('user_id', JSON.parse(UserId))
-        const result = await PostApiData('hideunhide', formdata)
-        console.log("RESULT URL = " , result)
-        if (result.status == 200) {
-            setData(result)
-            ShortToast(result.message, 'error', '')
-
-        } else {
-            ShortToast(result.message, 'error', '')
-
-        }
-        setLoader(false)
-    }
-
     const getWRID = async () => {
         const userd = await getDataFromLocalStorage("wrid")
         const countrySelected = await getDataFromLocalStorage("country")
         const lang = await getDataFromLocalStorage("lang")
         setCountry(countrySelected)
-        console.log("countryLan = ", countrySelected)
         setUserId(userd)
-        hideunHide()
         setLoader(false)
-
-        console.log("Language============>>>>>>>>>>>>>> " , language)
         //encodeBase64((userd))
     }
 
     const encodeBase64 = (input) => {
         base64.encode(input);
     }
-    console.log('netinfo=======>', netinfo)
-
-
 
     return (
 
@@ -154,7 +125,6 @@ const LNFShopWebView = ({ navigation }) => {
                     //             } else {
 
                     //             }
-                    //             console.log("URL == ", info.url)
                     //         }}
                     //     />
                     // </View>
@@ -175,7 +145,7 @@ const LNFShopWebView = ({ navigation }) => {
                                 webviewDebuggingEnabled
                                 textInteractionEnabled
                                 source={
-                                { uri: `${data?.shop_url}/?uid=${userId}&type=mob` }
+                                    { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
 
                                     // country == 'India'
                                     //     ? { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
@@ -188,6 +158,7 @@ const LNFShopWebView = ({ navigation }) => {
                                 }}
                                 style={{ flex: 1, display: showFirstWebView ? 'flex' : 'none' }}
                                 onNavigationStateChange={(info) => {
+                                    console.log('URL=>', info?.url)
                                     if (info.url == `${Constants.BASE_URL}failure/`) {
                                     } else if (info.url == `${Constants.BASE_URL}success/`) {
                                         navigation.navigate("Stats")
@@ -195,7 +166,6 @@ const LNFShopWebView = ({ navigation }) => {
                                     } else {
 
                                     }
-                                    console.log("WebView URL == ", `${data?.shop_url}/?uid=${userId}&type=mob` )
                                 }}
                             />
                         )}
@@ -214,13 +184,13 @@ const LNFShopWebView = ({ navigation }) => {
                                 webviewDebuggingEnabled
                                 textInteractionEnabled source={
 
-                                    { uri: `${data?.shop_url}/?uid=${userId}&type=mob` }
+                                    { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
 
                                     // country == 'India'
                                     //     ? { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob` }
                                     //     : { uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob&ip=${netinfo?.details?.ipAddress}` }
-                               }
-                                
+                                }
+
                                 onLoad={() => {
                                     // Second WebView has loaded, you can navigate or perform other actions here
                                 }}
@@ -228,6 +198,7 @@ const LNFShopWebView = ({ navigation }) => {
 
                                 style={{ flex: 1 }}
                                 onNavigationStateChange={(info) => {
+                                    console.log('URL=>', info?.url)
                                     if (info.url == `${Constants.BASE_URL}failure/`) {
                                         // navigation.navigate("BottomTabs")
                                     } else if (info.url == `${Constants.BASE_URL}success/`) {
@@ -238,7 +209,6 @@ const LNFShopWebView = ({ navigation }) => {
                                     } else {
 
                                     }
-                                    console.log("URL == ", info.url)
                                 }}
                             />
                         )}
