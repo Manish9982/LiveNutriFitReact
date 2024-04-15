@@ -10,7 +10,6 @@ const MedicalInformation = ({ navigation }) => {
   const Card = (props) => {
     return (
       <>
-
         <View>
           <TouchableOpacity style={styles.cardContainer}
             onPress={() => { navigation.navigate(props.name) }}>
@@ -28,7 +27,6 @@ const MedicalInformation = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
-
       </>
     )
   }

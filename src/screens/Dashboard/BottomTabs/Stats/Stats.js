@@ -165,8 +165,6 @@ const Stats = (props) => {
     getLanguage()
   }, [isFocused])
 
-  useEffect(() => { getFirstTimeLoginStatus() }, [])
-
   useEffect(() => {
     if (isFocused) {
       // getUserType()  // hide upgarde popup- 01 dec
@@ -211,14 +209,12 @@ const Stats = (props) => {
   }
   //lng
   const getLanguage = async () => {
-    setSecondaryLoader(true)
     const lang = await getDataFromLocalStorage("lang")
     if (lang == "en") {
       changeLanguage('en')
     } else {
       changeLanguage('hi')
     }
-    setSecondaryLoader(false)
   }
   const changeLanguage = (languageKey) => {
 
@@ -453,6 +449,7 @@ const Stats = (props) => {
   }
 
   const getDataForFreeUser = async () => {
+    setSecondaryLoader(true)
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("user_id", JSON.parse(temp))
@@ -476,7 +473,6 @@ const Stats = (props) => {
 
 
   const getDataForPaidUser = async () => {
-    setSecondaryLoader(true)
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("user_id", JSON.parse(temp))
@@ -493,6 +489,7 @@ const Stats = (props) => {
       // setBpm(result?.single[2]?.attribute_value[2])
     }
     setSecondaryLoader(false)
+    getFirstTimeLoginStatus()
   }
   const getName = async () => {
     var formdata = new FormData();
@@ -505,7 +502,6 @@ const Stats = (props) => {
     else {
       ShortToast(result?.message, 'error', '')
     }
-    setSecondaryLoader(false)
   }
 
   var myloop = []

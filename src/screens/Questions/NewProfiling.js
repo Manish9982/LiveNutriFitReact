@@ -219,19 +219,20 @@ const NewProfiling = ({ navigation }) => {
                         width={100}
                         value={answer}
                         keyboardType={'numeric'}
-                        maxLength={3}
-                        onChangeText={(t) => {
-                            if (t.length == 1 && (t == "-" || t == " " || t == "." || t == ",")) {
-                                ShortToast("Invalid Input", "warning", "")
-                            }
-                            else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
-                                ShortToast("Invalid Input", "warning", "")
-                            }
-                            else {
+                        maxLength={5}
+                        // onChangeText={(t) => {
+                        //     if (t.length == 1 && (t == "-" || t == " " || t == "." || t == ",")) {
+                        //         ShortToast("Invalid Input", "warning", "")
+                        //     }
+                        //     else if (t.includes("-") || t.includes(",") || t.includes(".") || t.includes(" ") || t > 650) {
+                        //         ShortToast("Invalid Input", "warning", "")
+                        //     }
+                        //     else {
 
-                                setAnswer(t)
-                            }
-                        }}
+                        //         setAnswer(t)
+                        //     }
+                        // }}
+                        onChangeText={(t) => setAnswer(t)}
                     />
                 </View>
             )
@@ -365,8 +366,6 @@ const NewProfiling = ({ navigation }) => {
                                     </TouchableOpacity>
                                 }
                                 {
-
-
                                     Platform.OS == 'android'
                                         ?
                                         showCalendar

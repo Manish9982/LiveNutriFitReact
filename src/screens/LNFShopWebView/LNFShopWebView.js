@@ -80,7 +80,7 @@ const LNFShopWebView = ({ navigation }) => {
                             webviewDebuggingEnabled
                             textInteractionEnabled
                             source={{
-                                uri: `${Constants.BASE_URL}shop/?uid=${userId}&type=mob`
+                                uri: `${Constants.BASE_URL}${strings.code == "" ? null : `${strings.code}/`}shop/?uid=${userId}&type=mob`
                             }}
                             style={{ flex: 1, }}
                             onNavigationStateChange={(info) => {

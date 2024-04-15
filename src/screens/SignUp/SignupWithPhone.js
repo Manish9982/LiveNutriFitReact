@@ -13,6 +13,7 @@ import hindi from '../../hi'
 import english from '../../en'
 import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import { useLocales } from '../../utils/LocalizationUtil';
+import moment from 'moment-timezone';
 
 const fontConfig = {
     fontFamily: "Montserrat-Regular",
@@ -47,6 +48,7 @@ const SignupWithPhone = ({ navigation }) => {
 
     const isFocused = useIsFocused()
     const strings = useLocales()
+    const currentTimezone = moment.tz.guess();
 
     useEffect(() => { getLanguage() }, [isFocused])
 
@@ -112,7 +114,6 @@ const SignupWithPhone = ({ navigation }) => {
             } else if (!testNumber(mobile)) {
                 ShortToast(strings.MobileError, 'error', '')
 
-
             } else if (!testEmail(email)) {
                 ShortToast(strings.EmailError, 'error', '')
 
@@ -141,6 +142,7 @@ const SignupWithPhone = ({ navigation }) => {
                 formdata.append("password", password);
                 formdata.append("confirm_password", confirmpassword);
                 formdata.append("language", langText);
+                formdata.append("timezone", currentTimezone)
 
                 var requestOptions = {
                     method: 'POST',
@@ -166,9 +168,7 @@ const SignupWithPhone = ({ navigation }) => {
                     ShortToast(error, 'error')
                 }
                 //Navigation
-
             }
-
 
         } else {
             ShortToast("Please accept terms and condtions !", "error")

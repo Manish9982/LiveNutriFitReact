@@ -29,7 +29,6 @@ import VerifyOTPAfterRegistrationEmail from './src/screens/VerifyOTP/VerifyOTPAf
 import VerifyOTPAfterSignInEmail from './src/screens/VerifyOTP/VerifyOTPAfterSignInEmail';
 import VerifyOTPAfterSignInPhone from './src/screens/VerifyOTP/VerifyOTPAfterSignInPhone';
 
-
 import WelcomeScreenBeforeBottomTabs from './src/screens/WelcomeScreenBeforeBottomTabs/WelcomeScreenBeforeBottomTabs'
 import WelcomeScreenAfterRegistration from './src/screens/WelcomeScreenAfterRegistration/WelcomeScreenAfterRegistration'
 import PlanChoosePromptAtStartup from './src/screens/PlanChoosePromptAtStartup/PlanChoosePromptAtStartup';
@@ -109,7 +108,7 @@ const App = () => {
     // NotificationListener()
     //Working
     getMessageCount()
-    PushNotification.removeAllDeliveredNotifications();
+    //PushNotification.removeAllDeliveredNotifications();
   }, []);
 
   const updateBadgeCount = (count) => {

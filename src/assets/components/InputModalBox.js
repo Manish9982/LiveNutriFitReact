@@ -3,6 +3,7 @@ import { View, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
 import { colors } from '../../colorSchemes/ColorSchemes';
 import { useLocales } from '../../utils/LocalizationUtil';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const InputModalBox = ({ initialValue = '', value, onSubmit, onChangeText, keyboardType = null, maxLength = null, width = null, ...props }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -39,6 +40,20 @@ const InputModalBox = ({ initialValue = '', value, onSubmit, onChangeText, keybo
     }
   };
 
+  function validateWeight(input) {
+    const regex = /^\d{1,3}(\.\d)?$/;
+    // if (regex.test(input)) {
+    //   setCurrentWeight(input)
+    //   setCrrnt(input)
+    //   setWeightOkButttonDisabled(false)
+    // }
+    // else {
+    //   ShortToast('We can only accept numbers with up to one decimal place.')
+    //   setCurrentWeight('')
+    //   setCrrnt('')
+    // }
+    return regex.test(input)
+  }
   return (
     <View style={styles.container}>
       <TouchableOpacity style={[styles.box, { width: width }]} onPress={handleModalOpen}>
@@ -63,7 +78,9 @@ const InputModalBox = ({ initialValue = '', value, onSubmit, onChangeText, keybo
               maxLength={maxLength}
               {...props}
             />
-            <TouchableOpacity style={styles.submitButton} onPress={handleInputSubmit}>
+            <TouchableOpacity
+              disabled={!validateWeight(inputValue)}
+              style={[styles.submitButton, { backgroundColor: validateWeight(inputValue) ? colors.GREEN : 'gray' }]} onPress={handleInputSubmit}>
               <Text style={{ color: 'white' }}>{strings.Ok}</Text>
             </TouchableOpacity>
           </View>
@@ -86,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     backgroundColor: colors.OFFWHITE,
-    margin:4,
+    margin: 4,
   },
   modalContainer: {
     flex: 1,
