@@ -22,7 +22,160 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DocumentPicker from 'react-native-document-picker'
 import { PERMISSIONS, RESULTS, requestMultiple } from 'react-native-permissions'
 import { useLocales } from '../../../../utils/LocalizationUtil'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
+const DATA = {
+  "status": 200,
+  "message": "success",
+  "hideunhiderating": "false",
+  "coachname": "LiveNutriFit",
+  "coachimage": "https://uat.livenutrifit.com/panel/linkfile/favicon.png",
+  "data": [
+    {
+      "user_id": "2350",
+      "reciever_id": "20",
+      "user_message": "Hi Coach",
+      "base_url": "https://uat.livenutrifit.com/panel/chat_pics/",
+      "icon": [],
+      "icon_extension": [],
+      "receiver_icon": [],
+      "ricon_extension": [],
+      "reciever_message": "",
+      "usertype": "user",
+      "created": 1713762092,
+      "message_type": "text",
+      "sender_pdf": "",
+      "receiver_pdf": "",
+      "coachname": "LiveNutriFit",
+      "coachimage": "https://uat.livenutrifit.com/panel/linkfile/favicon.png"
+    },
+    {
+      "user_id": "2350",
+      "reciever_id": "19",
+      "user_message": "",
+      "base_url": "https://uat.livenutrifit.com/panel/chat_pics/",
+      "icon": [],
+      "icon_extension": [],
+      "receiver_icon": [],
+      "ricon_extension": [],
+      "reciever_message": "Hey We Wake\r\n",
+      "usertype": "receiver",
+      "created": 1713778617,
+      "message_type": "text",
+      "sender_pdf": "",
+      "receiver_pdf": "",
+      "coachname": "Kaavya",
+      "coachimage": "https://uat.livenutrifit.com/panel/linkfile/favicon.png"
+    },
+    {
+      "user_id": "2350",
+      "reciever_id": "19",
+      "user_message": "",
+      "base_url": "https://uat.livenutrifit.com/panel/chat_pics/",
+      "icon": [],
+      "icon_extension": [],
+      "receiver_icon": [],
+      "ricon_extension": [],
+      "reciever_message": "What is your BMI?",
+      "questionnaire": {
+        "id": 4000,
+        "name": "Sickness Frequency",
+        "questionText": "How often do you fall sick?",
+        "groupId": 3000,
+        "weight": 2,
+        "updatedOn": 1712808000000,
+        "updatedBy": "Raminder Ahlawat",
+        "isActive": true,
+        "sequence": 60,
+        "formatter": "com.lnf.questionnaire.datamodel.formatter.DefaultFormatter",
+        "period": 1714044460388,
+        "count": 4,
+        "responses": [{
+          "id": 4000, "name": "Never", "question": "Sickness Frequency", "questionId": 4000, "rank": 4, "updatedOn": 1712808000000, "updatedBy": "Raminder Ahlawat", "isActive": true, "translatons": [["Hindi", "कभी नहीं"], ["Telugu", "ఎన్నడూ లేదు"], ["Tamil", "ஒருபோதும்"], ["Bengali", "কখনও"], ["Marathi", "कधीच नाही"]], "sequence": 1
+        }
+
+          ,
+        {
+          "id": 4001,
+          "name": "Once a Year",
+          "question": "Sickness Frequency",
+          "questionId": 4000,
+          "rank": 3,
+          "updatedOn": 1712808000000,
+          "updatedBy": "Raminder Ahlawat",
+          "isActive": true,
+          "translatons":
+            [["Hindi", "साल में एक बार"], ["Telugu", "సంవత్సరానికి ఒకసారి"], ["Tamil", "வருடத்திற்கு ஒரு முறை"], ["Bengali", "বছরে একবার"], ["Marathi", "वर्षातून एकदा"]], "sequence": 2
+        }
+
+          ,
+        {
+          "id": 4002, "name": "Twice a Year", "question": "Sickness Frequency", "questionId": 4000, "rank": 2, "updatedOn": 1712808000000, "updatedBy": "Raminder Ahlawat", "isActive": true, "translatons": [["Hindi", "साल में दो बार"], ["Telugu", "సంవత్సరానికి రెండుసార్లు"], ["Tamil", "வருடத்திற்கு இரண்டு முறை"], ["Bengali", "বছরে দু'বার"], ["Marathi", "वर्षातून दोनदा"]], "sequence": 3
+        }
+
+          ,
+        {
+          "id": 4003, "name": "More than 3 Times a Year", "question": "Sickness Frequency", "questionId": 4000, "rank": 1, "updatedOn": 1712808000000, "updatedBy": "Raminder Ahlawat", "isActive": true, "translatons": [["Hindi", "साल में 3 बार से अधिक"], ["Telugu", "సంవత్సరానికి 3 కంటే ఎక్కువ సార్లు"], ["Tamil", "வருடத்திற்கு 3 முறைக்கு மேல்"], ["Bengali", "বছরে 3 বারের বেশি"], ["Marathi", "वर्षातून 3 पेक्षा जास्त वेळा"]], "sequence": 4
+        }
+
+        ],
+        "parentQuestions": null,
+        "parentResponses": null,
+        "translatons": [["Hindi",
+          "Sickness Frequency"],
+        ["Telugu",
+          "Sickness Frequency"],
+        ["Tamil",
+          "Sickness Frequency"],
+        ["Bengali",
+          "Sickness Frequency"],
+        ["Marathi",
+          "Sickness Frequency"]],
+        "textTranslatons": [["Hindi",
+          "आप कितनी बार बीमार पड़ते हैं?"],
+        ["Telugu",
+          "మీరు ఎంత తరచుగా అనారోగ్యానికి గురవుతారు?"],
+        ["Tamil",
+          "நீங்கள் எவ்வளவு அடிக்கடி நோய்வாய்ப்படுகிறீர்கள்?"],
+        ["Bengali",
+          "আপনি কতবার অসুস্থ হয়ে পড়েন?"],
+        ["Marathi",
+          "आपण किती वेळा आजारी पडता?"]]
+      },
+      "options": [
+        {
+          "text": "<= 18.5",
+          "id": "23",
+        },
+        {
+          "text": "18.5 - 25.0",
+          "id": "24",
+        },
+        {
+          "text": "25.0 - 30.0",
+          "id": "26",
+        },
+        {
+          "text": "30.0 - 35.0",
+          "id": "27",
+        },
+        {
+          "text": "> 35.0",
+          "id": "28",
+        }
+      ],
+      "usertype": "receiver",
+      "created": 0,
+      "message_type": "quiz",
+      "sender_pdf": "",
+      "receiver_pdf": "",
+      "coachname": "Kaavya",
+      "coachimage": "https://uat.livenutrifit.com/panel/linkfile/favicon.png",
+      "edit": true,
+      "multi": false
+    },
+  ]
+}
 
 const Coach = ({ navigation }) => {
   const isFocused = useIsFocused()
@@ -47,6 +200,7 @@ const Coach = ({ navigation }) => {
   const [loader, setLoader] = useState(true)
   const [userType, setUserType] = useState("")
   const [popupvisible, setPopupvisible] = useState(false)
+  const [selectedOption, setSelectedOption] = useState([])
 
   const H = useWindowDimensions().height
   const W = useWindowDimensions().width
@@ -57,7 +211,7 @@ const Coach = ({ navigation }) => {
 
   const openAppSettings = () => {
     Linking.openSettings();
-};
+  };
 
   useEffect(() => {
     if (isFocused) {
@@ -74,7 +228,7 @@ const Coach = ({ navigation }) => {
       getMessages(),
         getLanguage(),
         setIsInfoButtonVisible(false)
-        markMessageAsRead()
+      markMessageAsRead()
     }
   }, [isFocused])
 
@@ -185,8 +339,10 @@ const Coach = ({ navigation }) => {
     console.log("type ===== ", result)
 
     if (result.status == '200') {
-      setData(result)
-      setMessages(result.data.reverse())
+      //setData(result)
+      setData(DATA)
+      //setMessages(result.data.reverse())
+      setMessages(DATA.data.reverse())
 
       markRatingAsRead()
 
@@ -200,8 +356,6 @@ const Coach = ({ navigation }) => {
       //   //   setVisible(false)
       //   // }
       // }
-
-
     }
     setLoader(false)
   }
@@ -229,7 +383,7 @@ const Coach = ({ navigation }) => {
     console.log("gallery pic", pic)
     console.log("gallery pic", pic?.[0]?.mime,)
     console.log("gallery pic", pic?.[0]?.path,)
-    console.log(pic.length)
+    console.log(pic?.length)
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
     const temp2 = await getDataFromLocalStorage('coach_id')
@@ -265,7 +419,7 @@ const Coach = ({ navigation }) => {
   const uploadCamPic = async (pic) => {
     setLoading(true)
     console.log("cam pic", pic)
-    console.log("pic.mime", pic.mime)
+    console.log("pic.mime", pic?.mime)
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
     const temp2 = await getDataFromLocalStorage('coach_id')
@@ -310,7 +464,6 @@ const Coach = ({ navigation }) => {
     }
     else ShortToast(result.message, 'error', '')
     setLoading(false)
-
   }
 
   const launchCam = async () => {
@@ -373,14 +526,11 @@ const Coach = ({ navigation }) => {
         // type: [DocumentPicker.types.pdf, DocumentPicker.types.docx], // Filter for PDF files only
         type: [DocumentPicker.types.pdf], // Filter for PDF files only
       });
-
       // Handle the selected PDF file here
       console.log(
         result
       );
-
       uploadPdf(result)
-
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -456,16 +606,16 @@ const Coach = ({ navigation }) => {
           }
         } else {
           if (statuses[PERMISSIONS.IOS.CAMERA] !== RESULTS.GRANTED) {
-           // Alert.alert("Camera is not accessible");
-           Alert.alert(
-            "Photo Library is not accessible",
-            "Please enable photo library access in settings",
-            [
+            // Alert.alert("Camera is not accessible");
+            Alert.alert(
+              "Photo Library is not accessible",
+              "Please enable photo library access in settings",
+              [
                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 { text: 'OK', onPress: openAppSettings },
-            ],
-            { cancelable: false }
-        );
+              ],
+              { cancelable: false }
+            );
             return false;
           } else if (statuses[PERMISSIONS.IOS.PHOTO_LIBRARY] !== RESULTS.GRANTED) {
             //Alert.alert("Photo Library is not accessible");
@@ -473,11 +623,11 @@ const Coach = ({ navigation }) => {
               "Photo Library is not accessible",
               "Please enable photo library access in settings",
               [
-                  { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                  { text: 'OK', onPress: openAppSettings },
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: 'OK', onPress: openAppSettings },
               ],
               { cancelable: false }
-          );
+            );
             return false;
           }
         }
@@ -488,14 +638,19 @@ const Coach = ({ navigation }) => {
   };
 
   const getTimeFromStamp = (timestamp) => {
+    if (timestamp !== 0) {
+      const date = new Date(Number.parseInt(timestamp, 10) * 1000)
+      var hour = date.getHours().toString().padStart(2, 0)
+      var minutes = date.getMinutes().toString().padStart(2, 0)
+      var date2 = date.getDate().toString().padStart(2, 0)
+      var month = (date.getMonth() + 1).toString().padStart(2, 0)
+      var year = date.getFullYear().toString()
+      return `${date2}/${month}/${year}  ${hour}:${minutes}`
+    }
+    else {
+      return ``
+    }
 
-    const date = new Date(Number.parseInt(timestamp, 10) * 1000)
-    var hour = date.getHours().toString().padStart(2, 0)
-    var minutes = date.getMinutes().toString().padStart(2, 0)
-    var date2 = date.getDate().toString().padStart(2, 0)
-    var month = (date.getMonth() + 1).toString().padStart(2, 0)
-    var year = date.getFullYear().toString()
-    return `${date2}/${month}/${year}  ${hour}:${minutes}`
   }
 
 
@@ -518,6 +673,39 @@ const Coach = ({ navigation }) => {
   //   return `${date2}/${month}/${year}  ${hour}:${minutes} ${period}`;
   // }
 
+  const onPressOption = (id, edit, multi) => {
+    if (edit) {
+      if (multi) {
+        setSelectedOption((prev) => prev?.includes(id) ? prev?.filter(item => item !== id) : [...prev, id])
+      }
+      else {
+        setSelectedOption([id])
+      }
+    }
+  }
+
+
+  const renderOptions = (item, index, edit, multi) => {
+    console.log('edit 2', edit)
+    return (
+      <TouchableOpacity
+        onPress={() => onPressOption(item?.id, edit, multi)}
+        style={[styles.options, { backgroundColor: selectedOption?.includes(item?.id) ? colors.GREEN : '#fff' }]}>
+        <Text style={{ marginRight: 8, color: selectedOption?.includes(item?.id) ? '#fff' : '#000' }}>
+          {item?.text}
+        </Text>
+        {
+          selectedOption?.includes(item?.id)
+          &&
+          <Icon
+            color={'#fff'}
+            name={"check-square-o"}
+            size={20}
+          />
+        }
+      </TouchableOpacity>
+    )
+  }
 
   const renderItem = ({ item, index }) => {
     if (item.reciever_message == ""
@@ -578,9 +766,7 @@ const Coach = ({ navigation }) => {
           }}>
             <Text style={{
 
-
-            }
-            }>{item.reciever_message}</Text>
+            }}>{item.reciever_message}</Text>
             <Text style={{
               marginTop: H * 0.01,
               fontSize: fontSizes.EXTRASM,
@@ -797,6 +983,54 @@ const Coach = ({ navigation }) => {
         </>
       )
     }
+    else if (item?.message_type == "quiz") {
+      return (
+        <View>
+          < View style={{
+            backgroundColor: "white",
+            padding: 8,
+            justifyContent: "center",
+            borderBottomRightRadius: 10,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+            alignSelf: "flex-start",
+            marginLeft: W * 0.02,
+            marginTop: H * 0.02,
+            maxWidth: W * 0.7,
+            flexDirection: "row"
+          }}>
+            <Text>{item?.reciever_message}</Text>
+            <Text style={{
+              marginTop: H * 0.01,
+              fontSize: fontSizes.EXTRASM,
+
+            }}>{`\n`}{getTimeFromStamp(item.created)}</Text>
+
+          </View >
+          <View style={styles.optionButtonView}>
+            {/* <FlatList
+              data={item?.options}
+              renderItem={renderOptions}
+              keyExtractor={(item, index) => `${index}`}
+            /> */}
+            {
+              item?.options?.map((i, index) => {
+                return (
+                  renderOptions(i, index, item?.edit, item?.multi)
+                )
+              })
+            }
+            <Text style={{
+              fontSize: fontSizes.EXTRASM,
+              alignSelf: 'flex-end',
+              position: 'absolute',
+              right: 10,
+              bottom: 10,
+            }}>{getTimeFromStamp(item?.created)}</Text>
+          </View>
+        </View>
+      )
+    }
 
   }
 
@@ -842,7 +1076,7 @@ const Coach = ({ navigation }) => {
 
   return (
     loader ?
-        <Loader />
+      <Loader />
       :
       <View
         //behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -1208,18 +1442,13 @@ const Coach = ({ navigation }) => {
 
           <View style={styles.messageList}>
             <FlatList
-              // initialScrollIndex={117}
-              inverted
+              inverted={true}
               ref={yourRef}
               data={messages}
               renderItem={renderItem}
               keyExtractor={(item, index) => `${index}`}
-
             />
           </View>
-
-
-
         </View >
 
         <View style={styles.modalCam}>
@@ -1403,6 +1632,34 @@ const makeStyles = (H, W) => StyleSheet.create({
     alignItems: "center",
     marginHorizontal: W * 0.1,
     marginVertical: H * 0.01,
+  },
+  optionButtonView:
+  {
+    maxWidth: W * 0.8,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: '#fff',
+    margin: W * 0.02,
+    marginTop: H * 0.01,
+    padding: 8,
+    borderRadius: 8,
+    borderBottomLeftRadius: 0,
+  },
+  options:
+  {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: colors.GREEN,
+    margin: 8,
+    padding: 8,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 10,
   }
 })
 

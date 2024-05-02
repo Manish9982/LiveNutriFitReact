@@ -1,3 +1,5 @@
+import { Image } from "react-native"
+
 const loadImage = path => {
     return new Promise((resolve, reject) => {
         const img = new Image()

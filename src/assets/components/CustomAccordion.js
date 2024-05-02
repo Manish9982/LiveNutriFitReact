@@ -4,47 +4,72 @@ import { Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Change to your desired icon library
 import { colors } from '../../colorSchemes/ColorSchemes';
 
-const CustomAccordion = ({ title, question, options, onSelectionChange, answers, defaultExpand = false }) => {
+const CustomAccordion = ({ title, question, options, onSelectionChange, answers, defaultExpand = false, singleOption = false }) => {
     const [expanded, setExpanded] = useState(defaultExpand);
     const [selectedOptions, setSelectedOptions] = useState(answers);
 
     useEffect(() => {
         onSelectionChange(selectedOptions);
     }, [selectedOptions, onSelectionChange]);
-
     const toggleAccordion = () => {
         setExpanded(!expanded);
     };
 
     const throwColor = (arr) => {
-        if (selectedOptions?.some(item => item.default == arr.default)) {
-            return colors.GREEN
+        if (singleOption) {
+            if (selectedOptions?.some(item => item.default == arr.default)) {
+                return colors.GREEN
+            }
+            else {
+                return colors.BLACK
+            }
         }
         else {
-            return colors.BLACK
+            if (selectedOptions?.some(item => item.default == arr.default)) {
+                return colors.GREEN
+            }
+            else {
+                return colors.BLACK
+            }
         }
     }
     const throwIcon = (arr) => {
-        if (selectedOptions?.some(item => item.default == arr.default)) {
-            return 'check-square-o'
+        if (singleOption) {
+            if (selectedOptions?.some(item => item.default == arr.default)) {
+                return 'check-square-o'
+            }
+            else {
+                return 'square-o'
+            }
         }
         else {
-            return 'square-o'
+            if (selectedOptions?.some(item => item.default == arr.default)) {
+                return 'check-square-o'
+            }
+            else {
+                return 'square-o'
+            }
         }
     }
 
     const toggleOption = (option) => {
-        setSelectedOptions(prevOptions => {
-            const isSelected = prevOptions?.some(item => item.default === option.default);
-            if (isSelected) {
-                return prevOptions?.filter(item => item.default !== option.default);
-            } else {
-                return [...prevOptions, option];
-            }
-        });
+        if (singleOption) {
+            setSelectedOptions([option])
+        }
+        else {
+            setSelectedOptions(prevOptions => {
+                const isSelected = prevOptions?.some(item => item.default === option.default);
+                if (isSelected) {
+                    return prevOptions?.filter(item => item.default !== option.default);
+                } else {
+                    return [...prevOptions, option];
+                }
+            });
+        }
+
     };
 
-    console.log('SelectedOption ==>>>>', options)
+    console.log('SelectedOption ==>>>>', answers)
     return (
         <View>
             <TouchableOpacity style={[styles.accordionBg, {

@@ -52,6 +52,7 @@ const EditProfile = ({ navigation, route }) => {
   const [showOptionsForFoodType, setShowOptionsForFoodType] = useState(false)
   const [foodType, setFoodType] = useState([])
   const [goal, setGoal] = useState([])
+  const [gender, setGender] = useState('')
   const [updateButtonDisabled, setUpdateButtonDisabled] = useState(false)
 
   const { NglobalBmi, Ncrrnt, Ntrgt, Nht, Nfeet, Ninch } = useContext(DataContext)
@@ -139,7 +140,7 @@ const EditProfile = ({ navigation, route }) => {
 
 
   const updateDetails = async () => {
-
+    console.log('gender', gender)
     if (feet == "" || inch == "") {
       ShortToast('Feet or Inch can not be empty', 'Error', '')
     } else {
@@ -153,7 +154,8 @@ const EditProfile = ({ navigation, route }) => {
         formdata.append("age", age);
         formdata.append("height", ((Number.parseInt(feet, 10)) * 30.48) + (Number.parseInt(inch, 10) * 2.54));
         formdata.append("address", address);
-        formdata.append("goal", goal.map(item => item.default).join(","))
+        formdata.append("gender", gender?.map(item => item.default).join(","));
+        formdata.append("goal", goal?.map(item => item.default).join(","))
         // formdata.append("intensity", exerciseLevel)
         formdata.append("food_type", foodType.map(item => item.default).join(","));
         formdata.append("intensity", "")
@@ -173,6 +175,7 @@ const EditProfile = ({ navigation, route }) => {
         formdata.append("height", height);
         formdata.append("mobile", mobile);
         formdata.append("address", address);
+        formdata.append("gender", gender?.map(item => item.default).join(","));
         formdata.append("goal", goal.map(item => item.default).join(","))
         // formdata.append("intensity", exerciseLevel)
         formdata.append("food_type", foodType.map(item => item.default).join(","));
@@ -242,7 +245,6 @@ const EditProfile = ({ navigation, route }) => {
       const result = await PostApiData('userprofile', formdata)
       if (result?.status == '200') {
         var height = cmToFeetAndInches(result?.data[0]?.height)
-        console.log('height', height)
         setMyData(result)
         setFeet(height[0]?.toString())
         setInch(height[1]?.toString())
@@ -275,7 +277,7 @@ const EditProfile = ({ navigation, route }) => {
   const handleDobPress = () => {
     setShowCalendar(prev => !prev)
   }
-  console.log('openGoals', openGoals)
+
   return (
     loader ?
       <View style={styles.activityIndicator}>
@@ -489,6 +491,34 @@ const EditProfile = ({ navigation, route }) => {
             </View>
           </View>
 
+          <View style={{ flexDirection: "row" }}>
+            <Image source={require('../../assets/icons/equality.png')}
+              style={{
+                top: H * 0.017,
+                left: W * 0.05,
+                height: H * 0.035,
+                width: H * 0.035,
+              }}
+            />
+            <View>
+              <Text style={styles.text}>{strings.Gender} </Text>
+              <View style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginVertical: H * 0.01,
+              }}>
+                <View>
+                  <CustomAccordion
+                    singleOption={true}
+                    onSelectionChange={setGender}
+                    title={myData?.data[0]?.gender?.question}
+                    options={myData?.data[0]?.gender?.option}
+                    answers={myData?.data[0]?.gender?.answer}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
 
           <View style={{ flexDirection: "row" }}>
             <Image source={require('../../assets/icons/height100.png')}
@@ -607,11 +637,7 @@ const EditProfile = ({ navigation, route }) => {
               </View>
             </View>
           </View>
-
-
-
-
-
+          
           <View style={{ flexDirection: "row" }}>
             <Image source={require('../../assets/icons/weight-loss.png')}
               style={{

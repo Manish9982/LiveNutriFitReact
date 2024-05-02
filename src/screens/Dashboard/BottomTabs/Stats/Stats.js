@@ -241,7 +241,6 @@ const Stats = (props) => {
 
   const onPressButton = () => {
     getDataForFreeUser()
-    // getDataForPaidUser()
   }
 
   const getPaidUserStatus = async () => {
@@ -330,7 +329,6 @@ const Stats = (props) => {
         //setTargetWeight('')
       } else {
         ShortToast(JSON.stringify(result?.message), 'error', '')
-
       }
     }
   }
@@ -369,7 +367,6 @@ const Stats = (props) => {
     //   const result = await PostApiData('updateuserhealthplan', formdata)
     //   if (result.status == 200) {
     //     getDataForFreeUser()
-    //     getDataForPaidUser()
     //     setEditSugar(false)
     //     setFastingSugar('')
     //     setNonFastingSugar('')
@@ -386,7 +383,6 @@ const Stats = (props) => {
     //   const result = await PostApiData('updateuserhealthplan', formdata)
     //   if (result.status == 200) {
     //     getDataForFreeUser()
-    //     getDataForPaidUser()
     //     setEditSugar(false)
     //     setFastingSugar('')
     //     setNonFastingSugar('')
@@ -455,10 +451,13 @@ const Stats = (props) => {
     formdata.append("user_id", JSON.parse(temp))
     formdata.append("timezone", currentTimezone)
     const result = await PostApiData('freeuser', formdata)
-    setData(result)
-    getDataForPaidUser()
-    storeDataInLocalStorage("stackValue", "3")
-    storeDataInLocalStorage("user_type", JSON.stringify(result?.user_type))
+    if (result?.status == '200') {
+      await setData(result)
+      await getDataForPaidUser()
+      await storeDataInLocalStorage("stackValue", "3")
+      await storeDataInLocalStorage("user_type", JSON.stringify(result?.user_type))
+    }
+
     //console.log("tempPaid", temp)
     console.log("response user freeuser =================>  ", result)
     //console.log("response user freeuser =================>  ", result)
