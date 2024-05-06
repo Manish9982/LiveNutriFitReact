@@ -72,6 +72,7 @@ import { LocalizationProvider, useChangeLanguage } from './src/utils/Localizatio
 import { NativeModules } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import UpdateNow from './src/screens/UpdateNow';
 
 
 const BadgeManager = NativeModules.BadgeManager;
@@ -235,6 +236,7 @@ const App = () => {
                 <Stack.Screen name="ChatPdfViewer" component={ChatPdfViewer} />
                 <Stack.Screen name="SubmitSteps" component={SubmitSteps} />
                 <Stack.Screen name="NewProfiling" component={NewProfiling} />
+                <Stack.Screen name="UpdateNow" component={UpdateNow} />
               </Stack.Navigator>
             </DataState>
           </NavigationContainer>

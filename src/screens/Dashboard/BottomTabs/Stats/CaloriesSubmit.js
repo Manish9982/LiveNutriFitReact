@@ -23,9 +23,7 @@ const CaloriesSubmit = ({ navigation }) => {
     const result = await PostApiData('updateuserpaidhealthplan', formdata)
     shortToast(result.message, 'success', '')
     navigation.navigate("BootSplash")
-
   }
-
 
   console.log((waist == NaN))
   return (
@@ -63,8 +61,6 @@ const CaloriesSubmit = ({ navigation }) => {
           activeUnderlineColor={colors.GREEN}
           keyboardType="number-pad"
           />
-      
-      
 
         <View style={styles.buttonDisplay}>
           <TouchableOpacity style={styles.buttonStyle}

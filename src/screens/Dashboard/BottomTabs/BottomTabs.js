@@ -5,14 +5,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Plans from '../BottomTabs/Plans/Plans'
 import Coach from '../BottomTabs/Coach/Coach'
 import StatsNav from './Stats/StatsNav';
-import { colors, fontSizes, H, PostApiData } from '../../../colorSchemes/ColorSchemes';
+import { colors, Constants, fontSizes, H, PostApiData } from '../../../colorSchemes/ColorSchemes';
 import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../local storage/LocalStorage';
-import {  useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import messaging from '@react-native-firebase/messaging';
 import DataContext from '../../../context/DataContext';
 import { displayNotification } from '../../../assets/components/NotificationServices';
 import LNFShopWebView from '../../LNFShopWebView/LNFShopWebView';
-import notifee, {EventType} from '@notifee/react-native'
+import notifee, { EventType } from '@notifee/react-native'
 import { useLocales } from '../../../utils/LocalizationUtil';
 
 const Tab = createBottomTabNavigator();
@@ -45,7 +45,7 @@ const BottomTabs = ({ route }) => {
   const getLanguage = async () => {
     const lang = await getDataFromLocalStorage("lang")
     const countrySelected = await getDataFromLocalStorage("country")
-    
+
     console.log("countrySelected============================     ", countrySelected)
     sethHidetab(countrySelected)
     setLangTypeText(lang)
@@ -77,6 +77,9 @@ const BottomTabs = ({ route }) => {
       // notificationPressSubscription?.remove();
     };
   }, [])
+  React.useEffect(() => {
+    getAppUpdateStatus()
+  }, [])
 
 
   React.useEffect(() => {
@@ -105,12 +108,23 @@ const BottomTabs = ({ route }) => {
     formdata.append("id", JSON.parse(temp));
     const result = await PostApiData('message_count', formdata)
 
-    console.log("AANCHAL=====>" , result?.count)
+    console.log("AANCHAL=====>", result?.count)
     if (result.status == '200') {
       if (result.count == "0") {
         setCount(null)
       }
       else setCount(result.count)
+    }
+  }
+
+  const getAppUpdateStatus = async () => {
+    var formdata = new FormData()
+    formdata.append('app_version', Constants.APP_VERSION)
+    formdata.append('device_type', Platform.OS)
+    const result = await PostApiData('get_versioncheck', formdata)
+    console.log('get_versioncheck', result)
+    if (result?.status == '201') {
+      navigation.navigate('UpdateNow', { 'link': Platform.OS == 'android' ? `${result?.link_android}` : `${result?.link_ios}`, 'message': `${result?.message}` })
     }
   }
 
@@ -147,14 +161,6 @@ const BottomTabs = ({ route }) => {
     const result = await PostApiData('get_device_token', formdata)
     console.log(result)
   }
-  // const setRegStatus = async () => {
-  //   const temp = await getDataFromLocalStorage('user_id')
-  //   var formdata = new FormData();
-  //   formdata.append("id", JSON.parse(temp));
-  //   formdata.append("register_status", "1")
-  //   const result = await PostApiData('registerstatus', formdata)
-  //   console.log(result)
-  // }
 
   const getCoach = async () => {
     var formdata = new FormData();
@@ -163,7 +169,6 @@ const BottomTabs = ({ route }) => {
     const result = await PostApiData('coachassign', formdata)
     storeDataInLocalStorage('coach_id', result.coach)
   }
-
 
   return (
     <Tab.Navigator
@@ -228,12 +233,6 @@ const BottomTabs = ({ route }) => {
         : null} */}
       < Tab.Screen name="LNF Shop" component={LNFShopWebView} options={{ tabBarLabel: strings.LNF_Shop }} />
     </Tab.Navigator>
-    //   <Tab.Screen name=" " component={StatsNav} options={{ tabBarLabel: language == "en" ? "Home" : "होम"}} />
-    //   <Tab.Screen name={"Upgrade"} component={Upgrade} options={{ tabBarLabel: language == "en" ? "Upgrade" : "अपग्रेड" }} />
-    //   <Tab.Screen name="Plans" component={Plans} options={{ tabBarLabel: language == "en" ? "Plans" : "प्लान्स" }} />
-    //   <Tab.Screen name="Coach" component={Coach} options={{ tabBarStyle: { display: 'none' }, tabBarBadge: count, tabBarLabel: language == "en" ? "Coach" : "कोच" }} />
-    //   <Tab.Screen name="More" component={MoreNavigation} options={{ tabBarLabel: language == "en" ? "More" : "मोर" }} />
-    // </Tab.Navigator>
   )
 }
 

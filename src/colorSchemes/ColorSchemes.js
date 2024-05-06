@@ -21,7 +21,8 @@ export const W = Dimensions.get('window').width
 // }
 export const Constants =
 {
-   BASE_URL: 'https://uat.livenutrifit.com/'
+   BASE_URL: 'https://uat.livenutrifit.com/',
+   APP_VERSION: '1.0'
 }
 
 export const colors = {
@@ -139,7 +140,7 @@ export const GetApiData = async (ApiName) => {
 
 export const PostApiData = async (ApiName, formdata) => {
    const netinfo = await NetInfo.fetch()
-    //Stconsole.log('netinfo', netinfo)
+   //Stconsole.log('netinfo', netinfo)
    console.log("API URL ==>", `${Constants.BASE_URL}panel/${ApiName}`)
    if (netinfo.isConnected) {
       //const URL = "https://lnf.bizhawkztest.com/public/"

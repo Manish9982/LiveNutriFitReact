@@ -799,11 +799,9 @@ const Coach = ({ navigation }) => {
             }}
           >
             <Image
-
               style={{
                 width: W * 0.25,
                 height: W * 0.3,
-
               }}
               source={require('../../../../assets/icons/pdf.png')} />
 
@@ -820,11 +818,9 @@ const Coach = ({ navigation }) => {
         return (
           <TouchableOpacity
             style={{
-
               alignSelf: 'flex-end',
               marginTop: 15,
               marginEnd: 10,
-
             }}
 
             onPress={() => {
