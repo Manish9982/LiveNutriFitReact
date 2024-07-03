@@ -141,7 +141,7 @@ const BottomTabs = ({ route }) => {
       var formdata2 = new FormData();
       formdata2.append("id", JSON.parse(temp));
       const result2 = await PostApiData('message_count', formdata2)
-      setCount(result2.count)
+      //setCount(result2.count)
     }
   }
 

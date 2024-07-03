@@ -40,6 +40,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
     const isFocused = useIsFocused()
     const firstLogin = () => {
         storeDataInLocalStorage('firstTimeLogin', '1')
+        storeDataInLocalStorage('firstTimeLoginForAlarm', '1')
     }
     const navigationToDashboard = async () => {
         await storeDataInLocalStorage('stackValue', "3")
@@ -57,7 +58,7 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
     }
 
     const changeLanguage = (languageKey) => {
-        
+
     }
 
     // const runProgressbarAndCheckbox = () => {
@@ -177,15 +178,8 @@ export default function WelcomeScreenBeforeBottomTabs({ navigation }) {
                     <Loader />
                 </View>
             </>
-
-
-
             :
-
-
             <>
-
-
                 < View style={{ height: H, width: W }}>
                     <StatusBar backgroundColor={colors.GREEN} />
 

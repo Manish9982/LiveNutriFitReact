@@ -1,6 +1,6 @@
-import { StyleSheet, TouchableOpacity, View, Dimensions, Linking, ActivityIndicator, StatusBar } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Dimensions, Linking, ActivityIndicator, StatusBar, Modal, TouchableWithoutFeedback, FlatList, Image } from 'react-native'
 import { TextInput, Text, configureFonts, DefaultTheme, Provider as PaperProvider, Checkbox } from 'react-native-paper';
-import { fontSizes, colors, ShortToast, H, fontFamily, Constants } from '../../colorSchemes/ColorSchemes'
+import { fontSizes, colors, ShortToast, H, fontFamily, Constants, GetApiData } from '../../colorSchemes/ColorSchemes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, { useState, useEffect } from 'react'
 import { storeDataInLocalStorage } from '../../local storage/LocalStorage';
@@ -45,12 +45,16 @@ const SignupWithPhone = ({ navigation }) => {
     const [isChecked, setChecked] = useState(false);
     const [secureTextEntry1, setSecureTextEntry1] = useState(true)
     const [secureTextEntry2, setSecureTextEntry2] = useState(true)
+    const [visibleCountryList, setVisibleCountryList] = useState(false)
+    const [countries, setCountries] = useState(null)
+    const [country, setCountry] = useState("")
 
     const isFocused = useIsFocused()
     const strings = useLocales()
     const currentTimezone = moment.tz.guess();
 
     useEffect(() => { getLanguage() }, [isFocused])
+    useEffect(() => { getCountryList() }, [isFocused])
 
     const handleCheckBoxToggle = () => {
         setChecked(prev => !prev);
@@ -63,7 +67,6 @@ const SignupWithPhone = ({ navigation }) => {
         if (lang == "en") {
             changeLanguage('en')
             setTangText("1")
-
         } else {
             setTangText("2")
             changeLanguage('hi')
@@ -75,7 +78,12 @@ const SignupWithPhone = ({ navigation }) => {
 
     }
 
-
+    const getCountryList = async () => {
+        const result = await GetApiData('get_countrycode')
+        if (result?.status == '200') {
+            setCountries(result)
+        }
+    }
 
 
 
@@ -143,12 +151,14 @@ const SignupWithPhone = ({ navigation }) => {
                 formdata.append("confirm_password", confirmpassword);
                 formdata.append("language", langText);
                 formdata.append("timezone", currentTimezone)
+                formdata.append("code", country?.code);
 
                 var requestOptions = {
                     method: 'POST',
                     body: formdata,
                 };
                 try {
+                    console.log('Signup API==>', formdata)
                     const response = await fetch(`${Constants.BASE_URL}panel/Signup`, requestOptions)
                     const result = await response.json()
                     console.log("Signup Result====>>>>>   ", result)
@@ -176,6 +186,28 @@ const SignupWithPhone = ({ navigation }) => {
         setLoaderNeeded(false)
     }
 
+    const renderCountries = ({ item }) => {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    setCountry(item)
+                    setVisibleCountryList(false)
+                }}
+                style={styles.countryButton}>
+                <View style={styles.secondContainer}>
+                    <Image
+                        style={styles.flagImage}
+                        source={{ uri: item?.icon }} />
+                    <Text>{item?.country}</Text>
+                </View>
+                <Text>{item?.code}</Text>
+            </TouchableOpacity>
+        )
+    }
+    const onPressChooseCountry = () => {
+        setVisibleCountryList(true)
+    }
+
     console.log('name and number---->', testName(userName), testNumber(mobile))
     const navigate = (result) => {
         // ShortToast(JSON.stringify(result.otp), 'warning', '')                                               // Navigation Function
@@ -198,10 +230,28 @@ const SignupWithPhone = ({ navigation }) => {
             <KeyboardAwareScrollView>
 
                 <ScrollView contentContainerStyle={{
-                    paddingBottom: H * 0.2
+                    paddingBottom: '60%'
                 }}>
                     <PaperProvider theme={theme}>
-
+                        <Modal
+                            transparent
+                            visible={visibleCountryList}>
+                            <TouchableWithoutFeedback onPress={() => setVisibleCountryList(false)}>
+                                <View style={styles.modalOverlay}>
+                                    <TouchableWithoutFeedback>
+                                        <View style={styles.list}>
+                                            <Text style={[styles.text3, { padding: 0 }]}>Choose Country :</Text>
+                                            <FlatList
+                                                contentContainerStyle={{ padding: 15 }}
+                                                data={countries?.countries}
+                                                renderItem={renderCountries}
+                                                keyExtractor={(item, index) => `${index}`}
+                                            />
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </Modal>
 
                         <View style={styles.mainContainer}>
                             <StatusBar
@@ -219,102 +269,77 @@ const SignupWithPhone = ({ navigation }) => {
                             <View style={styles.lowerContainer}>
 
                                 <Text style={styles.text}>{strings.Createyouraccount}</Text>
-                                <View style={{
-                                    flexDirection: "row",
-                                    marginHorizontal: HEIGHT * 0.02,
-                                    marginTop: 5,
-                                    height: HEIGHT * 0.05,
-                                }}>
-                                    <TouchableOpacity
-                                        onPress={() => { setCountryType("India") }}
-                                        style={{
-                                            backgroundColor: countryType == "India" ? colors.GREEN : "white",
-                                            borderColor: colors.GREEN,
-                                            alignItems: 'center',
-                                            width: WIDTH * 0.41,
-                                            borderRadius: 8,
-                                            justifyContent: 'center',
-                                            borderColor: colors.GREEN,
-                                            borderWidth: 1
-                                        }}>
-                                        <Text style={{ textAlign: "center", color: countryType == "India" ? "white" : "black", }}>(+91) {strings.India} <AntDesign name="check" color="white" size={16} /></Text>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity
-                                        onPress={() => { setCountryType("other") }}
-
-                                        style={{
-                                            backgroundColor: countryType == "other" ? colors.GREEN : "white",
-                                            borderColor: 'gray',
-                                            borderWidth: 1,
-                                            borderColor: colors.GREEN,
-                                            alignItems: "center",
-                                            width: WIDTH * 0.40,
-                                            justifyContent: 'center',
-                                            borderRadius: 8,
-                                            marginStart: 10
-                                        }}>
-                                        <Text style={{ color: countryType == "other" ? "white" : "black", }}>(+1) {strings.US}<AntDesign name="check" color="white" size={16} /></Text>
-                                    </TouchableOpacity>
-
-                                </View>
-
-
                                 <Text style={styles.text3}>{strings.Pleaseenteryourdetailstouseourapp}</Text>
 
 
-                                <TextInput style={styles.textInput}
+                                <TextInput
+                                    outlineColor='#ccc'
+                                    style={styles.textInput}
                                     placeholder={strings.Pleaseenteryourname}
                                     activeUnderlineColor={colors.GREEN}
                                     value={userName}
                                     onChangeText={(text) => { setUserName(text) }}
                                     mode='outlined'
-                                    outlineColor='#ebebeb'
                                     activeOutlineColor={colors.GREEN}
                                 />
 
-                                <TextInput style={styles.textInput}
+                                <TouchableOpacity
+                                    onPress={onPressChooseCountry}
+                                    style={styles.inputContainer}>
+                                    {
+                                        country == ''
+                                            ?
+                                            <Text style={styles.textInputTextCustom}>Choose Country</Text>
+                                            :
+                                            <Text style={{}}>({country?.code}) {country?.country}</Text>
+                                    }
+                                </TouchableOpacity>
+
+                                <TextInput
+                                    outlineColor='#ccc'
+                                    style={styles.textInput}
                                     placeholder={strings.EnterMobileNumber}
                                     value={mobile}
                                     onChangeText={(number) => { setMobile(number) }}
                                     mode='outlined'
-                                    outlineColor='#ebebeb'
                                     activeOutlineColor={colors.GREEN}
                                     keyboardType='numeric'
                                     maxLength={10}
                                 />
 
-                                <TextInput style={styles.textInput}
+                                <TextInput
+                                    outlineColor='#ccc'
+                                    style={styles.textInput}
                                     autoCapitalize='none'
                                     placeholder={strings.EnterEmailAddress}
                                     activeUnderlineColor={colors.GREEN}
                                     value={email}
                                     onChangeText={(text) => { setEmail(text) }}
                                     mode='outlined'
-                                    outlineColor='#ebebeb'
                                     activeOutlineColor={colors.GREEN}
                                 />
 
-                                <TextInput style={styles.textInput}
+                                <TextInput
+                                    outlineColor='#ccc'
+                                    style={styles.textInput}
                                     placeholder={strings.EnterPassword}
                                     activeUnderlineColor={colors.GREEN}
                                     //activeUnderlineColor={"red"}
                                     value={password}
                                     onChangeText={(text) => { setPassword(text) }}
                                     mode='outlined'
-                                    outlineColor='#ebebeb'
                                     activeOutlineColor={colors.GREEN}
                                     secureTextEntry={secureTextEntry1}
                                     right={<TextInput.Icon icon="eye" onPress={() => setSecureTextEntry1(prev => !prev)} color={secureTextEntry1 ? null : colors.GREEN} />}
                                 />
                                 <TextInput
+                                    outlineColor='#ccc'
                                     style={styles.textInput}
                                     placeholder={strings.ConfirmPassword}
                                     activeUnderlineColor={colors.GREEN}
                                     value={confirmpassword}
                                     onChangeText={(text) => { setConfirmPassword(text) }}
                                     mode='outlined'
-                                    outlineColor='#ebebeb'
                                     secureTextEntry={secureTextEntry2}
                                     right={<TextInput.Icon icon="eye" onPress={() => setSecureTextEntry2(prev => !prev)} color={secureTextEntry2 ? null : colors.GREEN} />}
                                     activeOutlineColor={colors.GREEN}
@@ -482,7 +507,55 @@ const styles = StyleSheet.create({
     {
         backgroundColor: 'white',
         fontSize: fontSizes.LAR,
-        marginVertical: HEIGHT * 0.01,
+        //height: 40,
+        marginVertical: 8,
+        //padding: 1,
+    },
+    inputContainer:
+    {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        paddingHorizontal: 14,
+        width: '100%', // Adjust width as needed,
+        height: 56,
+        justifyContent: 'center',
+        marginVertical: 8,
+    },
+    textInputTextCustom:
+    {
+        color: '#534f58',
+    },
+    list: {
+        backgroundColor: '#fff',
+        width: 300,
+        alignSelf: 'center',
+        padding: 15,
+        borderRadius: 8,
+        maxHeight: '65%',
+    },
+    modalOverlay:
+    {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'center'
+    },
+    countryButton:
+    {
+        paddingVertical: 12,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    flagImage:
+    {
+        height: 20,
+        width: 30,
+        borderRadius: 4,
+        marginRight: 8
+    },
+    secondContainer:
+    {
+        flexDirection: 'row',
     }
 })
 export default SignupWithPhone;

@@ -177,7 +177,7 @@ const SigninCorporate = ({ navigation, route }) => {
 
     const navigate = (result) => {
         //  ShortToast(`OTP : ${JSON.stringify(result?.otp)}`, 'warning', '')
-        setOtp(result.otp)
+        // setOtp(result.otp)
         // storeDataInLocalStorage('registerStatus', "2")
         setLoader(false)
         storeDataInLocalStorage('userType', 'corporate')//2
@@ -187,7 +187,7 @@ const SigninCorporate = ({ navigation, route }) => {
 
     const navigateUS = (result) => {
         // ShortToast(`OTP : ${JSON.stringify(result?.otp)}`, 'warning', '')
-        setOtp(result.otp)
+        // setOtp(result.otp)
         // storeDataInLocalStorage('registerStatus', "2")
         setLoader(false)
         storeDataInLocalStorage('userType', 'corporate')//2

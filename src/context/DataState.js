@@ -10,6 +10,7 @@ const DataState = (props) => {
 
     const [signup_type, setSignup_type] = useState('')
     const [mobile, setMobile] = useState('')
+    const [countryCode, setCountryCode] = useState('')
     const [otp, setOtp] = useState('')
     const [questionNumber, setQuestionNumber] = useState(1)
     const [num, setNum] = useState(0)
@@ -46,6 +47,7 @@ const DataState = (props) => {
         < DataContext.Provider value={{
             NsignupType: [signup_type, setSignup_type],
             Nmobile: [mobile, setMobile],
+            NcountryCode: [countryCode, setCountryCode],
             Notp: [otp, setOtp],
             NquestionNumber: [questionNumber, setQuestionNumber],
             Nnum: [num, setNum],

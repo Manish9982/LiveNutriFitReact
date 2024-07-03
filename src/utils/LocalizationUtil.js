@@ -27,7 +27,7 @@ export const LocalizationProvider = ({ children }) => {
         const currentLocales = new Localization({ [currentLanguage]: json });
         setLocales(currentLocales);
       } catch (error) {
-        //Alert.alert('Error loading language');
+        Alert.alert('Error loading language');
         console.error('Error loading language:', error);
       }
     };

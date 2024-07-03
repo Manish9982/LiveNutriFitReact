@@ -652,7 +652,7 @@ const Stats = (props) => {
                   item.heading2 == 'Weight' && props.navigation.navigate("OnDetailsSubmitScreenOne")
                   item.heading2 == 'Sugar' && props.navigation.navigate("OnDetailsSubmitScreenTwo", { "flag": dataForPaidUser?.single[1]?.attribute_value })
                   item.heading2 == 'Blood Pressure' && props.navigation.navigate("OnDetailsSubmitScreenThree")
-                  item.heading2 == 'Health Index' && props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
+                  item.heading2 == 'Health Index' && props.navigation.navigate("Coach", { "healthIndex": data?.healthindex[0]?.value })
                 }}
                 style={styles.nextButton}>
                 <LinearGradient colors={[colors.ORANGE, colors.ORANGE2, colors.ORANGE3]}
@@ -719,6 +719,7 @@ const Stats = (props) => {
             item.heading2 == "BMR" && ShortToast(strings.yourBMRIsCalculatedBased, "warning", "")
             item.heading2 == "WHR" && props.navigation.navigate("WHRSubmitMedium")
             item.heading2 == "Reports" && props.navigation.navigate("Reports")
+            item.heading2 == "Health Index" && props.navigation.navigate("Coach")
           }}
         >
           <View style={{

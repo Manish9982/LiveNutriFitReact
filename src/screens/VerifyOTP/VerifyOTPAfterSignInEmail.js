@@ -70,7 +70,7 @@ const VerifyOTPAfterSignInEmail = ({ navigation, route }) => {
       const result = await response.json()
       console.log(result)
       if (result.status === 200) {
-        setOtp(result.otp)
+        // setOtp(result.otp)
         ShortToast(result.message, 'success', '')
         //   ShortToast(`${result.otp}`, 'warning', '')
       }
@@ -154,7 +154,7 @@ const VerifyOTPAfterSignInEmail = ({ navigation, route }) => {
           <Text style={{ color: '#adadaa' }}>{strings.didnotreceivecode}</Text><TouchableOpacity onPress={() => otpRequestedAgain()}>
             <Text style={styles.text}>{strings.requestagain}</Text>
           </TouchableOpacity>
-        </View>
+        </View >
 
         <TouchableOpacity
           style={styles.button}

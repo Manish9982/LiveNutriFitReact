@@ -39,7 +39,7 @@ import Blank from './src/screens/Blank/Blank';
 import QuestionsCustom from './src/screens/Questions/QuestionsCustom';
 import Gratification from './src/screens/Dashboard/BottomTabs/More/Gratification';
 import { getFcmToken, NotificationListener, requestUserPermissionAndGetToken } from './src/assets/components/PushNotificationsServices';
-import { checkNotificationPermission, createChannel, displayNotification } from './src/assets/components/NotificationServices';
+import { checkNotificationPermission, onAppBootstrap } from './src/assets/components/NotificationServices';
 import ChatImageDisplay from './src/screens/Dashboard/BottomTabs/Coach/ChatImageDisplay';
 import messaging, { firebase } from '@react-native-firebase/messaging'
 import { getDataFromLocalStorage } from './src/local storage/LocalStorage';
@@ -74,7 +74,6 @@ import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import UpdateNow from './src/screens/UpdateNow';
 
-
 const BadgeManager = NativeModules.BadgeManager;
 
 
@@ -108,6 +107,7 @@ const App = () => {
     requestUserPermissionAndGetToken();
     // NotificationListener()
     //Working
+    onAppBootstrap()
     getMessageCount()
     //PushNotification.removeAllDeliveredNotifications();
   }, []);
@@ -137,7 +137,7 @@ const App = () => {
       if (nextAppState === 'active') {
         console.log('App has come to the foreground!');
         foregroundApi();
-      }else if(nextAppState === 'inactive'){
+      } else if (nextAppState === 'inactive') {
         console.log('App has come to the Inactive!');
         backgroundApi();
       } else if (nextAppState === 'background') {

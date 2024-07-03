@@ -47,7 +47,8 @@ export const colors = {
    'LIGHT_SILVER': '#e1e1e1',
    REWARDS_TEXT: '#E19044',
    GREEN_TRANSPARENT: 'rgba(128, 192, 67, 0.15)',
-   GREEN_DARK_TRANSPARENT: '#7DBD41'
+   GREEN_DARK_TRANSPARENT: '#7DBD41',
+   DARK_GRAY2:'#8b8b8b',
 };
 export const fontSizes = {
    EXTRASM: 8,
@@ -165,7 +166,7 @@ export const PostApiData = async (ApiName, formdata) => {
                await AsyncStorage.clear()
                RNRestart.Restart()
             } catch (e) {
-               ShortToast(`${e}`, "error", "")
+               ShortToast(`${e?.message}`, "error", "")
                ShortToast(`${ApiName}`, "error", "")
             }
          }

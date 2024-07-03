@@ -83,7 +83,6 @@ const ReminderExercise = () => {
     const [show2, setShow2] = useState(false)
     const [show3, setShow3] = useState(false)
 
-
     const converter = (val) => {
         return val < 10 ? `0${val}` : `${val}`
     }

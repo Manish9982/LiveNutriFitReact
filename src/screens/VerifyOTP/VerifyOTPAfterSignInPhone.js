@@ -68,7 +68,7 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
       const response = await fetch(`${Constants.BASE_URL}panel/Signup/login`, requestOptions)
       const result = await response.json()
       if (result.status === 200) {
-        setOtp(result.otp)
+        // setOtp(result.otp)
         ShortToast(result.message, 'success', '')
         // ShortToast(`${result.otp}`, 'warning', '')
       }
@@ -81,9 +81,10 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
 
   const verifyOTP = async () => {
     setLoader(true)
+    const mobile = await getDataFromLocalStorage('mobile_formatted')
     var formdata = new FormData();
     formdata.append("otp", otp);
-    formdata.append("mobile", route.params.mob)
+    formdata.append("mobile", mobile)
     formdata.append("login_time", Date.now())
     formdata.append("code", strings?.code)
 
@@ -92,9 +93,10 @@ const VerifyOTPAfterSignInPhone = ({ navigation, route }) => {
       body: formdata,
     };
     try {
+      console.log("formdata= ", formdata)
       const response = await fetch(`${Constants.BASE_URL}panel/verifyOTP`, requestOptions)
       const result = await response.json()
-      console.log("result= ", result)
+      console.log("result for OTP= ", result)
 
       if (result.status === 200) {
         storeDataInLocalStorage('Token', result.token)                       //Store Token                //change stack value for navigating to bottom tabs

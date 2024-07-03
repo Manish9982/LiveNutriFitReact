@@ -225,10 +225,12 @@ const More = ({ navigation }) => {
     setLoader(true)
 
     const temp = await getDataFromLocalStorage('user_id')
+    const temp2 = await getDataFromLocalStorage('fcmToken')
     var formdata = new FormData()
     formdata.append("user_id", JSON.parse(temp));
     formdata.append("logout_time", Date.now())
     formdata.append('clearToken', '1')
+    formdata.append("fcm_token", temp2);
 
     const result = await PostApiData('user_session_out', formdata)
 
@@ -509,7 +511,7 @@ const More = ({ navigation }) => {
               </TouchableOpacity>
               <Divider style={styles.dividerStyle} />
 
-              {/* <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
+              <TouchableOpacity onPress={() => { navigation.navigate('Reminder') }}>
                 <View style={styles.displayBar}>
 
                   <Image source={require('../../../../assets/images/Reminder.jpg')}
@@ -518,7 +520,7 @@ const More = ({ navigation }) => {
                   <Text style={styles.text1}>{strings.reminder}</Text>
                 </View>
               </TouchableOpacity>
-              <Divider style={styles.dividerStyle} /> */}
+              <Divider style={styles.dividerStyle} />
 
               <TouchableOpacity onPress={() => {
                 //ShortToast('Coming Soon..', 'warning', '')
@@ -737,7 +739,6 @@ const styles = StyleSheet.create({
   {
     height: 0.094 * HEIGHT,
     backgroundColor: 'white'
-
   },
   imageContainer:
   {

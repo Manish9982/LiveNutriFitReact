@@ -18,7 +18,7 @@ const BootSplash = ({ navigation }) => {
     retrieveLanguage()
   }, [])
 
-  const retrieveLanguage = async () => {
+  const retrieveLanguage = async () => {  
     const language = await getDataFromLocalStorage('language_new')
     await changeLanguage(language || 'en');
   }
