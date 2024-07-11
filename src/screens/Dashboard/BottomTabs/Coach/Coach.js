@@ -11,11 +11,6 @@ import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import ImagePicker from 'react-native-image-crop-picker';
 import { Rating, AirbnbRating } from 'react-native-ratings'
-import SweetAlert from 'react-native-sweet-alert'
-import Loader from '../../../../assets/components/Loader'
-import LocalizedStrings from 'react-native-localization';
-import hindi from '../../../../hi'
-import english from '../../../../en'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -25,9 +20,14 @@ import { useLocales } from '../../../../utils/LocalizationUtil'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import NewProfiling from '../../../Questions/NewProfiling'
 import LottieView from 'lottie-react-native'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 const Coach = ({ navigation }) => {
   const isFocused = useIsFocused()
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inputText, setInputText] = useState('');
+  const [selectedMessage, setSelectedMessage] = useState('');
+
   const interval = useRef();
   const { NisInfoButtonVisible, Nmessages, Ncount } = useContext(DataContext)
   const [messages, setMessages] = Nmessages
@@ -467,32 +467,8 @@ const Coach = ({ navigation }) => {
 
   }
 
-
-
-
-  // const getTimeFromStamp = (timestamp) => {
-  //   const date = new Date(Number.parseInt(timestamp, 10) * 1000);
-
-  //   var hour = date.getHours();
-  //   var period = hour >= 12 ? 'PM' : 'AM';
-
-  //   // Convert to 12-hour format
-  //   hour = (hour % 12) || 12;
-
-  //   var minutes = date.getMinutes().toString().padStart(2, '0');
-  //   var date2 = date.getDate().toString().padStart(2, '0');
-  //   var month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   var year = date.getFullYear().toString();
-
-  //   return `${date2}/${month}/${year}  ${hour}:${minutes} ${period}`;
-  // }
   const sendResponseForHealthIndex = async (arr, message) => {
-    // Integer customerId;
-    // Integer questionId;
-    // Integer period;
-    // String value;
-    // String type;
-    // String updatedBy;
+
     var formdata = new FormData();
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("userid", JSON.parse(temp));
@@ -546,6 +522,24 @@ const Coach = ({ navigation }) => {
     )
   }
 
+  const handleIconClick = (msg) => {
+    console.log("msg ", msg)
+    setSelectedMessage(msg);
+
+    setModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setModalVisible(false);
+  };
+
+  const handleSubmit = () => {
+    console.log('Submitted text:', inputText);
+    setModalVisible(false);
+    // Add your custom logic here
+  };
+
+
   const renderItem = ({ item, index }) => {
     if (item.reciever_message == ""
       && item.receiver_icon.length == 0
@@ -590,34 +584,55 @@ const Coach = ({ navigation }) => {
       item.receiver_icon.length == 0 && item?.message_type == 'text') {
       return (
         <>
+
           <View style={{
-            backgroundColor: "white",
-            paddingHorizontal: W * 0.05,
-            paddingVertical: H * 0.02,
-            justifyContent: "center",
-            alignSelf: "flex-start",
-            maxWidth: W * 0.7,
-            borderBottomRightRadius: 10,
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-            marginLeft: W * 0.02,
-            marginTop: H * 0.02,
+            flexDirection: 'row',
+            alignItems: 'center'
           }}>
-            <Text style={{
+            <View style={{
+              backgroundColor: "white",
+              paddingHorizontal: W * 0.05,
+              paddingVertical: H * 0.02,
+              justifyContent: "center",
+              alignSelf: "flex-start",
+              maxWidth: W * 0.7,
+              borderBottomRightRadius: 10,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              marginLeft: W * 0.02,
+              marginTop: H * 0.02,
+            }}>
+              <Text style={{
 
-            }}>{item.reciever_message}</Text>
-            <Text style={{
-              marginTop: H * 0.01,
-              fontSize: fontSizes.EXTRASM,
-            }}>{getTimeFromStamp(item.created)}</Text>
+              }}>{item.reciever_message}</Text>
+              <Text style={{
+                marginTop: H * 0.01,
+                fontSize: fontSizes.EXTRASM,
+              }}>{getTimeFromStamp(item.created)}</Text>
 
-            <Text style={{
-              fontFamily: 'Montserrat-Regular',
-              fontSize: fontSizes.SM,
-              marginTop: 5,
-              color: "black"
-            }}>By - {item?.coachname}</Text>
+              <Text style={{
+                fontFamily: 'Montserrat-Regular',
+                fontSize: fontSizes.SM,
+                marginTop: 5,
+                color: "black"
+              }}>By - {item?.coachname}</Text>
+            </View>
+
+            <TouchableOpacity
+              onPress={()=>handleIconClick(item?.reciever_message)}>
+              <Image
+                style={{
+                  width: W * 0.05,
+                  height: W * 0.05,
+                  marginLeft: W * 0.04
+
+                }}
+                source={require('../../../../assets/icons/reply.png')} />
+
+            </TouchableOpacity>
+
           </View>
+
         </>
       )
     }
@@ -949,6 +964,7 @@ const Coach = ({ navigation }) => {
         </Appbar.Header>
       </View>
 
+
       <View style={{
         flexDirection: 'row',
         //paddingVertical: H * 0.02,
@@ -1021,7 +1037,55 @@ const Coach = ({ navigation }) => {
       <View style={{
         flex: 1,
       }}>
+
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Enter your reply for:</Text>
+              <Text style={styles.msgText}>{selectedMessage}</Text>
+
+              <View>
+
+              </View>
+
+              
+              <TextInput
+                style={styles.input}
+                placeholder="Type your reply here"
+                value={inputText}
+                onChangeText={setInputText}
+              />
+
+              
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonCancel]}
+                  onPress={handleCancel}
+                >
+                  <Text style={styles.textStyle}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonSubmit]}
+                  onPress={handleSubmit}
+                >
+                  <Text style={styles.textStyle}>Submit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+
+
         {/******************************************************** User Ratings***************************************************************** */}
+
+
         <Modal
           transparent={true}
           visible={loading}>
@@ -1305,6 +1369,9 @@ const Coach = ({ navigation }) => {
           </View>
         </Modal>
 
+
+
+
         <View style={styles.messageList}>
           <FlatList
             inverted={true}
@@ -1526,7 +1593,79 @@ const makeStyles = (H, W) => StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 10,
-  }
-})
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  msgText: {
+    marginBottom: 14,
+    textAlign: 'center',
+    fontSize: 18,
+    marginTop: 2,
+    color: "grey",
+  fontWeight: 'bold',
+  },
+  input: {
+    height: 40,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop:10,
+    paddingHorizontal: 10,
+    width: '100%',
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop:10
+  },
+  button: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  buttonCancel: {
+    backgroundColor: '#ff6347',
+  },
+  buttonSubmit: {
+    backgroundColor: colors.GREEN,
+  },
+
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
+
+
 
 export default Coach
