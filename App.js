@@ -5,6 +5,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+
 import Signin from './src/screens/SignIn/Signin';
 import RegisterOrSignIn from './src/screens/RegisterOrSignIn/RegisterOrSignIn'
 import CreateAccount from './src/screens/CreateAccount/CreateAccount'
@@ -24,10 +25,12 @@ import { Alert, AppState, LogBox } from "react-native";
 import UserProfile from './src/screens/UserProfile/UserProfile';
 import EditProfile from './src/screens/EditProfile/EditProfile';
 
+
 import VerifyOTPAfterRegistrationPhone from './src/screens/VerifyOTP/VerifyOTPAfterRegistrationPhone';
 import VerifyOTPAfterRegistrationEmail from './src/screens/VerifyOTP/VerifyOTPAfterRegistrationEmail';
 import VerifyOTPAfterSignInEmail from './src/screens/VerifyOTP/VerifyOTPAfterSignInEmail';
 import VerifyOTPAfterSignInPhone from './src/screens/VerifyOTP/VerifyOTPAfterSignInPhone';
+
 
 import WelcomeScreenBeforeBottomTabs from './src/screens/WelcomeScreenBeforeBottomTabs/WelcomeScreenBeforeBottomTabs'
 import WelcomeScreenAfterRegistration from './src/screens/WelcomeScreenAfterRegistration/WelcomeScreenAfterRegistration'
@@ -48,6 +51,7 @@ import ChatImageWebview from './src/screens/Dashboard/BottomTabs/Coach/ChatImage
 import SigninCorporate from './src/screens/SignIn/SigninCorporate';
 import PlanDetailScreen from './src/screens/PlanDetailScreen/PlanDetailScreen';
 import PaymentWebview from './src/screens/PaymentWebview/PaymentWebview';
+
 
 import LNFShopWebView from './src/screens/LNFShopWebView/LNFShopWebView';
 import PaidCustomQuestions from './src/screens/PaidCustomQuestions/PaidCustomQuestions';
@@ -74,8 +78,8 @@ import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import UpdateNow from './src/screens/UpdateNow';
 
-const BadgeManager = NativeModules.BadgeManager;
 
+const BadgeManager = NativeModules.BadgeManager;
 
 
 const fontConfig = {
@@ -89,10 +93,10 @@ const theme = {
   fonts: configureFonts({ config: fontConfig }),
 };
 
-
 const Stack = createNativeStackNavigator();
 
 LogBox.ignoreAllLogs();
+
 
 const App = () => {
   //const appState = useRef(AppState.currentState);
@@ -100,6 +104,7 @@ const App = () => {
   //const [messages, setMessages] = Nmessages
   //added
   // Function to handle notification click event
+
 
   useEffect(() => {
     console.log('Initial useEffect: checkNotificationPermission and requestUserPermissionAndGetToken');
@@ -112,9 +117,11 @@ const App = () => {
     //PushNotification.removeAllDeliveredNotifications();
   }, []);
 
+
   const updateBadgeCount = (count) => {
     BadgeManager.updateBadgeCount(count);
   };
+
 
   const getMessageCount = async () => {
     const temp = await getDataFromLocalStorage('user_id')
@@ -124,10 +131,10 @@ const App = () => {
     console.log("GLOBAL COUNT API ==== >>>", result)
     updateBadgeCount(parseInt(result.count))
 
+
     if (result.status == '200') {
       console.log("GLOBAL COUNT API  COUNT==== >>> ==== >>>", parseInt(result.count))
       updateBadgeCount(parseInt(result.count))
-
     }
   }
 
@@ -157,6 +164,7 @@ const App = () => {
     };
   }, []);
 
+
   const foregroundApi = async () => {
     var formdata = new FormData()
     const temp = await getDataFromLocalStorage('user_id')
@@ -177,7 +185,10 @@ const App = () => {
   }
 
 
+
+
   return (
+
 
     <GestureHandlerRootView style={{ flex: 1 }}>
       <LocalizationProvider>
@@ -245,6 +256,8 @@ const App = () => {
     </GestureHandlerRootView>
   )
 }
+
+
 
 
 export default App
