@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, FlatList, TouchableOpacity, Modal, Button, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Divider, Text, TextInput } from 'react-native-paper';
+import { Divider, FAB, Text, TextInput } from 'react-native-paper';
 import { GetApiData, PostApiData, ShortToast, colors, fontFamily } from '../../../../colorSchemes/ColorSchemes';
 import HeaderForSubmissionScreens from '../Stats/HeaderForSubmissionScreens';
 import { getDataFromLocalStorage } from '../../../../local storage/LocalStorage';
 
-const App = () => {
+const Reminder = () => {
   const [alarms, setAlarms] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -32,6 +32,36 @@ const App = () => {
     dateToAdd.setMinutes(0)
     setNewTimeToAdd(dateToAdd)
   }, [])
+
+  function formatPeriodList(input) {
+    const isTimeWithDays = input.includes('(');
+
+    function formatTime(time) {
+      let [hours, minutes] = time?.match(/(\d{2}):(\d{2})/)?.slice(1, 3);
+      hours = parseInt(hours, 10);
+      const period = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      return `${String(hours).padStart(2, '0')}:${minutes} ${period}`;
+    }
+
+    if (isTimeWithDays) {
+      const [timePart, dayPart] = input?.match(/([\d:]+)\s*\(([^)]+)\)/)?.slice(1, 3);
+      const formattedTime = formatTime(timePart);
+      return `${formattedTime} (${dayPart})`;
+    } else {
+      const timeArray = [];
+      let start = 0;
+      for (let i = 0; i < input.length; i++) {
+        if (input[i] === ',') {
+          timeArray.push(input.substring(start, i));
+          start = i + 1;
+        }
+      }
+      timeArray.push(input.substring(start));
+      const formattedTimes = timeArray.map(formatTime);
+      return formattedTimes.join(',');
+    }
+  }
 
 
   const showPicker = (Platform.OS === 'ios' && showTimePicker && alarmDetails?.times?.length < 4 && alarmDetails?.frequency === 'DAILY') ||
@@ -108,11 +138,16 @@ const App = () => {
   };
 
   function convertTo24Hour(timeStr) {
-    // Extract hours, minutes, and period (AM/PM) from the input time string
-    const [time, period] = timeStr.split(' ');
-    let [hours, minutes] = time.split(':').map(Number);
-
-    // Convert the hours part based on the period (AM/PM)
+    // Extract hours, minutes, and period (AM/PM) using regular expressions
+    const timeRegex = /(\d{1,2}):(\d{2})\s*([APap][Mm])/;
+    const match = timeRegex.exec(timeStr);
+    if (!match) {
+      throw new Error("Invalid time format");
+    }
+    let hours = parseInt(match[1], 10);
+    const minutes = match[2];
+    const period = match[3].toUpperCase();
+    // Convert hours to 24-hour format
     if (period === 'AM') {
       if (hours === 12) {
         hours = 0; // Midnight case
@@ -122,15 +157,11 @@ const App = () => {
         hours += 12; // Convert PM hours to 24-hour format
       }
     }
-
-    // Format the hours and minutes to ensure two digits
-    const formattedHours = String(hours).padStart(2, '0');
-    const formattedMinutes = String(minutes).padStart(2, '0');
-
+    // Format the hours to ensure two digits
+    const formattedHours = hours.toString().padStart(2, '0');
     // Combine the formatted hours and minutes with a colon
-    return `${formattedHours}:${formattedMinutes}`;
+    return `${formattedHours}:${minutes}`;
   }
-
 
   function convertTo12HourFormat(time) {
     // Extract the hour and minute parts from the input time string
@@ -153,44 +184,65 @@ const App = () => {
 
   const handleSave = async () => {
     if (isEdit) {
-      var arr = []
-      arr = alarmDetails?.times?.map((item) => convertTo24Hour(item))
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData()
-      if (alarmDetails?.frequency === 'DAILY') {
-        formdata.append("period_time", arr?.join());
-      } else {
-        formdata.append("period_time", `${arr?.join()} (${alarmDetails?.days?.join()})`);
+      if (((alarmDetails?.days?.length !== 0 && alarmDetails?.frequency === "WEEKLY") || alarmDetails?.frequency !== "WEEKLY") && alarmDetails?.dosage !== "" && alarmDetails?.medication !== "" && alarmDetails?.times?.length !== 0) {
+        var arr = []
+        arr = alarmDetails?.times?.map((item) => convertTo24Hour(item))
+        const temp = await getDataFromLocalStorage('user_id')
+        var formdata = new FormData()
+        if (alarmDetails?.frequency === 'DAILY') {
+          formdata.append("period_time", arr?.join());
+        } else {
+          formdata.append("period_time", `${arr?.join()} (${alarmDetails?.days?.join()})`);
+        }
+        formdata.append("frequency", alarmDetails?.frequency == 'DAILY' ? 'DAILY' : 'WEEKLY');
+        formdata.append("id", alarmDetails?.id);
+        formdata.append("user_id", JSON.parse(temp));
+        formdata.append("medicine_name", alarmDetails?.medication);
+        formdata.append("quantity", alarmDetails?.dosage);
+        formdata.append("alert", "true");
+        const result = await PostApiData('update_medicine_alarm', formdata)
+        if (result?.status == '200') {
+          getAlarms()
+        }
       }
-      formdata.append("frequency", alarmDetails?.frequency == 'DAILY' ? 'DAILY' : 'WEEKLY');
-      formdata.append("id", alarmDetails?.id);
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("medicine_name", alarmDetails?.medication);
-      formdata.append("quantity", alarmDetails?.dosage);
-      formdata.append("alert", "true");
-      const result = await PostApiData('update_medicine_alarm', formdata)
-      if (result?.status == '200') {
-        getAlarms()
+      else {
+        if (alarmDetails?.times?.length == 0) {
+          ShortToast("Please click on '+' button after selecting time")
+        }
+        else {
+          ShortToast('Please fill all the fields')
+        }
       }
     }
     else {
-      var arr = []
-      arr = alarmDetails?.times?.map((item) => convertTo24Hour(item))
-      const temp = await getDataFromLocalStorage('user_id')
-      var formdata = new FormData()
-      if (alarmDetails?.frequency === 'DAILY') {
-        formdata.append("period_time", arr?.join());
-      } else {
-        formdata.append("period_time", `${arr?.join()} (${alarmDetails?.days?.join()})`);
+      //alarmDetails?.days?.length !== 0 is good case
+      if (((alarmDetails?.days?.length !== 0 && alarmDetails?.frequency === "WEEKLY") || alarmDetails?.frequency !== "WEEKLY") && alarmDetails?.dosage !== "" && alarmDetails?.medication !== "" && alarmDetails?.times?.length !== 0) {
+        var arr = []
+        arr = alarmDetails?.times?.map((item) => convertTo24Hour(item))
+        const temp = await getDataFromLocalStorage('user_id')
+        var formdata = new FormData()
+        if (alarmDetails?.frequency === 'DAILY') {
+          formdata.append("period_time", arr?.join());
+        } else {
+          formdata.append("period_time", `${arr?.join()} (${alarmDetails?.days?.join()})`);
+        }
+        formdata.append("frequency", alarmDetails?.frequency == 'DAILY' ? 'DAILY' : 'WEEKLY');
+        formdata.append("user_id", JSON.parse(temp));
+        formdata.append("medicine_name", alarmDetails?.medication);
+        formdata.append("quantity", alarmDetails?.dosage);
+        formdata.append("alert", "true");
+        const result = await PostApiData('add_medicine_alarm', formdata)
+        if (result?.status == '200') {
+          getAlarms()
+        }
       }
-      formdata.append("frequency", alarmDetails?.frequency == 'DAILY' ? 'DAILY' : 'WEEKLY');
-      formdata.append("user_id", JSON.parse(temp));
-      formdata.append("medicine_name", alarmDetails?.medication);
-      formdata.append("quantity", alarmDetails?.dosage);
-      formdata.append("alert", "true");
-      const result = await PostApiData('add_medicine_alarm', formdata)
-      if (result?.status == '200') {
-        getAlarms()
+      else {
+        if (alarmDetails?.times?.length == 0) {
+          ShortToast("Please click on '+' button after selecting time")
+        }
+        else {
+          ShortToast('Please fill all the fields')
+        }
       }
     }
   };
@@ -208,7 +260,15 @@ const App = () => {
 
   const onPressPlusButton = () => {
     const newTime = newTimeToAdd.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    setAlarmDetails({ ...alarmDetails, times: [...alarmDetails?.times, newTime] });
+    setAlarmDetails((prev) => {
+      if (prev?.times?.includes(newTime)) {
+        ShortToast('Time Already Exists!')
+        return prev
+      }
+      else {
+        return { ...alarmDetails, times: [...alarmDetails?.times, newTime] };
+      }
+    })
   }
 
   const acknowledgeMedicine = async (id) => {
@@ -220,15 +280,19 @@ const App = () => {
   }
 
   const toggleAlert = async (item) => {
-    var arr = []
-    arr = item?.times?.map((item) => convertTo24Hour(item))
-    console.log("item?.times", item?.times)
+    var arr = item?.times || item?.periodList
+    if (item?.times) {
+      arr?.forEach((item) => convertTo24Hour(item))
+    }
+    console.log("item?.timesss", item)
+    console.log("arr", arr)
     const temp = await getDataFromLocalStorage('user_id')
     var formdata = new FormData()
     if (item?.frequency === 'DAILY') {
-      formdata.append("period_time", arr?.join());
+      formdata.append("period_time", item.times ? arr?.join() : item?.periodList);
     } else {
-      formdata.append("period_time", `${arr?.join()} (${item?.days?.join()})`);
+      //formdata.append("period_time", `${item.times ? arr?.join() : item?.periodList} (${item?.days?.join()})`);
+      formdata.append("period_time", `${item.times ? arr?.join() : item?.periodList}`);
     }
     formdata.append("frequency", item?.frequency == 'DAILY' ? 'DAILY' : 'WEEKLY');
     formdata.append("id", item?.id);
@@ -252,23 +316,24 @@ const App = () => {
         </View>
         <Text style={styles.frequency}>{item.frequency}</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          <Text>{item?.periodList}</Text>
+          {/* <Text>{item?.periodList}</Text> */}
+          <Text>{formatPeriodList(item?.periodList)}</Text>
         </View>
       </View>
       <Divider style={{ backgroundColor: '#fff' }} />
       <View style={styles.section2}>
         <TouchableOpacity
           onPress={() => toggleAlert(item)}
-          style={[styles.icon, { backgroundColor: item?.alert ? colors.MEDAL_GOLD : colors.LIGHT_SILVER }]}>
+          style={[styles.icon, { backgroundColor: item?.alert ? colors.MEDAL_GOLD : colors.DARK_GRAY2 }]}>
           <Icon name="bell" size={24} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => acknowledgeMedicine(item?.id)}
-          style={[styles.icon, { backgroundColor: colors.GREEN, opacity: item?.acknowledged ? 0.3 : 1 }]}>
+          style={[styles.icon, { backgroundColor: item?.acknowledged ? colors.GREEN : colors.DARK_GRAY2 }]}>
           <Icon name="check" size={24} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.icon, { backgroundColor: colors.DARK_GRAY2 }]}
+          style={[styles.icon, { backgroundColor: colors.ORANGE2 }]}
           onPress={() => openModal(item, index)}>
           <Icon name="pencil" size={24} color="#fff" />
         </TouchableOpacity>
@@ -279,15 +344,19 @@ const App = () => {
     <>
       <HeaderForSubmissionScreens Title="Medication Monitoring" />
       <View style={styles.container}>
-        <FlatList
-          data={alarms}
-          renderItem={renderAlarmItem}
-          keyExtractor={(item) => item.id.toString()}
-        />
-        <TouchableOpacity style={styles.addButton} onPress={() => openModal(null)}>
-          <Text style={styles.addButtonText}>Add Medication</Text>
-        </TouchableOpacity>
-
+        {
+          alarms?.length == 0
+            ?
+            <View style={styles.infoContainer}>
+              <Text>Click '+' button to add medications</Text>
+            </View>
+            :
+            <FlatList
+              data={alarms}
+              renderItem={renderAlarmItem}
+              keyExtractor={(item) => item.id.toString()}
+            />
+        }
         <Modal visible={modalVisible} transparent={true} animationType="slide">
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
@@ -417,6 +486,10 @@ const App = () => {
             </View>
           </View>
         </Modal>
+        <FAB
+          onPress={() => openModal(null)}
+          icon={'plus'}
+          style={styles.fab} />
       </View>
     </>
   );
@@ -608,9 +681,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.DARK_GRAY,
     padding: 8,
     borderRadius: 8,
+  },
+  fab:
+  {
+    backgroundColor: colors.GREEN,
+    alignSelf: 'flex-end',
+  },
+  infoContainer:
+  {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 
 });
 
-export default App;
+export default Reminder;
 
