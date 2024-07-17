@@ -28,6 +28,213 @@ const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
+const DATA = {
+  "status": 200,
+  "message": "success",
+  "gender": "Man",
+  "data": [
+    {
+      "id": "4",
+      "heading": "Pain",
+      "heading2": "Pain",
+      "sub_heading": "Mild",
+      "sub_heading2": "Mild",
+      "icon": "",
+      "information": "Information here",
+      "attribute_value": [
+        "3"
+      ],
+      "attribute": [
+        "Pain"
+      ],
+      "attribute2": [
+        "Pain"
+      ]
+    },
+    {
+      "id": "5",
+      "heading": "Psychology",
+      "heading2": "Psychology",
+      "sub_heading": "Mild",
+      "sub_heading2": "Mild",
+      "icon": "",
+      "information": "Information",
+      "attribute_value": [
+        "5"
+      ],
+      "attribute": [
+        "Score"
+      ],
+      "attribute2": [
+        "Score"
+      ]
+    },
+    {
+      "id": "6",
+      "heading": "BMI",
+      "heading2": "BMI",
+      "sub_heading": "Underweight",
+      "sub_heading2": "Underweight",
+      "icon": "",
+      "information": "Information",
+      "attribute_value": [
+        "15.88"
+      ],
+      "attribute": "",
+      "attribute2": [
+        ""
+      ]
+    },
+    {
+      "id": "7",
+      "heading": "BMR",
+      "heading2": "BMR",
+      "sub_heading": "Underweight",
+      "sub_heading2": "Underweight",
+      "icon": "",
+      "information": "Information",
+      "attribute_value": [
+        "1588.67"
+      ],
+      "attribute": "",
+      "attribute2": [
+        ""
+      ]
+    },
+    {
+      "id": "8",
+      "heading": "WHR",
+      "heading2": "WHR",
+      "sub_heading": "At Risk",
+      "sub_heading2": "At Risk",
+      "icon": "",
+      "information": "Information",
+      "attribute_value": [
+        "1.00"
+      ],
+      "attribute": "",
+      "attribute2": [
+        ""
+      ]
+    },
+    {
+      "id": "11",
+      "heading": "Health Index",
+      "heading2": "Health Index",
+      "sub_heading": "",
+      "sub_heading2": "",
+      "icon": "",
+      "information": "Information",
+      "attribute_value": "73",
+      "attribute": [
+        ""
+      ],
+      "attribute2": [
+        ""
+      ]
+    }
+  ],
+  "single": [
+    {
+      "id": "21",
+      "heading": "Medication Monitor",
+      "heading2": "Medication Monitor",
+      "icon": "",
+      "calculation_value": "90%",
+      "calculation_value2": "90%",
+      "information": "Information",
+      "attribute_value": [
+        "90%",
+        "12",
+        "2"
+      ],
+      "attribute": [
+        "Compliance",
+        "No. of medications",
+        "Pending",
+        "2"
+      ],
+      "attribute2": [
+        "Compliance",
+        "No. of medications",
+        "2"
+      ]
+    },
+    {
+      "id": "1",
+      "heading": "Weight",
+      "heading2": "Weight",
+      "icon": "",
+      "calculation_value": "Underweight",
+      "calculation_value2": "Underweight",
+      "information": "Information",
+      "attribute_value": [
+        "56.1",
+        "80.1"
+      ],
+      "attribute": [
+        "Current Weight",
+        "Target Weight",
+        "Underweight"
+      ],
+      "attribute2": [
+        "Current Weight",
+        "Target Weight",
+        "Underweight"
+      ]
+    },
+    {
+      "id": "2",
+      "heading": "Sugar",
+      "heading2": "Sugar",
+      "icon": "",
+      "calculation_value": "Elevated",
+      "calculation_value2": "Elevated",
+      "information": "Information",
+      "attribute_value": [
+        "129",
+        "111"
+      ],
+      "attribute": [
+        "Fasting",
+        "Non-Fasting",
+        "Elevated"
+      ],
+      "attribute2": [
+        "Fasting",
+        "Non-Fasting",
+        "Elevated"
+      ]
+    },
+    {
+      "id": "3",
+      "heading": "Blood Pressure",
+      "heading2": "Blood Pressure",
+      "icon": "",
+      "calculation_value": "High",
+      "calculation_value2": "High",
+      "information": "Information",
+      "attribute_value": [
+        "88",
+        "99",
+        "88"
+      ],
+      "attribute": [
+        "Systolic(Upper)",
+        "Diastolic(Lower)",
+        "BPM",
+        "High"
+      ],
+      "attribute2": [
+        "Systolic",
+        "Diastolic",
+        "BPM",
+        "High"
+      ]
+    }
+  ]
+}
+
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
 
@@ -140,7 +347,7 @@ const Stats = (props) => {
     // Load the sound when the component mounts
     const soundObject = new Sound('coin_sound.mp3', Sound.MAIN_BUNDLE, (error) => {
       if (error) {
-        console.error('Failed to load the sound', error);
+
       } else {
         setSound(soundObject);
       }
@@ -189,16 +396,6 @@ const Stats = (props) => {
 
   function validateWeight(input) {
     const regex = /^\d{1,3}(\.\d)?$/;
-    // if (regex.test(input)) {
-    //   setCurrentWeight(input)
-    //   setCrrnt(input)
-    //   setWeightOkButttonDisabled(false)
-    // }
-    // else {
-    //   ShortToast('We can only accept numbers with up to one decimal place.')
-    //   setCurrentWeight('')
-    //   setCrrnt('')
-    // }
     return regex.test(input)
   }
 
@@ -223,9 +420,9 @@ const Stats = (props) => {
     if (sound) {
       sound.play((success) => {
         if (success) {
-          console.log('Sound played successfully');
+
         } else {
-          console.error('Failed to play the sound');
+
         }
       });
     }
@@ -236,7 +433,6 @@ const Stats = (props) => {
     var formdata = new FormData();
     formdata.append("id", JSON.parse(temp));
     const result = await PostApiData('assign_meal', formdata)
-    console.log("assign_meal =====>", result)
   }
 
   const onPressButton = () => {
@@ -282,7 +478,6 @@ const Stats = (props) => {
     formdata.append("user_id", JSON.parse(temp))
     formdata.append("text", text)
     const result = await PostApiData('add_user_mood', formdata)
-    console.log("MOOD RESULT == >> ", result)
     setVisibleMood(false)
     if (result.status == 200) {
       setShowInputForGratification(false)
@@ -292,21 +487,7 @@ const Stats = (props) => {
       setVisibleMood(false)
       // props.navigation.navigate('Gratification')
     }
-    // if (text == "") {
-    //   ShortToast("Required field", 'Alert', '')
-    // } else {
-    //   const temp = await getDataFromLocalStorage('user_id')
-    //   var formdata = new FormData();
-    //   formdata.append("user_id", JSON.parse(temp))
-    //   formdata.append("text", text)
-    //   const result = await PostApiData('add_user_mood', formdata)
-    //   if (result.status == 200) {
-    //     setShowInputForGratification(false)
-    //     ShortToast(result.message, 'success', '')
-    //     setVisibleMood(false)
-    //     props.navigation.navigate('Gratification')
-    //   }
-    // }
+
   }
 
   const updateWeightValues = async () => {
@@ -334,10 +515,6 @@ const Stats = (props) => {
   }
 
   const updateSugarValues = async () => {
-    // if (fastingSugar == "" || fastingSugar.includes(".") || fastingSugar.includes(",") || fastingSugar.includes("-") || fastingSugar.includes(" ") || nonFastingSugar == "" || nonFastingSugar.includes(".") || nonFastingSugar.includes(",") || nonFastingSugar.includes("-") || nonFastingSugar.includes(" ")) {
-    //   ShortToast('Invalid Input', 'error', '')
-    // }
-    // else 
 
     const temp = await getDataFromLocalStorage('user_id')
     var formdata = new FormData();
@@ -355,40 +532,6 @@ const Stats = (props) => {
       ShortToast(JSON.stringify(result?.message), 'error', '')
 
     }
-
-    // if (fastingSugar < 55 || nonFastingSugar < 70) {
-    //   ShortToast("Your sugar seems to be critically low! Kindly consult a Doctor", 'error', '')
-    //   const temp = await getDataFromLocalStorage('user_id')
-    //   var formdata = new FormData();
-    //   formdata.append("user_id", JSON.parse(temp));
-    //   formdata.append("type", "Sugar");
-    //   formdata.append("fasting", fastingSugar);
-    //   formdata.append("nonfasting", nonFastingSugar);
-    //   const result = await PostApiData('updateuserhealthplan', formdata)
-    //   if (result.status == 200) {
-    //     getDataForFreeUser()
-    //     setEditSugar(false)
-    //     setFastingSugar('')
-    //     setNonFastingSugar('')
-    //   }
-    // }
-    // else {
-    //   // if (route.params.flag[0] == "" && route.params.flag[1] == "") {
-    //   const temp = await getDataFromLocalStorage('user_id')
-    //   var formdata = new FormData();
-    //   formdata.append("user_id", JSON.parse(temp));
-    //   formdata.append("type", "Sugar");
-    //   formdata.append("fasting", fastingSugar);
-    //   formdata.append("nonfasting", nonFastingSugar);
-    //   const result = await PostApiData('updateuserhealthplan', formdata)
-    //   if (result.status == 200) {
-    //     getDataForFreeUser()
-    //     setEditSugar(false)
-    //     setFastingSugar('')
-    //     setNonFastingSugar('')
-    //     ShortToast(JSON.stringify(result?.message), 'success', '')
-    //   }
-    //  }
   }
 
   const updateBpValues = async () => {
@@ -458,9 +601,8 @@ const Stats = (props) => {
       await storeDataInLocalStorage("user_type", JSON.stringify(result?.user_type))
     }
 
-    //console.log("tempPaid", temp)
-    console.log("response user freeuser =================>  ", result)
-    //console.log("response user freeuser =================>  ", result)
+
+
 
   }
 
@@ -476,16 +618,10 @@ const Stats = (props) => {
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("user_id", JSON.parse(temp))
     const result = await PostApiData('paiduser', formdata)
-    console.log("PAID +++++++++++++ ", result)
     if (result?.status == "200") {
-      setDataForPaidUser(result)
-      // setCurrentWeight(result?.single[0]?.attribute_value[0])
+      //setDataForPaidUser(result)
+      setDataForPaidUser(DATA)
       setTargetWeight(result?.single[0]?.attribute_value[1])
-      // setFastingSugar(result?.single[1]?.attribute_value[0])
-      // setNonFastingSugar(result?.single[1]?.attribute_value[1])
-      // setSystolic(result?.single[2]?.attribute_value[0])
-      // setDiastolic(result?.single[2]?.attribute_value[1])
-      // setBpm(result?.single[2]?.attribute_value[2])
     }
     setSecondaryLoader(false)
     getFirstTimeLoginStatus()
@@ -649,6 +785,7 @@ const Stats = (props) => {
               <TouchableOpacity
                 onPress={() => {
                   setIsInfoButtonVisible(false)
+                  item.heading2 == 'Medication Monitor' && props.navigation.navigate("Reminder")
                   item.heading2 == 'Weight' && props.navigation.navigate("OnDetailsSubmitScreenOne")
                   item.heading2 == 'Sugar' && props.navigation.navigate("OnDetailsSubmitScreenTwo", { "flag": dataForPaidUser?.single[1]?.attribute_value })
                   item.heading2 == 'Blood Pressure' && props.navigation.navigate("OnDetailsSubmitScreenThree")
@@ -776,7 +913,6 @@ const Stats = (props) => {
     var formdata = new FormData();
     formdata.append("id", JSON.parse(temp))
     const result = await PostApiData('group_message_count', formdata)
-    console.log("notification gaurav1 ==========>>>>> ", result)
     if (result.status == 200) {
       setNotificationCount(result.count)
     } else {
@@ -789,7 +925,6 @@ const Stats = (props) => {
     readNotificationCount()
     const userID = await getDataFromLocalStorage('user_id')
     props.navigation.navigate("NotificationWebView", { "UserID": `${userID}` })
-    console.log("userID== ", userID)
   }
 
   const readNotificationCount = async () => {
@@ -799,7 +934,7 @@ const Stats = (props) => {
     formdata.append("id", JSON.parse(temp))
     const result = await PostApiData('group_read_message', formdata)
     if (result.status == 200) {
-      console.log("GauravNotificationCount  == ", result)
+
       //Alert.alert("Gaurav")
     } else {
       ShortToast(result?.message, 'error', '')
@@ -2033,116 +2168,7 @@ const Stats = (props) => {
                 <Button onPress={() => setVisible(false)}>Got it!</Button>
               </Dialog.Actions>
             </Dialog>
-            {/* <Snackbar
-              style={{
-                backgroundColor: colors.BAD_COLOR
-              }}
-              visible={visibleSnackOne}
-              onDismiss={onDismissSnackBarOne}
-              action={{
-                label: <Text>OK</Text>,
-                onPress: () => {
-                  onDismissSnackBarOne()
-                  onDismissSnackBarTwo()
-                  onDismissSnackBarThree()
-                },
-              }}>
-              <Text style={{
-                color: colors.FONT_BLACK,
-                textAlign: "center"
-              }}> It's Okay, Tomorrow Will be Better!</Text>
-            </Snackbar>
-            <Snackbar
-              style={{
-                backgroundColor: colors.GOOD_COLOR
-              }}
-              visible={visibleSnackTwo}
-              onDismiss={onDismissSnackBarTwo}
-              action={{
-                label: <Text>OK</Text>,
-                onPress: () => {
-                  onDismissSnackBarOne()
-                  onDismissSnackBarTwo()
-                  onDismissSnackBarThree()
-                },
-              }}>
-              <Text>
-                Good. But there is still scope for Improvemnet</Text>
-            </Snackbar>
-            <Snackbar
-              visible={visibleSnackThree}
-              onDismiss={onDismissSnackBarThree}
-              style={{
-                backgroundColor: colors.BEST_COLOR
-              }}
-              action={{
-                label: <Text>OK</Text>,
-                onPress: () => {
-                  onDismissSnackBarOne()
-                  onDismissSnackBarTwo()
-                  onDismissSnackBarThree()
-                },
-              }}>
-              <Text>Well Done. Keep it Up!</Text>
-            </Snackbar>*/}
-            {/* change to comment */}
-            {/* <FAB.Group
-              style={{}}
-              fabStyle={{ backgroundColor: colors.ORANGE, marginBottom: H * 0.11 }}
-              visible={isInfoButtonVisible}
-              open={open}
-              icon={open ? 'menu-open' : 'menu'}
-              actions={[
-                {
-                  icon: require('../../../../assets/icons/electrocardiography.png'),
-                  label: 'Health Index',
-                  onPress: () => {
-                    setIsInfoButtonVisible(false)
-                    props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.healthindex[0]?.value })
-                  },
-                },
-                {
-                  icon: require('../../../../assets/icons/blog.png'),
-                  label: 'Blog',
-                  onPress: () => openURL(),
-                },
-                {
-                  icon: require('../../../../assets/icons/user.png'),
-                  label: 'My Profile',
-                  onPress: () => {
-                    setIsInfoButtonVisible(false)
-                    props.navigation.navigate("UserProfile")
-                  }
-                },
-                {
-                  icon: require('../../../../assets/icons/ribbon.png'),
-                  color: "white",
-                  style: { backgroundColor: colors.MEDAL_GOLD, },
-                  label: 'My Points',
-                  onPress: () => {
-                    setIsInfoButtonVisible(false)
-                    props.navigation.navigate("Total Points")
-                  }
-                },
-              ]}
-              onStateChange={onStateChange}
-              onPress={() => {
-                if (open) {
-                  // do something if the speed dial is open
-                }
-              }}
-            /> */}
           </Portal>
-          {/*<FAB
-            visible={isInfoButtonVisible}
-            icon={require('../../../../assets/icons/electrocardiography.png')}
-            color="white"
-            //label="Health Index"
-            style={styles.fab}
-            onPress={() => {props.navigation.navigate("YourHealthIndexForFreeUser", { "healthIndex": data?.infomation[0]?.totalpoint })
-                            setIsInfoButtonVisible(false)}}
-            animated={true}
-            />*/}
           <View style={{ height: HEIGHT }}>
             <ScrollView
               ref={scrollRef}
@@ -2165,16 +2191,6 @@ const Stats = (props) => {
               {myloop}
               {/*********************PAID USER*******************/}
               <View style={{ marginTop: HEIGHT * 0.02, alignItems: 'center' }}>
-                {/* <FlatList
-                  data={dataForPaidUser?.single}
-                  renderItem={renderItem}
-                  keyExtractor={(item, index) => `${index}`}
-                /> */}
-                {/* <FlatList
-                  data={dataForPaidUser?.data}
-                  renderItem={renderItemTwo}
-                  keyExtractor={(item, index) => `${index}`}
-                  numColumns={2} /> */}
                 {
                   dataForPaidUser?.single?.map((item, index) => {
                     return (

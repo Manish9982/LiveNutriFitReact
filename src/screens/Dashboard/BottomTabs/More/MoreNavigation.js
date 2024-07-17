@@ -36,7 +36,6 @@ const MoreNavigation = ({ navigation, route }) => {
             headerShown: false
         }}>
             <Stack.Screen name="MoreNav" component={More} />
-            <Stack.Screen name="Reminder" component={Reminder} />
             <Stack.Screen name="LeadershipBoard" component={LeadershipBoard} />
             <Stack.Screen name="ReminderExercise" component={ReminderExercise} />
             <Stack.Screen name="ReminderFood" component={ReminderFood} />

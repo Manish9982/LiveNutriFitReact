@@ -77,6 +77,7 @@ import { NativeModules } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import UpdateNow from './src/screens/UpdateNow';
+import Reminder from './src/screens/Dashboard/BottomTabs/More/Reminder';
 
 
 const BadgeManager = NativeModules.BadgeManager;
@@ -248,6 +249,7 @@ const App = () => {
                 <Stack.Screen name="SubmitSteps" component={SubmitSteps} />
                 <Stack.Screen name="NewProfiling" component={NewProfiling} />
                 <Stack.Screen name="UpdateNow" component={UpdateNow} />
+                <Stack.Screen name="Reminder" component={Reminder} />
               </Stack.Navigator>
             </DataState>
           </NavigationContainer>
