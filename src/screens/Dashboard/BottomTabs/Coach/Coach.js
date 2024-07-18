@@ -1,7 +1,10 @@
-import { FlatList, View, Image, Keyboard, Modal, TouchableOpacity, StyleSheet, PermissionsAndroid, Linking, Alert, StatusBar, useWindowDimensions, KeyboardAvoidingView, Platform } from 'react-native'
+import {
+  FlatList, View, Image, Keyboard, Modal, TouchableOpacity, StyleSheet, PermissionsAndroid, Linking,
+  Alert, StatusBar, useWindowDimensions, KeyboardAvoidingView, Platform, PanResponder
+} from 'react-native'
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Appbar, Divider, Portal, ProgressBar, Text, TextInput } from 'react-native-paper'
-import { getDataFromLocalStorage, storeDataInLocalStorage } from '../../../../local storage/LocalStorage'
+import { getDataFromLocalStorage, removeDataFromLocalStorage, storeDataInLocalStorage } from '../../../../local storage/LocalStorage'
 import { colors, convertTimestampToYYYYMMDD, fontFamily, fontSizes, H, PostApiData, ShortToast, W } from '../../../../colorSchemes/ColorSchemes'
 import { color, spring } from 'react-native-reanimated'
 import DataContext from '../../../../context/DataContext'
@@ -11,22 +14,21 @@ import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import ImagePicker from 'react-native-image-crop-picker';
 import { Rating, AirbnbRating } from 'react-native-ratings'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DocumentPicker from 'react-native-document-picker'
 import { PERMISSIONS, RESULTS, requestMultiple } from 'react-native-permissions'
 import { useLocales } from '../../../../utils/LocalizationUtil'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import NewProfiling from '../../../Questions/NewProfiling'
 import LottieView from 'lottie-react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
+
+import { Swipeable } from 'react-native-gesture-handler';
 
 const Coach = ({ navigation }) => {
   const isFocused = useIsFocused()
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputText, setInputText] = useState('');
   const [selectedMessage, setSelectedMessage] = useState('');
+  const [selectedMessageID, setSelectedMessageID] = useState('');
 
   const interval = useRef();
   const { NisInfoButtonVisible, Nmessages, Ncount } = useContext(DataContext)
@@ -34,6 +36,7 @@ const Coach = ({ navigation }) => {
   const [count, setCount] = Ncount
   const [data, setData] = useState(null)
   const [text, setText] = useState("")
+  const [replytext, setreplyText] = useState("")
   const [page, setPage] = useState(2)
   const [keyboardShown, setKeyboardShown] = useState(false)
   const [isInfoButtonVisible, setIsInfoButtonVisible] = NisInfoButtonVisible
@@ -52,10 +55,13 @@ const Coach = ({ navigation }) => {
   const [popupvisible, setPopupvisible] = useState(false)
   const [selectedOption, setSelectedOption] = useState([])
   const [selecteOptionWhole, setSelecteOptionWhole] = useState(null)
-
+  const [isImageVisible, setIsImageVisible] = useState(true);
+  const emojis = ['👍', '👎', '😊', '😂', '😍', '😢', '🙏'];
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [emoji, setEmoji] = useState({});
   const H = useWindowDimensions().height
   const W = useWindowDimensions().width
-
+  const flatListRef = useRef(null);
   const strings = useLocales()
 
   const styles = makeStyles(H, W)
@@ -83,6 +89,28 @@ const Coach = ({ navigation }) => {
   useEffect(() => {
     removeValue()
   }, [])
+
+  useEffect(() => {
+    // Load stored emoji reactions when component mounts
+    const loadStoredEmojiReactions = async () => {
+      try {
+        const storedEmoji = await getDataFromLocalStorage('emojiReactions');
+        console.log("emoji first time ", storedEmoji)
+        if (storedEmoji !== null) {
+          setEmoji(JSON.parse(storedEmoji));
+          handleSelectEmoji(JSON.parse(storedEmoji))
+
+        }
+      } catch (error) {
+        console.error('Error loading emoji reactions:', error);
+      }
+    };
+
+    loadStoredEmojiReactions();
+  }, []); // Empty dependency array ensures this effect runs only once
+  // Empty dependency array ensures this effect runs only once
+
+
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', handleKeyboardDidShow);
@@ -152,14 +180,7 @@ const Coach = ({ navigation }) => {
     }
   }
 
-  const toastMobileEmail = async () => {
-    const userTypee = await getDataFromLocalStorage('user_type')
-    if (JSON.parse(userTypee) == "1") {
-      Alert.alert("Alert", strings.ThisfeatureforPaidCorporateUser)
-    } else {
-      scheduleWhatsappCall()
-    }
-  }
+
 
   const yourRef = useRef(null)
 
@@ -172,6 +193,8 @@ const Coach = ({ navigation }) => {
     formdata.append("pagination", 1);
     formdata.append("reciever_id", "")
     const result = await PostApiData('getusermessage', formdata)
+
+    console.log("chat Resultt", result)
 
     if (result.status == '200') {
       setData(result)
@@ -522,364 +545,726 @@ const Coach = ({ navigation }) => {
     )
   }
 
-  const handleIconClick = (msg) => {
+  const handleIconClick = (msg, msgID) => {
     console.log("msg ", msg)
-    setSelectedMessage(msg);
+    console.log("msgID ", msgID)
 
+
+    setSelectedMessage(msg);
+    setSelectedMessageID(msgID);
     setModalVisible(true);
   };
 
   const handleCancel = () => {
     setModalVisible(false);
+    setreplyText("")
+  };
+
+
+  const renderLeftActions = (item) => {
+
+    return (
+
+      <View style={{
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <TouchableOpacity
+          onPress={() => console.log()}>
+
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+              marginLeft: W * 0.04
+            }}
+            source={require('../../../../assets/icons/reply.png')}
+          />
+
+        </TouchableOpacity>
+      </View>
+    );
+
   };
 
   const handleSubmit = () => {
-    console.log('Submitted text:', inputText);
+    console.log('Submitted text:', replytext);
+    console.log('Submitted selectedMessageID:', selectedMessageID);
+    onSend()
     setModalVisible(false);
+    setreplyText("")
+
     // Add your custom logic here
   };
 
 
-  const renderItem = ({ item, index }) => {
-    if (item.reciever_message == ""
-      && item.receiver_icon.length == 0
-      && item.icon.length == 0 && item?.message_type == 'text') {
-      return (
-        <>
-          < View style={{
-            backgroundColor: colors.GREEN,
-            paddingHorizontal: W * 0.05,
-            paddingVertical: H * 0.02,
-            justifyContent: "center",
-            borderBottomLeftRadius: 10,
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-            alignSelf: "flex-end",
-            marginRight: W * 0.02,
-            marginTop: H * 0.02,
-            maxWidth: W * 0.85,
-          }
-          }>
-            <Text style={{
-              color: "white",
-              // ...fontFamily.bold
-            }}>{item.user_message}</Text>
-            <Text style={{
-              marginTop: H * 0.01,
-              fontSize: fontSizes.EXTRASM,
-              color: "white"
-            }}>{getTimeFromStamp(item.created)}</Text>
+  const saveEmojiReactions = async (emoji) => {
+    try {
+      // Check if emoji state is defined and not empty
+      if (Object.keys(emoji).length > 0) {
+        // Prepare emoji with icons (replace 'emoji_icon' with actual icon)
+        const emojiWithIcons = emoji;
+        Object.keys(emoji).forEach(key => {
+          emojiWithIcons[key] = `${emoji[key]} emoji_icon`;
+        });
 
-
-            {/* <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize:fontSizes.SM,
-            color:colors.OFFWHITE }}>{item?.coachname}</Text> */}
-
-          </View >
-        </>
-      )
+        // Save emoji reactions to AsyncStorage
+        await storeDataInLocalStorage('emojiReactions', JSON.stringify(emoji));
+        console.log('Saved Emoji Reactions:', emojiWithIcons);
+      } else {
+        console.warn('No emoji reactions to save.');
+      }
+    } catch (error) {
+      console.error('Error saving emoji reactions:', error);
     }
+  };
 
-    else if (item.user_message == ""
-      && item.icon.length == 0 &&
-      item.receiver_icon.length == 0 && item?.message_type == 'text') {
+  const handleLongPress = async (id) => {
+    setSelectedItemId(id);
+    await storeDataInLocalStorage('setSelectedItemId', id);
+
+  };
+
+  const handleSelectEmoji = async (selectedEmoji) => {
+    const storedEmojiID = await getDataFromLocalStorage('setSelectedItemId');
+
+    console.log("emoji=====", selectedEmoji)
+    console.log("emoji ID=====", selectedItemId)
+    console.log("setSelectedItemId=====", storedEmojiID)
+
+
+    setEmoji((prevState) => ({
+      ...prevState,
+      [storedEmojiID]: selectedEmoji,
+    }));
+    saveEmojiReactions(selectedEmoji); // Save emoji reactions after selecting emoji
+    setSelectedItemId(null); // Reset selectedItemId after selecting emoji
+  };
+
+  const handleClearEmoji = (id) => {
+    console.log("emoji---", id)
+    setEmoji((prevState) => {
+      const updatedReactions = { ...prevState };
+      delete updatedReactions[id];
+      return updatedReactions;
+    });
+    saveEmojiReactions(); // Save emoji reactions after clearing emoji
+  };
+  const scrollToMessage = (messageId) => {
+    console.log("ID", messageId)
+    console.log("index", index)
+    const index
+     = messages.findIndex(message => message.id === messageId);
+    if (index !== -1) {
+      flatListRef.current.scrollToIndex({ animated: true, index });
+    }
+  };
+  
+  const renderItem = ({ item, index }) => {
+    if (
+      item.reciever_message == "" &&
+      item.receiver_icon.length == 0 &&
+      item.icon.length == 0 &&
+      item?.message_type == 'text'
+    ) {
+      // console.log("Chat Item", "Gaurav 1");
       return (
-        <>
+        <Swipeable
+          renderLeftActions={() => renderLeftActions(item)}
+          onSwipeableLeftOpen={() => handleIconClick(item?.user_message, item?.message_id)}
+        >
 
-          <View style={{
-            flexDirection: 'row',
-            alignItems: 'center'
-          }}>
-            <View style={{
-              backgroundColor: "white",
-              paddingHorizontal: W * 0.05,
-              paddingVertical: H * 0.02,
-              justifyContent: "center",
-              alignSelf: "flex-start",
-              maxWidth: W * 0.7,
-              borderBottomRightRadius: 10,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-              marginLeft: W * 0.02,
-              marginTop: H * 0.02,
-            }}>
-              <Text style={{
+        
+            <View style={styles.messageContainerWrapper}>
+              <TouchableOpacity
+                onLongPress={() => handleLongPress(item?.message_id)}
+                style={styles.messageContainer}
+              >
+                <Text style={{ color: 'black', 
+                fontSize: fontSizes.LAR }}>
+                  {item.user_message}
+                </Text>
+                <Text
+                  style={{
+                    marginTop: H * 0.01,
+                    fontSize: fontSizes.EXTRASM,
+                    color: 'black',
+                  }}>
+                  {getTimeFromStamp(item.created)}
+                </Text>
+              </TouchableOpacity>
 
-              }}>{item.reciever_message}</Text>
-              <Text style={{
-                marginTop: H * 0.01,
-                fontSize: fontSizes.EXTRASM,
-              }}>{getTimeFromStamp(item.created)}</Text>
-
-              <Text style={{
-                fontFamily: 'Montserrat-Regular',
-                fontSize: fontSizes.SM,
-                marginTop: 5,
-                color: "black"
-              }}>By - {item?.coachname}</Text>
-            </View>
-
-            <TouchableOpacity
-              onPress={()=>handleIconClick(item?.reciever_message)}>
-              <Image
-                style={{
-                  width: W * 0.05,
-                  height: W * 0.05,
-                  marginLeft: W * 0.04
-
-                }}
-                source={require('../../../../assets/icons/reply.png')} />
-
-            </TouchableOpacity>
-
+            {emoji[item.message_id] && (
+              <Text style={styles.messageEmoji}>
+                {emoji[item.message_id]}</Text>
+            )}
+            {selectedItemId === item.message_id && (
+              <View style={styles.emojiPickerOverlay}>
+                <View style={styles.emojiPicker}>
+                  {emojis.map((emoji, index) => (
+                    <TouchableOpacity key={index} onPress={() => handleSelectEmoji(emoji)}>
+                      <Text style={styles.emoji}>{emoji}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            )}
           </View>
 
-        </>
-      )
-    }
-    else if (item?.message_type == "pdf") {
 
+        </Swipeable>
+      );
+    } else if (
+      item.reciever_message == "" &&
+      item.icon.length == 0 &&
+      item.receiver_icon.length == 0 &&
+      item?.message_type == 'reply'
+    ) {
+      // console.log("Chat Item", "Gaurav 6");
+      return (
+        <Swipeable
+          renderLeftActions={() => renderLeftActions(item)}
+          onSwipeableLeftOpen={() => handleIconClick(item?.user_message, item?.message_id)}
+        >
+          <TouchableOpacity
+          onLongPress={() => handleLongPress(item?.message_id)}
+          onPress={()=>
+            scrollToMessage("21759")}
+          
+            style={{
+              marginRight: W * 0.02,
+              marginTop: H * 0.02,
+              maxWidth: W * 0.7,
+              alignSelf: "flex-end",
+              borderWidth: 1,
+              backgroundColor: "#DCF8C6",
+              borderColor: "#CCCCCC", // Border color
+              borderBottomLeftRadius: 10,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+            }}
+          >
+          
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: '#F0F0F0',
+              borderBottomLeftRadius: 5,
+              borderTopLeftRadius: 5,
+              borderTopRightRadius: 5,
+              borderBottomRightRadius: 5,
+              marginLeft: 5,
+              marginRight: 5,
+              marginTop: 5,
+              marginBottom: 5,
+
+            }}>
+              <View style={{
+                width: 4, // Width of the red line
+                height: '100%', // Ensure it spans the full height of the container
+                backgroundColor: '#FF5B61',
+                // Space between the line and the text
+                borderRadius: 20,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0
+
+                // Border radius to round the ends of the line
+              }} />
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 13,
+                  padding: 10,
+                  width: W * 0.6,
+                }} >
+                {item.replied_message}
+              </Text>
+            </View>
+
+            {/* Highlighted view (user message with timestamp) */}
+            <View
+              style={{
+                paddingHorizontal: W * 0.05,
+                paddingVertical: H * 0.01,
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+              }}
+            >
+              <Text style={{ 
+                color: "black",
+               fontSize: fontSizes.LAR }}>
+                {item.user_message}</Text>
+              <Text
+                style={{
+                  marginTop: H * 0.01,
+                  fontSize: fontSizes.MED,
+                  color: "black",
+                }}
+              >
+                {getTimeFromStamp(item.created)}
+              </Text>
+            </View>
+
+            
+          </TouchableOpacity>
+
+          {emoji[item.message_id] && (
+              <Text style={styles.messageEmoji}>
+                {emoji[item.message_id]}</Text>
+            )}
+            {selectedItemId === item.message_id && (
+              <View style={styles.emojiPickerOverlay}>
+                <View style={styles.emojiPicker}>
+                  {emojis.map((emoji, index) => (
+                    <TouchableOpacity key={index} onPress={() => handleSelectEmoji(emoji)}>
+                      <Text style={styles.emoji}>{emoji}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            )}
+        </Swipeable>
+      );
+    } else if (
+      item.user_message == "" &&
+      item.icon.length == 0 &&
+      item.receiver_icon.length == 0 &&
+      item?.message_type == 'text'
+    ) {
+      // console.log("Chat Item", "Gaurav 2");
+      return (
+        <Swipeable
+          renderLeftActions={renderLeftActions}
+          onSwipeableLeftOpen={() => handleIconClick(item?.reciever_message, item?.message_id)}
+        >
+          <>
+            {/* Your existing content here */}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: "white",
+                  paddingHorizontal: W * 0.05,
+                  paddingVertical: H * 0.02,
+                  justifyContent: "center",
+                  alignSelf: "flex-start",
+                  maxWidth: W * 0.7,
+                  borderBottomRightRadius: 10,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
+                  marginLeft: W * 0.03,
+                  marginTop: H * 0.02,
+                }}
+              >
+                <Text>{item.reciever_message}</Text>
+                <Text
+                  style={{
+                    marginTop: H * 0.01,
+                    fontSize: fontSizes.EXTRASM,
+                  }}
+                >
+                  {getTimeFromStamp(item.created)}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Montserrat-Regular",
+                    fontSize: fontSizes.SM,
+                    marginTop: 5,
+                    color: "black",
+                  }}
+                >
+                  By - {item?.coachname}
+                </Text>
+              </View>
+            </View>
+          </>
+        </Swipeable>
+      );
+    } else if (item?.message_type == "pdf") {
+      // console.log("Chat Item", "Gaurav 3");
 
       if (item?.sender_pdf == "") {
         return (
-
-          <TouchableOpacity
-            style={{
-              marginTop: 15,
-              marginStart: 10,
-
-            }}
-            onPress={() => {
-              navigation.navigate("ChatPdfViewer", { url: `${item?.base_url}${item?.receiver_pdf}` })
-            }}
+          <Swipeable
+            renderLeftActions={renderLeftActions}
+            onSwipeableLeftOpen={() => handleIconClick(item?.reciever_message, item?.message_id)}
           >
-            <Image
+            <TouchableOpacity
               style={{
-                width: W * 0.25,
-                height: W * 0.3,
+                marginTop: 15,
+                marginStart: 10,
               }}
-              source={require('../../../../assets/icons/pdf.png')} />
+              onPress={() => {
+                navigation.navigate("ChatPdfViewer", {
+                  url: `${item?.base_url}${item?.receiver_pdf}`,
+                });
+              }}
+            >
+              <Image
+                style={{
+                  width: W * 0.25,
+                  height: W * 0.3,
+                }}
+                source={require("../../../../assets/icons/pdf.png")}
+              />
 
-            <Text style={{
-              fontSize: fontSizes.EXTRASM,
-              color: "black",
-              marginTop: 4,
-              marginStart: 10
-            }}>{getTimeFromStamp(item.created)}</Text>
-          </TouchableOpacity>
-
-        )
+              <Text
+                style={{
+                  fontSize: fontSizes.EXTRASM,
+                  color: "black",
+                  marginTop: 4,
+                  marginStart: 10,
+                }}
+              >
+                {getTimeFromStamp(item.created)}
+              </Text>
+            </TouchableOpacity>
+          </Swipeable>
+        );
       } else {
-        return (
-          <TouchableOpacity
-            style={{
-              alignSelf: 'flex-end',
-              marginTop: 15,
-              marginEnd: 10,
-            }}
+        // console.log("Chat Item", "Gaurav 4");
 
-            onPress={() => {
-              navigation.navigate("ChatPdfViewer", { url: `${item?.base_url}${item?.sender_pdf}` })
+        return (
+          <Swipeable
+            renderLeftActions={renderLeftActions}
+            onSwipeableLeftOpen={() => handleIconClick(item?.reciever_message, item?.message_id)}
+          >
+            <TouchableOpacity
+              style={{
+                alignSelf: "flex-end",
+                marginTop: 15,
+                marginEnd: 10,
+              }}
+              onPress={() => {
+                navigation.navigate("ChatPdfViewer", {
+                  url: `${item?.base_url}${item?.sender_pdf}`,
+                });
+              }}
+            >
+              <Image
+                style={{
+                  width: W * 0.25,
+                  height: W * 0.3,
+                }}
+                source={require("../../../../assets/icons/pdf.png")}
+              />
+
+              <Text
+                style={{
+                  fontSize: fontSizes.EXTRASM,
+                  color: "black",
+                  textAlign: "center",
+                  marginTop: 5,
+                }}
+              >
+                {getTimeFromStamp(item.created)}
+              </Text>
+            </TouchableOpacity>
+          </Swipeable>
+        );
+      }
+    } else if (item.icon.length !== 0) {
+      return (
+        <Swipeable
+          renderLeftActions={renderLeftActions}
+          onSwipeableLeftOpen={() => handleIconClick(item?.reciever_message, item?.message_id)}
+        >
+          <View
+            style={{
+              width: 80,
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Image
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("ChatImageDisplay", {
+                  icon: item.icon,
+                  base: `${item.base_url}`,
+                })
+              }
+            ></TouchableOpacity>
+          </View>
 
+          <>
+            {/* Your existing content here */}
+            <View
               style={{
-                width: W * 0.25,
-                height: W * 0.3,
+                backgroundColor: colors.GREEN,
+                paddingHorizontal: W * 0.05,
+                paddingVertical: H * 0.005,
+                justifyContent: "center",
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                alignSelf: "flex-end",
+                marginRight: W * 0.02,
+                marginTop: H * 0.02,
+                maxWidth: W * 0.7,
+                flexDirection: "row",
               }}
-              source={require('../../../../assets/icons/pdf.png')} />
-
-            <Text style={{
-              fontSize: fontSizes.EXTRASM,
-              color: "black",
-              textAlign: 'center',
-              marginTop: 5,
-            }}>{getTimeFromStamp(item.created)}</Text>
-          </TouchableOpacity>
-
-        )
-      }
-    }
-    else if (item.icon.length !== 0) {
+            >
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("ChatImageDisplay", {
+                    icon: item.icon,
+                    base: `${item.base_url}`,
+                  })
+                }
+              >
+                <Image
+                  source={{ uri: `${item.base_url}${item.icon[0]}` }}
+                  style={{ height: W * 0.34, width: W * 0.34 }}
+                />
+                <Text
+                  style={{
+                    marginTop: H * 0.01,
+                    fontSize: fontSizes.EXTRASM,
+                    color: "white",
+                  }}
+                >
+                  {getTimeFromStamp(item.created)}
+                </Text>
+              </TouchableOpacity>
+              {item.icon.length > 1 ? (
+                <>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("ChatImageDisplay", {
+                        icon: item.icon,
+                        base: `${item.base_url}`,
+                      })
+                    }
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "rgba(5,5,5,0.8)",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "white",
+                          position: "absolute",
+                          alignSelf: "center",
+                          zIndex: 100,
+                          fontSize: 35,
+                          shadowOpacity: 1,
+                          ...fontFamily.bold,
+                        }}
+                      >
+                        {item.icon.length - 2 == 0 ? "" : `+${item.icon.length - 2}`}
+                      </Text>
+                      <Image
+                        source={{ uri: `${item.base_url}${item.icon[1]}` }}
+                        style={{ height: W * 0.34, width: W * 0.34, zIndex: -2 }}
+                      />
+                      <Text
+                        style={{
+                          marginTop: H * 0.01,
+                          fontSize: fontSizes.EXTRASM,
+                        }}
+                      >
+                        {getTimeFromStamp(item.created)}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                </>
+              )}
+            </View>
+          </>
+        </Swipeable>
+      );
+    } else if (item.receiver_icon.length !== 0) {
       return (
-        <>
-          < View style={{
-            backgroundColor: colors.GREEN,
-            paddingHorizontal: W * 0.05,
-            paddingVertical: H * 0.005,
-            justifyContent: "center",
-            borderBottomLeftRadius: 10,
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-            alignSelf: "flex-end",
-            marginRight: W * 0.02,
-            marginTop: H * 0.02,
-            maxWidth: W * 0.7,
-            flexDirection: "row"
-          }}>
-            <TouchableOpacity onPress={() =>
-              navigation.navigate("ChatImageDisplay",
-                { "icon": item.icon, "base": `${item.base_url}` })}>
+        <Swipeable
+          renderLeftActions={renderLeftActions}
+          onSwipeableLeftOpen={() => handleIconClick(item?.reciever_message, item?.message_id)}
+        >
+          <View
+            style={{
+              width: 80,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("ChatImageDisplay", {
+                  icon: item.receiver_icon,
+                  base: `${item.base_url}`,
+                })
+              }
+            ></TouchableOpacity>
+          </View>
 
-              <Image source={{ uri: `${item.base_url}${item.icon[0]}` }}
-                style={{ height: W * 0.34, width: W * 0.34, }} />
-              <Text style={{
-                marginTop: H * 0.01,
-                fontSize: fontSizes.EXTRASM,
-                color: "white"
-              }}>{getTimeFromStamp(item.created)}</Text>
-            </TouchableOpacity>
-            {item.icon.length > 1
-              ?
-              <>
-                <TouchableOpacity onPress={() =>
-                  navigation.navigate("ChatImageDisplay",
-                    { "icon": item.icon, "base": `${item.base_url}` })}>
-                  <View style={{
-                    backgroundColor: 'rgba(5,5,5,0.8)',
-                    justifyContent: "center"
-                  }}>
-                    <Text style={{
-                      color: "white",
-                      position: "absolute",
-                      alignSelf: "center",
-                      zIndex: 100,
-                      fontSize: 35,
-                      shadowOpacity: 1,
-                      ...fontFamily.bold,
-                    }}>{item.icon.length - 2 == 0 ? "" : `+${item.icon.length - 2}`}</Text>
-                    <Image source={{ uri: `${item.base_url}${item.icon[1]}` }}
-                      style={{ height: W * 0.34, width: W * 0.34, zIndex: -2 }} />
-                    <Text style={{
-                      marginTop: H * 0.01,
-                      fontSize: fontSizes.EXTRASM,
+          <>
+            {/* Your existing content here */}
+            <View
+              style={{
+                backgroundColor: "white",
+                paddingHorizontal: W * 0.05,
+                paddingVertical: H * 0.005,
+                justifyContent: "center",
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                alignSelf: "flex-start",
+                marginLeft: W * 0.02,
+                marginTop: H * 0.02,
+                maxWidth: W * 0.7,
+                flexDirection: "row",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("ChatImageDisplay", {
+                    icon: item.receiver_icon,
+                    base: `${item.base_url}`,
+                  })
+                }
+              >
+                <Image
+                  source={{ uri: `${item.base_url}${item.receiver_icon[0]}` }}
+                  style={{ height: W * 0.34, width: W * 0.34 }}
+                />
+                <Text
+                  style={{
+                    marginTop: H * 0.01,
+                    fontSize: fontSizes.EXTRASM,
+                  }}
+                >
+                  {getTimeFromStamp(item.created)}
+                </Text>
+              </TouchableOpacity>
+              {item.receiver_icon.length > 1 ? (
+                <>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("ChatImageDisplay", {
+                        icon: item.receiver_icon,
+                        base: `${item.base_url}`,
+                      })
+                    }
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "rgba(5,5,5,0.4)",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "white",
+                          position: "absolute",
+                          alignSelf: "center",
+                          zIndex: 100,
+                          fontSize: 35,
+                          shadowOpacity: 1,
+                          ...fontFamily.bold,
+                        }}
+                      >
+                        {item.receiver_icon.length - 2 == 0
+                          ? ""
+                          : `+${item.receiver_icon.length - 2}`}
+                      </Text>
+                      <Image
+                        source={{ uri: `${item.base_url}${item.receiver_icon[1]}` }}
+                        style={{ height: W * 0.34, width: W * 0.34, zIndex: -2 }}
+                      />
+                      <Text
+                        style={{
+                          marginTop: H * 0.01,
+                          fontSize: fontSizes.EXTRASM,
+                          color: "white",
+                        }}
+                      >
+                        {getTimeFromStamp(item.created)}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                </>
+              )}
+            </View>
+          </>
+        </Swipeable>
+      );
+    } else if (item?.message_type == "quiz") {
+      
 
-                    }}>{getTimeFromStamp(item.created)}</Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-              :
-              <>
-              </>
-            }
-
-          </View >
-        </>
-      )
-    }
-    else if (item.receiver_icon.length !== 0) {
-      return (
-        <>
-          < View style={{
-            backgroundColor: "white",
-            paddingHorizontal: W * 0.05,
-            paddingVertical: H * 0.005,
-            justifyContent: "center",
-            borderBottomLeftRadius: 10,
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-            alignSelf: "flex-start",
-            marginLeft: W * 0.02,
-            marginTop: H * 0.02,
-            maxWidth: W * 0.7,
-            flexDirection: "row"
-          }}>
-            <TouchableOpacity onPress={() => navigation.navigate("ChatImageDisplay", { "icon": item.receiver_icon, "base": `${item.base_url}` })}>
-
-              <Image source={{ uri: `${item.base_url}${item.receiver_icon[0]}` }}
-                style={{ height: W * 0.34, width: W * 0.34 }} />
-              <Text style={{
-                marginTop: H * 0.01,
-                fontSize: fontSizes.EXTRASM,
-
-              }}>{getTimeFromStamp(item.created)}</Text>
-            </TouchableOpacity>
-            {item.receiver_icon.length > 1
-              ?
-              <>
-                <TouchableOpacity onPress={() => navigation.navigate("ChatImageDisplay", { "icon": item.receiver_icon, "base": `${item.base_url}` })}>
-                  <View style={{
-                    backgroundColor: 'rgba(5,5,5,0.4)',
-                    justifyContent: "center"
-                  }}>
-                    <Text style={{
-                      color: "white",
-                      position: "absolute",
-                      alignSelf: "center",
-                      zIndex: 100,
-                      fontSize: 35,
-                      shadowOpacity: 1,
-                      ...fontFamily.bold,
-                    }}>{item.receiver_icon.length - 2 == 0 ? "" : `+${item.receiver_icon.length - 2}`}</Text>
-                    <Image source={{ uri: `${item.base_url}${item.receiver_icon[1]}` }}
-                      style={{ height: W * 0.34, width: W * 0.34, zIndex: -2 }} />
-                    <Text style={{
-                      marginTop: H * 0.01,
-                      fontSize: fontSizes.EXTRASM,
-                      color: "white",
-                    }}>{getTimeFromStamp(item.created)}</Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-              :
-              <>
-              </>
-            }
-
-          </View >
-        </>
-      )
-    }
-    else if (item?.message_type == "quiz") {
       return (
         <View>
-          < View style={{
-            backgroundColor: "white",
-            padding: 8,
-            justifyContent: "center",
-            borderBottomRightRadius: 10,
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-            alignSelf: "flex-start",
-            marginLeft: W * 0.02,
-            marginTop: H * 0.02,
-            maxWidth: W * 0.7,
-          }}>
+          <View
+            style={{
+              backgroundColor: "white",
+              padding: 8,
+              justifyContent: "center",
+              borderBottomRightRadius: 10,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              alignSelf: "flex-start",
+              marginLeft: W * 0.02,
+              marginTop: H * 0.02,
+              maxWidth: W * 0.7,
+            }}
+          >
             <Text>{item?.reciever_message}</Text>
-            <Text style={{
-              textAlign: 'right',
-              marginTop: H * 0.01,
-              fontSize: fontSizes.EXTRASM,
-            }}>{getTimeFromStamp(item.created)}</Text>
-
-          </View >
+            <Text
+              style={{
+                textAlign: "right",
+                marginTop: H * 0.01,
+                fontSize: fontSizes.EXTRASM,
+              }}
+            >
+              {getTimeFromStamp(item.created)}
+            </Text>
+          </View>
           <View style={styles.optionButtonView}>
             {/* <FlatList
               data={item?.options}
               renderItem={renderOptions},
               keyExtractor={(item, index) => `${index}`}
             /> */}
-            {
-              item?.health_data?.responses?.map((i, index) => {
-                return (
-                  renderOptions(i, index, item?.health_data?.isActive, item?.health_data?.responseType, item)
-                )
-              })
-            }
+            {item?.health_data?.responses?.map((i, index) =>
+              renderOptions(
+                i,
+                index,
+                item?.health_data?.isActive,
+                item?.health_data?.responseType,
+                item
+              )
+            )}
           </View>
         </View>
-      )
+      );
+    } else {
+      // Handle other message types or conditions here
+      return null;
     }
-  }
+  };
+
+
 
   const onSend = async () => {
-    if (text !== "") {
+    console.log("Send", text == "" ? replytext : text)
+    if (text !== "" || replytext !== "") {
       var formdata = new FormData();
       const temp = await getDataFromLocalStorage('user_id')
       const temp2 = await getDataFromLocalStorage('coach_id')
       formdata.append("user_id", JSON.parse(temp));
-      formdata.append("user_message", text);
+      formdata.append("user_message", text == "" ? replytext : text);
       formdata.append("reciever_id", JSON.parse(temp2));
+      formdata.append("message_id", selectedMessageID);
       const result = await PostApiData('sendermessage', formdata)
       if (result?.status == '200') {
         setMessages([{
@@ -1038,7 +1423,6 @@ const Coach = ({ navigation }) => {
         flex: 1,
       }}>
 
-
         <Modal
           animationType="slide"
           transparent={true}
@@ -1047,22 +1431,43 @@ const Coach = ({ navigation }) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Enter your reply for:</Text>
+              <Text style={styles.modalText}>Reply for :</Text>
               <Text style={styles.msgText}>{selectedMessage}</Text>
 
-              <View>
-
+              <View style={styles.inputContainer}>
+                {/* <TouchableOpacity style={styles.iconButton} onPress={() => setCamVisible(true)}>
+                  <Image
+                    source={require('../../../../assets/icons/camera.png')}
+                    style={styles.icon}
+                  />
+                </TouchableOpacity> */}
+                {/* <TouchableOpacity style={styles.iconButton} onPress={() => {
+                  Alert.alert('Alert', "You are allowed to upload PDF file only !", [
+                    {
+                      text: 'Cancel',
+                      onPress: () => console.log('Cancel Pressed'),
+                      style: 'cancel',
+                    },
+                    { text: 'OKAY', onPress: () => pickPDF() },
+                  ]);
+                }}>
+                  <Image
+                    source={require('../../../../assets/icons/attachfile.png')}
+                    style={styles.icon}
+                  />
+                </TouchableOpacity> */}
+                <TextInput
+                  underlineColor="transparent"
+                  multiline={true}
+                  scrollEnabled
+                  placeholder='Type here..'
+                  placeholderTextColor="gray"
+                  style={styles.input}
+                  value={replytext}
+                  onChangeText={setreplyText}
+                />
               </View>
 
-              
-              <TextInput
-                style={styles.input}
-                placeholder="Type your reply here"
-                value={inputText}
-                onChangeText={setInputText}
-              />
-
-              
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={[styles.button, styles.buttonCancel]}
@@ -1072,8 +1477,7 @@ const Coach = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, styles.buttonSubmit]}
-                  onPress={handleSubmit}
-                >
+                  onPress={() => handleSubmit()}>
                   <Text style={styles.textStyle}>Submit</Text>
                 </TouchableOpacity>
               </View>
@@ -1081,10 +1485,7 @@ const Coach = ({ navigation }) => {
           </View>
         </Modal>
 
-
-
         {/******************************************************** User Ratings***************************************************************** */}
-
 
         <Modal
           transparent={true}
@@ -1375,7 +1776,7 @@ const Coach = ({ navigation }) => {
         <View style={styles.messageList}>
           <FlatList
             inverted={true}
-            ref={yourRef}
+            ref={flatListRef}
             data={messages}
             renderItem={renderItem}
             onEndReached={handleLoadMore}
@@ -1545,7 +1946,6 @@ const makeStyles = (H, W) => StyleSheet.create({
   {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-
     marginEnd: W * 0.02,
     marginLeft: W * 0.02,
     elevation: 1,
@@ -1599,10 +1999,11 @@ const makeStyles = (H, W) => StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    //backgroundColor:'#e8e9eb'
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#e8e9eb',
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
@@ -1627,23 +2028,23 @@ const makeStyles = (H, W) => StyleSheet.create({
     fontSize: 18,
     marginTop: 2,
     color: "grey",
-  fontWeight: 'bold',
   },
-  input: {
-    height: 40,
-    borderColor: 'white',
-    borderWidth: 1,
-    borderRadius: 10,
-    marginTop:10,
-    paddingHorizontal: 10,
-    width: '100%',
-    marginBottom: 20,
-  },
+
+  // input: {
+  //   height: 40,
+  //   borderColor: 'white',
+  //   borderWidth: 1,
+  //   borderRadius: 10,
+  //   marginTop: 10,
+  //   paddingHorizontal: 10,
+  //   width: '100%',
+  //   marginBottom: 20,
+  // },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    marginTop:10
+    marginTop: 10
   },
   button: {
     borderRadius: 10,
@@ -1663,6 +2064,109 @@ const makeStyles = (H, W) => StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 15,
+    width: '100%',
+  },
+  iconButton: {
+    padding: 5,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+
+  replycameraButton:
+  {
+    alignSelf: 'center',
+  },
+  replypdfButton:
+  {
+    marginLeft: W * 0.05,
+    marginRight: W * 0.02,
+    alignSelf: 'center',
+  },
+
+  replytext:
+  {
+    backgroundColor: 'white',
+    //marginTop: 5,
+    width: W * 0.6,
+    alignSelf: "center",
+  },
+  input: {
+    flex: 1,
+    backgroundColor: '#e8e9eb',
+
+    height: 40,
+    padding: 10,
+  },
+
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  messageContainerWrapper: {
+    marginHorizontal: W * 0.025,
+  },
+  messageContainer: {
+
+    paddingHorizontal: W * 0.05,
+    paddingVertical: H * 0.02,
+    marginTop: H * 0.02,
+    maxWidth: W * 0.7,
+    alignSelf: "flex-end",
+    borderWidth: 1,
+    backgroundColor: "#DCF8C6",
+    borderColor: "#CCCCCC", // Border color
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    maxWidth: W * 0.85,
+  },
+  emojiPickerOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'white',
+  },
+  emojiPicker: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'silver',
+    padding: 10,
+    elevation: 20,
+    borderRadius: 30,
+
+  },
+  emoji: {
+    marginHorizontal: 10, // Add horizontal margin to create space between emojis
+    fontSize: 30, // Adjust the size of the emoji if needed
+  },
+  messageEmoji: {
+    position: 'absolute',
+    bottom: 0,
+    left: W * 0.89,
+    marginTop:20,
+
+    alignSelf: "flex-end",
+
+    fontSize: fontSizes.XXXL, // Adjust font size as needed
   },
 });
 

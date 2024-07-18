@@ -618,9 +618,10 @@ const Stats = (props) => {
     const temp = await getDataFromLocalStorage('user_id')
     formdata.append("user_id", JSON.parse(temp))
     const result = await PostApiData('paiduser', formdata)
+    // console.log("Paid user" , result)
     if (result?.status == "200") {
-      //setDataForPaidUser(result)
-      setDataForPaidUser(DATA)
+      setDataForPaidUser(result)
+      //setDataForPaidUser(DATA)
       setTargetWeight(result?.single[0]?.attribute_value[1])
     }
     setSecondaryLoader(false)
@@ -714,12 +715,15 @@ const Stats = (props) => {
               onPress={() => {
                 handleTextPress(item.attribute2[i])
               }}>
+               {/* {console.log(item.attribute_value[i])}  */}
               {<Text style={{
                 ...fontFamily.bold,
                 fontSize: fontSizes.XXL,
                 margin: 5,
-                textAlign: 'center'
-              }}>{(item.attribute_value[i] == "") ? "--" : item.attribute_value[i]}</Text>}
+                textAlign: 'center',  
+               
+              }}>{(item.attribute_value[i] == "" 
+              ||item.attribute_value[i] == null) ? "--" : item.attribute_value[i]}</Text>}
             </TouchableOpacity>
             <Text style={{
               fontSize: fontSizes.MED,
@@ -738,11 +742,24 @@ const Stats = (props) => {
     }
     /*///Weigth, Sugar, BP////*////////////////////////////////////////////////////////////////////////////////////////////
     return (
+
+
+    
       <View
         key={index}
         style={styles.cardForMonitoringStats}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
-          <Text style={{ ...fontFamily.bold, marginLeft: WIDTH * 0.02 }}>{item.heading}</Text>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+          <Text style={{
+            ...fontFamily.bold,
+            marginLeft: WIDTH * 0.02,
+          }}>{item.heading}</Text>
+          
+         {
+          item.heading2 === 'Medication Monitor'?null
+          :
           <View style={{
             backgroundColor: getColorForBg(item?.attribute2[item?.attribute2?.length - 1]),
             borderRadius: 12,
@@ -753,17 +770,23 @@ const Stats = (props) => {
             alignContent: "center",
             width: W * 0.22,
           }}>
+
+
             <Text style={{
               fontSize: fontSizes.SM,
               color: getColorForText(item?.attribute2[item?.attribute2?.length - 1]),
               textAlign: 'center',
               margin: WIDTH * 0.01,
+
               //marginHorizontal: WIDTH * 0.018,
               alignItems: "center",
               alignSelf: "center",
               ...fontFamily.bold,
+            
             }}>{item?.attribute[item?.attribute?.length - 1]}</Text>
           </View>
+         }
+
         </View>
         <View style={{ flexDirection: 'row', }}>
           <View style={{
@@ -771,8 +794,13 @@ const Stats = (props) => {
             justifyContent: 'space-between',
             width: WIDTH * 0.88,
             flexWrap: 'wrap',
+
           }}>
-            <View style={{ flexDirection: 'row', width: WIDTH * 0.7, justifyContent: 'space-evenly' }}>
+            <View style={{
+              flexDirection: 'row',
+              width: WIDTH * 0.7,
+              justifyContent: 'space-evenly'
+            }}>
               {myLoopTwo}
             </View>
             <View style={{
@@ -780,7 +808,8 @@ const Stats = (props) => {
               width: WIDTH * 0.13,
               alignSelf: 'flex-end',
               alignItems: 'center',
-              marginRight: WIDTH * 0.01
+              marginRight: WIDTH * 0.01,
+
             }}>
               <TouchableOpacity
                 onPress={() => {
@@ -796,6 +825,32 @@ const Stats = (props) => {
                   style={styles.nextButton}>
                   <AntDesign name="right" size={HEIGHT * 0.035} color='white' />
                 </LinearGradient>
+
+                {item.heading2 === 'Medication Monitor' && (
+               <View style={{
+                 backgroundColor: getColorForBg(item?.attribute2[item?.attribute2?.length - 1]),
+                 borderRadius: W * 0.11, // Make it half of the width/height to create a circle
+                 alignItems: "center",
+                 justifyContent: "center",
+                 width: W * 0.055, // Width and height should be the same for a circle
+                 height: W * 0.055,
+                 position: 'absolute',
+                 right: -W * 0.02, // Adjust position relative to the button
+                 top: -W * 0.04,
+                 zIndex: 101,
+               }}>
+                 <Text style={{
+                   fontSize: fontSizes.MED,
+                   color: getColorForText(item?.attribute2[item?.attribute2?.length - 1]),
+                   textAlign: 'center',
+
+                   margin: 0, // Remove margin for centered text
+                   ...fontFamily.bold,
+                 }}>
+                   {item?.attribute[item?.attribute?.length - 1]}
+                 </Text>
+               </View>
+             )}
               </TouchableOpacity>
             </View>
           </View>
